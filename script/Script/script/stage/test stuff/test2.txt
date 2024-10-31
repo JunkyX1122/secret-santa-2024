@@ -1,0 +1,295 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Fuck Ass MB Spell"]
+#Text["Fuck Ass MB Spell"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+
+
+let objEnemy;
+let objEnemy2;
+let count = 0;
+   let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 60*60;
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(250);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(60);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+@Initialize
+{
+	//let x1 = 0;
+	//let x2 = GetScreenWidth;
+	//SetStgFrame(x1,0,x2,480,10,80);
+	//SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
+	//SetStgFrame(107,0,640+107,480,10,80);
+	//SetPlayerClip(0,0,GetStgFrameWidth,GetStgFrameHeight);
+	
+	timer;
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	SetAutoDeleteObject(true);
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,GetStgFrameHeight/2 );
+	renderYuuma(objEnemy);
+
+	//renderBoss(objEnemy,IMG_BOSS1PLACE);
+	end;
+	SetShotAutoDeleteClip(33,33,33,33);
+	SetCommonData("SpellCardBG1",false);
+
+	
+	
+	SetCommonData("GlobalColour",[255,255,255]);
+	
+}
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+    ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count == 0)
+	{
+		
+	}
+    if(count < 95)
+    {
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    }
+    if(count == 95)
+    {
+		//move;
+		Fire;	
+		
+		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+        count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+	
+    count++;
+    yield;
+}
+@Finalize
+{
+}
+let angArray = [];
+let distArray = [];
+let ringCount = 12;
+task Fire
+{
+	ascent(i in 0..ringCount)
+	{
+		angArray ~= [-90];
+		distArray ~= [70 + 20 * i];
+		CreateIdleRings(distArray[i], 20, i);
+	}
+	NewFire;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ascent(i in 0..12)
+		{
+			angArray[i] += ( 0.5+0.1 * i ) * ([-1,1][i%2]);
+		}
+		yield;
+	}
+	
+
+}
+
+task NewFire()
+{
+	wait(60*3);
+	let cc = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		if(cc%6==0)
+		{
+			SE_PlayLen(shot1,60);
+			let obj2 = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),0,0,76,418,5,2,BLEND_ALPHA,false);
+			MoveAlong(obj2,1,2);
+		}
+		if(cc%4==0)
+		{
+			SE_PlayLen(chime1,60);
+			let obj2 = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),0,0,220,419,5,2,BLEND_ALPHA,false);
+			MoveAlong(obj2,-2,2);
+		}
+		cc++;
+		yield;
+	}
+	
+	task MoveAlong(obj,angP,disP)
+	{
+		wait(5);
+		let ringsCrossed = 0;
+		let dist = 0;
+		let transitionDist = distArray[0];
+		let centerX = ObjMove_GetX(objEnemy);
+		let centerY = ObjMove_GetY(objEnemy);
+		let t = transitionDist / disP;
+		ascent(i in 0..round(t))
+		{
+			dist = ((transitionDist / t) * i) ;
+			ObjMove_SetPosition(obj,centerX + dist * cos(-90),centerY + dist * sin(-90));
+			yield;
+		}
+		let activeAngle = -90;
+		while(ringsCrossed < ringCount - 1)
+		{
+			dist = distArray[ringsCrossed];
+			let currentTargetAngle = angArray[ringsCrossed];
+			while(!DifferenceCheck(activeAngle,currentTargetAngle,(|angP|)))
+			{
+				currentTargetAngle = angArray[ringsCrossed];
+				ObjMove_SetPosition(obj,centerX + dist * cos(activeAngle),centerY + dist * sin(activeAngle));
+				activeAngle+=angP;
+				yield;
+			}
+			let gapSize = distArray[ringsCrossed + 1] - distArray[ringsCrossed];
+			let transitionDist = gapSize;
+			t = transitionDist / disP;
+			ascent(i in 0..round(t))
+			{
+				
+				dist = distArray[ringsCrossed] + (((transitionDist) / t) * i) ;
+				ObjMove_SetPosition(obj,centerX + dist * cos(angArray[ringsCrossed]),centerY + dist * sin(angArray[ringsCrossed]));
+				yield;
+			}
+			ringsCrossed++;
+			
+			activeAngle = angArray[ringsCrossed - 1];
+			yield;
+		}
+	}
+}
+task CreateIdleRings(dis,stickOut,id)
+{
+	let objL = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objL, PRIMITIVE_LINESTRIP);
+	Obj_SetRenderPriorityI(objL,29);
+	ObjPrim_SetVertexCount(objL, 129);
+	ObjRender_SetPosition(objL,ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),0);
+	ascent(i in 0..60*3)
+	{
+		ObjRender_SetAngleZ(objL,angArray[id]);
+		let disTo = dis*sin(90/(60*3 - 1)*i); 
+		ascent(o in 0..128)
+		{
+			let ang = 360/127*o;
+			
+			ObjPrim_SetVertexPosition(objL,o, disTo*cos(ang), disTo*sin(ang),0);
+		}
+		let ang = 0;
+		let sticDis = disTo+stickOut/(60*3 - 1)*i;
+		ObjPrim_SetVertexPosition(objL,128, sticDis*cos(ang), sticDis*sin(ang),0);
+		yield;
+	}
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ObjRender_SetAngleZ(objL,angArray[id]);
+		yield;
+	}
+}
+function DifferenceCheck(angle,angleTarget,lenience)
+{
+	let dir = angleTarget;
+    let maxTraverse = lenience; // If 2 degrees from target.
+
+	let diff = dir - angle;
+	while(diff >= 180) { diff -= 360; }    // adjust the range
+	while(diff < -180) { diff += 360; }
+
+	let diffAbs = (|diff|);
+	if(diffAbs < maxTraverse) 
+	{
+		return true;
+	} 
+	return false;
+    
+}
+task timer
+{
+    while(TIME>60*10)
+    {
+        TIME--;
+		yield;
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+	SE_PlayLen(BossDead,50);
+	Obj_SetValue(objEnemy,"cast",0);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+
+	loop(60)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	
+    CloseScript(GetOwnScriptID());
+	return;
+} 
+task move
+{
+	wait(150);
+	let cc = 1;
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+        ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*cc, rand(80,120), 140);
+		cc*=-1;
+		wait(280);
+    }
+}
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+

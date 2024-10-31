@@ -1,0 +1,337 @@
+#TouhouDanmakufu[Package]
+#Title["Package"]
+#Text[""]
+#Player["./../../player/The Ultimate Player (Set 1)/A Ultimate1.txt"]
+#include "./lib/lib_img.txt"
+#include "./lib/lib_sound.txt"
+#include "./Loading.txt"
+let skipIntro = false;
+@Initialize
+{
+	//SetSkipModeKey(KEY_INVALID);
+	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+	InstallFont(GetCurrentScriptDirectory~"reve.ttf");
+	
+	Loader();
+}
+@MainLoop
+{
+	if(skipIntro==false&&GetVirtualKeyState(VK_OK)==KEY_PUSH)
+	{
+		skipIntro=true;
+	}
+	yield;
+}
+
+@Finalize
+{
+}
+//----------------------------------------------------
+task Loader
+{
+	LoadThings;
+	while(mainLoadBool==false){yield;}
+	
+	TTitleScene;
+}
+let carryOn = false;
+task TTitleScene
+{
+	//タイトルシーン終了フラグ
+	wait(120);
+	TStageScene("",0,60);
+	TStageScene("",1,60);
+	
+}
+
+
+//----------------------------------------------------
+// ステージシーン
+//----------------------------------------------------
+function TStageScene(let pathReplay,SELECT_ID,waiter)
+{
+	yield;
+	LoadingBool = true;
+	let dirCurrent = GetCurrentScriptDirectory();
+	let dirModule = GetModuleDirectory();
+	let pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+	if(SELECT_ID==1)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage02/stage.txt";
+	}
+	if(SELECT_ID==2)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage03/stage.txt";
+	}
+	if(SELECT_ID==3)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage04/stage.txt";
+	}
+	if(SELECT_ID==4)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage05/stage.txt";
+	}
+	if(SELECT_ID==5)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage06/stage.txt";
+	}
+	let pathPlayer = dirCurrent ~ "./../../player/The Ultimate Player (Set 1)/A Ultimate1.txt";
+
+	//--------------------------------
+	//画面遷移
+	//RenderSceneToTransitionTexture();
+	//TTransition();
+
+	//--------------------------------
+	//ステージ初期化
+	InitializeStageScene();
+	if(length(pathReplay) > 0)
+	{
+		//SetStageReplayFile(pathReplay);
+	}
+
+	//--------------------------------
+	//初期ステージ設定
+	let indexStage = 1; //ステージインデックス
+	loop(waiter){yield;}
+	SetStageIndex(indexStage);
+	SetStageMainScript(pathMainScript);
+	SetStagePlayerScript(pathPlayer);
+	StartStageScene();
+
+	//--------------------------------
+	//ステージ操作
+	let END_RESULT = 0;
+	let stgSceneState = GetStageSceneState();
+	while(stgSceneState != STAGE_STATE_FINISHED)
+	{
+		
+		stgSceneState = GetStageSceneState();
+		//--------------------------------
+		//一時停止チェック
+		if(GetVirtualKeyState(VK_PAUSE) == KEY_PUSH)
+		{
+			let resPause = RunPauseScene();
+			alternative(resPause)
+			case(RESULT_RETRY)
+			{
+				TTransition();
+				TerminateStageScene();
+				TStageScene(1,SELECT_ID,1);
+				//return;
+			
+			}
+			case(RESULT_END)
+			{
+
+				TTransition();
+				TerminateStageScene();
+				carryOn = false;
+				TTitleScene;
+			}
+		}
+
+		if(!IsReplay() && GetKeyState(KEY_BACK) == KEY_PUSH)
+		{
+		
+			TerminateStageScene();
+			TStageScene(1,SELECT_ID,1);
+			return;
+		}
+		if(stgSceneState == STAGE_STATE_FINISHED)
+		{
+			//RenderToTextureA1(tex_rd, 0, 100, true);
+		}
+		if(stgSceneState != STAGE_STATE_FINISHED)
+		{
+			yield;
+		}
+		
+	}	
+	FinalizeStageScene();
+
+	//TTransition();
+}
+
+
+//----------------------------------------------------
+
+//----------------------------------------------------
+task TEndScene()
+{
+
+	//--------------------------------
+
+	FinalizeStageScene();
+
+	//--------------------------------
+
+	let dirModule = GetModuleDirectory();
+	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndScene.txt";
+	let idScript = LoadScript(pathScript);
+	StartScript(idScript);
+
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+
+	//--------------------------------
+
+	let result = GetScriptResult(idScript);
+	alternative(result)
+	case(RESULT_END)
+	{
+		LastInfo;
+	}
+	case(RESULT_RETRY)
+	{
+		TStageScene("",0,1);
+	}
+}
+function textCentreX(obj)
+{
+	return ObjText_GetTotalWidth(obj)/2;
+}
+function textCentreY(obj)
+{
+	return ObjText_GetTotalHeight(obj)/2;
+}
+task LastInfo
+{
+	ClosePackage;
+}
+//----------------------------------------------------
+
+//----------------------------------------------------
+function RunPauseScene()
+{
+	RenderSceneToTransitionTexture();
+	PauseStageScene(true);
+
+	let dirModule = GetModuleDirectory();
+	let pathScript = GetCurrentScriptDirectory ~ "lib/system/Pause.txt";
+
+	//--------------------------------
+
+	let idScript = LoadScript(pathScript);
+	StartScript(idScript);
+
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+
+	PauseStageScene(false);
+
+	let res = GetScriptResult(idScript);
+	return res;
+}
+
+
+//----------------------------------------------------
+
+//----------------------------------------------------
+task TReplaySelectScene()
+{
+	let dirCurrent = GetCurrentScriptDirectory();
+	let pathScript = dirCurrent ~ "ExRumia_Package_ReplaySelectScene.txt";
+
+	//--------------------------------
+	let idScript = LoadScript(pathScript);
+	StartScript(idScript);
+
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+
+	//--------------------------------
+
+	let result = GetScriptResult(idScript);
+	if(length(result) == 0)
+	{
+
+		TTitleScene();
+	}
+ 	else
+ 	{
+
+		TStageScene(result,0,1);
+	}
+
+}
+
+
+//----------------------------------------------------
+
+//----------------------------------------------------
+task TReplaySaveScene()
+{
+	let dirModule = GetModuleDirectory();
+	let pathScript = dirModule ~ "script/default_system/Default_ReplaySaveScene.txt";
+
+	//--------------------------------
+
+	let idScript = LoadScript(pathScript);
+	StartScript(idScript);
+
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+
+
+	//--------------------------------
+
+	TTitleScene();
+}
+
+
+//----------------------------------------------------
+
+//----------------------------------------------------
+function RenderSceneToTransitionTexture()
+{
+
+	let textureName = GetTransitionRenderTargetName();
+	RenderToTextureA1(textureName, 0, 100, true);
+}
+function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace)
+{
+	let objText = ObjText_Create();
+	ObjText_SetText(objText, text);
+	Obj_SetRenderPriorityI(objText,81);
+	ObjText_SetFontSize(objText, fontsize);
+	ObjText_SetFontType(objText, fontFace);
+	ObjText_SetFontBold(objText, false);
+	ObjText_SetFontColorTop(objText, color[0][0], color[0][1], color[0][2]);
+	ObjText_SetFontColorBottom(objText, color[1][0], color[1][1], color[1][2]);
+	ObjText_SetFontBorderType(objText, BORDER_SHADOW);
+	ObjText_SetFontBorderColor(objText, bordercolor[0], bordercolor[1], bordercolor[2]);
+	ObjText_SetFontBorderWidth(objText, 1);
+	ObjRender_SetAlpha(objText,255);
+	ObjRender_SetPosition(objText,xpos-textCentreX(objText),ypos-textCentreY(objText),0);
+	ObjText_SetHorizontalAlignment(objText,ALIGNMENT_LEFT);
+	ObjText_SetMaxWidth(objText,GetScreenWidth-40);
+	return objText;
+}
+task TTransition
+{
+	let textureName = GetTransitionRenderTargetName();
+
+	let objImage = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objImage, 100); 
+	ObjPrim_SetTexture(objImage, textureName); 
+	ObjSprite2D_SetSourceRect(objImage, 0, 0, 640, 480);
+	ObjSprite2D_SetDestRect(objImage, 0, 0, 640, 480);
+
+	let alpha = 255;
+	while(alpha > 0)
+	{
+		ObjRender_SetAlpha(objImage, alpha);
+		alpha -= 16;
+		yield;
+	}
+	Obj_Delete(objImage);
+}

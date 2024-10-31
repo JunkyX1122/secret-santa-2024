@@ -1,0 +1,17 @@
+#include "./lib_img.txt"
+#include "./lib_shotcon.txt"
+#include "./lib_pointFilter.dnh"
+
+#include "./lib_shotfunc.txt"
+#include "./lib_sound.txt"
+#include "./lib_basics.txt"
+#include "./lib_enemy.txt"
+#include "./lib_enemyrender.txt"
+#include "./lib_generalrendering.txt"
+#include "./lib_cutin.txt"
+#include "./dialog_func.txt"
+
+let DIFF_EASY = 0;
+let DIFF_NORM = 1;
+let DIFF_ABEX = 2;
+

@@ -1,0 +1,348 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Ns1"]
+#Text["Ns1 (Reminder for all sword slashes to have some sort of[r]charge.)"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+let objEnemy;
+let objEnemy2;
+let count = 0;
+   let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 60*60;
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(250);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(60);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+@Initialize
+{
+	InitialiseIndiv();
+	timer;
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	SetAutoDeleteObject(true);
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 110, 40);
+	renderYuuma(objEnemy);
+
+	end;
+	SetCommonData("SpellCardBG1",false);
+	
+}
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+    ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count == 0)
+	{
+		
+	}
+    if(count < 95)
+    {
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    }
+    if(count == 95)
+    {
+		//move;
+		Fire;	
+		
+		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+        count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+	
+    count++;
+    yield;
+}
+@Finalize
+{
+}
+
+task Fire
+{
+	let bit = 1-2*round(rand(0,1));
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		bit*=-1;
+		SE_PlayLen(charge0,80);
+		ascent(o in 0..2)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), -90+20*bit,-bit,0);
+			}
+			wait(90-60*o);
+			bit*=-1;
+		}
+		
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*bit, rand(80,120), 100);
+		let randStart = -90+rand(-45,45);
+		let ang = randStart;
+		let ang2 = randStart;
+		loop(12)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				Trailing(ang);
+				Trailing(ang2);
+				ang+=31.123*bit;
+				ang2-=31.123*bit;
+				wait(10);
+			}
+		}
+		wait(90);
+		ObjEnemy_SetDamageRate(objEnemy, (0.09)/1.5, (0.09)/3);
+	}
+	
+	task Trailing(ang)
+	{
+		SE_PlayLen(shot1,60);
+		let t = 40;
+		let xIn = ObjMove_GetX(objEnemy);
+		let yIn = ObjMove_GetY(objEnemy);
+		let cosAng = cos(ang);
+		let sinAng = sin(ang);
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(chime1,60);
+				let scl = 1/t*i;
+				let ang2 = rand(0,360);
+				let randDis = rand(0,20);
+				let randX = randDis*cos(ang2);
+				let randY = randDis*sin(ang2);
+				let x = 500*cosAng*scl+randX;
+				let y = 500*sinAng*scl+randY;
+				let objShot = ShotA2(xIn+x, yIn+y,2,ang,0.05,10,293,293,10,2,BLEND_ADD_ARGB,true);
+				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
+				wait(4);
+			}
+		}
+	}
+}
+task SwordPath(sourceX, sourceY, startAng,bit,type)
+{
+	SE_PlayLen(drum,80);
+	SE_PlayLen(slash,80);
+	let renderBetween = 7;
+	let renderTime = 10;
+	let cc = 0;
+	let swordScl = 1;
+	let scl = 0;
+	let trueAng = 0;
+		
+	let rad = 270;
+	let x = 0;
+	let ovalAng = -startAng;
+	
+	ScreenShake(renderBetween*3,6);
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+
+	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	Obj_SetRenderPriorityI(obj, 49);
+	ObjSprite2D_SetSourceRect(obj,512, 0, 512*2, 128);
+	ObjSprite2D_SetDestRect(obj,512, 0, 512*2, 128);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetPosition(obj, sourceX, sourceY,0);
+	ObjRender_SetAngleXYZ(obj, 0, 0,0);
+	ObjRender_SetScaleXYZ(obj, 0, 0,0);
+	
+	let texture =  IMG_SLASH;
+	let tri = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(tri, PRIMITIVE_TRIANGLESTRIP);
+	Obj_SetRenderPriorityI(tri, 48);
+	ObjPrim_SetTexture(tri, texture);
+	
+	
+	
+	
+	
+	
+	let objspell = CreateShotA1(sourceX,sourceY,0,0,1,0);
+	ObjRender_SetAlpha(objspell,0);
+	let d = renderTime+1+10;
+	ascent(o in 0..renderTime)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(shot1,60);
+			let ang = 0;
+			ObjPrim_SetVertexCount(tri, (renderBetween*(o+1))*2);
+			ascent(i in 0..renderBetween*(o+1))
+			{
+				ang = startAng-270/(renderBetween*(renderTime))*i*bit-ovalAng;
+				let xx = 0+rad/2*cos(ang);
+				let yy = 0+rad*sin(ang);
+				let centerX = 0;
+				let centerY = 0;
+
+				let x=(xx-centerX)*cos(ovalAng) - (yy-centerY)*sin(ovalAng) + centerX;
+				let y=(xx-centerX)*sin(ovalAng) + (yy-centerY)*cos(ovalAng) + centerY;
+				
+				ObjShot_SetIntersectionLine(objspell,sourceX,sourceY,sourceX + x,sourceY + y,30);
+				
+				ObjPrim_SetVertexPosition(tri, i*2  , sourceX + 0, sourceY + 0, 0);
+				ObjPrim_SetVertexPosition(tri, i*2+1, sourceX + x, sourceY + y, 0);
+				
+				ObjPrim_SetVertexUVT(tri,i*2  ,256/(renderBetween*renderTime)*(i)+cc,0);
+				ObjPrim_SetVertexUVT(tri,i*2+1,256/(renderBetween*renderTime)*(i)+cc,128);
+				ObjPrim_SetVertexAlpha(tri, i*2  , 255*sin(180/(renderBetween*renderTime)*i));
+				ObjPrim_SetVertexAlpha(tri, i*2+1, 255*sin(180/(renderBetween*renderTime)*i));
+				
+				ObjPrim_SetVertexColor(tri,i*2+1,255,165,0);
+				
+				scl = Get_Distance(0,0,x,y)/(512)*swordScl/(renderTime-1)*o;
+				trueAng = Get_PointAngle(x,y,0,0);
+				
+				
+				if(i>=renderBetween*(o))
+				{
+					ascent(p in 0..6)
+					{
+						
+						let disAm = 0.5+0.25/5*(p);
+						let spdScl = Get_Distance(0,0,x*disAm,y*disAm)/512;
+						let shid = [44,56][p%2];
+						let deid = 418;
+						let spd = 4 + p;
+						let angP = -20/5*p;
+						let objShot = ShotA1(sourceX+x*disAm, sourceY+y*disAm,spd * spdScl,trueAng + angP*bit,shid,deid,d,2,BLEND_ALPHA,false);
+					}
+				}
+				ObjRender_SetAngleXYZ(obj, 0, 0,trueAng);
+				ObjRender_SetScaleXYZ(obj, scl,scl,0);
+				ObjRender_SetPosition(obj, sourceX+256*scl*cos(trueAng), sourceY+256*scl*sin(trueAng),0);
+				
+			}		
+			d--;
+			
+			//ObjRender_SetPosition(tri, sourceX, sourceY, 0);
+			cc-=96-(64/renderTime*o);
+			yield;
+		}
+	}
+	Obj_Delete(objspell);
+	let t = 60;
+	descent(o in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ascent(i in 0..renderBetween*renderTime)
+			{
+				ObjPrim_SetVertexUVT(tri,i*2  ,256/(renderBetween*renderTime)*(i)+cc,0);
+				ObjPrim_SetVertexUVT(tri,i*2+1,256/(renderBetween*renderTime)*(i)+cc,128);
+				
+				ObjPrim_SetVertexAlpha(tri, i*2  , 255*sin(180/(renderBetween*renderTime)*i)/t*o);
+				ObjPrim_SetVertexAlpha(tri, i*2+1, 255*sin(180/(renderBetween*renderTime)*i)/t*o);
+				
+				ObjPrim_SetVertexColor(tri,i*2+1,255,165,0);
+			}	
+			if(type==0)
+			{
+				ObjRender_SetPosition(obj, sourceX+256*scl*cos(trueAng), sourceY+256*scl*sin(trueAng),0);
+			}
+			else
+			{
+				ObjRender_SetPosition(obj,ObjRender_GetX(obj)+10/t*o*cos(trueAng-90*bit),ObjRender_GetY(obj)+10/t*o*sin(trueAng-90*bit),0);
+				ObjRender_SetAngleZ(obj,ObjRender_GetAngleZ(obj)-20*bit);
+			}
+			//ObjRender_SetPosition(tri, sourceX, sourceY, 0);
+			ObjRender_SetAlpha(obj,255/t*o);
+			cc-=8/t*o;
+			yield;
+		}
+	}
+	Obj_Delete(tri);
+	Obj_Delete(obj);
+}
+task timer
+{
+    while(TIME>60*10)
+    {
+        TIME--;
+		yield;
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+	SE_PlayLen(BossDead,50);
+	Obj_SetValue(objEnemy,"cast",0);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+
+	loop(60)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	
+    CloseScript(GetOwnScriptID());
+	return;
+} 
+task move
+{
+	wait(150);
+	let cc = 1;
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+        ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*cc, rand(80,120), 140);
+		cc*=-1;
+		wait(280);
+    }
+}
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+

@@ -1,0 +1,27 @@
+
+/*
+	obj - Object to apply the shader.
+	texture - Texture which the object is using, for example:
+		
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,"texture.png");
+		
+		ShaderTask_SetPointFilterMode(obj,"texture.png");
+*/
+
+task ShaderTask_SetPointFilterMode(obj,texture){
+	let shader = ObjShader_Create;
+	let pathShader = GetCurrentScriptDirectory ~ "hlsl_pointFilter.dnh";	//path to hlsl_pointFilter.dnh
+	
+	ObjShader_SetShaderF(shader,pathShader);
+	ObjShader_SetShaderO(obj,shader);
+	ObjShader_SetTechnique(shader,"TecPoint");
+	
+	while(!Obj_IsDeleted(obj)){
+		ObjShader_SetTexture(obj,"g_Texture",texture);
+		yield;
+	}
+	
+	ObjShader_ResetShader(obj);
+	Obj_Delete(shader);
+}

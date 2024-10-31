@@ -1,0 +1,6 @@
+Begining error logging at 
+Thu Feb 04 16:30:40 2016
+error at d:\release\metaseq452\mqboolop\cork\src\mesh\mesh.isct.tpp, line #966: Ran out of tries to perturb the mesh
+Ending error logging at 
+Thu Feb 04 16:30:40 2016
+

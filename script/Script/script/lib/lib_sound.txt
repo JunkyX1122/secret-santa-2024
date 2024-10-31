@@ -1,0 +1,255 @@
+let gbSound = 1;
+//======================================================
+//====================Spell Sounds======================
+//======================================================
+let PlayerSplCall =  GetCurrentScriptDirectory~"./../../se/bom_00.wav";
+let SuperCharge =  GetCurrentScriptDirectory~"./../../se/bom_10.wav";
+
+let FlashBomb1 =  GetCurrentScriptDirectory~"./../../se/bom_flash_00.wav";
+let FlashBomb2 =  GetCurrentScriptDirectory~"./../../se/bom_flash_01.wav";
+
+let BossSpell =  GetCurrentScriptDirectory~"./../../se/spell_0.wav";
+
+
+
+//======================================================
+//=====================Boss Death=======================
+//======================================================
+let BossDead =  GetCurrentScriptDirectory~"./../../se/boss_d.wav";
+let BossEnd =  GetCurrentScriptDirectory~"./../../se/boss_end.wav";
+
+let BossEndRev =  GetCurrentScriptDirectory~"./../../se/boss_endrev.wav";
+
+//======================================================
+//=======================Bursts=========================
+//======================================================
+let Burst1 =  GetCurrentScriptDirectory~"./../../se/burst_00.wav";
+let Burst2 =  GetCurrentScriptDirectory~"./../../se/burst_01.wav";
+let Burst3 =  GetCurrentScriptDirectory~"./../../se/burst_02.wav";
+let Burst4 =  GetCurrentScriptDirectory~"./../../se/burst_03.wav";
+let UFO =  GetCurrentScriptDirectory~"./../../se/haniwa_00.wav";
+let Noise =  GetCurrentScriptDirectory~"./../../se/noise_00.wav";
+let Heart =  GetCurrentScriptDirectory~"./../../se/heart.wav";
+
+//======================================================
+//=======================Charge=========================
+//======================================================
+let Charge1 =  GetCurrentScriptDirectory~"./../../se/charge_0.wav";
+let Charge2 =  GetCurrentScriptDirectory~"./../../se/charge_1.wav";
+let Charge3 =  GetCurrentScriptDirectory~"./../../se/charge_2.wav";
+let Charge4 =  GetCurrentScriptDirectory~"./../../se/charge_3.wav";
+let Charge5 =  GetCurrentScriptDirectory~"./../../se/charge_up.wav";
+let Drain =  GetCurrentScriptDirectory~"./../../se/rei_drain_00.wav";
+
+//======================================================
+//=======================Damage=========================
+//======================================================
+let Damage1 =  GetCurrentScriptDirectory~"./../../se/damage_00.wav";
+let Damage2 =  GetCurrentScriptDirectory~"./../../se/damage_01.wav";
+
+//======================================================
+//========================Shot==========================
+//======================================================
+let Shot1 =  GetCurrentScriptDirectory~"./../../se/e_shot_00.wav";
+let Shot2 =  GetCurrentScriptDirectory~"./../../se/e_shot_01.wav";
+let Chime1 =  GetCurrentScriptDirectory~"./../../se/warning.wav";
+let Freeze =  GetCurrentScriptDirectory~"./../../se/freeze_00.wav";
+let Bone =  GetCurrentScriptDirectory~"./../../se/hone_shot.wav";
+let BulletDeleteSound =  GetCurrentScriptDirectory~"./../../se/bullet_del.wav";
+
+//======================================================
+//=======================TimeOut========================
+//======================================================
+let Time =  GetCurrentScriptDirectory~"./../../se/endtime.wav";
+
+//======================================================
+//=======================TimeOut========================
+//======================================================
+let EnamyDeath =  GetCurrentScriptDirectory~"./../../se/enemy_death.wav";
+
+//======================================================
+//=======================Lasers=========================
+//======================================================
+let LaserDelLong =  GetCurrentScriptDirectory~"./../../se/laser_0.wav";
+let LaserFireLong =  GetCurrentScriptDirectory~"./../../se/laser_1.wav";
+let LaserDelShort =  GetCurrentScriptDirectory~"./../../se/laser_2.wav";
+let LaserFireShort =  GetCurrentScriptDirectory~"./../../se/laser_3.wav";
+
+//======================================================
+//=======================Talking========================
+//======================================================
+let Talk =  GetCurrentScriptDirectory~"./../../se/talk_00.wav";
+
+//======================================================
+//=======================Cursors========================
+//======================================================
+
+//======================================================
+//==================Sanra Gun Fire======================
+//======================================================
+let GunReload =  GetCurrentScriptDirectory~"./../../se/scope_reload.wav";
+let GunFire =  GetCurrentScriptDirectory~"./../../se/scope_gun.wav";
+
+//======================================================
+//===================Xeno a Sounds======================
+//======================================================
+let Upgrade =  GetCurrentScriptDirectory~"./../../se/buy_upgrade.wav";
+
+//======================================================
+//=====================Sub Events=======================
+//======================================================
+
+//======================================================
+//=======================Items==========================
+//======================================================
+let BombGet =  GetCurrentScriptDirectory~"./../../se/bom_get.wav";
+let PointGet =  GetCurrentScriptDirectory~"./../../se/item_00.wav";
+let LifeGet =  GetCurrentScriptDirectory~"./../../se/1up.wav";
+
+
+
+//======================================================
+//===================TOUHOU SOUNDS======================
+//======================================================
+let poof =  GetCurrentScriptDirectory~"./../../se2/se_enep00_2.wav";
+let explosion = GetCurrentScriptDirectory~"./../../se2/se_enep01.wav";
+let bigexplosion = GetCurrentScriptDirectory~"./../../se2/EXPLOSION.wav";
+let explode = GetCurrentScriptDirectory~"./../../se2/se_enep02.wav";
+let drum = GetCurrentScriptDirectory~"./../../se2/don.wav";
+let slash = GetCurrentScriptDirectory~"./../../se2/Slash.wav";
+let boon0 = GetCurrentScriptDirectory~"./../../se2/se_boon00.wav";
+let boon1 = GetCurrentScriptDirectory~"./../../se2/se_boon01.wav";
+let ufo = GetCurrentScriptDirectory~"./../../se2/se_ufo.wav";
+let timestop = GetCurrentScriptDirectory~"./../../se2/timestop.wav";
+let cat = GetCurrentScriptDirectory~"./../../se2/se_cat01.wav";
+let dog = GetCurrentScriptDirectory~"./../../se2/wolf.wav";
+let laugh = GetCurrentScriptDirectory~"./../../se2/ex.wav";
+
+//======================================================
+//====================Shot Sounds=======================
+//======================================================
+let shot1 = GetCurrentScriptDirectory~"./../../se2/Shot1.wav";
+let shot2 = GetCurrentScriptDirectory~"./../../se2/Shot2.wav";
+
+//======================================================
+//====================Chime Sounds======================
+//======================================================
+let chime1 = GetCurrentScriptDirectory~"./../../se2/se_kira00.wav";
+let chime2 = GetCurrentScriptDirectory~"./../../se2/se_kira01.wav";
+let chime3 = GetCurrentScriptDirectory~"./../../se2/Eff1.wav";
+let chime4 = GetCurrentScriptDirectory~"./../../se2/Eff2.wav";
+let chime5 = GetCurrentScriptDirectory~"./../../se2/Eff3.wav";
+let chime6 = GetCurrentScriptDirectory~"./../../se2/Eff4.wav";
+let chime7 = GetCurrentScriptDirectory~"./../../se2/Eff5.wav";
+let chime8 = GetCurrentScriptDirectory~"./../../se2/Eff6.wav";
+
+//======================================================
+//====================Spirit Sounds=====================
+//======================================================
+let spirit1 = GetCurrentScriptDirectory~"./../../se2/spirit1.wav";
+let spirit2 = GetCurrentScriptDirectory~"./../../se2/spirit2.wav";
+let spirit3 = GetCurrentScriptDirectory~"./../../se2/spirit3.wav";
+let spirit4 = GetCurrentScriptDirectory~"./../../se2/spirit4.wav";
+
+//======================================================
+//===================Timeout Sounds=====================
+//======================================================
+let timeout1 = GetCurrentScriptDirectory~"./../../se2/se_timeout.wav";
+let timeout2 = GetCurrentScriptDirectory~"./../../se2/se_timeout2.wav";
+
+//======================================================
+//====================Laser Sounds======================
+//======================================================
+let laser0 = GetCurrentScriptDirectory~"./../../se2/se_lazer00.wav";
+let laser1 = GetCurrentScriptDirectory~"./../../se2/se_gun00.wav";
+let laser2 = GetCurrentScriptDirectory~"./../../se2/se_lazer01.wav";
+let laser3 = GetCurrentScriptDirectory~"./../../se2/beam.wav";
+let laser4 = GetCurrentScriptDirectory~"./../../se2/se_LaserDelay.wav";
+let MSpark = GetCurrentScriptDirectory~"./../../se2/se_nep00.wav";
+
+//======================================================
+//===================Charge Sounds======================
+//======================================================
+let charge0 = GetCurrentScriptDirectory~"./../../se2/se_ch00.wav";
+let charge1 = GetCurrentScriptDirectory~"./../../se2/se_ch02.wav";
+let charge2 = GetCurrentScriptDirectory~"./../../se2/se_power0.wav";
+let charge3 = GetCurrentScriptDirectory~"./../../se2/charge.wav";
+let charge4 = GetCurrentScriptDirectory~"./../../se2/power0.wav";
+let charge5 = GetCurrentScriptDirectory~"./../../se2/Charge2.wav";
+
+//======================================================
+//==================Familiar Sounds=====================
+//======================================================
+let spawnfm1 = GetCurrentScriptDirectory~"./../../se2/fam.wav";
+let spawnfm2 = GetCurrentScriptDirectory~"./../../se2/Weird1.wav";
+let spawnfm3 = GetCurrentScriptDirectory~"./../../se2/se_water.wav";
+
+//======================================================
+//===================Other Sounds=======================
+//======================================================
+let ping = GetCurrentScriptDirectory~"./../../se2/ormchange.wav";
+
+let textchange = GetCurrentScriptDirectory~"./../../se2/se_text.wav";
+
+let spellcard = GetCurrentScriptDirectory~"./../../se2/seUseSpellCard.wav";
+let compositespellcard = GetCurrentScriptDirectory~"./../../se2/compositespell.wav";
+
+let warning = GetCurrentScriptDirectory~"./../../se2/warning.wav";
+
+let nodamage = GetCurrentScriptDirectory~"./../../se2/se_nodamage.wav";
+
+let select = GetCurrentScriptDirectory~"./../../se2/se_select00.wav";
+let selected = GetCurrentScriptDirectory~"./../../se2/se_ok00.wav";
+let cancel = GetCurrentScriptDirectory~"./../../se2/se_cancel00.wav";
+let gap = GetCurrentScriptDirectory~"./../../se2/gap.wav";
+
+
+//======================================================
+//===================Character Talk=====================
+//======================================================
+
+//======================================================
+//=======================EXTRA=========================
+//======================================================
+let dooropen = GetCurrentScriptDirectory~"./../../se3/DoorOpen.wav";
+let doorclose = GetCurrentScriptDirectory~"./../../se3/DoorClose.wav";
+//======================================================
+//===================Sound Loader=======================
+let seobj = ObjSound_Create;
+//======================================================
+task SE_PlayLen(let path, let vl)
+{
+	ObjSound_Load(seobj,path);
+	ObjSound_Play(seobj);
+	ObjSound_SetLoopEnable(seobj, false);
+	ObjSound_SetSoundDivision(seobj,SOUND_SE);
+	ObjSound_SetVolumeRate(seobj,vl*gbSound);
+	ObjSound_SetPanRate(seobj,0);
+	//Obj_Delete(seobj);
+	//RemoveSound(path);
+	//return(seobj);
+}
+task SE_PlayLenDynam(let path, let vl, let panrate)
+{
+	ObjSound_Load(seobj,path);
+	ObjSound_Play(seobj);
+	ObjSound_SetLoopEnable(seobj, false);
+	ObjSound_SetSoundDivision(seobj,SOUND_SE);
+	ObjSound_SetVolumeRate(seobj,vl*gbSound);
+	ObjSound_SetPanRate(seobj,panrate);
+
+	//Obj_Delete(seobj);
+	//RemoveSound(path);
+	//return(seobj);
+}
+let LoadAllSoundsArray = [PlayerSplCall,SuperCharge,FlashBomb1,
+FlashBomb2,BossSpell,BossDead,BossEnd,Burst1,Burst2,Burst3,Burst4,UFO,Noise,Charge1,Charge2,Charge3,Charge4,Charge5,Drain,Damage1,Damage2,Shot1,Shot2,Chime1,
+Freeze,Bone,BulletDeleteSound,Time,EnamyDeath,LaserDelLong,LaserFireLong,LaserDelShort,LaserFireShort,Talk,GunReload,
+GunFire,Upgrade,BombGet,PointGet,LifeGet,
+shot1,shot2,chime1,chime2,spirit1,spirit2,spirit3,spirit4,timeout1,timeout2,laser0,laser1,laser2,laser3,laser4,MSpark,charge0,charge1,charge2,charge3,charge4,
+charge5,spawnfm1,spawnfm2,spawnfm3,gap,select,selected,cancel,dooropen,doorclose];
+
+
+
+
+

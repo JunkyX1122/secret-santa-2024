@@ -1,0 +1,12 @@
+Metasequoia 4 Ver4.5.2 (64bit) is running.
+Windows version : 6.1  (Windows 7 x64)
+Number of CPU : 4
+Physical memory : 4014 MB
+Direct3D11 Driver: Intel(R) HD Graphics 4400
+    DeviceID: 1054
+    SubsysID: 101847080
+    Revision: 6
+    FeatureLevel: 11.0
+Not found 'D3DCompiler_43.dll'
+Error occurred in the rendering.(D3D11)
+Access violation in module Metaseq.exe at address 0000000000000000, for writing 0000000000000000

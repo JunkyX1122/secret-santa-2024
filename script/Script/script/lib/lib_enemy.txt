@@ -1,0 +1,265 @@
+task KillAllEnemies
+{
+	let enemyArray = GetAllEnemyID();
+	ascent(i in 0..length(enemyArray))
+	{
+		ObjEnemy_SetLife(enemyArray[i],0);
+	}
+}
+function Enemy(x,y,life,collision)
+{
+	let BaseObj = ObjEnemy_Create(OBJ_ENEMY);
+	let c = 0;	
+	let color = [0,0,0];
+	ObjEnemy_Regist(BaseObj);
+	ObjEnemy_SetLife(BaseObj,life);
+	ObjEnemy_SetDamageRate(BaseObj,1,1);
+	ObjMove_SetPosition(BaseObj,x,y);
+	ObjEnemy_SetAutoDelete(BaseObj,true);
+	Control(BaseObj,collision);
+	Obj_SetValue(BaseObj,"collision",collision);
+	return BaseObj;
+	
+	task Control(BaseObj,collision)
+	{	
+		let OldX;
+		let OldY;
+		while(!Obj_IsDeleted(BaseObj))
+		{
+			collision = Obj_GetValueD(BaseObj,"collision",false);
+			if(collision==true)
+			{
+				let scl = Obj_GetValueD(BaseObj,"scale",1);
+				ObjEnemy_SetIntersectionCircleToShot(BaseObj,ObjMove_GetX(BaseObj),ObjMove_GetY(BaseObj),18*scl);
+				ObjEnemy_SetIntersectionCircleToPlayer(BaseObj,ObjMove_GetX(BaseObj),ObjMove_GetY(BaseObj),12*scl);
+			}
+			
+			OldX = ObjMove_GetX(BaseObj);
+			OldY = ObjMove_GetY(BaseObj);
+			if(ObjEnemy_GetInfo(BaseObj,INFO_LIFE) <=0)
+			{
+				if(collision==true)
+				{
+					SE_PlayLen(EnamyDeath,35);
+					loop(1)
+					{
+						
+						EnemyDelete(OldX,OldY,1);
+						
+					}
+					loop(6)
+					{
+						EnemyDelete2(OldX,OldY);
+					}
+				}
+				Obj_Delete(BaseObj);
+			}
+			/*
+			if(ObjMove_GetX(BaseObj)<-borders || ObjMove_GetX(BaseObj)>GetStgFrameWidth+borders || ObjMove_GetY(BaseObj)<-borders || ObjMove_GetY(BaseObj)>GetStgFrameHeight+borders&&collision==true)
+			{
+				Obj_Delete(BaseObj);
+			}
+			*/
+			yield;
+		}
+		Obj_Delete(BaseObj);
+
+	}
+	task EnemyDelete(x,y,sc)
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,IMG_ENEMY_DEL1);
+		Obj_SetRenderPriorityI(obj,31);
+		ObjRender_SetAngleZ(obj,0);		
+		let ALF=255;
+		ObjRender_SetAlpha(obj,ALF);
+		let scale =0;
+		ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+		ObjSprite2D_SetSourceRect(obj,128,128,256,256);
+		ObjSprite2D_SetDestRect(obj,128,128,256,256);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+		loop(20)
+		{
+			ObjRender_SetScaleXYZ(obj,scale/2,scale/2,scale/2);
+			ObjRender_SetAlpha(obj,ALF);
+			scale+=(2+sc)/20;
+			ALF-=255/20;
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+	task EnemyDelete2(x,y)
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,IMG_ENEMY_DEL0);
+		Obj_SetRenderPriorityI(obj,31);
+		ObjRender_SetAngleZ(obj,0);		
+		let ALF=255;
+		ObjRender_SetAlpha(obj,ALF);
+		let scale =2;
+		let type = round(rand(-0.4,5.5));
+		ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+		ObjSprite2D_SetSourceRect(obj,30*type,0,30*(type+1),30);
+		ObjSprite2D_SetDestRect(obj,30*type,0,30*(type+1),30);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj,x,y,0);
+		let angle = rand(0,360);
+		let am = rand(3,7)/1.5;
+		ObjRender_SetAngleZ(obj,rand(0,360));
+		ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+		loop(20)
+		{
+			ObjRender_SetPosition(obj,x,y,0);
+			ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+			ObjRender_SetAlpha(obj,ALF);
+			scale+=(2)/20;
+			ALF-=255/20;
+			x+=am*cos(angle);
+			y+=am*sin(angle);
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+}
+
+function fam(x,y,life,size,collision,r,g,b)
+{
+	let obj = ObjEnemy_Create(OBJ_ENEMY);
+	let shot;
+	let c = 0;
+	ObjEnemy_Regist(obj);
+	ObjMove_SetPosition(obj,x,y);
+	ObjEnemy_SetLife(obj,life);
+	ObjEnemy_SetDamageRate(obj,100,100);
+	Control;
+	DrawFam(1,r,g,b);
+	return obj;
+		task Control{	
+			while(!Obj_IsDeleted(obj)){
+			c++;
+
+			ObjRender_SetY(obj,ObjMove_GetY(obj)+0.1*sin(c*5));
+			if(c%7==0){DrawFam(0,r,g,b);}
+			if(ObjEnemy_GetInfo(obj,INFO_LIFE) <=0){
+	
+			Obj_Delete(obj);
+			}
+			if(ObjMove_GetX(obj)<-100 || ObjMove_GetX(obj)>GetScreenWidth+100 || ObjMove_GetY(obj)<-31 || ObjMove_GetY(obj)>GetScreenHeight+31 && collision == true){
+			Obj_Delete(obj);
+			}
+			if(collision==true){ObjEnemy_SetIntersectionCircleToShot(obj,ObjMove_GetX(obj),ObjMove_GetY(obj),18);
+			ObjEnemy_SetIntersectionCircleToPlayer(obj,ObjMove_GetX(obj),ObjMove_GetY(obj),12);}
+			yield;
+			}
+			Obj_Delete(obj);
+		}
+		task DrawFam(p,r,g,b){
+			let fam=ObjPrim_Create(OBJ_SPRITE_2D);
+			let px = 64;
+			let py = 0;
+			let img= IMG_FAMILIAR;
+			ObjPrim_SetTexture(fam,img);
+			ObjSprite2D_SetSourceRect(fam,1,1,63,63);
+			ObjRender_SetPosition(fam,x,y,0);
+			ObjRender_SetScaleXYZ(fam,1,1,0);
+			ObjSprite2D_SetDestCenter(fam);
+			ObjRender_SetBlendType(fam,BLEND_ALPHA);
+			ObjRender_SetAlpha(fam,255/3);
+			if(p==0){
+				ObjRender_SetBlendType(fam,BLEND_ADD_ARGB);
+				Obj_SetRenderPriority(fam,0.3);
+				let Alpha = 255;
+				ascent(i in 0..50)
+				{
+					if(Obj_IsDeleted(obj) ){Obj_Delete(fam);}
+					ObjRender_SetPosition(fam,ObjMove_GetX(obj),ObjMove_GetY(obj),0);
+					ObjRender_SetScaleXYZ(fam,1+i*0.05*size,1+i*0.05*size,0);
+					ObjRender_SetColor(fam,r-i*5.1,g-i*5.1,b-i*5.1);
+					ObjRender_SetAlpha(fam,Alpha/3);
+					Alpha-=255/50;
+					yield;
+				}
+			Obj_Delete(fam);
+			}
+			if(p==1){
+				while(!Obj_IsDeleted(obj)){
+				ObjRender_SetPosition(fam,ObjMove_GetX(obj),ObjMove_GetY(obj),0);
+				yield;
+				}
+				Obj_Delete(fam);
+			}
+		}
+}
+function fam2(x,y,life,size,collision,r,g,b)
+{
+	let obj = ObjEnemy_Create(OBJ_ENEMY);
+	let shot;
+	let c = 0;
+	ObjEnemy_Regist(obj);
+	ObjMove_SetPosition(obj,x,y);
+	ObjEnemy_SetLife(obj,life);
+	ObjEnemy_SetDamageRate(obj,100,100);
+	Control;
+	DrawFam(1,r,g,b);
+	return obj;
+		task Control{	
+			while(!Obj_IsDeleted(obj)){
+			c++;
+
+			ObjRender_SetY(obj,ObjMove_GetY(obj)+0.1*sin(c*5));
+			if(c%7==0){DrawFam(0,r,g,b);}
+			if(ObjEnemy_GetInfo(obj,INFO_LIFE) <=0){
+	
+			Obj_Delete(obj);
+			}
+			if(ObjMove_GetX(obj)<-100 || ObjMove_GetX(obj)>GetScreenWidth+100 || ObjMove_GetY(obj)<-31 || ObjMove_GetY(obj)>GetScreenHeight+31 && collision == true){
+			Obj_Delete(obj);
+			}
+			if(collision==true){ObjEnemy_SetIntersectionCircleToShot(obj,ObjMove_GetX(obj),ObjMove_GetY(obj),18);
+			ObjEnemy_SetIntersectionCircleToPlayer(obj,ObjMove_GetX(obj),ObjMove_GetY(obj),12);}
+			yield;
+			}
+			Obj_Delete(obj);
+		}
+		task DrawFam(p,r,g,b){
+			let fam=ObjPrim_Create(OBJ_SPRITE_2D);
+			let px = 64;
+			let py = 0;
+			let img= IMG_FAMILIAR;
+			ObjPrim_SetTexture(fam,img);
+			ObjSprite2D_SetSourceRect(fam,1,1,63,63);
+			ObjRender_SetPosition(fam,x,y,0);
+			ObjRender_SetScaleXYZ(fam,1,1,0);
+			ObjSprite2D_SetDestCenter(fam);
+			ObjRender_SetBlendType(fam,BLEND_ADD_ARGB);
+			ObjRender_SetAlpha(fam,255/3);
+			if(p==0){
+				ObjRender_SetBlendType(fam,BLEND_ADD_ARGB);
+				Obj_SetRenderPriority(fam,0.3);
+				let Alpha = 255;
+				ascent(i in 0..50)
+				{
+					if(Obj_IsDeleted(obj) ){Obj_Delete(fam);}
+					ObjRender_SetPosition(fam,ObjMove_GetX(obj),ObjMove_GetY(obj),0);
+					ObjRender_SetScaleXYZ(fam,1+i*0.05*size,1+i*0.05*size,0);
+					ObjRender_SetColor(fam,r-i*5.1,g-i*5.1,b-i*5.1);
+					ObjRender_SetAlpha(fam,Alpha/3);
+					Alpha-=255/50;
+					yield;
+				}
+			Obj_Delete(fam);
+			}
+			if(p==1){
+				while(!Obj_IsDeleted(obj)){
+				ObjRender_SetPosition(fam,ObjMove_GetX(obj),ObjMove_GetY(obj),0);
+				yield;
+				}
+				Obj_Delete(fam);
+			}
+		}
+}
+
+
+

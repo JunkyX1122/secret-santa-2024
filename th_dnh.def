@@ -1,0 +1,4 @@
+window.title = Project S&Y
+screen.width=854
+screen.height=480
+window.size.list = 854x480 1280x720 1708x960

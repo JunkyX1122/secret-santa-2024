@@ -1,0 +1,180 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["&quot;Spear of Justice&quot;"]
+#Text["S6"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+
+let objEnemy;
+let count = 0;
+let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 90;
+let finalSpellBool = false;
+
+
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(275/3);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(90);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+
+@Initialize
+{
+	InitialiseIndiv();
+	timer;
+	SetAutoDeleteObject(true);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	
+	renderYuuma(objEnemy);
+	
+	
+	end;
+
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("&quot;Spear of Justice&quot;","", LENEN, 255,0,0);
+	
+	ScreenShake(60,4);
+
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	//WingAura(objEnemy);
+	//SetIntersectionVisualization(true);
+}
+
+
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+	
+	ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+	ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+	
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count < 95)	
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		SetCommonData("SpellCardBG1",true);
+	}
+    if(count == 95)
+    {
+		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		Fire;
+		
+        //count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+    count++;
+    yield;
+}
+
+
+@Finalize
+{
+}
+task Fire
+{
+}
+
+task timer
+{
+    loop(TIME-10)
+    {
+        wait(60);
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+
+
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+
+	SE_PlayLen(BossDead,50);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+	SetCommonData("SpellCardBG1",false);
+	wait(140);
+	
+	CloseScript(GetOwnScriptID());
+	return;
+	
+} 
+task move
+{
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+		let angz = rand(0,360);
+		let dis = rand(10,30);
+		let x = ObjMove_GetX(objEnemy)+dis*cos(angz);
+		let y = ObjMove_GetY(objEnemy)+dis*sin(angz);
+		if(x<GetStgFrameWidth/2-100 || x>GetStgFrameWidth/2+100)
+		{
+			angz = 180-angz;
+			x = ObjMove_GetX(objEnemy)+dis*cos(angz);
+			y = ObjMove_GetY(objEnemy)+dis*sin(angz);
+		}
+		
+		if(y<75 || y>150)
+		{
+			angz = -1*angz;
+			x = ObjMove_GetX(objEnemy)+dis*cos(angz);
+			y = ObjMove_GetY(objEnemy)+dis*sin(angz);
+		}
+		ObjMove_SetDestAtFrameWeight(objEnemy, x, y, 100);
+        wait(200);
+    }
+}
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+

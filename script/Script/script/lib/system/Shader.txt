@@ -1,0 +1,126 @@
+//number of samples across the blur effect, max 7
+float passcount_ = 7.0;
+
+//number of pixels the samples reach across for the next sample
+float passstep_ = 2.0;
+
+//boosts colors
+float glowColor_ = 1.0;
+
+//boosts alpha
+float glowAlpha_ = 100.0;
+
+//these MUST be specified to be the same as the texture's width/height
+float tex_width_ = 1000.0;
+float tex_height_ = 1000.0;
+
+sampler sampler0_ : register(s0);
+static const float PI = 3.14159265f;
+
+struct PS_INPUT {
+    float4 diffuse : COLOR0;
+    float2 texCoord : TEXCOORD0;
+    float2 vPos : VPOS;
+};
+
+struct PS_OUTPUT {
+    float4 color : COLOR0;
+};
+
+
+float gaussianWeight(float x, float deviation){
+    float mantissa = 1.0 / (deviation * sqrt(2.0 * PI));
+    float exponent = -(x*x) / (2.0 * (deviation*deviation));
+
+    return mantissa * exp(exponent);
+}
+
+
+PS_OUTPUT PsGaussHorizontal(PS_INPUT In) : COLOR0 {
+    PS_OUTPUT Out;
+
+    //standard deviation for use in the Gaussian weight function
+    float stdv = max(passcount_*passstep_ / 2, 1);
+
+    float2 pixelSize = float2(1.0/tex_width_, 1.0/tex_height_);
+
+    //sum up weighted color values
+    float4 colorSum = float4(0, 0, 0, 0);
+    float sumWeight = 0;
+
+    //horizontal blurring
+    int maxUnroll = 15;
+    int maxRadius = min(passcount_, maxUnroll); //necessary to allow loop unrolling
+    [unroll(maxUnroll)] for(int i = -maxRadius; i < maxRadius; i++){
+        float2 off = float2(In.texCoord.x + i*passstep_*pixelSize.x, In.texCoord.y);
+        float weight = gaussianWeight(i, stdv);
+
+        colorSum += tex2D(sampler0_, off) * weight;
+        sumWeight += weight;
+    }
+
+    //normalize
+    colorSum /= sumWeight;
+
+    Out.color = colorSum;
+    
+    return Out;
+}
+
+PS_OUTPUT PsGaussVertical(PS_INPUT In) : COLOR0 {
+    PS_OUTPUT Out;
+
+    //standard deviation for use in the Gaussian weight function
+    float stdv = max(passcount_*passstep_ / 2, 1);
+
+    float2 pixelSize = float2(1.0/tex_width_, 1.0/tex_height_);
+
+    //sum up weighted color values
+    float4 colorSum = float4(0, 0, 0, 0);
+    float sumWeight = 0;
+
+    //horizontal blurring
+    int maxUnroll = 15;
+    int maxRadius = min(passcount_, maxUnroll); //necessary to allow loop unrolling
+    [unroll(maxUnroll)] for(int i = -maxRadius; i < maxRadius; i++){
+        float2 off = float2(In.texCoord.x, In.texCoord.y + i*passstep_*pixelSize.y);
+        float weight = gaussianWeight(i, stdv);
+
+        colorSum += tex2D(sampler0_, off) * weight;
+        sumWeight += weight;
+    }
+
+    //normalize
+    colorSum /= sumWeight;
+
+    Out.color = colorSum;
+    
+    return Out;
+}
+
+PS_OUTPUT PsGlowBoost(PS_INPUT In) : COLOR0 {
+    PS_OUTPUT Out;
+
+    float4 color = tex2D(sampler0_, In.texCoord);
+    Out.color = float4(color.rgb*glowColor_, color.a*glowAlpha_);
+    
+    return Out;
+}
+
+technique GaussianBlurH {
+    pass P0 {
+        PixelShader = compile ps_3_0 PsGaussHorizontal();
+    }
+}
+
+technique GaussianBlurV {
+    pass P0 {
+        PixelShader = compile ps_3_0 PsGaussVertical();
+    }
+}
+
+technique BlurGlow{
+    pass P0 {
+        PixelShader = compile ps_3_0 PsGlowBoost();
+    }
+}

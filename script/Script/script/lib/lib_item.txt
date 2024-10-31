@@ -1,0 +1,74 @@
+#UserItemData
+
+item_image = "./../../img/stgsystem/img_item.png"
+
+
+//------------------------------------------------
+// Life ITEM
+
+ItemData { //Life Item Fragment
+	id=0
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(74, 0, 96, 20)
+}
+
+//------------------------------------------------
+// Spell ITEM
+
+ItemData { //Spell Item
+	id=1
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(50, 0, 72, 20)
+}
+
+//------------------------------------------------
+// SCORE ITEMS
+
+ItemData { //Small Score
+	id=2
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(15, 0, 30, 15)
+}
+
+ItemData { //Large Score
+	id=3
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(24, 16, 50, 41)
+}
+
+//------------------------------------------------
+// POWER ITEMS
+ItemData { //small power
+	id=4
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(0, 0, 14, 14)
+}
+
+ItemData { //Large Power
+	id=5
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(0, 17, 24, 41)
+}
+
+//------------------------------------------------
+// delete ITEM
+
+ItemData { //Delete Item
+	id=8
+	value=0
+	alpha = 255;
+	render = ALPHA;
+	rect=(32, 0, 46, 14)
+}

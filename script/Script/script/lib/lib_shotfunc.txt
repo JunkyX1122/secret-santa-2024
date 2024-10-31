@@ -1,0 +1,530 @@
+
+let DeleteFrameArea = 16;
+task WarningLaser(x,y,ang,thicc,time,ID,rnd)
+{
+	let laser = CreateStraightLaserA1(x,y,ang,0,thicc,0,ID,9000);
+	ObjStLaser_SetSource(laser,false);
+	ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+	Obj_SetRenderPriorityI(laser,rnd);
+	ascent(i in 0..time)
+	{
+		ObjLaser_SetLength(laser,i*30);
+		ObjRender_SetAlpha(laser,64-64/time*i);
+		yield;
+	}
+	Obj_Delete(laser);
+}
+
+task LaserSource(x,y,deleygraphic,startingdeley,size,deletdeley,deleteframe)
+{
+	loop(2)
+	{
+		let stars = ShotA1(x,y,0,rand(0,360),deleygraphic,deleygraphic,startingdeley,3,BLEND_ADD_ARGB,false);
+		ObjShot_SetDeleteFrameA3(stars,deletdeley,size,deleteframe);
+		ObjRender_SetScaleXYZ(stars,size,size,size);
+		ObjMove_SetAngularVelocity(stars,5);
+		ObjRender_SetBlendType(stars,BLEND_ADD_ARGB);
+		ObjShot_SetSpellResist(stars, true);
+		Obj_SetRenderPriorityI(stars,Obj_GetRenderPriorityI(stars)+1);
+		ObjShot_SetIntersectionEnable(stars,false);
+	}
+}
+
+function ShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
+{
+    let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
+	BulletDelete(shot);
+    DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove);
+    return shot;
+}
+function ShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delaymove)
+{
+    let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
+	BulletDelete(shot);
+    DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove);
+    return shot;
+}
+function ShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
+{
+    let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
+	BulletDelete(shot);
+    DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
+    DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
+    return shot;
+}
+function ShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype,delaymove)
+{
+    let angle = atan2(yspd,xspd);
+    let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
+	BulletDelete(shot);
+    DelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove);
+    return shot;
+}
+
+task DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
+{
+    let obj=CreateShotA1(x,y,0,dir,cloud,0);
+	ObjShot_SetAutoDelete(obj,false);
+	if(delaymove==true)
+	{
+		ObjMove_SetSpeed(obj,spd);
+	}
+	ObjShot_SetIntersectionEnable(obj,false);
+    let c = 0;
+    let v = false;
+    let px = 0;
+    let adc = false;
+    let s = size;
+	let c2 = 0;
+	let coord = GetShotDataInfoA1(graphic,TARGET_ENEMY,INFO_RECT);
+	let coordc = GetShotDataInfoA1(cloud,TARGET_ENEMY,INFO_RECT);
+	let xwid = coord[2]-coord[0];
+	let ywid = coord[3]-coord[1];
+	
+	let xwidc = coordc[2]-coordc[0];
+	let ywidc = coordc[3]-coordc[1];
+    if(!Obj_IsDeleted(shot))
+    {
+		ObjRender_SetBlendType(obj,blendtype);
+		
+		
+        let s_value = s-1;
+        Obj_SetRenderPriorityI(obj,Obj_GetRenderPriorityI(shot)+1);
+        while(c<delay-1 &&  !Obj_IsDeleted(shot))
+        {
+			/*
+            ObjRender_SetScaleXYZ(obj,xwid/xwidc*s,ywid/ywidc*s,0);
+			if((cloud>=417&&cloud<=424)||(cloud>=443&&cloud<=450))
+			{
+				ObjRender_SetScaleXYZ(obj,(xwid*2)/xwidc*s,(ywid*2)/ywidc*s,0);
+			}*/
+			ObjRender_SetScaleXYZ(obj,s,s,0);
+			ObjRender_SetAlpha(obj,c2);
+            if(v==true)
+            { ObjRender_SetAngleXYZ(obj,0,0,dir-c*3);}
+            ;
+            if(s>=1)
+            {s -= s_value/(delay-1);
+            }
+            c++;
+			c2+=255/(delay-1);
+            
+            yield;
+        }
+		ObjMove_SetPosition(shot,ObjMove_GetX(obj),ObjMove_GetY(obj));
+        Obj_Delete(obj);
+    }
+}
+
+function ShotA1S(x,y,spd,dir,graphic,cloud,delay,size,blendtype)
+{
+    let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+function ShotA2S(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype)
+{
+    let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+function ShotOA1S(obj,spd,dir,graphic,cloud,delay,size,blendtype)
+{
+    let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudS(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
+    DelayCloudS(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+function ShotB2S(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype)
+{
+    let angle = atan2(yspd,xspd);
+    let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudS(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+
+task DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype)
+{
+    let obj=CreateShotA1(x,y,0,dir,cloud,0);
+	ObjShot_SetIntersectionEnable(obj,false);
+    let c = 0;
+    let v = false;
+    let px = 0;
+    let adc = false;
+    let s = size;
+	let c2 = 0;
+	let c3 = 2;
+	let coord = GetShotDataInfoA1(graphic,TARGET_ENEMY,INFO_RECT);
+	let coordc = GetShotDataInfoA1(cloud,TARGET_ENEMY,INFO_RECT);
+	let xwid = coord[2]-coord[0];
+	let ywid = coord[3]-coord[1];
+	
+	let xwidc = coordc[2]-coordc[0];
+	let ywidc = coordc[3]-coordc[1];
+    if(!Obj_IsDeleted(shot))
+    {
+		ObjRender_SetBlendType(obj,blendtype);
+		
+        let s_value = s-1;
+        Obj_SetRenderPriorityI(obj,Obj_GetRenderPriorityI(shot)+1);
+        while(c<delay-1 &&  !Obj_IsDeleted(shot))
+        {
+            /*
+            ObjRender_SetScaleXYZ(obj,xwid/xwidc*s,ywid/ywidc*s,0);
+			if((cloud>=417&&cloud<=424)||(cloud>=443&&cloud<=450))
+			{
+				ObjRender_SetScaleXYZ(obj,(xwid*2)/xwidc*s,(ywid*2)/ywidc*s,0);
+			}*/
+			ObjRender_SetScaleXYZ(obj,s,s,0);
+			ObjRender_SetAlpha(obj,c2);
+            if(v==true)
+            { ObjRender_SetAngleXYZ(obj,0,0,dir-c*3);}
+            ;
+            if(s>=1)
+            {s -= s_value/(delay-1)*c3;
+            }
+            c++;
+			c2+=(255/(delay-1))*c3;
+            c3-=2/(delay-1);
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+}
+
+function ShotA1F(x,y,spd,dir,graphic,cloud,delay,size,blendtype)
+{
+    let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+function ShotA2F(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype)
+{
+    let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+function ShotOA1F(obj,spd,dir,graphic,cloud,delay,size,blendtype)
+{
+    let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudF(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
+    DelayCloudF(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+function ShotB2F(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype)
+{
+    let angle = atan2(yspd,xspd);
+    let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
+	BulletDelete(shot);
+    DelayCloudF(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype);
+    return shot;
+}
+
+task DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype)
+{
+    let obj=CreateShotA1(x,y,0,dir,cloud,0);
+    let c = 0;
+    let v = false;
+    let px = 0;
+    let adc = false;
+    let s = size;
+	let c2 = 0;
+	let c3 = 0;
+	let coord = GetShotDataInfoA1(graphic,TARGET_ENEMY,INFO_RECT);
+	let coordc = GetShotDataInfoA1(cloud,TARGET_ENEMY,INFO_RECT);
+	let xwid = coord[2]-coord[0];
+	let ywid = coord[3]-coord[1];
+	
+	let xwidc = coordc[2]-coordc[0];
+	let ywidc = coordc[3]-coordc[1];
+    if(!Obj_IsDeleted(shot))
+    {
+		ObjRender_SetBlendType(obj,blendtype);
+		
+        let s_value = s-1;
+        Obj_SetRenderPriorityI(obj,Obj_GetRenderPriorityI(shot)+1);
+        while(c<delay-1 &&  !Obj_IsDeleted(shot))
+        {
+			/*
+            ObjRender_SetScaleXYZ(obj,xwid/xwidc*s,ywid/ywidc*s,0);
+			if((cloud>=417&&cloud<=424)||(cloud>=443&&cloud<=450))
+			{
+				ObjRender_SetScaleXYZ(obj,(xwid*2)/xwidc*s,(ywid*2)/ywidc*s,0);
+			}*/
+			ObjRender_SetScaleXYZ(obj,s,s,0);
+			ObjRender_SetAlpha(obj,c2);
+            if(v==true)
+            { ObjRender_SetAngleXYZ(obj,0,0,dir-c*3);}
+            ;
+            if(s>=1)
+            {s -= s_value/(delay-1)*c3;
+            }
+            c++;
+			c2+=(255/(delay-1))*c3;
+            c3+=2/(delay-1);
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+}
+task ObjShot_SetAutoDeleteA1(obj,boolen)
+{
+	Obj_SetValue(obj,"AutoDelete",boolen);
+}
+task ObjShot_SetAutoDeleteA2(obj,boolen)
+{
+	Obj_SetValue(obj,"AutoDelete",boolen);
+	ObjShot_SetAutoDelete(obj,boolen);
+}
+task BulletDelete(obj)
+{
+	
+}
+task Obj_DeleteBullet(obj)
+{
+	ObjShot_SetGraphic(obj,1000);
+	ObjMove_SetPosition(obj,-100,-100);
+	Obj_Delete(obj);
+}
+
+task ObjShot_SetDeleteFrameA3(obj,time,size,shrinktime)
+{
+	wait(time);
+	let size2 = size;
+	ObjShot_SetIntersectionEnable(obj,false);
+	loop(shrinktime)
+	{
+		ObjRender_SetScaleXYZ(obj,size,size,size);
+		size-=size2/shrinktime;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+task ObjShot_SetDeleteFrameA4(obj,time,fadetime,startingfade)
+{
+	wait(time);
+	let alpha = startingfade;
+	
+	loop(fadetime)
+	{
+		//ObjRender_SetColor(obj,alpha,alpha,alpha);
+		ObjRender_SetAlpha(obj,alpha);
+		alpha-=startingfade/fadetime;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
+task ObjShot_SetDeleteFrameA5(obj,deley,size)
+{
+	wait(deley);
+	if(!Obj_IsDeleted(obj))
+	{
+		let color = GetShotDataInfoA1(ObjShot_GetImageID(obj),TARGET_ENEMY,INFO_DELAY_COLOR);
+		let angleT = rand(0,360);
+		let speed = rand(0.5,2);
+		let stay = round(rand(20,25));
+		Burst(obj,size,color,angleT,speed,stay,true);
+		Burst(obj,size/2,[255,255,255],angleT,speed,stay,true);
+		Obj_DeleteBullet(obj);
+	}
+}
+
+task ObjShot_SetDeleteFrameA5(obj,deley,size,col)
+{
+	wait(deley);
+	if(!Obj_IsDeleted(obj))
+	{
+		let color = col;
+		let angleT = rand(0,360);
+		let speed = rand(0.5,2);
+		let stay = round(rand(20,25));
+		Burst(obj,size,color,angleT,speed,stay,true);
+		Burst(obj,size/2,[255,255,255],angleT,speed,stay,true);
+		Obj_DeleteBullet(obj);
+	}
+}
+
+task ObjShot_SetDeleteFrameA5(obj,deley,size,col,stay)
+{
+	wait(deley);
+	if(!Obj_IsDeleted(obj))
+	{
+		let color = col;
+		let angleT = rand(0,360);
+		let speed = rand(0.5,2);
+		Burst(obj,size,color,angleT,speed,stay,true);
+		Burst(obj,size/2,[255,255,255],angleT,speed,stay,true);
+		Obj_DeleteBullet(obj);
+	}
+}
+task ObjShot_SetDeleteFrameA6(obj,deley,size)
+{
+	wait(deley);
+	if(!Obj_IsDeleted(obj))
+	{
+		let color = GetShotDataInfoA1(ObjShot_GetImageID(obj),TARGET_ENEMY,INFO_DELAY_COLOR);
+		let angleT = rand(0,360);
+		let speed = rand(0.5,2);
+		let stay = round(rand(20,25)/2);
+		Burst(obj,size,color,angleT,speed,stay,false);
+		Burst(obj,size/2,[255,255,255],angleT,speed,stay,false);
+		Obj_DeleteBullet(obj);
+	}
+}
+task ObjShot_SetDeleteFrameA7(obj,deley,size,angleT,speed,stay,growbool)
+{
+	wait(deley);
+	if(!Obj_IsDeleted(obj))
+	{
+		let color = GetShotDataInfoA1(ObjShot_GetImageID(obj),TARGET_ENEMY,INFO_DELAY_COLOR);
+		Burst(obj,size,color,angleT,speed,round(stay),growbool);
+		Burst(obj,size/2,[255,255,255],angleT,speed,stay,growbool);
+		Obj_DeleteBullet(obj);
+	}
+}
+let objDeleteParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_LIGHT, [0,0,64,64], BLEND_ADD_ARGB, 0.51);
+task Burst(obj,size,color,angleT,speed,stay,growbool)
+{
+	let inits = size;
+	let Alpha = 255;
+	let ang = rand(0,360);
+	let x = ObjMove_GetX(obj);
+	let y = ObjMove_GetY(obj);
+	loop(stay)
+	{
+		ObjParticleList_SetAlpha(objDeleteParticle,Alpha);
+		ObjParticleList_SetScale(objDeleteParticle,size,size,0);
+		ObjParticleList_SetPosition(objDeleteParticle,x,y,0);
+		ObjParticleList_SetAngleZ(objDeleteParticle,ang);
+		ObjParticleList_SetColor(objDeleteParticle,color[0],color[1],color[2]);
+		ObjParticleList_AddInstance(objDeleteParticle);
+		//size-=inits/stay;
+		if(growbool==true)
+		{
+			size+=inits/stay;
+			Alpha-=255/stay;
+		}
+		else
+		{
+			size-=inits/stay;
+		}
+		x+=speed*cos(angleT);
+		y+=speed*sin(angleT);
+		yield;
+	}
+}
+function CurvyLaser2(x,y,speed,dir,l,w,graphic,fade,col)
+{
+	let shot = CreateShotA1(x,y,speed,dir,graphic,0);
+	Obj_SetVisible(shot,false);
+	ObjShot_SetIntersectionEnable(shot,false);
+	ObjShot_SetSpellResist(shot,true);
+	Trail;
+	return shot;
+	task Trail
+	{
+		let c = 0;
+		while(!Obj_IsDeleted(shot))
+		{
+			LaserEffect(fade,l,w,c);
+			wait(1);
+			c+=10;
+		}
+		task LaserEffect(fade,l,w,c)
+		{
+			let fade_value = 1;
+			fade *= fade_value;
+			l = ObjMove_GetSpeed(shot)*l+l;
+			let obj = CreateStraightLaserA1(ObjMove_GetX(shot),ObjMove_GetY(shot),ObjMove_GetAngle(shot),l,w,fade,graphic,0);
+			ObjStLaser_SetSource(obj,false);
+			ObjLaser_SetInvalidLength(obj,3,3);
+			ObjRender_SetColor(obj,col[0],col[1],col[2]);
+			//disableforonesec( obj );
+			ObjRender_SetBlendType( obj, BLEND_ADD_ARGB );
+			let original_l = l;
+			let original_w = w;
+			let alpha = 0;
+			loop(fade)
+			{
+				
+				ObjLaser_SetRenderWidth(obj,w*fade_value);
+				ObjLaser_SetIntersectionWidth(obj,(w/2)*fade_value);
+				ObjLaser_SetLength(obj,l*fade_value);
+				if(alpha<200){alpha+=20;}
+				//ObjRender_SetColor(obj,255+64*sin(c+180),200,100+32*sin(c));
+				l -= original_l/fade;
+				w -= original_w/fade;
+				wait(2);
+			}
+			Obj_Delete(obj);
+		}
+	}
+	task disableforonesec( obj )
+	{
+	ObjShot_SetIntersectionEnable( obj, false );
+	wait( 10 );
+	ObjShot_SetIntersectionEnable( obj, true );
+	}
+}
+function CurvyLaser3(x,y,speed,dir,l,w,graphic,fade,col)
+{
+	let shot = CreateShotA1(x,y,speed,dir,graphic,0);
+	Obj_SetVisible(shot,false);
+	ObjShot_SetIntersectionEnable(shot,false);
+	ObjShot_SetSpellResist(shot,true);
+	Trail;
+	return shot;
+	task Trail
+	{
+		let c = 0;
+		while(!Obj_IsDeleted(shot))
+		{
+			LaserEffect(fade,l,w,c);
+			wait(1);
+			c+=10;
+		}
+		task LaserEffect(fade,l,w,c)
+		{
+			let fade_value = 1;
+			fade *= fade_value;
+			l = ObjMove_GetSpeed(shot)*l+l;
+			let obj = CreateStraightLaserA1(ObjMove_GetX(shot),ObjMove_GetY(shot),ObjMove_GetAngle(shot),l,w,fade,graphic,0);
+			ObjStLaser_SetSource(obj,false);
+			ObjLaser_SetInvalidLength(obj,3,3);
+			ObjRender_SetColor(obj,col[0],col[1],col[2]);
+			//disableforonesec( obj );
+			ObjRender_SetBlendType( obj, BLEND_SUBTRACT );
+			let original_l = l;
+			let original_w = w;
+			let alpha = 0;
+			loop(fade)
+			{
+				
+				ObjLaser_SetRenderWidth(obj,w*fade_value);
+				ObjLaser_SetIntersectionWidth(obj,(w/3)*fade_value);
+				ObjLaser_SetLength(obj,l*fade_value);
+				if(alpha<200){alpha+=20;}
+				//ObjRender_SetColor(obj,255+64*sin(c+180),200,100+32*sin(c));
+				l -= original_l/fade;
+				w -= original_w/fade;
+				wait(2);
+			}
+			Obj_Delete(obj);
+		}
+	}
+	task disableforonesec( obj )
+	{
+	ObjShot_SetIntersectionEnable( obj, false );
+	wait( 10 );
+	ObjShot_SetIntersectionEnable( obj, true );
+	}
+}

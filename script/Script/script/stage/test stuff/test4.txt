@@ -1,0 +1,208 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Hecatia shit"]
+#Text["Hecatia shit"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+
+
+let objEnemy;
+let objEnemy2;
+let count = 0;
+   let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 60*60;
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(250);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(60);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+@Initialize
+{
+	//let x1 = 0;
+	//let x2 = GetScreenWidth;
+	//SetStgFrame(x1,0,x2,480,10,80);
+	//SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
+	//SetStgFrame(107,0,640+107,480,10,80);
+	//SetPlayerClip(0,0,GetStgFrameWidth,GetStgFrameHeight);
+	
+	timer;
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	SetAutoDeleteObject(true);
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,150 );
+	renderYuuma(objEnemy);
+
+	//renderBoss(objEnemy,IMG_BOSS1PLACE);
+	end;
+	SetShotAutoDeleteClip(33,33,33,33);
+	SetCommonData("SpellCardBG1",false);
+
+	
+	
+	SetCommonData("GlobalColour",[255,255,255]);
+	
+}
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+    ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count == 0)
+	{
+		
+	}
+    if(count < 95)
+    {
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    }
+    if(count == 95)
+    {
+		//move;
+		Fire;	
+		
+		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+        count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+	
+    count++;
+    yield;
+}
+@Finalize
+{
+}
+
+task Fire
+{
+	let ang = 0;
+	let bit = 1;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		
+		//SE_PlayLen(chime1,60);
+		
+		HecatiaChunk(ang,bit);
+		
+		wait(6);
+		
+		ang+=(360/7 + 9)*bit;
+	}
+}
+task HecatiaChunk(ang,bit)
+{
+	let d = 3;
+	let ds = 20;
+	ascent(i in 0..6)
+	{
+		SE_PlayLen(shot1,60);
+		ascent(o in 0..3)
+		{
+			let ang2 = ang - 3*o*bit;
+			let delay = ds+d+d*o;
+			let obj = ShotA1(ObjMove_GetX(objEnemy)+60*cos(ang2),ObjMove_GetY(objEnemy)+60*sin(ang2),2,ang2,425,418,delay,3,BLEND_ADD_ARGB,false);
+			ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+			Curvy(obj,ang2,delay);
+			
+		}
+		ang+=8*bit;
+		wait(2);
+	}
+}
+task Curvy(obj,ang,delay)
+{
+	wait(delay);
+	let cc = 0;
+	while(!Obj_IsDeleted(obj))
+	{
+		ObjMove_SetAngle(obj,ang+45*sin(cc));
+		cc+=2;
+		yield;
+	}
+}
+task timer
+{
+    while(TIME>60*10)
+    {
+        TIME--;
+		yield;
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+	SE_PlayLen(BossDead,50);
+	Obj_SetValue(objEnemy,"cast",0);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+
+	loop(60)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	
+    CloseScript(GetOwnScriptID());
+	return;
+} 
+task move
+{
+	wait(150);
+	let cc = 1;
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+        ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*cc, rand(80,120), 140);
+		cc*=-1;
+		wait(280);
+    }
+}
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+

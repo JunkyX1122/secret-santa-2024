@@ -1,0 +1,515 @@
+let RP = 10;
+let IMG_DIALOGBOX = GetCurrentScriptDirectory~"./../../img/talk/diabox.png";
+function randLR
+{
+	let bitn = round(rand(0,1));
+	if(bitn==0){bitn=-1;}
+	return bitn;
+}
+let dialogue_text = "";
+let widthGl = 0;
+let speakerColor = [0,0,0];
+
+let playerobjects = [];
+let enemyobjects = [];
+
+let portrait_player = [];
+let portrait_enemy = [];
+
+let player_yRot = [];
+let enemy_yRot = [];
+
+let playeroffsets = []; //coordinate offsets for player potraits
+let enemyoffsets = []; //coordinate offsets for enemy potraits
+
+let playerscales = []; //scales for player potraits
+let enemyscales = []; //scales for enemy potraits
+
+function SetPortraitNumber(numplayer, numenemy)
+{
+	ascent(i in 0 .. numplayer)
+	{
+		let obj = CreatePortrait;
+		playerobjects = playerobjects ~ [obj];
+		playerscales = playerscales ~ [1];
+		playeroffsets = playeroffsets ~ [[0, 0]];
+		player_yRot = player_yRot ~ [0];
+	}
+	ascent(i in 0 .. numenemy){
+		let obj = CreatePortrait;
+		enemyobjects = enemyobjects ~ [obj];
+		enemyscales = enemyscales ~ [1];
+		enemyoffsets = enemyoffsets ~ [[0, 0]];
+		enemy_yRot = enemy_yRot ~ [0];
+	}
+
+	ascent(i in 0 .. numplayer){
+		let path = "";
+		portrait_player = portrait_player ~ [path];
+	}
+	ascent(i in 0 .. numenemy){
+		let path = "";
+		portrait_enemy = portrait_enemy ~ [path];
+	}
+}
+function CreatePortrait
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, "");
+	ObjSprite2D_SetSourceRect(obj, 0, 0, GetTextureWidth(""), GetTextureHeight(""));
+	ObjSprite2D_SetDestCenter(obj);
+	//ObjRender_SetScaleXYZ(obj, 0.5, 0.5, 0);
+	Obj_SetRenderPriorityI(obj, 75+RP);
+	return obj;
+}
+
+task StartDialogNameless(width,y)
+{
+	widthGl = width+185;
+	let dialogBoxObj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(dialogBoxObj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetTexture(dialogBoxObj, IMG_DIALOGBOX);
+	ObjPrim_SetVertexCount(dialogBoxObj, 4);
+	Obj_SetRenderPriorityI(dialogBoxObj, 76+RP);
+	ObjRender_SetAlpha(dialogBoxObj,196);
+	
+	let borderObj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(borderObj, PRIMITIVE_LINESTRIP);
+	ObjPrim_SetTexture(borderObj, IMG_PIXEL);
+	ObjPrim_SetVertexCount(borderObj, 5);
+	Obj_SetRenderPriorityI(borderObj, 76+RP);
+	
+	let pointOffsets = [[-190-width, -48], [190+width, -48], [190+width, 48], [-190-width, 48],[-190-width, -48]];
+	let centerPoint = [GetScreenWidth/2, y];
+	let xr = rand(0,512);
+	let yr = rand(0,512);
+	let xp = 0.4*randLR;
+	let yp = 0.4*randLR;
+	ascent(t in 0 .. 31)
+	{
+		ascent(i in 0 .. 5)
+		{
+			if(i<4)
+			{
+				ObjPrim_SetVertexUVT(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0]+xr, centerPoint[1] + pointOffsets[i][1]+yr);
+				ObjPrim_SetVertexPosition(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+			}
+			ObjPrim_SetVertexUVT(borderObj, i, 0, 0);
+			ObjPrim_SetVertexPosition(borderObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+		}
+		xr+=xp;
+		yr+=yp;
+		yield;
+	}
+	while(GetCommonData("IsDialogueSequenceActive", false)==false)
+	{
+		ascent(i in 0 .. 4)
+		{
+			ObjPrim_SetVertexUVT(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0]+xr, centerPoint[1] + pointOffsets[i][1]+yr);
+			ObjPrim_SetVertexPosition(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0], centerPoint[1] + pointOffsets[i][1], 0);
+		}
+		xr+=xp;
+		yr+=yp;
+		yield;
+	}
+	descent(t in 0 .. 31)
+	{
+		ascent(i in 0 .. 5)
+		{
+			if(i<4)
+			{
+				ObjPrim_SetVertexUVT(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0]+xr, centerPoint[1] + pointOffsets[i][1]+yr);
+				ObjPrim_SetVertexPosition(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+			}
+			ObjPrim_SetVertexUVT(borderObj, i, 0, 0);
+			ObjPrim_SetVertexPosition(borderObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+		}
+		xr+=xp;
+		yr+=yp;
+		yield;
+	}
+	Obj_Delete(dialogBoxObj);
+	Obj_Delete(borderObj);
+}
+
+task StartDialog(width,y)
+{
+	widthGl = width+185;
+	let dialogBoxObj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(dialogBoxObj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetTexture(dialogBoxObj, IMG_DIALOGBOX);
+	ObjPrim_SetVertexCount(dialogBoxObj, 4);
+	Obj_SetRenderPriorityI(dialogBoxObj, 75+RP);
+	ObjRender_SetAlpha(dialogBoxObj,196);
+	
+	
+	
+	let borderObj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(borderObj, PRIMITIVE_LINESTRIP);
+	ObjPrim_SetTexture(borderObj, IMG_PIXEL);
+	ObjPrim_SetVertexCount(borderObj, 7);
+	Obj_SetRenderPriorityI(borderObj, 77+RP);
+	
+	let titleObj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(titleObj, PRIMITIVE_TRIANGLESTRIP);
+	ObjPrim_SetTexture(titleObj, IMG_PIXEL);
+	ObjPrim_SetVertexCount(titleObj, 4);
+	ObjRender_SetAlpha(titleObj, 192);
+	Obj_SetRenderPriorityI(titleObj, 76+RP);
+	
+	let pointOffsets = [[-191-width, -48-24], [190+width, -48-24], [190+width, 48], [-190-width, 48],[-190-width, -48-24],[-190-width, -24-24], [190+width, -24-24]];
+	let centerPoint = [GetScreenWidth/2, y];
+	let xr = rand(0,512);
+	let yr = rand(0,512);
+	let xp = 0.4*randLR;
+	let yp = 0.4*randLR;
+	ascent(t in 0 .. 31)
+	{
+		ascent(i in 0 .. 7)
+		{
+			if(i<4)
+			{
+				ObjPrim_SetVertexUVT(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0]+xr, centerPoint[1] + pointOffsets[i][1]+yr);
+				ObjPrim_SetVertexPosition(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+			}
+			ObjPrim_SetVertexUVT(borderObj, i, 0, 0);
+			ObjPrim_SetVertexPosition(borderObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+		}
+		ObjPrim_SetVertexPosition(titleObj, 0, centerPoint[0] + pointOffsets[0][0] * (t/30), centerPoint[1] + pointOffsets[0][1], 0);
+		ObjPrim_SetVertexPosition(titleObj, 1, centerPoint[0] + pointOffsets[5][0] * (t/30), centerPoint[1] + pointOffsets[5][1], 0);
+		ObjPrim_SetVertexPosition(titleObj, 2, centerPoint[0] + pointOffsets[1][0] * (t/30), centerPoint[1] + pointOffsets[1][1], 0);
+		ObjPrim_SetVertexPosition(titleObj, 3, centerPoint[0] + pointOffsets[6][0] * (t/30), centerPoint[1] + pointOffsets[6][1], 0);
+		ObjRender_SetColor(titleObj,speakerColor[0],speakerColor[1],speakerColor[2]);
+		xr+=xp;
+		yr+=yp;
+		yield;
+	}
+	while(GetCommonData("IsDialogueSequenceActive", false)==false)
+	{
+		ascent(i in 0 .. 4)
+		{
+			ObjPrim_SetVertexUVT(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0]+xr, centerPoint[1] + pointOffsets[i][1]+yr);
+			ObjPrim_SetVertexPosition(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0], centerPoint[1] + pointOffsets[i][1], 0);
+		}
+		ObjRender_SetColor(titleObj,speakerColor[0],speakerColor[1],speakerColor[2]);
+		xr+=xp;
+		yr+=yp;
+		yield;
+	}
+	descent(t in 0 .. 31)
+	{
+		ascent(i in 0 .. 7)
+		{
+			if(i<4)
+			{
+				ObjPrim_SetVertexUVT(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0]+xr, centerPoint[1] + pointOffsets[i][1]+yr);
+				ObjPrim_SetVertexPosition(dialogBoxObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+			}
+			ObjPrim_SetVertexUVT(borderObj, i, 0, 0);
+			ObjPrim_SetVertexPosition(borderObj, i, centerPoint[0] + pointOffsets[i][0] * (t/30), centerPoint[1] + pointOffsets[i][1], 0);
+		}
+		ObjRender_SetColor(titleObj,speakerColor[0],speakerColor[1],speakerColor[2]);
+		ObjPrim_SetVertexPosition(titleObj, 0, centerPoint[0] + pointOffsets[0][0] * (t/30), centerPoint[1] + pointOffsets[0][1], 0);
+		ObjPrim_SetVertexPosition(titleObj, 1, centerPoint[0] + pointOffsets[5][0] * (t/30), centerPoint[1] + pointOffsets[5][1], 0);
+		ObjPrim_SetVertexPosition(titleObj, 2, centerPoint[0] + pointOffsets[1][0] * (t/30), centerPoint[1] + pointOffsets[1][1], 0);
+		ObjPrim_SetVertexPosition(titleObj, 3, centerPoint[0] + pointOffsets[6][0] * (t/30), centerPoint[1] + pointOffsets[6][1], 0);
+		xr+=xp;
+		yr+=yp;
+		yield;
+	}
+	Obj_Delete(dialogBoxObj);
+	Obj_Delete(borderObj);
+}
+
+function SetDialogueTextA1(speaker, text, color , y)
+{ //event will advance only upon button press
+	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+	dialogue_text = text;
+
+	let obj = ObjText_Create();
+	ObjText_SetFontType(obj, "Times New Roman");
+	ObjText_SetFontSize(obj, 22);
+	ObjText_SetFontColorTop(obj, 255, 255, 255);
+	speakerColor = color;
+	ObjText_SetFontColorBottom(obj, color[0], color[1], color[2]);	
+	ObjText_SetFontBorderType(obj, BORDER_FULL);
+	ObjText_SetFontBorderWidth(obj, 1);
+	ObjText_SetFontBorderColor(obj, 0, 0, 0);
+	ObjText_SetLinePitch(obj, 7);
+	ObjText_SetMaxWidth(obj, widthGl*2);
+	Obj_SetRenderPriorityI(obj, 76+RP);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl, y, 0);
+
+	let objName = ObjText_Create();
+	ObjText_SetFontType(objName, "Revue");
+	ObjText_SetFontSize(objName, 22);
+	ObjText_SetFontColorTop(objName, 255, 255, 255);
+	speakerColor = color;
+	ObjText_SetFontColorBottom(objName, color[0], color[1], color[2]);	
+	ObjText_SetFontBorderType(objName, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objName, 1);
+	ObjText_SetFontBorderColor(objName, 0, 0, 0);
+	ObjText_SetLinePitch(objName, 7);
+	ObjText_SetMaxWidth(objName, widthGl*2);
+	Obj_SetRenderPriorityI(objName, 76+RP);
+	ObjRender_SetPosition(objName, GetScreenWidth/2-widthGl, y-25, 0);
+	ObjText_SetText(objName, speaker);
+	
+	let stringThing = SplitString(text,"|");
+	let scrollT = [];
+	
+	ascent(j in 0..length(stringThing))
+	{
+		ascent(i in 0..length(stringThing[j]))
+		{
+			ascent(o in 0..length(playerobjects))
+			{
+				ObjRender_SetAngleY(playerobjects[o],player_yRot[o]);
+			}
+			ascent(o in 0..length(enemyobjects))
+			{
+				ObjRender_SetAngleY(enemyobjects[o],enemy_yRot[o]);
+			}
+			scrollT = scrollT ~ [stringThing[j][i]];
+			dialogue_text = scrollT;
+			ObjText_SetText(obj, dialogue_text);
+			
+			if(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+			{
+				if(GetVirtualKeyState(VK_CANCEL) == KEY_FREE||i<4)
+				{
+					yield;
+				}
+			}
+			else
+			{
+				
+			}
+			
+			
+		}
+		scrollT =  scrollT ~  "[r]";
+	}
+	yield;
+	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	{
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		yield;
+	}
+	yield;
+	Obj_Delete(obj);
+	Obj_Delete(objName);
+}
+
+
+function SetDialogueTextA2(speaker, text, color , y  , spkP, spkE, imgS, iS, xm, ym,textScrollSound)
+{ //event will advance only upon button press
+
+	SetSpeaker(spkP,spkE);
+	
+	if(spkP>=0&&spkE>=0)
+	{
+	}
+	else if(spkP>=0)
+	{
+		SetNewPlayerPort(imgS, iS,xm,ym);
+	}
+	else if(spkE>=0)
+	{
+		SetNewEnemyPort(imgS, iS,xm,ym);
+	}
+	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+	dialogue_text = text;
+
+	let obj = ObjText_Create();
+	ObjText_SetFontType(obj, "Times New Roman");
+	ObjText_SetFontSize(obj, 22);
+	ObjText_SetFontColorTop(obj, 255, 255, 255);
+	speakerColor = color;
+	ObjText_SetFontColorBottom(obj, color[0], color[1], color[2]);	
+	ObjText_SetFontBorderType(obj, BORDER_FULL);
+	ObjText_SetFontBorderWidth(obj, 1);
+	ObjText_SetFontBorderColor(obj, 0, 0, 0);
+	ObjText_SetLinePitch(obj, 7);
+	ObjText_SetMaxWidth(obj, widthGl*2);
+	Obj_SetRenderPriorityI(obj, 76+RP);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl, y, 0);
+
+	let objName = ObjText_Create();
+	ObjText_SetFontType(objName, "Revue");
+	ObjText_SetFontSize(objName, 22);
+	ObjText_SetFontColorTop(objName, 255, 255, 255);
+	speakerColor = color;
+	ObjText_SetFontColorBottom(objName, color[0], color[1], color[2]);	
+	ObjText_SetFontBorderType(objName, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objName, 1);
+	ObjText_SetFontBorderColor(objName, 0, 0, 0);
+	ObjText_SetLinePitch(objName, 7);
+	ObjText_SetMaxWidth(objName, widthGl*2);
+	Obj_SetRenderPriorityI(objName, 76+RP);
+	ObjRender_SetPosition(objName, GetScreenWidth/2-widthGl, y-25, 0);
+	ObjText_SetText(objName, speaker);
+	
+	let stringThing = SplitString(text,"|");
+	let scrollT = [];
+	
+	ascent(j in 0..length(stringThing))
+	{
+		ascent(i in 0..length(stringThing[j]))
+		{
+			ascent(o in 0..length(playerobjects))
+			{
+				ObjRender_SetAngleY(playerobjects[o],player_yRot[o]);
+			}
+			ascent(o in 0..length(enemyobjects))
+			{
+				ObjRender_SetAngleY(enemyobjects[o],enemy_yRot[o]);
+			}
+			scrollT = scrollT ~ [stringThing[j][i]];
+			if([stringThing[j][i]]==" ")
+			{
+				
+			}
+			else
+			{
+				SE_PlayLen(Talk,75);
+	
+				SE_PlayLen(textScrollSound,75);
+			}
+			dialogue_text = scrollT;
+			ObjText_SetText(obj, dialogue_text);
+		
+			loop(2)
+			{
+				
+				if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+				{
+					yield;
+				}
+			}
+			
+		}
+		scrollT =  scrollT ~  "[r]";
+	}
+	yield;
+	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	{
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		yield;
+	}
+	yield;
+	Obj_Delete(obj);
+	Obj_Delete(objName);
+}
+
+function SetPortraitData(offsetsPlayer, offsetsEnemy, scalesPlayer, scalesEnemy)
+{
+	playeroffsets = offsetsPlayer;
+	enemyoffsets = offsetsEnemy;
+	playerscales = scalesPlayer;
+	enemyscales = scalesEnemy;
+}
+
+function SetNewPlayerPort(img, i,x,y){ //moves in the player portrait from below
+	portrait_player[i] = img;
+	ObjRender_SetPosition(playerobjects[i], x + playeroffsets[i][0], y + playeroffsets[i][1], 0); //start position
+
+	ObjPrim_SetTexture(playerobjects[i], portrait_player[i]);
+	ObjSprite2D_SetSourceRect(playerobjects[i], 0, 0, GetTextureWidth(portrait_player[i]), GetTextureHeight(portrait_player[i]));
+	ObjSprite2D_SetDestCenter(playerobjects[i]);
+	ObjRender_SetScaleXYZ(playerobjects[i],playerscales[i],playerscales[i],playerscales[i]);
+}
+
+function SetNewEnemyPort(img, i,x,y){ //moves in the enemy portrait from below
+	portrait_enemy[i] = img;
+	ObjRender_SetPosition(enemyobjects[i], x  + enemyoffsets[i][0], y + enemyoffsets[i][1], 0); //start position
+
+	ObjPrim_SetTexture(enemyobjects[i], portrait_enemy[i]);
+	ObjSprite2D_SetSourceRect(enemyobjects[i], 0, 0, GetTextureWidth(portrait_enemy[i]), GetTextureHeight(portrait_enemy[i]));
+	ObjSprite2D_SetDestCenter(enemyobjects[i]);
+	ObjRender_SetScaleXYZ(enemyobjects[i],enemyscales[i],enemyscales[i],enemyscales[i]);
+}
+
+function SetSpeaker(playerID,enemyID)
+{
+	ascent(o in 0..length(playerobjects))
+	{
+		if(o==playerID)
+		{
+			ObjRender_SetColor(playerobjects[o],255,255,255);
+			Obj_SetRenderPriorityI(playerobjects[o], 75+RP);
+		}
+		else
+		{
+			ObjRender_SetColor(playerobjects[o],32,32,32);
+			Obj_SetRenderPriorityI(playerobjects[o], 74+RP);
+		}
+	}
+	ascent(o in 0..length(enemyobjects))
+	{
+		if(o==enemyID)
+		{
+			ObjRender_SetColor(enemyobjects[o],255,255,255);
+			Obj_SetRenderPriorityI(enemyobjects[o], 75+RP);
+		}
+		else
+		{
+			ObjRender_SetColor(enemyobjects[o],32,32,32);
+			Obj_SetRenderPriorityI(enemyobjects[o], 74+RP);
+		}
+	}
+}
+task EndDialogueSequence
+{
+	ascent(i in 0 .. length(playerobjects))
+	{
+		RemovePlayerPort(i);
+	}
+	ascent(i in 0 .. length(enemyobjects))
+	{
+		RemoveEnemyPort(i);
+	}
+	loop(30){yield;}
+
+	ascent(i in 0 .. length(playerobjects)){
+		Obj_Delete(playerobjects[i]);
+	}
+	ascent(i in 0 .. length(enemyobjects)){
+		Obj_Delete(enemyobjects[i]);
+	}
+	playerobjects = [];
+	enemyobjects = [];
+
+}
+
+task RemovePlayerPort(i)
+{ //moves out the player portrait
+	portrait_player[i] = "";
+
+	//moveDeceleration(playerobjects[i], ObjRender_GetX(playerobjects[i]), GetStgFrameHeight + 384, 20, false);
+	//wait(20);
+
+	ObjPrim_SetTexture(playerobjects[i], "");
+	ObjSprite2D_SetSourceRect(playerobjects[i], 0, 0, 0, 0);
+	ObjSprite2D_SetDestCenter(playerobjects[i]);
+
+}
+task RemoveEnemyPort(i)
+{ //moves out the enemy portrait
+	portrait_enemy[i] = "";
+
+	//moveDeceleration(enemyobjects[i], ObjRender_GetX(enemyobjects[i]), GetStgFrameHeight + 384, 20, false);
+	//wait(20);
+
+	ObjPrim_SetTexture(enemyobjects[i], "");
+	ObjSprite2D_SetSourceRect(enemyobjects[i], 0, 0, 0, 0);
+	ObjSprite2D_SetDestCenter(enemyobjects[i]);
+}
+
+
+
+
+
+
+
+

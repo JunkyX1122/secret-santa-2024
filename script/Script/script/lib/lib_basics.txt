@@ -1,0 +1,112 @@
+/*
+function wait(t)
+{
+	loop(t){yield;}
+}
+*/
+function Get_Distance(x1, y1, x2, y2)
+{
+	return ((x1-x2)^2 + (y1-y2)^2)^0.5;
+}
+
+function Get_PointAngle(x1,y1,x2,y2)
+{
+	let angle=atan2(y1-y2,x1-x2);
+	return angle;
+}
+function getDotAngle(x1,y1,x2,y2)
+{
+	let angle=atan2(y1-y2,x1-x2);
+	return angle;
+}
+task ObjMove_SetDestAtFrameWeight(objEnemy, fin_x, fin_y, flame)
+{
+	let x = ObjMove_GetX(objEnemy);
+	let y = ObjMove_GetY(objEnemy);
+	let rx = fin_x - x;
+	let ry = fin_y - y;
+	let t_rate = 90/flame;
+	let s = 0.1;
+	ObjMove_SetAngle(objEnemy, getDotAngle(fin_x,fin_y,ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)));
+	ascent(time in 1 .. flame+1)
+	{
+		s-=0.1/(flame-1);
+		ObjMove_SetSpeed(objEnemy, s);
+		ObjMove_SetX(objEnemy, x + rx * sin(t_rate * time));
+		ObjMove_SetY(objEnemy, y + ry * sin(t_rate * time));
+		yield;
+	}
+	ObjMove_SetSpeed(objEnemy, 0);
+}
+task ScreenShake(duration,range) 
+{
+	let shake = range;
+	loop(duration)
+	{
+		Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+		Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+		shake-=range/duration;
+		yield;
+		Reset2DCamera;
+	}
+}
+task ScreenShakeVert(duration,range) 
+{
+	let shake = range;
+	loop(duration)
+	{
+		//Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+		Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+		shake-=range/duration;
+		yield;
+		Reset2DCamera;
+	}
+}
+task ScreenShakeReverse(duration,range) 
+{
+	let shake = 0;
+	loop(duration)
+	{
+		Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+		Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+		shake+=range/duration;
+		yield;
+		Reset2DCamera;
+	}
+}
+task Hitbox(obj,scaleX,scaleY)
+{
+	while(!Obj_IsDeleted(obj))
+	{
+		let angleG = ObjMove_GetAngle(obj);
+		ObjShot_SetIntersectionLine(obj,ObjMove_GetX(obj)+(scaleX)*cos(angleG),ObjMove_GetY(obj)+(scaleX)*sin(angleG),ObjMove_GetX(obj)-(scaleX)*cos(angleG),ObjMove_GetY(obj)-(scaleX)*sin(angleG),scaleY);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task HitboxSingle(obj,scaleX,scaleY)
+{
+	if(!Obj_IsDeleted(obj))
+	{
+		let angleG = ObjMove_GetAngle(obj);
+		ObjShot_SetIntersectionLine(obj,ObjMove_GetX(obj)+(scaleX)*cos(angleG),ObjMove_GetY(obj)+(scaleX)*sin(angleG),ObjMove_GetX(obj)-(scaleX)*cos(angleG),ObjMove_GetY(obj)-(scaleX)*sin(angleG),scaleY);
+		yield;
+	}
+}
+
+task ObjMove_SetAngularVelocityA2(obj,deley,turnamount,stoptime)
+{
+	loop(deley){yield;}
+	ObjMove_SetAngularVelocity(obj,turnamount);
+	loop(stoptime){yield;}
+	ObjMove_SetAngularVelocity(obj,0);
+}
+task ObjRender_SetScale(obj,scl)
+{
+	ObjRender_SetScaleXYZ(obj,scl,scl,scl);
+}
+
+
+
+

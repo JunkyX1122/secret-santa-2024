@@ -1,0 +1,39 @@
+
+
+sampler Tex0	: register(s0);
+
+texture g_Texture;
+sampler Samp0 = sampler_state{
+	Texture		= <g_Texture>;
+	MipFilter	= POINT;
+	MinFilter	= LINEAR;
+	MagFilter	= POINT;
+	AddressU	= 1;
+	AddressV	= 1;
+};
+
+struct PS_INPUT{
+	float2 texCoord : TEXCOORD0;
+	float4 diffuse	: COLOR0;
+};
+struct PS_OUTPUT{
+    float4 color 	: COLOR0;
+};
+
+PS_OUTPUT PsShader(PS_INPUT In) : COLOR0{
+	PS_OUTPUT Out;
+
+	float4 tex0 = tex2D(Samp0,In.texCoord);
+	tex0 *= In.diffuse;
+	
+	Out.color = tex0;
+
+	return Out;
+}
+
+technique TecPoint{
+	pass P0{
+		PixelShader = compile ps_3_0 PsShader();
+	}
+}
+

@@ -1,0 +1,169 @@
+let mainLoadBool = false;
+let LoadBool = false;
+let LoadingBool = false;
+task LoadThings
+{
+	Loading;
+	//-----------------Load Images-----------------
+	ascent(i in 0..length(StageSystem_ImgArray))
+	{
+		LoadTexture(StageSystem_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(Enemy_ImgArray))
+	{
+		LoadTexture(Enemy_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(Effects_ImgArray))
+	{
+		LoadTexture(Effects_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(Card_ImgArray))
+	{
+		LoadTexture(Card_ImgArray[i]);
+		yield;
+	}
+
+	ascent(i in 0..length(BossSprite_ImgArray))
+	{
+		LoadTexture(BossSprite_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(TextImg_ImgArray))
+	{
+		LoadTexture(TextImg_ImgArray[i]);
+		yield;
+	}
+	
+	ascent(i in 0..length(Background_ImgArray))
+	{
+		LoadTexture(Background_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(TitleScreen_ImgArray))
+	{
+		LoadTexture(TitleScreen_ImgArray[i]);
+		yield;
+	}
+	
+	ascent(i in 0..length(CharacterImg_ImgArray))
+	{
+		ascent(o in 0..length(CharacterImg_ImgArray[i]))
+		{
+			LoadTexture(CharacterImg_ImgArray[i][o]);
+		}
+		yield;
+	}
+	
+	//-----------------Load Sound-----------------
+	ascent(i in 0..length(LoadAllSoundsArray))
+	{
+		LoadTexture(LoadAllSoundsArray[i]);
+		yield;
+	}
+	loop(120){yield;}
+	mainLoadBool=true;
+}
+task Loading
+{
+	Black();
+	Logo();
+	LoadIcon;
+	Orb;
+	task Black()
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_black.png");
+		Obj_SetRenderPriorityI(obj,99);
+		ObjRender_SetAngleZ(obj,0);		
+		let ALF=255;
+		ObjRender_SetAlpha(obj,ALF);
+		let scale =1;
+		ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+		ObjSprite2D_SetSourceRect(obj,0,0,640,480);
+		ObjSprite2D_SetDestRect(obj,0,0,640,480);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+		while(LoadBool==false){yield;}
+		Obj_Delete(obj);
+	}
+	task Logo()
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_logo.png");
+		Obj_SetRenderPriorityI(obj,99);
+		ObjRender_SetAngleZ(obj,0);		
+		let ALF=255;
+		ObjRender_SetAlpha(obj,ALF);
+		let scale =10;
+		ObjRender_SetScaleXYZ(obj,1,1,1);
+		ObjSprite2D_SetSourceRect(obj,0,0,640,480);
+		ObjSprite2D_SetDestRect(obj,0,0,640,480);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2-50,0);
+		while(LoadBool==false){yield;}
+		Obj_Delete(obj);
+	}
+	task LoadIcon
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_load1.png");
+		Obj_SetRenderPriorityI(obj,99);
+		ObjRender_SetAngleZ(obj,0);		
+		let ALF=255;
+		let count = 90;
+		ObjRender_SetScaleXYZ(obj,1,1,1);
+		ObjSprite2D_SetSourceRect(obj,0,0,256,64);
+		ObjSprite2D_SetDestRect(obj,0,0,256,64);
+		ObjSprite2D_SetDestCenter(obj);
+		while(LoadingBool==false)
+		{
+			ObjRender_SetPosition(obj,GetScreenWidth-150,GetScreenHeight-80+10*sin(count),0);
+			ObjRender_SetAlpha(obj,255+255*sin(count));
+			count+=5;
+			yield;
+		}
+		while(LoadBool==false)
+		{
+			ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_load2.png");
+			ObjRender_SetPosition(obj,GetScreenWidth-150,GetScreenHeight-80+10*sin(count),0);
+			ObjRender_SetAlpha(obj,255+255*sin(count));
+			count+=5;
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+	task Orb
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_loadorb.png");
+		Obj_SetRenderPriorityI(obj,99);
+		ObjRender_SetAngleZ(obj,0);		
+		let ALF=255;
+		let count = 90;
+		ObjRender_SetScaleXYZ(obj,0.5,0.5,1);
+		ObjSprite2D_SetSourceRect(obj,0,0,128,128);
+		ObjSprite2D_SetDestRect(obj,0,0,128,128);
+		ObjSprite2D_SetDestCenter(obj);
+		while(LoadingBool==false)
+		{
+			ObjRender_SetPosition(obj,GetScreenWidth-180+60*sin(count),GetScreenHeight-40,0);
+			ObjRender_SetAngleZ(obj,0+180*sin(count));
+			count+=2.5;
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+	while(LoadingBool==false)
+	{
+		yield;
+	}
+	while(LoadBool==false)
+	{
+		LoadBool = true;
+		yield;
+	}
+	loop(60){yield;}
+}

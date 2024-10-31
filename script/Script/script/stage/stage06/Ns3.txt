@@ -1,0 +1,262 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Ns3"]
+#Text["Ns3"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+let objEnemy;
+let objEnemy2;
+let count = 0;
+   let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 60*60;
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(250);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(60);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+@Initialize
+{
+	InitialiseIndiv();
+	timer;
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	SetAutoDeleteObject(true);
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
+	renderYuuma(objEnemy);
+
+	end;
+	SetCommonData("SpellCardBG1",false);
+	
+}
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+    ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count == 0)
+	{
+		
+	}
+    if(count < 95)
+    {
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    }
+    if(count == 95)
+    {
+		//move;
+		Fire;	
+		
+		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+        count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+	
+    count++;
+    yield;
+}
+@Finalize
+{
+}
+task Fire
+{
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		let ang = GetAngleToPlayer(objEnemy);
+		let bit2 = [1,-1,0];
+		ascent(i in 0..3)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(spawnfm1,60);
+				if(i==2)
+				{
+					SE_PlayLen(boon1,60);
+					ascent(o in 0..24)
+					{
+						Trailing(ang+360/24*o);
+					}
+				}
+				ascent(o in 0..8)
+				{
+					KnifeFire(ang+360/8*o*bit,bit2[i]*bit);
+				}
+				wait(60*2.5);
+			}
+		}
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,-100), rand(80,110), 90);
+			wait(60*3);
+		}
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjEnemy_SetDamageRate(objEnemy, (0.076)/1.5, (0.076)/3);
+			bit*=-1;
+		}
+	}
+}
+task Trailing(ang)
+{
+	SE_PlayLen(shot1,60);
+	let t = 90;
+	let xIn = ObjMove_GetX(objEnemy);
+	let yIn = ObjMove_GetY(objEnemy);
+	let cosAng = cos(ang);
+	let sinAng = sin(ang);
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//SE_PlayLen(chime1,60);
+			let scl = 1/t*i;
+			let ang2 = rand(0,360);
+			let randDis = rand(0,20);
+			let randX = randDis*cos(ang2);
+			let randY = randDis*sin(ang2);
+			let x = 500*cosAng*scl+randX;
+			let y = 500*sinAng*scl+randY;
+			let objShot = ShotA2(xIn+x, yIn+y,1,ang,0.01,10,293,293,10,2,BLEND_ADD_ARGB,true);
+			ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
+			wait(4);
+		}
+	}
+}
+task KnifeFire(ang,bit)
+{
+	SE_PlayLen(shot1,60);
+	let objShot = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),3,ang,331,331,10,2,BLEND_ALPHA,true);
+	ObjMove_SetAngularVelocityA2(objShot,10,1.5*bit,45+22);
+	ObjShot_SetSpellResist(objShot,false);
+	ObjShot_SetAutoDelete(objShot,false);
+	wait(10);
+	let flipper = 0;
+	let ccc = 0;
+	let shtType = 0;
+	let col = [[255,128,128],[255,165,0]];
+	let crcID = [76,88];
+	let delID = [418,423];
+	let pltID = [92,104];
+	let am = 6;
+	while(!Obj_IsDeleted(objShot)&&!Obj_IsDeleted(objEnemy))
+	{
+		if(ccc%4==0)
+		{
+			SE_PlayLen(Shot1,30);
+			if(shtType%5==4)
+			{
+				SE_PlayLen(chime1,30);
+				let spd = 1.5;
+				ascent(i in 0..am)
+				{
+					let obj = ShotA2(ObjMove_GetX(objShot), ObjMove_GetY(objShot),0,ObjMove_GetAngle(objShot)+180/am+360/am*i,spd/120,spd,crcID[flipper%2],delID[flipper%2],20,2,BLEND_ALPHA,false);
+					
+				}
+				flipper++;
+			}
+			else
+			{
+				let obj = ShotA1(ObjMove_GetX(objShot), ObjMove_GetY(objShot),0,ObjMove_GetAngle(objShot),pltID[flipper%2],418,20,2,BLEND_ALPHA,false);
+				ObjMove_AddPatternA2(obj,120,0,NO_CHANGE,1/120,1,0);
+				ObjRender_SetColor(obj,col[flipper%2][0],col[flipper%2][1],col[flipper%2][2]);
+			}
+			shtType++;
+		}
+		if(ccc>60*3)
+		{
+			ObjShot_SetAutoDelete(objShot,true);
+		}
+		ccc++;
+		yield;
+	}
+}
+
+task timer
+{
+    while(TIME>60*10)
+    {
+        TIME--;
+		yield;
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+	SE_PlayLen(BossDead,50);
+	Obj_SetValue(objEnemy,"cast",0);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+
+	loop(60)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	
+    CloseScript(GetOwnScriptID());
+	return;
+} 
+task move
+{
+	wait(150);
+	let cc = 1;
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+        ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*cc, rand(80,120), 140);
+		cc*=-1;
+		wait(280);
+    }
+}
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+

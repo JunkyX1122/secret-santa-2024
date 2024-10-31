@@ -1,0 +1,228 @@
+
+#include "./lib_img.txt"
+#include "./lib_sound.txt"
+
+let LIFE_ITEM_FULL = 0;
+
+let SPELL_ITEM_FULL = 1;
+
+let SCORE_ITEM_S = 2;
+let SCORE_ITEM_L = 3;
+
+let POWER_ITEM_S = 4;
+let POWER_ITEM_L = 5;
+
+
+
+let DELETE_ITEM = 8;
+@Initialize{
+    SetItemRenderPriorityI(40);
+    SetDefaultBonusItemEnable(false); // since no one wants the stinky stupid poop pee default star items
+    LoadItemData( GetCurrentScriptDirectory ~ "lib_item.txt");
+}
+
+@Event{
+    alternative(GetEventType)
+    case(EV_DELETE_SHOT_TO_ITEM){
+		SE_PlayLen(BulletDeleteSound,32);
+		Burst(GetEventArgument(0),GetEventArgument(1)[0],GetEventArgument(1)[1],[0,0,0],1);
+    }
+
+}
+@MainLoop
+{
+	yield;
+}
+function CreateParticleListRect(type, path, source, blend, priority) //possibly copied from tcl
+{
+    let obj = ObjParticleList_Create(type);
+    Obj_SetRenderPriority(obj, priority);
+    ObjPrim_SetTexture(obj, path);
+    ObjRender_SetBlendType(obj, blend);
+
+    ObjPrim_SetVertexCount(obj, 4);
+
+    let width = source[2] - source[0];
+    let height = source[3] - source[1];
+    let hWid = width / 2;
+    let hHei = height / 2;
+
+    ObjPrim_SetVertexUVT(obj, 0, source[0], source[1]);
+    ObjPrim_SetVertexUVT(obj, 1, source[2], source[1]);
+    ObjPrim_SetVertexUVT(obj, 2, source[0], source[3]);
+    ObjPrim_SetVertexUVT(obj, 3, source[2], source[3]);
+    ObjPrim_SetVertexPosition(obj, 0, -hWid, -hHei, 0);
+    ObjPrim_SetVertexPosition(obj, 1, hWid, -hHei, 0);
+    ObjPrim_SetVertexPosition(obj, 2, -hWid, hHei, 0);
+    ObjPrim_SetVertexPosition(obj, 3, hWid, hHei, 0);
+    
+    ObjPrim_SetVertexIndex(obj, [0, 1, 2, 1, 2, 3]);
+    return obj;
+}
+
+let objDeleteParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_LIGHT, [0,0,64,64], BLEND_ADD_ARGB, 0.51);
+task Burst(obj,x,y,color,scl)
+{
+	let size = 1;
+	let inits = size;
+	let Alpha = 255;
+	let ang = rand(0,360);
+	let stay = round(rand(2,5));
+	let speed = rand(0.5,2);
+	if(color==[0,0,0]){color = GetShotDataInfoA1(obj,TARGET_ENEMY,INFO_DELAY_COLOR);}
+	loop(stay)
+	{
+		ObjParticleList_SetAlpha(objDeleteParticle,Alpha);
+		ObjParticleList_SetScale(objDeleteParticle,size*scl,size*scl,0);
+		ObjParticleList_SetPosition(objDeleteParticle,x,y,0);
+		ObjParticleList_SetAngleZ(objDeleteParticle,ang);
+		ObjParticleList_SetColor(objDeleteParticle,color[0],color[1],color[2]);
+		ObjParticleList_AddInstance(objDeleteParticle);
+		//size-=inits/stay;
+	
+		size-=inits/stay;
+		
+		x+=speed*cos(ang);
+		y+=speed*sin(ang);
+		yield;
+	}
+}
+
+task AURA_item(objitem,type){
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_ITEM);
+	ObjSprite2D_SetSourceRect(obj, 136, 10, 186, 60);
+	ObjSprite2D_SetDestCenter(obj);
+	Obj_SetRenderPriority(obj, 0.31);
+	alternative(type)
+	case(LIFE_ITEM_FULL){
+		ObjRender_SetColorHSV(obj,300,126,255);
+		ObjRender_SetScaleXYZ(obj,1.4,1.4,1.4);
+	}
+	case(SPELL_ITEM_FULL){
+		ObjRender_SetColorHSV(obj,120,150,230);
+		ObjRender_SetScaleXYZ(obj,1.4,1.4,1.4);
+	}
+	case(SCORE_ITEM_S){
+		ObjRender_SetColorHSV(obj,243,150,255);
+		ObjRender_SetScaleXYZ(obj,1.2,1.2,1.2);
+	}
+	case(SCORE_ITEM_L){
+		ObjRender_SetColorHSV(obj,243,150,255);
+		ObjRender_SetScaleXYZ(obj,1.4,1.4,1.4);
+	}
+	case(POWER_ITEM_L){
+		ObjRender_SetColorHSV(obj,356,150,250);
+		ObjRender_SetScaleXYZ(obj,1.4,1.4,1.4);
+	}
+	case(POWER_ITEM_S){
+		ObjRender_SetColorHSV(obj,356,150,250);
+		ObjRender_SetScaleXYZ(obj,1.2,1.2,1.2);
+	}
+	case(DELETE_ITEM){
+		Obj_Delete(obj);
+	}
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	ObjRender_SetPosition(obj,ObjMove_GetX(objitem)-3,ObjMove_GetY(objitem)+1,0);
+	ObjRender_SetAlpha(obj,164);
+	while(!Obj_IsDeleted(objitem)){
+		ObjRender_SetAngleZ(obj,ObjRender_GetAngleZ(obj)+1);
+		ObjRender_SetPosition(obj,ObjMove_GetX(objitem)-3,ObjMove_GetY(objitem)+1,0);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task TItemCreateU2(type,x,y,gox,goy,score){
+	if(type==DELETE_ITEM)
+	{
+		score = plusValue;
+		plusCount++;
+		if(plusValue<1000)
+		{
+			plusValue+=5;
+		}
+	}
+	let objitem = CreateItemU2(type, x, y, gox, goy, score);
+	Obj_SetRenderPriority(objitem, 0.32);
+	let speed = 5.7;
+	let falling = 0;
+	let time = 0;
+	let gotoplayer = 0;
+	AURA_item(objitem,type);
+	while(!Obj_IsDeleted(objitem)){
+		y = ObjMove_GetY(objitem);
+		//CollectItemsByType(DELETE_ITEM);
+		time++;
+		yield;
+	}
+	alternative(type)
+	case(LIFE_ITEM_FULL)
+	{
+		AddScore(1000000);
+		if(GetPlayerLife<10&&y<GetStgFrameHeight)
+		{
+			SetPlayerLife(GetPlayerLife + 1);
+		}
+		if(y<GetStgFrameHeight)
+		{
+			SE_PlayLen(LifeGet,90);
+		}
+	}
+	case(SPELL_ITEM_FULL)
+	{
+		AddScore(100000);
+		if(GetPlayerSpell<10&&y<GetStgFrameHeight)
+		{
+			SetPlayerSpell(GetPlayerSpell + 1);
+			SE_PlayLen(BombGet,90);
+			
+		}
+	}
+	case(SCORE_ITEM_S)
+	{
+		if(y<GetStgFrameHeight)
+		{
+			SetCommonData("ScoreItemStage",GetCommonData("ScoreItemStage",0)+1);
+			SE_PlayLen(PointGet,90);
+		}
+	}
+	case(SCORE_ITEM_L)
+	{
+		if(y<GetStgFrameHeight)
+		{
+			SE_PlayLen(PointGet,90);
+		}
+	}
+	case(DELETE_ITEM)
+	{
+		SE_PlayLen(PointGet,90);
+	}
+	return;
+}
+let plusValue = 5;
+let plusCount = 0;
+let countDown = 0;
+task BlackItem
+{
+	loop
+	{
+		while(plusValue==5){yield;}
+		let plusCount2 = 0;
+		countDown = 60;
+		while(countDown>0)
+		{		
+			if(plusCount2!=plusCount)
+			{
+				countDown = 60;
+			}
+			plusCount2 = plusCount;
+			countDown--;
+			yield;
+			
+		}
+		plusValue = 5;
+		plusCount = 0;
+		yield;
+	}
+}

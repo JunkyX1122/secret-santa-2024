@@ -1,0 +1,77 @@
+
+//Minoriko's shot by Zhan_fox
+
+#UserShotData
+
+shot_image = "./../../img/bullet/Minorikos_shot.png"
+delay_rect = (275,51,313,92)
+
+// Berries
+ShotData{ id=1001 rect=(18,3,47,28) render=ALPHA angular_velocity = 3 delay_color= (255,64,64) } //strawberry
+ShotData{ id=1002 rect=(6,40,24,64) render=ALPHA angular_velocity = 2 delay_color= (255,32,64) } //cherry
+ShotData{ id=1003 rect=(27,37,44,66) render=ALPHA angular_velocity = 2 delay_color= (255,32,64) } //cherry
+ShotData{ id=1004 rect=(48,39,64,67) render=ALPHA angular_velocity = 2 delay_color= (255,32,64) } //cherry
+ShotData{ id=1005 rect=(17,69,30,80) render=ALPHA angular_velocity = 2 delay_color= (255,32,64) } //cherry
+ShotData{ id=1006 rect=(72,39,87,53) render=ALPHA angular_velocity = 1 delay_color= (255,32,64) } //foxberry
+ShotData{ id=1007 rect=(71,57,86,72) render=ALPHA angular_velocity = 1 delay_color= (255,32,64) } //foxberry
+ShotData{ id=1008 rect=(50,0,84,34) render=ALPHA angular_velocity = 2 delay_color= (64,255,144) } //gooseberry
+ShotData{ id=1009 rect=(294,0,314,17) render=ALPHA angular_velocity = 2 delay_color= (0,10,0) } //blackberry
+ShotData{ id=1010 rect=(296,18,316,39) render=ALPHA angular_velocity = 2 delay_color= (0,10,0) } //blackberry
+ShotData{ id=1011 rect=(179,179,197,192) render=ALPHA angular_velocity = 2 delay_color= (64,64,200) } //blueberry
+ShotData{ id=1012 rect=(142,204,202,248) render=ALPHA angular_velocity = 2 delay_color= (64,255,64) } //grapes
+ShotData{ id=1013 rect=(149,253,215,300) render=ALPHA angular_velocity = 2 delay_color= (64,255,64) } //grapes
+
+//apples and pears
+ShotData{ id=1014 rect=(234,50,270,92) render=ALPHA angular_velocity = 0.5 delay_color= (255,64,64) } //red apple
+ShotData{ id=1015 rect=(275,51,313,92) render=ALPHA angular_velocity = -0.5 delay_color= (255,64,64) } //red apple
+ShotData{ id=1016 rect=(140,119,174,163) render=ALPHA angular_velocity = 0.5 delay_color= (64,255,64) } //green apple
+ShotData{ id=1017 rect=(223,4,257,49) render=ALPHA angular_velocity = 1 delay_color= (64,144,255) } //red pear
+ShotData{ id=1018 rect=(190,50,230,90) render=ALPHA angular_velocity = 1 delay_color= (255,255,64) } //yellow pear
+ShotData{ id=1019 rect=(110,125,135,152) render=ALPHA angular_velocity = 0.5 delay_color= (255,64,64) } //red apple 'ranetki'
+ShotData{ id=1020 rect=(110,155,135,180) render=ALPHA angular_velocity = -0.5 delay_color= (255,64,64) } //red apple 'ranetki'
+ShotData{ id=1021 rect=(110,183,135,180) render=ALPHA angular_velocity = 0.5 delay_color= (64,255,64) } //green apple 'ranetki'
+ShotData{ id=1022 rect=(111,214,135,240) render=ALPHA angular_velocity = -0.5 delay_color= (64,255,64) } //green apple 'ranetki'
+
+//Oranges
+ShotData{ id=1023 rect=(2,85,35,117) render=ALPHA angular_velocity = 0.3 delay_color= (255,128,64) } //orange
+ShotData{ id=1024 rect=(222,94,263,135) render=ALPHA angular_velocity = 0.6 delay_color= (255,128,64) } //orange with leaves
+ShotData{ id=1025 rect=(265,101,309,141) render=ALPHA angular_velocity = 0.6 delay_color= (255,128,64) } //orange with leaves
+ShotData{ id=1026 rect=(90,59,119,85) render=ALPHA angular_velocity = 1 delay_color= (255,128,64) } //orange circle
+ShotData{ id=1027 rect=(91,31,120,59) render=ALPHA angular_velocity = 1 delay_color= (255,64,64) } //bloodorange circle
+ShotData{ id=1028 rect=(120,59,149,85) render=ALPHA angular_velocity = 1 delay_color= (255,255,64) } //limon circle
+
+//Other fruits(90,4,127,32)
+ShotData{ id=1029 rect=(90,4,127,32)render=ALPHA angular_velocity = 1 delay_color= (255,128,64) } //peach
+ShotData{ id=1030 rect=(92,88,132,115) render=ALPHA angular_velocity = 1 delay_color= (255,128,64) } //peach
+ShotData{ id=1031 rect=(133,90,153,114) render=ALPHA angular_velocity = 1 delay_color= (255,128,64) } //apricot
+ShotData{ id=1032 rect=(262,1,292,23) render=ALPHA angular_velocity = 1 delay_color= (32,32,255) } //plum
+ShotData{ id=1033 rect=(268,25,293,52) render=ALPHA angular_velocity = 1 delay_color= (128,255,144)} //kiwi
+ShotData{ id=1034 rect=(154,52,190,104) render=ALPHA angular_velocity = 2 delay_color= (255,255,64) } //banana
+ShotData{ id=1035 rect=(178,103,224,172) render=ALPHA angular_velocity = 1 delay_color= (255,128,64) } //ananas
+ShotData{ id=1036 rect=(34,73,83,123) render=ALPHA angular_velocity = 1 delay_color= (32,255,32) } //watermelon
+ShotData{ id=1037 rect=(70,185,96,206) render=ALPHA angular_velocity = 1 delay_color= (32,255,32)} //avakado
+ShotData{ id=1038 rect=(127,3,224,50) render=ALPHA angular_velocity = 0 delay_color= (255,128,64) } //group of fruits
+ShotData{ id=1039 rect=(142,168,171,200) render=ALPHA angular_velocity = 1 delay_color= (64,128,255) } //mint
+
+//Vegtables
+ShotData{ id=1040 rect=(4,118,24,160) render=ALPHA angular_velocity = 0 delay_color= (255,255,64) } //corn
+ShotData{ id=1041 rect=(34,122,56,160) render=ALPHA angular_velocity = 0 delay_color= (128,255,144) } //peas
+ShotData{ id=1042 rect=(60,124,76,158) render=ALPHA angular_velocity = 0 delay_color= (128,255,144) } //cucumber
+ShotData{ id=1043 rect=(76,124,108,158) render=ALPHA angular_velocity = 0 delay_color= (200,64,64) } //radish
+ShotData{ id=1044 rect=(4,160,18,199) render=ALPHA angular_velocity = 0 delay_color= (255,64,64) } //chili pepper
+ShotData{ id=1045 rect=(21,159,33,201) render=ALPHA angular_velocity = 0 delay_color= (255,128,64) } //carrot
+ShotData{ id=1046 rect=(54,157,83,185) render=ALPHA angular_velocity = 0 delay_color= (255,64,64) } //cherri tomates
+ShotData{ id=1047 rect=(40,185,64,208) render=ALPHA angular_velocity = 0 delay_color= (255,255,64) } //yellow pepper
+ShotData{ id=1048 rect=(2,242,32,269) render=ALPHA angular_velocity = 0 delay_color= (255,64,64) } //red pepper
+ShotData{ id=1049 rect=(3,209,32,239) render=ALPHA angular_velocity = 0 delay_color= (255,255,255) } //onion
+ShotData{ id=1050 rect=(37,215,72,239) render=ALPHA angular_velocity = 0 delay_color= (200,200,144) } //potato
+ShotData{ id=1051 rect=(76,211,106,239) render=ALPHA angular_velocity = 0 delay_color= (255,64,64) } //tomato
+ShotData{ id=1052 rect=(38,241,71,268) render=ALPHA angular_velocity = 0 delay_color= (128,255,144) } //broccoli
+ShotData{ id=1053 rect=(73,241,108,267) render=ALPHA angular_velocity = 0 delay_color= (255,64,255) } //eggplant
+ShotData{ id=1054 rect=(0,270,33,298) render=ALPHA angular_velocity = 0 delay_color= (128,255,144) } //salat
+ShotData{ id=1055 rect=(38,271,64,298) render=ALPHA angular_velocity = 0 delay_color= (255,255,255) } //garlik
+ShotData{ id=1056 rect=(61,269,100,303) render=ALPHA angular_velocity = 0 delay_color= (255,64,255) } //beet
+ShotData{ id=1057 rect=(115,244,134,261) render=ALPHA angular_velocity = 0 delay_color= (200,200,144) } //chesnut
+ShotData{ id=1058 rect=(115,261,134,279) render=ALPHA angular_velocity = 0 delay_color= (200,200,144) } //chesnut
+ShotData{ id=1059 rect=(115,279,134,297) render=ALPHA angular_velocity = 0 delay_color= (200,200,144) } //chesnut
+ShotData{ id=1060 rect=(100,288,116,304) render=ALPHA angular_velocity = 0 delay_color= (144,255,144) } //chesnut closed

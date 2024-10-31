@@ -1,0 +1,39 @@
+[settings]
+skin type=kid
+taunt pingpong=yes
+kid fire duration=6
+kid blood splat=yes
+kid bow lag=yes
+icon speed=4
+icon loop=no
+credits=my ass
+
+[walk frames]
+kid=4
+
+[taunt frames]
+kid=4
+
+[taunt speed]
+kid=0.2
+
+[short names]
+kid=HOTEL MARIO
+
+[long names]
+kid=Mario
+
+[lang]
+credits=
+princess=THE PRINCESS and LUIGI
+savetext1=Thanks to %player%,
+savetext2=I can now safely rule the Mushroom Kingdom,
+savetext3=free from the terrible, Koopa Clan.
+savetext4=
+savetext5=YOU'RE THE
+savetext6=BEST PLAYER EVER!
+
+[boll color]
+kid top=#EB1717
+kid mid=#000000
+kid bot=#2A46AF

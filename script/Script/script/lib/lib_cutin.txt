@@ -1,0 +1,794 @@
+let CSD = GetCurrentScriptDirectory;
+let DEBUG = false;
+let CutinDifficulty = "";
+
+
+
+
+let Alpha_HUD = [255, 255]; 
+
+
+let LENEN = "LENEN";
+
+task ObjCutin_SetSpellcardS3(SpellName, R, G, B)
+{
+	let r = IntToString(R);
+	let g = IntToString(G);
+	let b = IntToString(B);
+	let boss = GetEnemyBossObjectID[0];
+	let spells = Obj_GetValueD(boss, "Spellcards", []);
+	spells = spells~[[SpellName, r, g, b, "", ""]];
+	Obj_SetValue(boss, "Spellcards", spells);
+}
+
+task ObjCutin_SetSpellcardS4(SpellName, image, cuttype, R, G, B)
+{
+	let r = IntToString(R);
+	let g = IntToString(G);
+	let b = IntToString(B);
+	let boss = GetEnemyBossObjectID[0];
+	let spells = Obj_GetValueD(boss, "Spellcards", []);
+	spells = spells~[[SpellName, r, g, b, cuttype, image]];
+	Obj_SetValue(boss, "Spellcards", spells);
+}
+
+task ObjCutin_LaunchS3(image, difficulty)
+{
+	CutinS3(image, difficulty);
+}
+
+task CutinS3(mimage, difficulty)
+{
+	let spells = Obj_GetValueD(GetEnemyBossObjectID[0], "Spellcards", []);
+	let boss = GetEnemyBossObjectID[0];
+	let spcount = length(spells);
+	CutinDifficulty = difficulty;
+	let IsSpellAttackAnimation = false;
+	descent(i in 0..spcount){SpellText(6*i, i);}
+	SpawnCutinImage(mimage);
+	
+	
+	let delay = 6;
+	while(!Obj_IsDeleted(boss)){
+		spells = Obj_GetValueD(boss,"Spellcards", []);
+		if(length(spells)!=spcount&&delay==0){
+			delay = 6;
+			SpellText(0, spcount);
+			SpawnCutinImage(spells[spcount][5]);
+			spcount++;
+		}
+		delay = max(delay-1, 0);
+		yield;
+	}
+	
+	
+	
+	task FireCutinA1(x, y, angle, ispeed, itime, mspeed, mtime, img){	
+		if(IsSpellAttackAnimation){return;}	
+		let SpellCutin = CreateSimple2DImageA1(0.80, img);
+		ObjRender_SetPosition(SpellCutin, x, y, 0);
+		ObjRender_SetAlpha(SpellCutin, 0);
+		
+		
+		
+		let len = itime;
+		ascent(x in 0..len){
+			let mod = x/len;
+			let locs = [ObjRender_GetX(SpellCutin), ObjRender_GetY(SpellCutin)];
+			ObjRender_SetPosition(SpellCutin, floor(locs[0]+ispeed*cos(angle)), floor(locs[1]+ispeed*sin(angle)), 0);
+			
+			let alph = min(255, 255*(mod*2));
+			ObjRender_SetAlpha(SpellCutin, alph);
+			yield;
+		}
+		
+		len = mtime;
+		let nx = ObjRender_GetX(SpellCutin);
+		let ny = ObjRender_GetY(SpellCutin);
+		ascent(x in 0..len){
+			nx += mspeed*cos(angle);
+			ny += mspeed*sin(angle);
+			ObjRender_SetPosition(SpellCutin, floor(nx), floor(ny), 0);
+			yield;
+		}
+		//return;
+		len = mtime;
+		ascent(x in 0..len){
+			let mod = x/len;
+			let locs = [ObjRender_GetX(SpellCutin), ObjRender_GetY(SpellCutin)];
+			ObjRender_SetPosition(SpellCutin, floor(locs[0]+ispeed*cos(angle)), floor(locs[1]+ispeed*sin(angle)), 0);
+			yield;
+		}
+		Obj_Delete(SpellCutin);
+		
+	}
+
+	task FireCutinA2(x, y, alpha, img, details){
+		if(IsSpellAttackAnimation){return;}
+		//[spd, spdinc, ang, anginc, alphachange, time]
+		let SpellCutin = CreateSimple2DImageA1(0.80, img);
+		ObjRender_SetPosition(SpellCutin, x, y, 0);
+		ObjRender_SetAlpha(SpellCutin, alpha);
+		
+		ascent(i in 0..length(details)){
+			let nx = ObjRender_GetX(SpellCutin);
+			let ny = ObjRender_GetY(SpellCutin);
+			let info = details[i];
+			let len = info[5];
+			let alphinc = -(alpha-info[4])/len;
+			let spdinc = -(info[0]-info[1])/len;
+			let mspeed = info[0];
+			let cangle = info[2];
+			ascent(x in 0..len){
+				mspeed+=spdinc;
+				cangle+=info[3];
+				nx += mspeed*cos(cangle);
+				ny += mspeed*sin(cangle);
+				ObjRender_SetPosition(SpellCutin, nx, ny, 0);
+				yield;
+				alpha = min(max(alpha+alphinc, 0), 255);
+				ObjRender_SetAlpha(SpellCutin, alpha);
+			}
+		}
+		Obj_Delete(SpellCutin);
+	}
+
+	function SpawnCutinImage(image){
+		
+		FireCutinA2(GetStgFrameWidth+256, GetStgFrameHeight/2+96, 0, image,
+		[
+			[32, 1, 182, 0.1, 255, 30],
+			[1, 1.25, 180, 14, 255, 10],
+			[1.25, 1.75, 315, 0, 255, 80],
+			[2, 2.5, 340, -15.75, 192, 10],
+			[2.5, 31, 182.5, 0, 0, 20],
+		]
+		);
+		SpellAttackEffect(145);
+		
+	}
+	
+	task SpellText(delay, num){
+		let tspell = spells[num];
+		let SpellName = tspell[0];
+		let r = atoi(tspell[1]);
+		let g = atoi(tspell[2]);
+		let b = atoi(tspell[3]);
+		
+		let Colors = [[r,g,b]];
+		
+		//These are long-looking common data group names
+		let SpellDataAttempt = SpellName~"|"~CutinDifficulty~"|"~GetPlayerID~"|"~"Attempt";
+		let SpellDataGet = SpellName~"|"~CutinDifficulty~"|"~GetPlayerID~"|"~"Get";
+		//This is actually the common data retrieval
+		let SpellValueAttempt = GetAreaCommonData("cutin_History", SpellDataAttempt, 0);
+		let SpellValueGet = GetAreaCommonData("cutin_History", SpellDataGet, 0);
+		
+		
+		if(!IsReplay&&!DEBUG&&num==0){
+			SpellValueAttempt++;
+			SetAreaCommonData("cutin_History", SpellDataAttempt, SpellValueAttempt);
+			SaveCommonDataAreaA1("cutin_History");
+		}
+	
+	
+		let SpellBG = CreateSimple2DImageA2(0.81+0.01*max(0, 1-num), SpellAttack_img, 0, 0, 255, 42);
+		ObjSprite2D_SetDestRect(SpellBG, -220, -12, 32, 20);
+		ObjRender_SetPosition(SpellBG, GetScreenWidth/2, 24+32*num, 0);
+		ObjRender_SetAlpha(SpellBG, 0);
+		ObjRender_SetColor(SpellBG, Colors[0][0], Colors[0][1], Colors[0][2]);
+		ObjSprite2D_SetDestCenter(SpellBG);
+		
+		let SpellText = ObjText_Create;
+		ObjText_SetText(SpellText,SpellName);
+		ObjText_SetFontSize(SpellText,20);
+		ObjText_SetFontColorTop(SpellText,255,255,255);
+		ObjText_SetFontColorBottom(SpellText, 255, 255, 255);
+		ObjText_SetFontBorderType(SpellText,BORDER_FULL);
+		ObjText_SetFontBorderColor(SpellText,0,0,0);
+		ObjText_SetFontBorderWidth(SpellText,2);
+		ObjText_SetHorizontalAlignment(SpellText, ALIGNMENT_CENTER);
+		ObjText_SetMaxWidth(SpellText, GetStgFrameWidth-24);
+		Obj_SetRenderPriority(SpellText, 0.82+0.01*max(0, 1-num));
+		ObjRender_SetPosition(SpellText, 0, 12+32*num, 0);
+		ObjRender_SetAlpha(SpellText, 0);
+		ObjText_SetFontType(SpellText,"Times New Roman");
+		
+		
+		let SpellInfo = ObjPrim_Create(OBJ_SPRITE_LIST_2D);
+		let bonus = 0;
+		let count = GetNumSize(bonus);
+		let scount = max(2, GetNumSize(SpellValueAttempt));
+		ObjPrim_SetTexture(SpellInfo, SpellAttack_img);
+		ObjRender_SetBlendType(SpellInfo, BLEND_ALPHA);
+		Obj_SetRenderPriority(SpellInfo, 0.81);
+		ObjRender_SetY(SpellInfo, 36);
+		ObjRender_SetAlpha(SpellInfo, 0);
+		
+		//-------------Introduction--------------------------
+		
+		loop(delay){yield;}
+		let len = 30;
+		ascent(i in 0..len)
+		{
+			let mod = i/len;
+			let tmod = min(1, ((i*2)/len));
+			ObjRender_SetScaleXYZ(SpellBG, 4-2.5*mod, 4-2.5*mod, 1);
+			ObjRender_SetAlpha(SpellBG, 255*mod);
+			ObjRender_SetX(SpellText, (GetStgFrameWidth-24)*(1-mod)+100);
+			//ObjRender_SetScaleXYZ(SpellText, 4-3*tmod, 4-3*tmod, 1);
+			ObjRender_SetAlpha(SpellText, 255*tmod);
+			yield;
+		}
+		loop(40){yield;}
+		let mov = 0;
+		
+		RegularSpellCardDeclare([ObjRender_GetY(SpellText), 12+32*num, 0.135, 12]);
+		//32 is the offset from the top of the screen
+		//If using a system where the lifebar is on the boss rather than the top of the screen, 12 is a good value
+
+		
+		loop(delay*0.65){yield;}
+		
+		ascent(i in 0..80){
+			let endspeed = 0.5+i/2.5;
+			ObjRender_SetX(SpellBG, ObjRender_GetX(SpellBG)+endspeed);
+			ObjRender_SetX(SpellText, ObjRender_GetX(SpellText)+endspeed);
+			yield;
+		}
+		
+		Obj_Delete(SpellBG);
+		Obj_Delete(SpellText);
+		
+		function SpellcardDeclareMovement(dest){
+			ObjRender_SetY(SpellInfo, 24+dest[1]);
+			while(dest[0]>dest[1]){
+				dest[0] = ObjRender_GetY(SpellText);
+				mov = min(mov+dest[2], (dest[0]-dest[1])/dest[3]+0.125);
+				ObjRender_SetY(SpellBG, dest[0]-mov);
+				ObjRender_SetY(SpellText, dest[0]-mov-2);
+				yield;
+			}
+		}
+		
+		function RegularSpellCardDeclare(dest){
+			if(num!=0){Obj_Delete(SpellInfo);}
+			SpellcardDeclareMovement(dest);
+			ascent(i in 0..20){
+				ObjRender_SetAlpha(SpellInfo, 255/20*i);
+				//DrawScoreBonus;
+				yield;
+			}
+			let timerf = ObjEnemyBossScene_GetInfo(GetEnemyBossSceneObjectID, INFO_ORGTIMERF);
+			let startdiff = timerf-(timerf-5*60);
+			while(!Obj_IsDeleted(boss)){
+				ObjRender_SetAlpha(SpellBG, Alpha_HUD[0]);
+				ObjRender_SetAlpha(SpellText, Alpha_HUD[0]);
+				ObjRender_SetAlpha(SpellInfo, Alpha_HUD[0]);
+				
+			//	let modif = min(1, ((ObjEnemyBossScene_GetInfo(GetEnemyBossSceneObjectID, INFO_TIMERF))/(ObjEnemyBossScene_GetInfo(GetEnemyBossSceneObjectID, INFO_ORGTIMERF)-startdiff)));
+			//	bonus = ((sscore*0.20)+(sscore*((modif)*0.80)));
+				//DrawScoreBonus;
+				yield;
+			}
+			Obj_Delete(SpellInfo);
+			
+			if(bonus>=1&&ObjEnemyBossScene_GetInfo(GetEnemyBossSceneObjectID, INFO_TIMERF)>0){
+			//	GotSpellCard(bonus);
+			//	AddScore(bonus);
+				if(!IsReplay&&!DEBUG&&num==0){
+					SpellValueGet++;
+					SetAreaCommonData("cutin_History", SpellDataGet, SpellValueGet);
+					SaveCommonDataAreaA1("cutin_History");
+				}
+			}else{
+			//	FailedSpellCard;
+			}
+		}
+		sub DrawScoreBonus{
+			if(GetPlayerY<128+32*length(spells)){Alpha_HUD[0] = max(Alpha_HUD[0]-10, 85);}else{Alpha_HUD[0] = min(Alpha_HUD[0]+11, 255);}
+			
+			ObjSpriteList2D_ClearVertexCount(SpellInfo);
+				
+			ObjSpriteList2D_SetSourceRect(SpellInfo, 0, 48, 128, 60);
+			ObjSpriteList2D_SetDestCenter(SpellInfo);
+			ObjRender_SetX(SpellInfo, GetStgFrameWidth-130);
+			ObjSpriteList2D_AddVertex(SpellInfo);
+			//Bonus Score
+			bonus = ObjEnemyBossScene_GetInfo(GetEnemyBossSceneObjectID, INFO_SPELL_SCORE);
+			count = GetNumSize(bonus);
+			let listNum = DigitToArray(min(99999999, bonus), count);
+			let objScene = GetEnemyBossSceneObjectID;
+			if(ObjEnemyBossScene_GetInfo(objScene, INFO_PLAYER_SHOOTDOWN_COUNT) +
+			ObjEnemyBossScene_GetInfo(objScene, INFO_PLAYER_SPELL_COUNT) == 0){
+				ascent(iObj in 0 .. count){
+					let num = listNum[iObj];
+					ObjRender_SetX(SpellInfo, GetStgFrameWidth-94-(8*count) + iObj * 7);
+					ObjSpriteList2D_SetSourceRect(SpellInfo, num * 8, 64, (num + 1) * 8, 76);
+					ObjSpriteList2D_SetDestCenter(SpellInfo);
+					ObjSpriteList2D_AddVertex(SpellInfo);
+				}
+			}else{
+					bonus = 0;
+					ObjRender_SetX(SpellInfo, GetStgFrameWidth-131);
+					ObjSpriteList2D_SetSourceRect(SpellInfo, 144, 48, 176, 60);
+					ObjSpriteList2D_SetDestCenter(SpellInfo);
+					ObjSpriteList2D_AddVertex(SpellInfo);
+			}
+			//History
+			listNum = DigitToArray(SpellValueGet, scount) ~ [10] ~ DigitToArray(SpellValueAttempt, scount);
+				
+			ascent(iObj in 0 .. scount*2+1){
+				let num = listNum[iObj];
+				ObjRender_SetX(SpellInfo, GetStgFrameWidth-58 + iObj * 8);
+				ObjSpriteList2D_SetSourceRect(SpellInfo, num * 8, 64, (num + 1) * 8, 76);
+				ObjSpriteList2D_SetDestCenter(SpellInfo);
+				ObjSpriteList2D_AddVertex(SpellInfo);
+			}
+		}
+	}
+	
+	task SpellAttackEffect(alphamax){
+		if(IsSpellAttackAnimation){return;}
+		IsSpellAttackAnimation = true;
+		let alpha = 1;
+		let GetCenterX = GetStgFrameWidth/2;
+		let GetCenterY = GetStgFrameHeight/2;
+		//LightLine(GetCenterX, GetCenterY, -1.5);
+		//LightLine2(GetCenterX, GetCenterY, -1.5);
+		//Octagon(GetCenterX*2, GetCenterY*2, -1.15, 180, 1);
+		//Octagon(GetCenterX*2, GetCenterY*2, 1.05, 240, 0);
+		//Octagon(GetCenterX*2, GetCenterY*2, 1.05, 295, 0);
+		//Octagon(GetCenterX/5, GetCenterY/5, 0.75, 170, 1);
+		
+		ascent (i in 0..13)
+		{
+		//	Line(GetCenterX, 0+(i*75), 1.5);
+		}
+		ascent (i in 0..13)
+		{
+		//	Line(GetCenterX, GetStgFrameHeight-(i*75), -1.5);
+		}
+		
+		loop(15){yield;}
+		ascent(i in 0..20)
+		{
+			alpha = 0.1+alphamax/20*i;
+			yield;
+		}
+		loop(110){yield;}
+		descent(i in 0..20)
+		{
+			alpha = alphamax/20*i;
+			yield;
+		}
+		
+		IsSpellAttackAnimation = false;
+		
+		task LightLine(mx, my, posinc)
+		{
+			let objSpellAttack = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjRender_SetBlendType(objSpellAttack, BLEND_ADD_ARGB);
+			Obj_SetRenderPriority(objSpellAttack, 0.75);
+			ObjPrim_SetTexture(objSpellAttack, img_SpellAttack_L);
+			ObjSprite2D_SetSourceRect(objSpellAttack, 0, 0, GetStgFrameWidth, 64*3);
+			ObjSprite2D_SetDestRect(objSpellAttack, -256*2, -64, 256*2, 64);
+			let LineX = 0;
+			ObjRender_SetPosition(objSpellAttack, mx, my, 0);
+			ObjRender_SetAngleZ(objSpellAttack, -0);
+			while(alpha>0){
+				LineX += posinc;
+				ObjSprite2D_SetSourceRect(objSpellAttack, LineX, 0, 1+LineX, 64*1);
+				ObjRender_SetAlpha(objSpellAttack, alpha);
+				yield;
+			}
+			Obj_Delete(objSpellAttack);
+		}
+		task LightLine2(mx, my, posinc)
+		{
+			let objSpellAttack = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjRender_SetBlendType(objSpellAttack, BLEND_ADD_ARGB);
+			Obj_SetRenderPriority(objSpellAttack, 0.75);
+			ObjPrim_SetTexture(objSpellAttack, img_SpellAttack_L);
+			ObjSprite2D_SetSourceRect(objSpellAttack, 0, 0, GetStgFrameWidth, 64*3);
+			ObjSprite2D_SetDestRect(objSpellAttack, -256*2, -64, 256*2, 64);
+			let LineX = 0;
+			let alfa = 255;
+			ObjRender_SetPosition(objSpellAttack, mx, my, 0);
+			ObjRender_SetAngleZ(objSpellAttack, -0);
+			let Yscale = 1;
+			loop(50)
+			{
+				ObjRender_SetAlpha(objSpellAttack,alfa);
+				ObjSprite2D_SetSourceRect(objSpellAttack, LineX, 0, 1+LineX, 64*1);
+				ObjRender_SetScaleXYZ(objSpellAttack,1,Yscale,1);
+				Yscale+=0.1;
+				alfa-=255/50;
+				yield;
+			}
+			Obj_Delete(objSpellAttack);
+		}
+		
+		task Line(mx, my, posinc){
+			let objSpellAttack = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjRender_SetBlendType(objSpellAttack, BLEND_ALPHA);
+			Obj_SetRenderPriority(objSpellAttack, 0.75);
+			ObjPrim_SetTexture(objSpellAttack, img_SpellAttack);
+			ObjSprite2D_SetSourceRect(objSpellAttack, 0, 0, 512, 16);
+			ObjSprite2D_SetDestRect(objSpellAttack, -256*2, -8, 256*2, 8);
+			let LineX = 0;
+			ObjRender_SetPosition(objSpellAttack, mx, my, 0);
+			ObjRender_SetAngleZ(objSpellAttack, -0);
+			while(alpha>0){
+				LineX += posinc;
+				ObjSprite2D_SetSourceRect(objSpellAttack, LineX, 0, 512*2+LineX, 16);
+				ObjRender_SetAlpha(objSpellAttack, alpha);
+				yield;
+			}
+			Obj_Delete(objSpellAttack);
+		}
+	
+		task Octagon(mx, my, spininc, dist, size){
+		
+			let countVertex = 16;
+			let listRadius = [];
+			loop(countVertex){
+				listRadius = listRadius ~ [0];
+			}
+
+			let objOutline = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+			ObjPrim_SetPrimitiveType(objOutline, PRIMITIVE_TRIANGLESTRIP);
+			ObjPrim_SetVertexCount(objOutline, countVertex);
+			ObjRender_SetBlendType(objOutline, BLEND_ALPHA);
+			Obj_SetRenderPriority(objOutline, 0.76);
+			ObjPrim_SetTexture(objOutline, img_SpellAttack);
+			ascent (iVert in 0..countVertex/2){
+				let left = iVert * 128;
+				let indexVert = iVert * 2;
+				ObjPrim_SetVertexUVT(objOutline, indexVert + 0, left, 0);
+				ObjPrim_SetVertexUVT(objOutline, indexVert + 1, left, 16);
+			}			
+	
+			let frame = 0;
+			let rRate = 1;
+			let spin = 0;
+	
+			while(alpha>0){
+				spin+=spininc;
+				VertexSize;
+				ObjRender_SetPosition(objOutline, mx, my, 0);
+				ObjRender_SetAngleZ(objOutline, spin);
+				ObjRender_SetAlpha(objOutline, alpha);
+				frame++;
+				yield;
+			}
+			Obj_Delete(objOutline);
+			
+			task VertexSize{	
+				if(frame>=35){return;}
+				ascent (iVert in 0..countVertex/2){
+					let indexVert = iVert * 2;
+					let angle = (360 / (countVertex / 2 - 1) * iVert);
+
+					let vx1 = listRadius[indexVert] * cos(angle);
+					let vy1 = listRadius[indexVert] * sin(angle);
+					ObjPrim_SetVertexPosition(objOutline, indexVert + 0, vx1, vy1, 0);
+
+					let vx2 = listRadius[indexVert+1] * cos(angle);
+					let vy2 = listRadius[indexVert+1] * sin(angle);
+					ObjPrim_SetVertexPosition(objOutline, indexVert + 1, vx2, vy2, 0);
+
+					let dr = (dist * rRate - listRadius[indexVert]) / 16;
+					listRadius[indexVert] = listRadius[indexVert] + dr;
+					if(frame>size){
+						listRadius[indexVert + 1] = listRadius[indexVert + 1] + dr;
+					}
+				}
+			}
+		}
+	}
+}
+task FadeInA1(obj, ftime)
+{
+	ascent(i in 0..ftime){
+		ObjRender_SetAlpha(obj, 255/ftime*i);
+		yield;
+	}
+}
+task FadeInB1(obj, alpha, ftime)
+{
+	ascent(i in 0..ftime){
+		ObjRender_SetAlpha(obj, alpha/ftime*i);
+		yield;
+	}
+}
+task FadeOutA1(obj, ftime)
+{
+	descent(i in 0..ftime){
+		ObjRender_SetAlpha(obj, 255/ftime*i);
+		yield;
+	}
+}
+task FadeOutB1(obj, initalpha, ftime)
+{
+	descent(i in 0..ftime){
+		ObjRender_SetAlpha(obj, initalpha/ftime*i);
+		yield;
+	}
+}
+function CreateSimple2DImageA1(pri, image)
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjRender_SetBlendType(obj, BLEND_ALPHA);
+	Obj_SetRenderPriority(obj, pri);
+	ObjPrim_SetTexture(obj, image);
+	let test = [GetTextureWidth(image), GetTextureHeight(image)];
+	ObjSprite2D_SetSourceRect(obj, 0, 0, test[0]-1, test[1]-1);
+	ObjSprite2D_SetDestRect(obj, -(test[0]/2+0.5), -(test[1]/2), (test[0]/2), (test[1]/2));
+	return obj;
+}
+function CreateSimple2DImageA2(pri, image, x1, y1, x2, y2)
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjRender_SetBlendType(obj, BLEND_ALPHA);
+	Obj_SetRenderPriority(obj, pri);
+	ObjPrim_SetTexture(obj, image);
+	ObjSprite2D_SetSourceRect(obj, x1, y1, x2, y2);
+	ObjSprite2D_SetDestCenter(obj);
+	return obj;
+}
+function DigitToArray(digit, count)
+{
+	let res = [];
+	digit = truncate(digit);
+
+	loop{
+		let tnum = truncate(digit % 10);
+		digit /= 10;
+		res = [tnum] ~ res;
+		if(truncate(digit) == 0){break;}
+	}
+
+	loop(max(0, count - length(res))){
+		res = [0] ~ res;
+	}
+
+	return res;
+}
+function GetNumSize(value)
+{
+	if(value<=1){return 1;}
+	else{return truncate(log10(value))+1;}
+}
+
+task Card(R,G,B)
+{
+
+	Circles(1);
+	Circles(-1);
+	
+	SpellChain(GetStgFrameWidth/2+rand(20,-20)+50,GetStgFrameHeight/2,10,180,1.2,1);
+	SpellChain(GetStgFrameWidth/2+rand(20,-20)-200,GetStgFrameHeight/2,-30,0,1,0.25);
+	SpellChain(GetStgFrameWidth/2+rand(20,-20)+200,GetStgFrameHeight/2,-50,0,1.1,0);
+	SpellChain(GetStgFrameWidth/2+rand(20,-20)-200,GetStgFrameHeight/2+80,-80,90,0.75,0.25);
+	SpellChain(0+10,		       GetStgFrameHeight/2,0,90,1.5,0);
+	SpellChain(GetStgFrameWidth-10,GetStgFrameHeight/2,0,90,1.5,0);
+	
+    let a =ObjPrim_Create(OBJ_SPRITE_2D);
+    let b =ObjPrim_Create(OBJ_SPRITE_2D);
+    let c =ObjPrim_Create(OBJ_SPRITE_2D);
+    let d =ObjPrim_Create(OBJ_SPRITE_2D);
+    let e =ObjPrim_Create(OBJ_SPRITE_2D);
+    let f =ObjPrim_Create(OBJ_SPRITE_2D);
+    let g =ObjPrim_Create(OBJ_SPRITE_2D);
+    let h =ObjPrim_Create(OBJ_SPRITE_2D);
+    let SplitCard = [a, b, c, d, e, f, g, h];
+    ascent(i in 0..length(SplitCard))
+    {
+        ObjPrim_SetTexture(SplitCard[i], Card_ImgArray[i+4]);
+        ObjRender_SetBlendType(SplitCard[i], BLEND_ALPHA);
+        Obj_SetRenderPriority(SplitCard[i], 0.28);
+        ObjSprite2D_SetSourceRect(SplitCard[i], 0, 0, 190, 500);
+        ObjSprite2D_SetDestCenter(SplitCard[i]);
+        ObjRender_SetColor(SplitCard[i], R, G, B);
+        ObjRender_SetAlpha(SplitCard[i], 0);
+        ObjRender_SetScaleXYZ(SplitCard[i], 4, 4, 1);
+        ObjRender_SetPosition(SplitCard[i], GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+        ScaleDown(SplitCard[i]);
+    }
+    wait(30);
+    let angle = 45;
+    CornerMove(SplitCard[0],0, 180, -1);
+    CornerMove(SplitCard[1],90, 90, 1);
+    CornerMove(SplitCard[2],180, 90, 1);
+    CornerMove(SplitCard[3],270, 180, -1);
+    BorderSpin(SplitCard[4]);
+    let Scaling = 0;
+    ScaleUpABit(SplitCard[5], 1);
+    ScaleUpABit(SplitCard[6], 200);
+    ScalaleUpdown(SplitCard[5], 1.5);
+    Spiiiin(SplitCard[5], 1);
+    Spiiiin(SplitCard[6], -1);
+    Spiiiin(SplitCard[7], 1);
+    wait(60);
+    AlphaDownAndDelete(SplitCard[5],100);
+    AlphaDownAndDelete(SplitCard[6],100);
+    wait(30);
+    AlphaDownAndDelete(SplitCard[4],100);
+    AlphaDownAndDelete(SplitCard[7],100);
+    AlphaDownAndDelete(SplitCard[0],100);
+    AlphaDownAndDelete(SplitCard[1],100);
+    AlphaDownAndDelete(SplitCard[2],100);
+    AlphaDownAndDelete(SplitCard[3],100);
+    task AlphaDownAndDelete(obj,mult)
+    {
+        let alpha = 255;
+        loop(mult)
+        {
+            alpha-=255/mult;
+            ObjRender_SetAlpha(obj,alpha);
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+    task ScalaleUpdown(obj, mult)
+    {
+        wait(35);
+        while(!Obj_IsDeleted(obj))
+        {
+            Scaling+=0.002*mult;
+            ObjRender_SetScaleXYZ(obj, 1+Scaling, 1+Scaling, 1);
+            yield;
+        }
+    }
+    task Spiiiin(obj, mult)
+    {
+        wait(30);
+        while(!Obj_IsDeleted(obj))
+        {
+            let angle = ObjRender_GetAngleZ(obj);
+            ObjRender_SetAngleZ(obj, angle+(6*mult));
+            yield;
+        }
+    }
+    task ScaleUpABit(obj, mult)
+    {
+        loop(5)
+        {
+            Scaling+=0.0005*(mult*0.7);
+            ObjRender_SetScaleXYZ(obj, 1+Scaling, 1+Scaling, 1);
+            yield;
+        }
+    }
+    task BorderSpin(obj)
+    {
+        let scale = 0;
+        while(!Obj_IsDeleted(obj))
+        {
+            let angle = ObjRender_GetAngleZ(obj);
+            ObjRender_SetAngleZ(obj, angle+6);
+            scale+=0.002;
+            ObjRender_SetScaleXYZ(obj, 0.7+scale, 0.7+scale, 1);
+            yield;
+        }
+    }
+    task ScaleDown(obj)
+    {
+        let alpha = 0;
+        let scale = 0;
+        loop(15)
+        {
+            alpha+=4.1*4;
+            ObjRender_SetAlpha(obj,alpha);
+            scale+=0.055*4;
+            ObjRender_SetScaleXYZ(obj, 4-scale, 4-scale, 1);
+            yield;
+        }
+    }
+    task CornerMove(obj, i,mult, multi)
+    {
+        let radius = 0;
+        let X = GetStgFrameWidth/2;
+        let Y = GetStgFrameHeight/2;
+        loop(10)
+        {
+            ObjRender_SetPosition(obj, X+radius*cos(angle+(i*360/4)+mult), Y+radius*sin(angle+(i*360/4)+mult), 0);
+            radius+=6;
+            yield;
+        }
+        wait(40);
+        loop(160)
+        {
+            ObjRender_SetPosition(obj, X+radius*cos(angle+(i*360/4)+mult), Y+radius*sin(angle+(i*360/4)+mult), 0);
+            ObjRender_SetAngleZ(obj, ObjRender_GetAngleZ(obj)+(1*multi));
+            radius-=0.5;
+            yield;
+        }
+    }
+	task Circles(AngleY)
+	{
+		let count = 270;
+		let ArCount = 0;
+		let countwait = 0;
+		let moveamount = 3;
+		let XPlus = 30;
+		ascent(i in 0..220)
+		{
+			
+			let objC = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(objC,Card_ImgArray[ArCount+12]);
+			Obj_SetRenderPriority(objC,0.28);
+			ObjRender_SetAngleZ(objC,0);		
+			let ALF=0;
+			ObjRender_SetAlpha(objC,ALF);
+			let scale =1;
+			ObjRender_SetScaleXYZ(objC,scale,scale,scale);
+			ObjSprite2D_SetSourceRect(objC,0,0,80,391);
+			ObjSprite2D_SetDestRect(objC,0,0,80,391);
+			ObjSprite2D_SetDestCenter(objC);
+			ObjRender_SetAngleY(objC,90+90*AngleY);
+			
+			ObjRender_SetPosition(objC,GetStgFrameWidth/2+XPlus*AngleY,GetStgFrameHeight/2,0);
+			ObjRender_SetAlpha(objC,128+(128)*cos(count));
+			XPlus+=moveamount;
+			if(moveamount>-2)
+			{
+				moveamount-=6/220;
+			}
+			count+=260/220;
+
+			if(countwait>4)
+			{
+				ArCount++;
+				countwait = 0;
+			}
+			countwait++;
+			if(ArCount>5){ArCount = 0;}
+			
+			yield;
+			
+			Obj_Delete(objC);
+		}
+	}
+	task SpellChain(X,Y,angle,moveangle,scale,moveamount)
+	{
+		let objC = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objC,Card_ImgArray[3]);
+		Obj_SetRenderPriority(objC,0.27);
+		ObjRender_SetAngleZ(objC,angle);		
+		let ALF=0;
+		ObjRender_SetAlpha(objC,ALF);
+		ObjRender_SetScaleXYZ(objC,scale,scale,scale);
+		ObjSprite2D_SetSourceRect(objC,0,0,20,2200);
+		ObjSprite2D_SetDestRect(objC,0,0,20,2200);
+		ObjSprite2D_SetDestCenter(objC);
+		let c = 0;
+		ObjRender_SetPosition(objC,X,Y,0);
+		loop(30)
+		{
+			ObjRender_SetAlpha(objC,ALF);
+			ObjRender_SetPosition(objC,ObjRender_GetX(objC)+moveamount*cos(moveangle),ObjRender_GetY(objC)+moveamount*sin(moveangle),0);
+			ObjSprite2D_SetSourceRect(objC,0,c,20,2200+c);
+			c+=5;
+			ALF+=255/30;
+			yield;
+		}
+		loop(150)
+		{
+			ObjRender_SetPosition(objC,ObjRender_GetX(objC)+moveamount*cos(moveangle),ObjRender_GetY(objC)+moveamount*sin(moveangle),0);
+			ObjSprite2D_SetSourceRect(objC,0,c,20,2200+c);
+			c+=5;
+			yield;
+		}
+		loop(30)
+		{
+			ObjRender_SetAlpha(objC,ALF);
+			ObjRender_SetPosition(objC,ObjRender_GetX(objC)+moveamount*cos(moveangle),ObjRender_GetY(objC)+moveamount*sin(moveangle),0);
+			ObjSprite2D_SetSourceRect(objC,0,c,20,2200+c);
+			c+=5;
+			ALF-=255/30;
+			yield;
+		}
+		Obj_Delete(objC);
+	}
+}
