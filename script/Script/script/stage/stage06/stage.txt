@@ -15,7 +15,7 @@ let vol = 100;
 let MusicFade = false;
 @Initialize
 {
-	
+	LoadBoss();
 	InitialiseIndiv();
 	SetPlayerLife(9999);
 	//SetForbidPlayerSpell(true);
@@ -104,12 +104,34 @@ task StartMusic
 task Dialog
 {
 }
+let Boss;
+task LoadBoss()
+{
+	Boss=ObjEnemyBossScene_Create();
+	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
+	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
+	
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
+	
+	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"Ns3.txt");
+	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
+	
+	ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"Ns4.txt");
+	ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
+	
+	ObjEnemyBossScene_Add(Boss,4,GetCurrentScriptDirectory~"S5.txt");
+	
+	ObjEnemyBossScene_Add(Boss,5,GetCurrentScriptDirectory~"S6.txt");
+
+	ObjEnemyBossScene_LoadInThread(Boss);
+}
 task StartStage
 {	
 	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
-	SetCommonData("MaxNumberOfPhases",10);
-	loop(60)
+	SetCommonData("MaxNumberOfPhases",5);
+	loop(120)
 	{
 		yield;
 	}
@@ -121,24 +143,8 @@ task StartStage
 	*/
 	loop(1)
 	{
-		let Boss=ObjEnemyBossScene_Create();
-		ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
-		ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
 		
-		ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
-		ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
 		
-		ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"Ns3.txt");
-		ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
-		
-		ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"Ns4.txt");
-		ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
-		
-		ObjEnemyBossScene_Add(Boss,4,GetCurrentScriptDirectory~"S5.txt");
-		
-		ObjEnemyBossScene_Add(Boss,5,GetCurrentScriptDirectory~"S6.txt");
-
-		ObjEnemyBossScene_LoadInThread(Boss);
 		ObjEnemyBossScene_Regist(Boss);	
 		while(!Obj_IsDeleted(Boss))
 		{
