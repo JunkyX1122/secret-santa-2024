@@ -71,9 +71,12 @@ let IMG_EAGLE= GetCurrentScriptDirectory() ~ "./../../img/enemy/eagle.png";
 let IMG_ANIMALSPIRIT= GetCurrentScriptDirectory() ~ "./../../img/enemy/animal_spirits.png";
 
 
-let IMG_WING = GetCurrentScriptDirectory()~"./../../img/effect/wing.png";
+let IMG_WING = GetCurrentScriptDirectory()~"./../../img/enemy/wing.png";
+let IMG_SWORD = GetCurrentScriptDirectory()~"./../../img/enemy/sword.png";
+let IMG_DRAGONMAW = GetCurrentScriptDirectory()~"./../../img/enemy/dragon_maw.png";
+let IMG_REDRINSHIELD = GetCurrentScriptDirectory()~"./../../img/enemy/redrinShield.png";
 
-let BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING];
+let BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD];
 
 //---------------------------------------
 //--------------FACE IMAGES--------------
@@ -145,8 +148,7 @@ let IMG_SWITCHAURA = GetCurrentScriptDirectory()~"./../../img/effect/possfire.pn
 
 let IMG_SLASH = GetCurrentScriptDirectory()~"./../../img/effect/Slash.png";
 let IMG_FIRERING = GetCurrentScriptDirectory()~"./../../img/effect/FireRing.png";
-let IMG_SWORD = GetCurrentScriptDirectory()~"./../../img/effect/sword.png";
-let IMG_DRAGONMAW = GetCurrentScriptDirectory()~"./../../img/effect/dragon_maw.png";
+
 
 
 
@@ -154,7 +156,7 @@ let Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,IMG_ITEM,IM
 IMG_WARINING,IMG_AURA,IMG_LEFTEYE,IMG_FADERING,IMG_SUN1,IMG_SUN2,IMG_SUN3,IMG_SUN4,IMG_MASTER_SPARK,IMG_PAGODA1,IMG_PAGODA2,IMG_BOTTOMWARNING,
 IMG_GUARDRING,IMG_FLASHEFF,IMG_CHARGEEFF,IMG_STAR,IMG_GRADIENT,IMG_MAGICCIRCLE,IMG_FDFCHARGE,IMG_FDFBURST,IMG_FDFLINES,
 IMG_SAURA,IMG_SAURA2,IMG_SWITCHAURA,IMG_FADEBALL,
-IMG_SLASH,IMG_FIRERING,IMG_SWORD,IMG_DRAGONMAW];
+IMG_SLASH,IMG_FIRERING];
 
 //---------------------------------------
 //---------------CARDS EF----------------

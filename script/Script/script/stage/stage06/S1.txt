@@ -265,7 +265,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type,shoottype)
 	
 	let objspell = CreateShotA1(sourceX,sourceY,0,0,1,0);
 	ObjRender_SetAlpha(objspell,0);
-	let d = renderTime+1+10;
+	let d = renderTime+1;
 	ascent(o in 0..renderTime)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -312,7 +312,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type,shoottype)
 						let spd = 18;
 						let angP = 0;
 						let totalSpd = spd * spdScl;
-						let objShot = ShotA2(sourceX+x*disAm, sourceY+y*disAm,totalSpd,trueAng + angP*bit,-totalSpd/60, totalSpd/3,shid,deid,d,2,BLEND_ALPHA,true);
+						let objShot = ShotA2(sourceX+x*disAm, sourceY+y*disAm,totalSpd*1.3,trueAng + angP*bit,-totalSpd/60, totalSpd/3,shid,deid,d,2,BLEND_ALPHA,false);
 					}
 				}
 				

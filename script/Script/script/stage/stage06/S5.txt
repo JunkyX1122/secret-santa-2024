@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Shout &quot;Feel My Wrath!&quot;"]
+#Title["&quot;Spear of Justice&quot;"]
 #Text["S5"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Shout &quot;Feel My Wrath!&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("&quot;Spear of Justice&quot;","", LENEN, 255,0,0);
 	
 	ScreenShake(60,4);
 
@@ -100,6 +100,7 @@ let finalSpellBool = false;
 }
 task Fire
 {
+	
 }
 
 task timer

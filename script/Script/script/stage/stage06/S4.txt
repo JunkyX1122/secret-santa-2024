@@ -47,11 +47,6 @@ let finalSpellBool = false;
 	
 	
 	end;
-
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	
-	
-	
 	//WingAura(objEnemy);
 	//SetIntersectionVisualization(true);
 }
@@ -121,6 +116,7 @@ task Fire
 		}
 		if(!firstTime)
 		{
+			ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 			ScreenShake(60,4);
 			ObjCutin_LaunchS3("", "Normal");
 			ObjCutin_SetSpellcardS4("Blaze &quot;Vermillion Blaze&quot;","", LENEN, 255,0,0);
