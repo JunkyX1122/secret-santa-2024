@@ -650,7 +650,7 @@ ShotData
 	}
 } // Blue
 ShotData
-{ id=428 rect=(32,821,63,852) render=ALPHA angular_velocity = 0 collision=(5,1,3) delay_color= (255,255,64) 
+{ id=428 rect=(32,821,63,852) render=ALPHA angular_velocity = 0 collision=(5,0,3) delay_color= (255,255,64) 
 	AnimationData
 	{ 
 		animation_data=(4,128,821,159,852)
@@ -691,7 +691,7 @@ ShotData
 	}
 } // Blue
 ShotData
-{ id=432 rect=(32,821,63,852) render=ADD angular_velocity = 0 collision=(5,1,3) delay_color= (255,255,64) 
+{ id=432 rect=(32,821,63,852) render=ADD angular_velocity = 0 collision=(5,0,3) delay_color= (255,255,64) 
 	AnimationData
 	{ 
 		animation_data=(4,128,885,159,916)

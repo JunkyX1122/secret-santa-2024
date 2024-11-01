@@ -550,7 +550,7 @@ task BuffApply()
 	
 	CreateTempText(GetStgFrameWidth/2,GetStgFrameHeight/2-50,"&quot;Wings of Resolve&quot;",totalShow);
 	wait(timeBetween);
-	CreateTempText(GetStgFrameWidth/2,GetStgFrameHeight/2+50,"&quot;Sanctuary&quot;",totalShow-timeBetween);
+	CreateTempText(GetStgFrameWidth/2,GetStgFrameHeight/2+50,"&quot;Shields of Courage&quot;",totalShow-timeBetween);
 	wait(totalShow-timeBetween);
 	StopSlow(TARGET_ALL);
 	SE_PlayLen(compositespellcard,75);
@@ -651,7 +651,7 @@ task RedrinGlow()
 	{
 		if(regeningBool)
 		{
-			ObjEnemy_SetLife(objEnemy, ObjEnemy_GetInfo(objEnemy, INFO_LIFE) + healthGain );
+			ObjEnemy_SetLife(objEnemy, ObjEnemy_GetInfo(objEnemy, INFO_LIFE) + healthGain);
 		}
 		BurningParticle();
 		yield;
@@ -773,6 +773,7 @@ task end
 	{
 		yield;
 	}
+	regeningBool = false;
 	ascent(o in 0..15)
 	{
 		SE_PlayLen(BossDead,80);

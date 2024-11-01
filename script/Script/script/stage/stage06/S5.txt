@@ -12,7 +12,8 @@ let objEnemy;
 let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 90;
+let TIME_MAX = 60;
+let TIME = TIME_MAX;
 let finalSpellBool = false;
 
 
@@ -22,7 +23,7 @@ let finalSpellBool = false;
   SetScriptResult(275/3);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(90);
+  SetScriptResult(TIME_MAX);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -40,24 +41,16 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
 	
-	
 	end;
 
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("&quot;Spear of Justice&quot;","", LENEN, 255,0,0);
-	
-	ScreenShake(60,4);
-
-	SE_PlayLen(compositespellcard,75);
-	SE_PlayLen(BossSpell,75);
 	//WingAura(objEnemy);
 	//SetIntersectionVisualization(true);
+	
 }
 
 
@@ -66,8 +59,8 @@ let finalSpellBool = false;
 	SetCommonData("BossX", ObjMove_GetX(objEnemy));
 	SetCommonData("BossY", ObjMove_GetY(objEnemy));
 	
-	ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
-	ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+	//ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+	//ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
 	
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
@@ -77,11 +70,11 @@ let finalSpellBool = false;
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		SetCommonData("SpellCardBG1",true);
+		
 	}
     if(count == 95)
     {
-		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		
 		Fire;
 		
         //count = 1111;
@@ -90,6 +83,10 @@ let finalSpellBool = false;
     {
        
     }
+	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+    {
+		ObjEnemy_AddLife(objEnemy,-(275/3)/(TIME*TIME_MAX-2));
+	}
     count++;
     yield;
 }
@@ -98,9 +95,656 @@ let finalSpellBool = false;
 @Finalize
 {
 }
+let REDRIN_DISTFROMCENTRE = GetStgFrameWidth + 200;
+let BOSS_DOWN = 90;
+let BOSS_UP = 270;
+let BOSS_RIGHT = 0;
+let BOSS_LEFT = 180;
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	SpawnCage(bit);
+	wait(60);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2-REDRIN_DISTFROMCENTRE, 60);
+	wait(150);
+	wait(60*2);
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("&quot;Spear of Justice&quot;","", LENEN, 255,0,0);
+	ScreenShake(60,4);
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	SetCommonData("SpellCardBG1",true);
+	wait(60);
 	
+	ManageSpearCharge(bit,BOSS_UP);
+	wait(60*12);
+	ManageSpearCharge(bit,bit==1 ? BOSS_LEFT : BOSS_RIGHT);
+	wait(60*12);
+	ManageSpearCharge(bit,bit==-1 ? BOSS_LEFT : BOSS_RIGHT);
+	wait(60*12);
+	ManageSpearCharge(bit,BOSS_DOWN);
+}
+
+task ManageSpearCharge(bit,mainAng)
+{
+	alternative(mainAng)
+	case(BOSS_DOWN)
+	{
+		SetShotAutoDeleteClip(32,96,32,32);
+	}
+	case(BOSS_UP)
+	{
+		SetShotAutoDeleteClip(32,32,32,96);
+	}
+	case(BOSS_RIGHT)
+	{
+		SetShotAutoDeleteClip(32,64,32,64);
+	}
+	case(BOSS_LEFT)
+	{
+		SetShotAutoDeleteClip(32,64,32,64);
+	}
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2 + REDRIN_DISTFROMCENTRE * cos(mainAng), GetStgFrameHeight/2 + REDRIN_DISTFROMCENTRE * sin(mainAng));
+	let disTotal = (REDRIN_DISTFROMCENTRE+GetStgFrameWidth/2);
+	let laneAngAdd = 0;
+	ascent(ccc in 0..60*6)
+	{
+		if(ccc%120==0)
+		{
+			SE_PlayLen(charge0,60);
+		}
+		if(ccc%8==0)
+		{
+			SE_PlayLen(chime1,60);
+			ascent(i in 0..30)
+			{
+				let ang = mainAng+360/30*i+ccc*2.321*bit;
+				let x = ObjMove_GetX(objEnemy) + disTotal * cos (ang+180);
+				let y = ObjMove_GetY(objEnemy) + disTotal * sin (ang+180);
+				let objShot = ShotA2(x, y,2,ang,5/200,10,298,298,10,2,BLEND_ADD_ARGB,true);
+				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
+			}
+		}
+		
+		if(ccc%30==0)
+		{
+			SE_PlayLen(chime1,60);
+			ascent(i in 0..40)
+			{
+				let ang = mainAng+360/40*i+ccc*9.321*bit;
+				let x = ObjMove_GetX(objEnemy) + disTotal * cos (ang+180);
+				let y = ObjMove_GetY(objEnemy) + disTotal * sin (ang+180);
+				let objShot = ShotA2(x, y,1,ang,6/200,10,338,338,10,2,BLEND_ADD_ARGB,true);
+				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
+			}
+		}
+		ascent(o in 0..8)
+		{
+			if(ccc%20==(o*2))
+			{
+				SE_PlayLen(Shot1,60);
+				ascent(i in 0..24)
+				{
+					let ang = mainAng+360/24*i+laneAngAdd;
+					let x = ObjMove_GetX(objEnemy) + disTotal * cos (ang+180);
+					let y = ObjMove_GetY(objEnemy) + disTotal * sin (ang+180);
+					let objShot = ShotA2(x, y,1,ang,4/200,10,71,71,10,2,BLEND_ADD_ARGB,true);
+					ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
+				}
+				if(o==7)
+				{
+					laneAngAdd += 6.234*bit;
+				}
+			}
+		}
+		yield;
+	}
+	wait(60);
+	SE_PlayLen(charge1,60);
+	let ang = GetAngleToPlayer(objEnemy);
+	WarningLaser(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang,60);
+	ShootSpear(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang,mainAng);
+	wait(60);
+	
+}
+
+
+task SpawnCage(bit)
+{
+	ascent(i in 0..8)
+	{
+		let x = ObjMove_GetX(objEnemy);
+		let y = ObjMove_GetY(objEnemy);
+		let ang = 180/8+360/8*i;
+		ShootHolySword(x,y,ang);
+		ChainFollow(x,y,ang,false);
+		WarningLaser(x,y,ang,35);
+	}
+	wait(150);
+	let boxAng = 0;
+	ascent(i in 0..8)
+	{
+		boxAng = 360/8*i;
+		let x = GetStgFrameWidth/2  + GetStgFrameWidth * cos(boxAng) + 200*cos(boxAng-90)*bit;
+		let y = GetStgFrameHeight/2 + GetStgFrameWidth * sin(boxAng) + 200*sin(boxAng-90)*bit;
+		let ang = boxAng+180;
+		ShootHolySword(x,y,ang);
+		ChainFollow(x,y,ang,true);
+		WarningLaser(x,y,ang,35);
+	}
+}
+task ShootSpear(x,y,angle,mainAng)
+{
+	let wallOffset = 0;
+	let spearCentreX = x;
+	let spearCentreY = y;
+	let speed = 40;
+	let objSpearParts = [];
+	let spearTipTiltOffset = 80;
+	
+	let xyOffset = [
+		[100*cos(angle-180),100*sin(angle-180)],
+		[15*cos(angle+90),15*sin(angle+90)],
+		[15*cos(angle-90),15*sin(angle-90)]];
+	
+	objSpearParts = objSpearParts ~ [
+		S_Laser3(spearCentreX+xyOffset[0][0],spearCentreY+xyOffset[0][1],angle,speed*cos(angle),speed*sin(angle),10,50,405,0.5,8,true,14)];
+		
+	
+	
+	objSpearParts = objSpearParts ~ [
+		S_Laser3(spearCentreX+xyOffset[1][0],spearCentreY+xyOffset[1][1],angle+90+spearTipTiltOffset,speed*cos(angle),speed*sin(angle),10,50,405,0.5,3,true,14)];
+		
+	objSpearParts = objSpearParts ~ [
+		S_Laser3(spearCentreX+xyOffset[2][0],spearCentreY+xyOffset[2][1],angle+90-spearTipTiltOffset,speed*cos(angle),speed*sin(angle),10,50,405,0.5,3,true,14)];
+		
+	wait(60);
+	SE_PlayLen(slash,70);
+	let speedBetween = 6;
+	let cosAng = cos(angle);
+	let sinAng = sin(angle);
+	let checker = true;
+	
+	while(checker)
+	{
+		ascent(i in 0..length(objSpearParts))
+		{
+			ObjMove_SetPosition(objSpearParts[i], spearCentreX + xyOffset[i][0], spearCentreY + xyOffset[i][1]);
+		}
+		loop(speedBetween)
+		{
+			if(checker)
+			{
+				spearCentreX += speed/speedBetween * cosAng;
+				spearCentreY += speed/speedBetween * sinAng;
+				checker = CheckAgainstWall();
+			}
+		}
+		yield;
+	}
+	SE_PlayLen(explode,70);
+	SE_PlayLen(drum,70);
+	ScreenShake(120,6);
+	alternative(mainAng)
+	case(BOSS_DOWN)
+	{
+		spearCentreY = 0-wallOffset;
+	}
+	case(BOSS_UP)
+	{
+		spearCentreY = GetStgFrameHeight+wallOffset;
+	}
+	case(BOSS_RIGHT)
+	{
+		spearCentreX = 0-wallOffset;
+	}
+	case(BOSS_LEFT)
+	{
+		spearCentreX = GetStgFrameWidth+wallOffset;
+	}
+	ascent(i in 0..length(objSpearParts))
+	{
+		ObjMove_SetPosition(objSpearParts[i], spearCentreX + xyOffset[i][0], spearCentreY + xyOffset[i][1]);
+	}
+	let d = 80;
+	let angP = 15;
+	ascent(i in 1..6)
+	{
+		LaserNormal(spearCentreX,spearCentreY,angle+180,angP*i,20,13,d);
+		LaserNormal(spearCentreX,spearCentreY,angle+180,angP*i,20*2,380,d);
+		if(i>0)
+		{
+			LaserNormal(spearCentreX,spearCentreY,angle+180,-angP*i,20,13,d);
+			LaserNormal(spearCentreX,spearCentreY,angle+180,-angP*i,20*2,380,d);
+		}
+	}
+	wait(d);
+	
+	ascent(p in 0..5)
+	{
+		let rockThrowSpeed = 5/1.2;
+		let angg = angle+180 - 90 + 180/4*p;
+		let rockThrowSpdX = rockThrowSpeed*cos(angg);
+		let rockThrowSpdY = rockThrowSpeed*sin(angg);
+		ascent(i in 0..30)
+		{
+			let rockDis = rand(0,10)+40/30*i;
+			let rockAng = rand(0,360);
+			let rockX = spearCentreX + rockDis * cos(rockAng);
+			let rockY = spearCentreY + rockDis * sin(rockAng);
+			let shtID = [307,361][i%2];
+			let objS = ShotB2(rockX,rockY,rockThrowSpdX,rockThrowSpdY,0,0.04,0,10,shtID,shtID,5,1,BLEND_ADD_ARGB,false);
+		}
+	}
+	ascent(spd in 0..6)
+	{
+		
+		let sprd = 10+5*spd;
+		ascent(p in 0..sprd)
+		{
+			let rockThrowSpeed = (1+spd/2)*rand(0.95,1);
+			let angg = mainAng - 90 + 180/(sprd-1)*p+rand(1,-1)*0.4;
+			let rockThrowSpdX = rockThrowSpeed*cos(angg);
+			let rockThrowSpdY = rockThrowSpeed*sin(angg);
+			let rockX = spearCentreX;
+			let rockY = spearCentreY;
+			let shtID = 152;
+			let objS = ShotB2(rockX,rockY,rockThrowSpdX,rockThrowSpdY,0,0.02,0,10,shtID,shtID,5,1,BLEND_ADD_ARGB,false);
+			
+		}
+		sprd = 10+6*spd;
+		ascent(p in 0..sprd)
+		{
+			let rockThrowSpeed = (1+spd/2)*rand(0.95,1);
+			let angg = mainAng - 90 + 180/(sprd-1)*p+rand(1,-1)*0.4;
+			let rockThrowSpdX = rockThrowSpeed*cos(angg);
+			let rockThrowSpdY = rockThrowSpeed*sin(angg);
+			let rockX = spearCentreX;
+			let rockY = spearCentreY;
+			let shtID = 72;
+			let objS = ShotB2(rockX,rockY,rockThrowSpdX,rockThrowSpdY,0,0.01,0,10,shtID,shtID,5,1,BLEND_ADD_ARGB,false);
+			
+		}
+	}
+	SE_PlayLen(drum,70);
+	let t = 20;
+	speed = 15;
+	ascent(o in 0..t)
+	{
+		spearCentreX -= speed * cosAng * (1-sin(90/(t-1)*o));
+		spearCentreY -= speed * sinAng * (1-sin(90/(t-1)*o));
+		ascent(i in 0..length(objSpearParts))
+		{
+			ObjMove_SetPosition(objSpearParts[i], spearCentreX + xyOffset[i][0], spearCentreY + xyOffset[i][1]);
+		}
+		yield;
+	}
+	wait(60);
+	t = 60;
+	speed = 25;
+	ascent(i in 0..length(objSpearParts))
+	{
+		Obj_SetValue(objSpearParts[i], "staying",false);
+	}
+	ascent(o in 0..t)
+	{
+		spearCentreX -= speed * cosAng * sin(90/(t-1)*o);
+		spearCentreY -= speed * sinAng * sin(90/(t-1)*o);
+		ascent(i in 0..length(objSpearParts))
+		{
+			if(!Obj_IsDeleted(objSpearParts[i]))
+			{
+				ObjMove_SetPosition(objSpearParts[i], spearCentreX + xyOffset[i][0], spearCentreY + xyOffset[i][1]);
+			}
+		}
+		yield;
+	}
+	
+	function CheckAgainstWall()
+	{
+		alternative(mainAng)
+		case(BOSS_DOWN)
+		{
+			return spearCentreY > 0-wallOffset;
+		}
+		case(BOSS_UP)
+		{
+			return spearCentreY < GetStgFrameHeight+wallOffset;
+		}
+		case(BOSS_RIGHT)
+		{
+			return spearCentreX > 0-wallOffset;
+		}
+		case(BOSS_LEFT)
+		{
+			return spearCentreX < GetStgFrameWidth+wallOffset;
+		}
+		return false;
+	}
+		
+}
+task LaserNormal(x,y,angle,angle2,widthh,id,t)
+{
+
+	let obj = CreateStraightLaserA1(x,y,angle,0,widthh,60,id,t);
+	ObjStLaser_SetSource(obj,false);
+	Grower(obj,800);
+	
+	task Grower(obj,size)
+	{
+		
+		ascent(i in 0..t)
+		{
+			ObjStLaser_SetAngle(obj,angle+angle2*sin(90/(t-1)*i));
+			ObjLaser_SetLength(obj,size/(t-1)*i);
+			yield;
+		}
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(laser0,60);
+		}
+	}
+}
+task ShootHolySword(x,y,angle)
+{
+	let speed = 20;
+	S_Laser2(x,y,angle,speed*cos(angle),speed*sin(angle),10,50,50,405,0.5,8,true,14);
+	let spearTipDis = 150;
+	let spearTipAngOffset = 5;
+	let spearTipTiltOffset = 80;
+	S_Laser2(x+spearTipDis*cos(angle+spearTipAngOffset),y+spearTipDis*sin(angle+spearTipAngOffset),angle+90+spearTipTiltOffset,speed*cos(angle),speed*sin(angle),10,50,50,405,0.5,3,true,14);
+	S_Laser2(x+spearTipDis*cos(angle-spearTipAngOffset),y+spearTipDis*sin(angle-spearTipAngOffset),angle+90-spearTipTiltOffset,speed*cos(angle),speed*sin(angle),10,50,50,405,0.5,3,true,14);
+	
+	
+}
+task LaserGrowFade(obj,dis,alpha)
+{
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		ObjLaser_SetLength(obj,dis/t*i);
+		ObjRender_SetAlpha(obj,alpha-alpha/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+task Fader(objFade)
+{
+	let Alpha = 32;
+	loop(30)
+	{
+		ObjRender_SetAlpha(objFade,Alpha);
+		Alpha-=32/30;	
+		yield;
+	}
+	Obj_Delete(objFade);
+}
+task WarningLaser(x,y,ang,slashWidth)
+{
+	let t = 30;
+
+	let dis = 1600;
+	ascent(i in 0..t)
+	{
+		let sideDis = slashWidth*sin(90/(t-1)*i);
+		ascent(o in 0..2)
+		{
+			if(i>0||o==0)
+			{
+				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,405,9000);
+				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+				ObjShot_SetAutoDelete(laser,false);
+				ObjStLaser_SetSource(laser,false);
+				LaserGrowFade(laser,dis,128-128/t*i);
+			}
+		}
+		yield;
+	}
+}
+task ChainFollow(x,y,angle,inPlace)
+{
+	wait(60);
+	let cosAng = cos(angle);
+	let sinAng = sin(angle);
+	let cosAng2 = cos(angle+90);
+	let sinAng2 = sin(angle+90);
+	
+	let t = 80*2;
+	let wvds = 30;
+	let d = 1600;
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(chime1,60);
+			let xT = x + d/t*i * cosAng;
+			let yT = y + d/t*i * sinAng;
+			
+			let scl = sin(i*12.35234);
+			ascent(o in 0..2)
+			{
+				let b = 1-2*o;
+				let xT2 = xT + wvds * cosAng2 * scl * b;
+				let yT2 = yT + wvds * sinAng2 * scl * b;
+				let spd = 0.15;
+				let id = i%3!=0 ? 432 : 86;
+				let objShot = ShotA1(xT2, yT2,0,angle+90*b,id,id,10,2,BLEND_ADD_ARGB,true);
+				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
+				if(!inPlace)
+				{
+					ObjShot_SetDeleteFrameA6(objShot,90,1);
+				}
+				else
+				{
+					ObjShot_SetSpellResist(objShot,true);
+				}
+			}
+			if(i%2==0)
+			{
+				wait(1); 
+			}
+		}
+	}
+}
+task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,scaleX,scaleY,bouncebool,sizehit)
+{
+	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0&&bouncebool==true)
+	{
+		SE_PlayLen(Shot2,60+30);	
+	}
+	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	ObjShot_SetIntersectionEnable(obj,false);
+	ObjShot_SetSpellResist(obj,true);
+	ObjShot_SetAutoDelete(obj,false);
+	//318
+	let scaleYIn = 0;
+	let xmove2 = xmove;
+	let ymove2 = ymove;
+	let totaldeley = growdeley+deley;
+	
+	ascent(i in 0..growdeley)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			ObjRender_SetScaleXYZ(obj,i/growdeley*(scaleX/5),i/growdeley*scaleY,1);
+			scaleYIn+=scaleY/growdeley;
+			//xmove-=xmove2/totaldeley;
+			//ymove-=ymove2/totaldeley;
+			yield;
+		}
+	}
+	loop(deley)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			//xmove-=xmove2/totaldeley;
+			//ymove-=ymove2/totaldeley;
+			yield;
+		}
+	}
+		let scaleXIn = scaleX/5;
+		scaleX/=5;
+	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0&&bouncebool==true)
+	{
+		SE_PlayLen(LaserFireLong,20+30);
+	}
+	loop(4)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			loop(1)
+			{
+				let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+				ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
+				ObjShot_SetIntersectionEnable(objFade,false);
+				ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
+				Fader(objFade);
+			}
+			if(bouncebool==true)
+			{
+		
+			}
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+			ObjRender_SetScaleX(obj,scaleX);
+			scaleX+=(scaleXIn*4)/4;
+			
+			yield;
+		}
+	}
+	loop(stay)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			loop(1)
+			{
+				let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+				ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
+				ObjShot_SetIntersectionEnable(objFade,false);
+				ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
+				Fader(objFade);
+			}
+			if(bouncebool==true)
+			{
+
+			}
+			
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			ObjRender_SetScaleX(obj,scaleX);
+			HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+			yield;
+		}
+	}
+	loop(20)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+			ObjRender_SetScaleX(obj,scaleX);
+			scaleX-=(scaleXIn*5)/20;
+			yield;
+		}
+	}
+	Obj_Delete(obj);
+}
+function S_Laser3(X,Y,angle,xmove,ymove,growdeley,deley,ID,scaleX,scaleY,bouncebool,sizehit)
+{
+	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0&&bouncebool==true)
+	{
+		SE_PlayLen(Shot2,60+30);	
+	}
+	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	ObjShot_SetIntersectionEnable(obj,false);
+	ObjShot_SetSpellResist(obj,true);
+	ObjShot_SetAutoDelete(obj,false);
+	//318
+	
+	HandleSpear(obj);
+	return obj;
+	task HandleSpear(obj)
+	{
+		let scaleYIn = 0;
+		let xmove2 = xmove;
+		let ymove2 = ymove;
+		let totaldeley = growdeley+deley;
+		ascent(i in 0..growdeley)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+				ObjRender_SetScaleXYZ(obj,i/growdeley*(scaleX/5),i/growdeley*scaleY,1);
+				scaleYIn+=scaleY/growdeley;
+				//xmove-=xmove2/totaldeley;
+				//ymove-=ymove2/totaldeley;
+				yield;
+			}
+		}
+		loop(deley)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+				//xmove-=xmove2/totaldeley;
+				//ymove-=ymove2/totaldeley;
+				yield;
+			}
+		}
+		let scaleXIn = scaleX/5;
+		scaleX/=5;
+		loop(4)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				loop(1)
+				{
+					let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+					ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
+					ObjShot_SetIntersectionEnable(objFade,false);
+					ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
+					Fader(objFade);
+				}
+	
+				HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+				ObjRender_SetScaleX(obj,scaleX);
+				scaleX+=(scaleXIn*4)/4;
+				
+				yield;
+			}
+		}
+		while(Obj_GetValueD(obj,"staying",true)==true)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				loop(1)
+				{
+					let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+					ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
+					ObjShot_SetIntersectionEnable(objFade,false);
+					ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
+					Fader(objFade);
+				}
+
+				ObjRender_SetScaleX(obj,scaleX);
+				HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+				yield;
+			}
+		}
+		descent(p in 0..20)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ObjRender_SetAlpha(obj,255/20*p);
+				yield;
+			}
+		}
+		Obj_Delete(obj);
+	}
 }
 
 task timer
@@ -140,7 +784,11 @@ task end
 	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
 	SetCommonData("SpellCardBG1",false);
-	wait(140);
+	loop(140)
+	{
+		SetShotAutoDeleteClip(32,32,32,32);
+		yield;
+	}
 	
 	CloseScript(GetOwnScriptID());
 	return;
