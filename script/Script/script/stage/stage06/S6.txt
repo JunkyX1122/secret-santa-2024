@@ -231,7 +231,7 @@ task FirePassive()
 		if(fc%3==0)
 		{
 			SE_PlayLen(Shot1,60);
-			let shtID = hasShouted ? 431 : 429;
+			let shtID = hasShouted ? 427 : 425;
 			let delID = hasShouted ? 420 : 418;
 			let gapp = hasShouted ? 6 : 3;
 			ascent(i in 0..2)
@@ -240,6 +240,7 @@ task FirePassive()
 				ascent(o in 0..4)
 				{
 					let objShot = ShotA2(ObjRender_GetX(shields[i]), ObjRender_GetY(shields[i]),10,ang-gapp*bit+(gapp*2)/3*o*bit,-4/120,2,shtID,delID,10,2,BLEND_ADD_ARGB,false);
+					ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 				}
 				bit*=-1;
 			}
@@ -248,7 +249,7 @@ task FirePassive()
 		{
 			if(fc%6==0)
 			{
-				let shtID = 431;
+				let shtID = 427;
 				let delID = 420; 
 				let gapp = 90;
 				let tot = 6;
@@ -579,7 +580,7 @@ task BuffShoot()
 	let objS = CreateShield(0,60);
 	shields = shields ~ [objS];	
 	wait(50);
-	let shtID = hasShouted ? 431 : 429;
+	let shtID = hasShouted ? 427 : 429;
 	let delID = hasShouted ? 420 : 418;
 	let gapp = hasShouted ? 6 : 3;
 	let fc = 0;
@@ -593,6 +594,7 @@ task BuffShoot()
 			{
 				let ang = angS - 80+160/9*i;
 				let objShot = ShotA2(ObjRender_GetX(shields[2]), ObjRender_GetY(shields[2]),10,ang,-8/30,2,shtID,delID,10,2,BLEND_ADD_ARGB,false);
+				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 			}
 		}
 		fc++;

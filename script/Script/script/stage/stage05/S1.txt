@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Festivity &quot;Glimmering Shuriken&quot;","", LENEN, 0,145,255);
+	ObjCutin_SetSpellcardS4("Festivity &quot;Blade of Eight Colors&quot;","", LENEN, 0,145,255);
 	
 	ScreenShake(60,4);
 
@@ -98,9 +98,139 @@ let finalSpellBool = false;
 {
 }
 
+let MIKO_ORB_ORDER = [400,407,405,402,401,404,403,408];
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	Slash(x,y,angleT,id,60);
+}
+task Slash(x,y,angleT,id,waiter)
+{
+	let X = x;
+	let Y = y;
 	
+	let speed = 90;
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);	
+		S_Laser2((X-400*cos(angleT)),(Y-400*sin(angleT)),angleT,speed*cos(angleT),speed*sin(angleT),waiter,1,50,id,0.5,50,true,7,BLEND_ADD_ARGB);
+		ascent(i in 1..7)
+		{
+			S_Laser2((X-400*cos(angleT))+(1*i*cos(angleT+90)),(Y-400*sin(angleT))+(1*i*sin(angleT+90)),angleT-i/2,speed*cos(angleT),speed*sin(angleT),waiter,1,20,id,0.5,50,false,7,BLEND_SUBTRACT);
+			S_Laser2((X-400*cos(angleT))-(1*i*cos(angleT+90)),(Y-400*sin(angleT))-(1*i*sin(angleT+90)),angleT+i/2,speed*cos(angleT),speed*sin(angleT),waiter,1,20,id,0.5,50,false,7,BLEND_SUBTRACT);
+		}
+	}
+	wait(waiter);
+}
+task Fader(objFade)
+{
+	let Alpha = 32;
+	loop(30)
+	{
+		ObjRender_SetAlpha(objFade,Alpha);
+		Alpha-=32/30;	
+		yield;
+	}
+	Obj_Delete(objFade);
+}
+
+task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,scaleX,scaleY,bouncebool,sizehit,BT)
+{
+	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	ObjRender_SetBlendType(obj,BT);
+	ObjShot_SetIntersectionEnable(obj,false);
+	ObjShot_SetSpellResist(obj,true);
+	ObjShot_SetAutoDelete(obj,false);
+	//318
+	let scaleYIn = 0;
+	let xmove2 = xmove;
+	let ymove2 = ymove;
+	let totaldeley = growdeley+deley;
+
+	ascent(i in 0..growdeley)
+	{
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+		{
+			//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			ObjRender_SetScaleXYZ(obj,i/growdeley*(scaleX/5),i/growdeley*scaleY,1);
+			scaleYIn+=scaleY/growdeley;
+			//xmove-=xmove2/totaldeley;
+			//ymove-=ymove2/totaldeley;
+			yield;
+		}
+	}
+	loop(deley)
+	{
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+		{
+			//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			//xmove-=xmove2/totaldeley;
+			//ymove-=ymove2/totaldeley;
+			yield;
+		}
+	}
+		let scaleXIn = scaleX/5;
+		scaleX/=5;
+	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		SE_PlayLen(LaserFireShort,70);
+		
+	}
+	loop(4)
+	{
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+		{
+			loop(1)
+			{
+				let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+				ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
+				ObjShot_SetIntersectionEnable(objFade,false);
+				ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
+				Fader(objFade);
+			}
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+			ObjRender_SetScaleX(obj,scaleX);
+			scaleX+=(scaleXIn*4)/4;
+			
+			yield;
+		}
+	}
+	loop(stay)
+	{
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+		{
+			loop(1)
+			{
+				let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+				ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
+				ObjShot_SetIntersectionEnable(objFade,false);
+				ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
+				Fader(objFade);
+			}
+			if(bouncebool==true)
+			{
+
+			}
+			
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			ObjRender_SetScaleX(obj,scaleX);
+			HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+			yield;
+		}
+	}
+	loop(20)
+	{
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+		{
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			HitboxSingle(obj,sizehit*scaleY,sizehit*scaleX);
+			ObjRender_SetScaleX(obj,scaleX);
+			scaleX-=(scaleXIn*5)/20;
+			yield;
+		}
+	}
+	Obj_Delete(obj);
 }
 task timer
 {

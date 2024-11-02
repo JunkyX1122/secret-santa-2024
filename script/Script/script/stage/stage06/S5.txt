@@ -528,7 +528,7 @@ task ChainFollow(x,y,angle,inPlace)
 				let xT2 = xT + wvds * cosAng2 * scl * b;
 				let yT2 = yT + wvds * sinAng2 * scl * b;
 				let spd = 0.15;
-				let id = i%3!=0 ? 432 : 86;
+				let id = i%3!=0 ? 428 : 86;
 				let objShot = ShotA1(xT2, yT2,0,angle+90*b,id,id,10,2,BLEND_ADD_ARGB,true);
 				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 				if(!inPlace)
