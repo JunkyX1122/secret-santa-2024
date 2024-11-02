@@ -37,7 +37,7 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,180 );
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 120, 40);
 	renderYuuma(objEnemy);
 
 	end;
@@ -85,9 +85,228 @@ let TIME = 60*60;
 
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	ShurikenFire(bit);
 
 }
+let keepFiring = true;
+task PassiveFire(bit)
+{
+	let positions = [];
+	let dis = 100;
+	let centreScale = 1.2;
+	let ang = 0;
+	let size = 1;
+	let startAng = 90;
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..2)
+		{
+			let x1 = dis * centreScale * cos(ang-45*bit+90*o*bit) * size;
+			let y1 = dis * centreScale * sin(ang-45*bit+90*o*bit) * size;
+			
+			let x2 = dis * 2 * cos(ang) * size;
+			let y2 = dis * 2 * sin(ang) * size;
+			
+			let angS = Get_PointAngle(x2,y2,x1,y1);
+			let pAm = 4;
+			ascent(p in 0..pAm)
+			{
+				if(p<pAm-1||o==1)
+				{
+					let x3 = Interpolate_Linear(x1,x2,1/(pAm-1)*p);
+					let y3 = Interpolate_Linear(y1,y2,1/(pAm-1)*p);
+					if(p==pAm-1)
+					{
+						angS = ang;
+					}
+					positions = positions ~ [[x3,y3]];
+				}
+				
+			}
+		}
+		ang+=90*bit;
+	}
+	while(!Obj_IsDeleted(objEnemy)&&keepFiring)
+	{
+		ascent(i in 0..5)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(shot1,60);
+				ascent(p in 0..length(positions))
+				{
+					let spdScl = Get_Distance(0,0,positions[p][0],positions[p][1])/100;
+					let ang = Get_PointAngle(positions[p][0],positions[p][1],0,0) + startAng;
+					let spd = 2 * spdScl;
+					
+					
+					let x = ObjMove_GetX(objEnemy) + positions[p][0] * 0.3;
+					let y = ObjMove_GetY(objEnemy) + positions[p][1] * 0.3;
+					
+					let xy = Rotate2D(x,y,startAng,ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy));
+					
+					let objS = ShotA1(xy[0],xy[1],spd,ang,277,420,10,2,BLEND_ADD_ARGB,false);
+				}
+				wait(3);
+			}
+		}
+		startAng+=9.12321*bit;
+		wait(3);
+	}
+}
+task ShurikenFire(bit)
+{
+	let ang = 0;
+	let tot = 5;
+	let addP = 160/(tot-1);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		PassiveFire(bit);
+		SE_PlayLen(poof,60);
+		ascent(i in 0..tot)
+		{
+			ang = GetAngleToPlayer(objEnemy)-80*bit+addP*i*bit;
+			let spd = 3+1*sin(180/(tot-1)*i);
+			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,6,0.75,6*bit,bit);
+		}
+		wait(60);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(poof,60);
+			ascent(i in 0..tot+1)
+			{
+				ang = GetAngleToPlayer(objEnemy)-(80+addP/2)*bit+addP*i*bit;
+				let spd = 3+1*sin(180/(tot)*i);
+				CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,6,0.75,6*bit,bit);
+			}
+			wait(60*2);
+		}
+		let spd = 6;
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(10,100)*bit, rand(110,130), 60*4);
+			ascent(p in 0..5)
+			{
+				if(!Obj_IsDeleted(objEnemy))
+				{
+					SE_PlayLen(poof,60);
+					ang = GetAngleToPlayer(objEnemy);
+					CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,4,0.5,6*bit,bit);
+					wait(10);
+				}
+			}
+		}
+		spd = 7;
+		let a = GetAngleToPlayer(objEnemy);
+		ascent(p in 0..10)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(poof,60);
+				ang = a + 360/10*p*bit;
+				CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,4,0.5,6*bit,bit);
+				wait(3);
+			}
+		}
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(slash,60);
+			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,a,10,1,6*bit,bit);
+		}
+		wait(3);
+		ascent(p in 0..10*3+1)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(poof,60);
+				ang = a + 360/10*p*bit;
+				CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,4,0.5,6*bit,bit);
+				wait(3);
+			}
+		}
+		wait(60*2.5);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge1,60);
+			keepFiring = false;
+		}
+		wait(60*0.5);
+		ObjEnemy_SetDamageRate(objEnemy, (0.09)/1.5, (0.09)/3);
+		keepFiring = true;
+		bit*=-1;
+	}
+	
+}
+task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit)
+{
+	let del = 8;
+	let objSourceShot = ShotA1(x,y,0,ang,295,420,del,2,BLEND_ADD_ARGB,false);
+	ObjRender_SetBlendType(objSourceShot,BLEND_ADD_ARGB);
+	let shurikenPoints = [];
+	let dis = 50;
+	let centreScale = 0.75;
 
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..2)
+		{
+			let x1 = x + dis * centreScale * cos(ang-45*bit+90*o*bit) * size;
+			let y1 = y + dis * centreScale * sin(ang-45*bit+90*o*bit) * size;
+			
+			let x2 = x + dis * 2 * cos(ang) * size;
+			let y2 = y + dis * 2 * sin(ang) * size;
+			
+			let angS = Get_PointAngle(x2,y2,x1,y1);
+			
+			ascent(p in 0..pAm)
+			{
+				if(p<pAm-1||o==1)
+				{
+					let x3 = Interpolate_Linear(x1,x2,1/(pAm-1)*p);
+					let y3 = Interpolate_Linear(y1,y2,1/(pAm-1)*p);
+					if(p==pAm-1)
+					{
+						angS = ang;
+					}
+					let objS = ShotA1(x3,y3,0,angS,431,420,del,2,BLEND_ADD_ARGB,false);
+					ObjShot_SetAutoDelete(objS,false);
+					shurikenPoints = shurikenPoints ~ [objS];
+				}
+				
+			}
+		}
+		ang+=90*bit;
+	}
+	wait(del);
+	
+	let xSpd = speed*cos(ang);
+	let ySpd = speed*sin(ang);
+	
+	while(!Obj_IsDeleted(objSourceShot))
+	{
+		
+		ascent(i in 0..length(shurikenPoints))
+		{
+			let obj = shurikenPoints[i];
+			if(!Obj_IsDeleted(obj))
+			{
+				let rotatedPos = Rotate2D(ObjMove_GetX(obj),ObjMove_GetY(obj),spinAmount,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
+				ObjMove_SetPosition(obj,rotatedPos[0]+xSpd,rotatedPos[1]+ySpd);
+				ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+spinAmount);
+			}
+		}
+		ObjMove_SetPosition(objSourceShot,ObjMove_GetX(objSourceShot)+xSpd,ObjMove_GetY(objSourceShot)+ySpd);
+		yield;
+	}
+	ascent(i in 0..length(shurikenPoints))
+	{
+		if(!Obj_IsDeleted(shurikenPoints[i]))
+		{
+			ObjShot_SetDeleteFrameA6(shurikenPoints[i],0,1);
+		}
+	}
+}
 task timer
 {
     while(TIME>60*10)
