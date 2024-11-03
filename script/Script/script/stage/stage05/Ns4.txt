@@ -1,0 +1,153 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Ns4"]
+#Text["Ns4"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+let objEnemy;
+let objEnemy2;
+let count = 0;
+   let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 60*60;
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(250);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(60);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+@Initialize
+{
+	InitialiseIndiv();
+	timer;
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	SetAutoDeleteObject(true);
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
+	renderYuuma(objEnemy);
+
+	end;
+	SetCommonData("SpellCardBG1",false);
+	
+}
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+    ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count == 0)
+	{
+		
+	}
+    if(count < 95)
+    {
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    }
+    if(count == 95)
+    {
+		//move;
+		Fire;	
+		
+		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+        count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+	
+    count++;
+    yield;
+}
+@Finalize
+{
+}
+
+task Fire
+{
+	
+}
+task timer
+{
+    while(TIME>60*10)
+    {
+        TIME--;
+		yield;
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+	SE_PlayLen(BossDead,50);
+	Obj_SetValue(objEnemy,"cast",0);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+    SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+
+	loop(60)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	
+    CloseScript(GetOwnScriptID());
+	return;
+} 
+task move
+{
+	wait(150);
+	let cc = 1;
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+        ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*cc, rand(80,120), 140);
+		cc*=-1;
+		wait(280);
+    }
+}
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+
