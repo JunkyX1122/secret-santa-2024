@@ -166,7 +166,7 @@ task WarningLaser(x,y,ang)
 		let sideDis = 10*sin(90/(t-1)*i);
 		ascent(o in 0..2)
 		{
-			if(i>1||o==0)
+			if(i>0||o==0)
 			{
 				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,405,9000);
 				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);

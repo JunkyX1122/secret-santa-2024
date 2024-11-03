@@ -85,8 +85,111 @@ let TIME = 60*60;
 
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	let ang = 90;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+200*bit, 100, 50);
 	
+		AquaJet(GetPlayerX, GetPlayerY-150,GetStgFrameWidth/2+200*bit, 100,50,70);
+		wait(70+50);
+		SE_PlayLen(charge0,60);
+		AquaJet(GetStgFrameWidth/2-200*bit, 100, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),50,70);
+		wait(70+50+255);
+		bit*=-1;
+	}
 }
+task AquaJet(x,y,xI,yI,d,t)
+{
+	let sprd = 70;
+	let ang = Get_PointAngle(x,y,xI,yI)+180;
+	ascent(i in 0..3)
+	{
+		let ang2 = ang-sprd+(sprd*2)/2*i;
+		WarningLaser(xI,yI,ang2);
+	}
+	
+	wait(d);
+	ObjMove_SetDestAtFrameWeight(objEnemy, x,y, t);
+	
+	
+	ascent(i in 0..3)
+	{
+		let ang2 = ang-sprd+(sprd*2)/2*i;
+		CreateJetStream(ang2,t);
+	}
+}
+let shtIDA = [427,275,275,277,277,80,295];
+task CreateJetStream(ang,t)
+{
+	SE_PlayLen(spawnfm3,60);
+	SE_PlayLen(slash,60);
+	ascent(i in 0..t)
+	{
+		SE_PlayLen(Shot1,60);
+		ascent(o in 0..5)
+		{
+			let randIntens = rand(0,1);
+			let ang2 = ang -40 + 80*randIntens;
+			let dis = 60;
+			let x = ObjMove_GetX(objEnemy)+dis*cos(ang2);
+			let y = ObjMove_GetY(objEnemy)+dis*sin(ang2);
+			let spd = rand(4,5)*(3-2/(t-1)*i);
+			
+			let whiteScl = sin(180*randIntens);
+			
+			let xs = spd*cos(ang-4+8*randIntens);
+			let ys = spd*sin(ang-4+8*randIntens);
+			let shtID = shtIDA[round(rand(0,length(shtIDA)*2))%length(shtIDA)];
+			
+			
+			
+			let objS = ShotB2(x,y,xs,ys,0,0.1,0,100,shtID,420,5,3,BLEND_ADD_ARGB,false);
+			ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
+			
+			let witt = 100+155*whiteScl;
+			ObjRender_SetColor(objS,witt,witt,255);
+		}
+		yield;
+	}
+}
+task WarningLaser(x,y,ang)
+{
+	let t = 40;
+	let slashWidth = 35;
+	let dis = 800;
+	ascent(i in 0..t)
+	{
+		let sideDis = 50*sin(90/(t-1)*i);
+		ascent(o in 0..2)
+		{
+			if(i>0||o==0)
+			{
+				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,404,9000);
+				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+				ObjShot_SetAutoDelete(laser,false);
+				ObjStLaser_SetSource(laser,false);
+				LaserGrowFade(laser,dis,128-128/t*i);
+			}
+		}
+		yield;
+	}
+}
+
+task LaserGrowFade(obj,dis,alpha)
+{
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		ObjLaser_SetLength(obj,dis/t*i);
+		ObjRender_SetAlpha(obj,alpha-alpha/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
 task timer
 {
     while(TIME>60*10)
