@@ -1,0 +1,330 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["S5"]
+#Text["S5"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+
+let objEnemy;
+let count = 0;
+let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 80;
+let finalSpellBool = false;
+
+let HEALTH_MAX = 225/3;
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(225/3);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(80);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+
+@Initialize
+{
+	InitialiseIndiv();
+	timer;
+	SetAutoDeleteObject(true);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	
+	renderYuuma(objEnemy);
+	
+	
+	end;
+
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("Celebration &quot;Celestial Blizzard&quot;","", LENEN, 0,145,255);
+	
+	ScreenShake(60,4);
+
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	
+}
+
+
+@MainLoop
+{
+	SetCommonData("BossX", ObjMove_GetX(objEnemy));
+	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+	
+	ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+	ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+	
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        
+        SetAutoDeleteObject(true);
+    }
+	if(count < 95)	
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		SetCommonData("SpellCardBG1",true);
+	}
+    if(count == 95)
+    {
+		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+		Fire;
+		
+        //count = 1111;
+    }
+	isEnemyDeleted = Obj_IsDeleted(objEnemy);
+    count++;
+    yield;
+}
+let isEnemyDeleted = false;
+
+@Finalize
+{
+}
+let DIST_MAX = 1500;
+let MIKO_ORB_ORDER = [400,407,405,402,401,404,403,408];
+let SHARD_ORDER = [146,144,153];
+task Fire
+{
+	yield;
+	let ccc = 1;
+	let dis = 0;
+	let dis2 = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ObjMove_SetX(GetPlayerObjectID,ObjMove_GetX(GetPlayerObjectID)-0.5);
+		ObjMove_SetY(GetPlayerObjectID,ObjMove_GetY(GetPlayerObjectID)+0.5*0.3);
+		if(ccc%30==0)
+		{
+			CreateWindArrow(ccc);
+		}
+		if(ccc%140==0)
+		{
+			SE_PlayLen(charge0,60);
+		}
+		if(ccc%12==0)
+		{
+			ascent(o in 0..3)
+			{
+				let randD = (ccc*-8.3242 + DIST_MAX/3*o)%DIST_MAX;
+				ascent(i in 0..6)
+				{
+					let obj = CreateShotA1(0,-100,0,90,SHARD_ORDER[round(rand(0,2))],0);
+					BulletTravelOval(obj,randD,0.45+i*0.005);
+					ObjRender_SetScale(obj,1.9-0.9/5*i);
+					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+				}
+			}
+		}
+		if(ccc%9==0)
+		{
+			ascent(i in 0..5)
+			{
+				let obj = CreateShotA1(0,-100,0,90,73,0);
+				let ddd = (dis+DIST_MAX/5*i)%1500;
+				BulletTravelOval(obj,ddd,0.3-0.2/1500*ddd);
+				
+			}
+			dis2-=10.213;
+			dis = (-ccc * 60.342 + dis2) % 1500;
+		}
+		if(ccc%50==0)
+		{
+			CreateCelebrationLine(ccc);
+		}
+		ccc++;
+		yield;
+	}
+}
+
+task CreateCelebrationLine(ccc)
+{
+	let adder = DIST_MAX/4;
+	let dis = DIST_MAX+((ccc*25.23)%adder);
+	let disIni = dis;
+	ascent(i in 0..8)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(Shot1,60);
+			while(dis>0 && !Obj_IsDeleted(objEnemy))
+			{
+				let obj = CreateShotA1(0,-100,0,90,MIKO_ORB_ORDER[i],0);
+				BulletTravelOval(obj,dis+4*i,0.5,-1);
+				dis-=adder;
+			}
+			dis = disIni;
+			wait(3);
+		}
+	}
+}
+
+task CreateWindArrow(ccc)
+{
+	let dis = -((ccc*5.23)%300);
+	let disIni = dis;
+	ascent(i in 0..10)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(Shot1,60);
+			while(dis<DIST_MAX && !Obj_IsDeleted(objEnemy))
+			{
+				ascent(o in 0..2)
+				{
+					let obj = CreateShotA1(0,-100,0,90,50,0);
+					BulletTravelOval(obj,dis+3*i*[1,-1][o],0.6);
+				}
+				dis+=300;
+			}
+			dis = disIni;
+			wait(2);
+		}
+	}
+}
+task BulletTravelOval(obj,rad,spd)
+{
+	BulletTravelOval(obj,rad,spd,0);
+}
+task BulletTravelOval(obj,rad,spd,radIncrease)
+{
+	ObjShot_SetAutoDelete(obj,false);
+	let ang = 0;
+	let centerX = -150;
+	let centerY = -150;
+	let ovalAng = -20/(1500)*(1500-(rad));
+	let cosOA = cos(ovalAng);
+	let sinOA = sin(ovalAng);
+	rad+=100;
+	let x = 100;
+	let y = 100;
+	let yMax = GetStgFrameHeight+32;
+	while(ang < 180 && x > 0 && y < yMax && rad > 0 && !isEnemyDeleted)
+	{
+		let xx = 0+rad*cos(ang);
+		let yy = 0+rad/2*sin(ang);
+		rad+=radIncrease;
+		x=(xx-centerX)*cosOA - (yy-centerY)*sinOA + centerX;
+		y=(xx-centerX)*sinOA + (yy-centerY)*cosOA + centerY;
+		ObjMove_SetAngle(obj,Get_PointAngle(x,y,ObjMove_GetX(obj),ObjMove_GetY(obj)));
+		ObjMove_SetPosition(obj,x,y);
+		ang+=spd;
+		yield;
+	}
+	if(y<yMax)
+	{
+		ObjShot_SetDeleteFrameA5(obj,0,1);
+	}
+	else
+	{
+		Obj_Delete(obj);
+	}
+}
+task timer
+{
+    loop(TIME-10)
+    {
+        wait(60);
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+
+
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+
+	ascent(o in 0..15)
+	{
+		SE_PlayLen(BossDead,80);
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,10,10);
+		loop(6)
+		{
+			ObjEnemy_SetLife(objEnemy, 0);
+			let shake = 4;
+			Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+			Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+			yield;
+			Reset2DCamera;
+		}
+	}
+	ascent(o in 0..2)
+	{
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,25,100);
+	
+		ascent(i in 0..3)
+		{
+			let bit = 1-2*round(rand(0,1));
+			let apa = rand(0,128);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+		}
+		ScreenShake(30,9); 
+		SE_PlayLen(BossEnd,80);
+		StartSlow(TARGET_ALL,20);
+		loop(30/6)
+		{
+
+			wait(6);
+		}
+	}
+	ScreenShake(190,12); 
+	StopSlow(TARGET_ALL);
+	SE_PlayLen(BossEnd,80);
+	SE_PlayLen(BossSpell,100);
+	//FlasherZ(150);
+	SE_PlayLen(BossDead,80);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+	SetCommonData("SpellCardBG1",false);
+	loop(20)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	wait(100);
+	
+	CloseScript(GetOwnScriptID());
+	return;
+	
+} 
+
+function GetCenterX{
+     return GetStgFrameWidth/2;
+}
+function GetCenterY{
+     return GetStgFrameHeight/2;
+}
+

@@ -16,7 +16,7 @@ let TIME = 60*60;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
-  SetScriptResult(250);
+  SetScriptResult(215);
         }
  case(EV_REQUEST_TIMER){
   SetScriptResult(60);
@@ -213,7 +213,7 @@ task Trailing(xs,ys,ang)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			SE_PlayLen(Shot1,40);
+			SE_PlayLen(Shot1,60);
 			let scl = 1/t*i;
 			let ang2 = rand(0,360);
 			let randDis = rand(0,20);

@@ -15,12 +15,12 @@ let c = 0;
 let TIME_MAX = 60;
 let TIME = TIME_MAX;
 let finalSpellBool = false;
-
+let HEALTH_MAX = 225/3;
 
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
-  SetScriptResult(275/3);
+  SetScriptResult(HEALTH_MAX);
         }
  case(EV_REQUEST_TIMER){
   SetScriptResult(TIME_MAX);
@@ -85,7 +85,7 @@ let finalSpellBool = false;
     }
 	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
     {
-		ObjEnemy_AddLife(objEnemy,-(275/3)/(TIME*TIME_MAX-2));
+		ObjEnemy_AddLife(objEnemy,-(HEALTH_MAX)/(TIME*TIME_MAX-2));
 	}
     count++;
     yield;

@@ -16,7 +16,7 @@ let TIME = 60*60;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
-  SetScriptResult(250);
+  SetScriptResult(215);
         }
  case(EV_REQUEST_TIMER){
   SetScriptResult(60);
@@ -68,7 +68,7 @@ let TIME = 60*60;
 		//move;
 		Fire;	
 		
-		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
         count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
@@ -85,6 +85,280 @@ let TIME = 60*60;
 
 task Fire
 {
+	yield;
+	let bit = 1-2*round(rand(0,1));
+	//125,128
+	WallFire(bit);
+	CurveShurikanFire(bit);
+	StraightShurikanFire(bit);
+}
+task StraightShurikanFire(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		let ang = 90+180;
+		let x = ObjMove_GetX(objEnemy);
+		let y = ObjMove_GetY(objEnemy);
+		let am = 12;
+		ascent(i in 0..am)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(chime1,60);
+				ascent(o in 0..1)
+				{
+					if(o==0||(i>0&&i<am-1))
+					{
+						let ang2 = ang+180/(am-1)*i*[1,-1][o]*bit;
+						WarningLaser(x,y,ang2,10);
+					}
+				}
+				wait(2);
+			}
+		}
+		wait(10);
+		ascent(i in 0..am)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(shot1,60);
+				ascent(o in 0..1)
+				{
+					if(o==0||(i>0&&i<am-1))
+					{
+						let ang2 = ang+180/(am-1)*i*[1,-1][o]*bit;
+						CreateShuriken(x,y,10,ang2,3,0.3,6*bit,bit);
+					}
+				}
+				wait(2);
+			}
+		}
+		bit*=-1;
+		wait(100);
+	}
+}
+task WarningLaser(x,y,ang,t)
+{
+	
+	let slashWidth = 35;
+	let dis = 1200;
+	ascent(i in 0..t)
+	{
+		let sideDis = 30*sin(90/(t-1)*i);
+		ascent(o in 0..2)
+		{
+			if(i>0||o==0&&!Obj_IsDeleted(objEnemy))
+			{
+				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,404,9000);
+				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+				ObjShot_SetAutoDelete(laser,false);
+				ObjStLaser_SetSource(laser,false);
+				LaserGrowFade(laser,dis,128-128/t*i);
+			}
+		}
+		yield;
+	}
+}
+task LaserGrowFade(obj,dis,alpha)
+{
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		ObjLaser_SetLength(obj,dis/t*i);
+		ObjRender_SetAlpha(obj,alpha-alpha/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+task CurveShurikanFire(bit)
+{
+	let ang = 90;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ang = rand(0,360);
+		SE_PlayLen(shot1,60);
+		ascent(i in 0..15)
+		{
+			CreateShurikenSmall(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,ang+360/15*i*bit,1*bit,6*bit,bit);
+		}
+		bit*=-1;
+		wait(80);
+	}
+}
+task WallFire(bit)
+{
+	let idd = 0;
+	let ang = 90;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ascent(i in 0..4)
+		{
+			CreateWall(ang+360/4*i*bit,[132,136][idd%2],bit);
+		}
+		idd++;
+		ang+=(180/4+12.2131)*bit;
+		wait(30);
+	}
+}
+task CreateShurikenSmall(x,y,speed,ang,angVel,spinAmount,bit)
+{
+	let del = 8;
+	let objSourceShot = ShotA1(x,y,0,ang,407,407,del,2,BLEND_SUBTRACT,false);
+	ObjRender_SetBlendType(objSourceShot,BLEND_SUBTRACT);
+	
+	let objSourceShot2 = ShotA1(x,y,0,ang,403,403,del,2,BLEND_ADD_ARGB,false);
+	Obj_SetRenderPriority(objSourceShot2,0.49);
+	ObjRender_SetBlendType(objSourceShot2,BLEND_ADD_ARGB);
+	
+	/*
+	let shurikenPoints = [];
+	let dis = 13;
+	let centreScale = 0.75;
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..1)
+		{
+			let x2 = x + dis * cos(ang);
+			let y2 = y + dis * sin(ang);
+			
+			
+			let angS = ang;
+			
+			let objS = ShotA1(x2,y2,0,angS,128,420,del,2,BLEND_ADD_ARGB,false);
+			ObjShot_SetAutoDelete(objS,false);
+			Obj_SetRenderPriority(objS,0.49);
+			shurikenPoints = shurikenPoints ~ [objS];
+
+			
+		}
+		ang+=90*bit;
+	}
+	*/
+	wait(del);
+	let angP = 0;
+	let angA = 0;
+	while(!Obj_IsDeleted(objSourceShot))
+	{
+		let xSpd = cos(ang+angP);
+		let ySpd = sin(ang+angP);
+		/*
+		ascent(i in 0..length(shurikenPoints))
+		{
+			let obj = shurikenPoints[i];
+			if(!Obj_IsDeleted(obj))
+			{
+				let rotatedPos = Rotate2D(ObjMove_GetX(obj),ObjMove_GetY(obj),spinAmount,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
+				ObjMove_SetPosition(obj,rotatedPos[0]+xSpd*speed,rotatedPos[1]+ySpd*speed);
+				ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+spinAmount);
+			}
+		}
+		*/
+		angP = 80*sin(angA);
+		angA += angVel;
+		ObjMove_SetPosition(objSourceShot,ObjMove_GetX(objSourceShot)+xSpd*speed,ObjMove_GetY(objSourceShot)+ySpd*speed);
+		ObjMove_SetPosition(objSourceShot2,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
+		yield;
+	}
+	
+	ObjShot_SetDeleteFrameA6(objSourceShot,0,1);
+	ObjShot_SetDeleteFrameA6(objSourceShot2,0,1);
+		
+	
+}
+task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit)
+{
+	let del = 4;
+	let objSourceShot = ShotA1(x,y,0,ang,295,420,del,2,BLEND_ADD_ARGB,false);
+	ObjRender_SetBlendType(objSourceShot,BLEND_ADD_ARGB);
+	let shurikenPoints = [];
+	let dis = 50;
+	let centreScale = 0.75;
+
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..2)
+		{
+			let x1 = x + dis * centreScale * cos(ang-45*bit+90*o*bit) * size;
+			let y1 = y + dis * centreScale * sin(ang-45*bit+90*o*bit) * size;
+			
+			let x2 = x + dis * 2 * cos(ang) * size;
+			let y2 = y + dis * 2 * sin(ang) * size;
+			
+			let angS = Get_PointAngle(x2,y2,x1,y1);
+			
+			ascent(p in 0..pAm)
+			{
+				if(p<pAm-1||o==1)
+				{
+					let x3 = Interpolate_Linear(x1,x2,1/(pAm-1)*p);
+					let y3 = Interpolate_Linear(y1,y2,1/(pAm-1)*p);
+					if(p==pAm-1)
+					{
+						angS = ang;
+					}
+					let objS = ShotA1(x3,y3,0,angS,427,420,del,2,BLEND_ADD_ARGB,false);
+					ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
+					ObjShot_SetAutoDelete(objS,false);
+					shurikenPoints = shurikenPoints ~ [objS];
+				}
+				
+			}
+		}
+		ang+=90*bit;
+	}
+	wait(del);
+	
+	let xSpd = speed*cos(ang);
+	let ySpd = speed*sin(ang);
+	
+	while(!Obj_IsDeleted(objSourceShot))
+	{
+		
+		ascent(i in 0..length(shurikenPoints))
+		{
+			let obj = shurikenPoints[i];
+			if(!Obj_IsDeleted(obj))
+			{
+				let rotatedPos = Rotate2D(ObjMove_GetX(obj),ObjMove_GetY(obj),spinAmount,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
+				ObjMove_SetPosition(obj,rotatedPos[0]+xSpd,rotatedPos[1]+ySpd);
+				ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+spinAmount);
+			}
+		}
+		ObjMove_SetPosition(objSourceShot,ObjMove_GetX(objSourceShot)+xSpd,ObjMove_GetY(objSourceShot)+ySpd);
+		yield;
+	}
+	ascent(i in 0..length(shurikenPoints))
+	{
+		if(!Obj_IsDeleted(shurikenPoints[i]))
+		{
+			ObjShot_SetDeleteFrameA6(shurikenPoints[i],0,1);
+		}
+	}
+}
+task CreateWall(ang,id,bit)
+{
+	ascent(i in 0..28)
+	{
+		SE_PlayLen(Shot1,60);
+		ascent(o in 0..2)
+		{
+			if(true)
+			{
+				let angleT = ang+1*i*bit*(1-2*o);
+				let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,angleT,-4/70,0,id,id,15,2,BLEND_SUBTRACT,true);
+				ObjRender_SetBlendType(obj,BLEND_SUBTRACT);
+				//ObjRender_SetScale(obj,1.2);
+				ObjMove_AddPatternA2(obj, 120, 0, ang-0.1*i*bit*(1-2*o), 7/100,7,0);
+				
+				let obj2 = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,angleT,-4/70,0,137,137,15,2,BLEND_ADD_ARGB,true);
+				ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+				Obj_SetRenderPriority(obj2,0.49);
+				//ObjRender_SetScale(obj2,1.2);
+				ObjMove_AddPatternA2(obj2, 120, 0, ang-0.1*i*bit*(1-2*o), 7/100,7,0);
+			}
+		}
+		yield;
+	}
 	
 }
 task timer
