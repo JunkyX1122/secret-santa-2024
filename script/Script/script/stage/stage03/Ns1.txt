@@ -86,29 +86,110 @@ let TIME = 60*60;
 task Fire
 {
 	let bit = 1-2*round(rand(0,1));
-	LaserSweep(bit);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);
+		let startAng = rand(10,-10);
+		ascent(i in 0..5)
+		{
+			let ang = 90-90*bit+180/4*bit*i+startAng;
+			BookOpen(ObjMove_GetX(objEnemy)+200*cos(ang),ObjMove_GetY(objEnemy)+200*sin(ang),bit);
+			wait(14);
+		}
+		bit*=-1;
+		wait(60);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,-30)*bit, rand(120,130), 60*2-1);
+		wait(60*2);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+	}
 }
-task LaserSweep(bit)
+task BookOpen(x,y,bit)
+{
+	let ang = 90;
+	ascent(i in 0..50)
+	{
+		ang = 90+360/50*i*bit;
+		if(ang%360>0 && ang%360<180)
+		{
+			let obj = ShotB1(x+130*cos(ang),y-30*sin(ang)-10,3*cos(ang),1,79,420,80,2,BLEND_ALPHA,false);
+		}
+	}
+	ascent(i in 0..5)
+	{
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(spawnfm3,50);
+			loop(5)
+			{
+				if(!Obj_IsDeleted(objEnemy)) 
+				{
+					SE_PlayLen(Shot2,70);
+					LaserSweep(x,y,bit,i);
+					wait(2);
+				}
+			}
+			wait(4);
+		}
+	}
+	
+}
+task LaserSweep(xs,ys,bit,starter)
 {
 	
 	let ang = -90+90*bit;
-	let x = ObjMove_GetX(objEnemy);
-	let y = ObjMove_GetY(objEnemy);
-	let obj = CreateStraightLaserA1(x,y,ang,0,15,9999,4,0);
-	ObjStLaser_SetSource(obj,false);
-
+	let x = xs;
+	let y = ys;
+	let obj = CreateStraightLaserA1(x,y,ang,0,10,9999,26,0);
+	let obj2 = CreateStraightLaserA1(x,y,ang,0,20,9999,38,0);
+	let laserss = [obj,obj2];
+	
+	
+	let obj3 = CreateShotA1(x,y,0,0,437,0);
+	let obj4 = CreateShotA1(x,y,0,0,437,0);
+	let sourcess = [obj3,obj4];
 	let t = 60;
-	let size = 70;
+	let size = 120;
+	let flipAng = 60;
+	let spinAng = 120;
 	ascent(i in 0..t)
 	{
-		let mAng = -90+90*bit-180/(t-1)*i*bit;
-		let x = ObjMove_GetX(objEnemy) + 90*cos(mAng);
-		let y = ObjMove_GetY(objEnemy) + 20*cos(mAng);
-		ObjMove_SetPosition(obj,x,y);
-		ObjStLaser_SetAngle(obj,mAng);
-		ObjLaser_SetLength(obj,size*sin(180/(t-1)*i));
-		yield;
-		yield;
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			ascent(obj in 0..2)
+			{
+				ObjRender_SetBlendType(laserss[obj],BLEND_ADD_ARGB);
+				ObjStLaser_SetSource(laserss[obj],false);
+				let mAng = -90+flipAng*bit-(flipAng*2)/(t-1)*i*bit;
+				let mAng2 = -90+spinAng*bit-(spinAng*2)/(t-1)*i*bit;
+				let x = xs + 150*cos(mAng);
+				let y = ys + 50*sin(mAng);
+				ObjMove_SetPosition(laserss[obj],x,y);
+				ObjStLaser_SetAngle(laserss[obj],mAng2);
+				let lasLength = size*sin(180/(t-1)*i);
+				ObjLaser_SetLength(laserss[obj],lasLength);
+				
+				x = x + lasLength*obj * cos(mAng2); 
+				y = y + lasLength*obj * sin(mAng2);
+				ObjMove_SetPosition(sourcess[obj],x,y);
+				ObjRender_SetBlendType(sourcess[obj],BLEND_ADD_ARGB);
+				ObjRender_SetScale(sourcess[obj],1*sin(180/(t-1)*i));
+				if((i+starter)%3==0 && obj == 1)
+				{
+					SE_PlayLen(Shot1,40);
+					let xs = 4*cos(mAng2);
+					let ys = 4*sin(mAng2);
+					let objS = ShotB2(x,y,xs,ys,0,0.1,0,10-6*sin(180/(t-1)*i),96,420,5,3,BLEND_ALPHA,false);
+				}
+				
+			}
+			
+			yield;
+		}
+	}
+	ascent(obj in 0..2)
+	{
+		Obj_Delete(laserss[obj]);
+		Obj_Delete(sourcess[obj]);
 	}
 }
 task Grower(obj,size,biz,ang)

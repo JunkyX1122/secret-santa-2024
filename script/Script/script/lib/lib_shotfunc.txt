@@ -52,6 +52,14 @@ function ShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
     DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
+function ShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove)
+{
+    let angle = atan2(yspd,xspd);
+    let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
+	BulletDelete(shot);
+    DelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove);
+    return shot;
+}
 function ShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let angle = atan2(yspd,xspd);
