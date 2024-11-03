@@ -640,7 +640,7 @@ ShotData
 	}
 } // Purple
 ShotData
-{ id=427 rect=(0,821,31,852) render=ALPHA angular_velocity = 0 collision=(5,1,3) delay_color= (255,64,255) 
+{ id=427 rect=(0,821,31,852) render=ALPHA angular_velocity = 0 collision=(5,1,3) delay_color= (64,64,255) 
 	AnimationData
 	{ 
 		animation_data=(4,0,821,31,852)

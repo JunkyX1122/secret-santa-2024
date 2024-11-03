@@ -239,9 +239,10 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit,type)
 					{
 						angS = ang;
 					}
-					let objS = ShotA1(x3,y3,0,angS,431,420,del,4,BLEND_ADD_ARGB,false);
+					let objS = ShotA1(x3,y3,0,angS,427,420,del,4,BLEND_ADD_ARGB,false);
 					ObjShot_SetSpellResist(objS,true);
 					ObjShot_SetAutoDelete(objS,false);
+					ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
 					shurikenPoints = shurikenPoints ~ [objS];
 					if(p==pAm-1)
 					{
