@@ -83,9 +83,162 @@ let TIME = 60*60;
 {
 }
 
+let globalBit = 1;
+let globalAng = -90;
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	globalBit = bit;
+	KnifeFire(bit);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge1,60);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,0)*bit, rand(80,120), 140);
+		ascent(i in 0..7)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				CreateShurikenLine(GetStgFrameWidth/2+rand(20,-20),100-100/6*i,bit,90-90*bit,2-1.125/6*i);
+				bit*=-1;
+				wait(10);
+			}
+		}
 	
+		wait(50*4.5);
+		globalAng = -90+rand(20,-20);
+		globalBit*=-1;
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge0,60);
+		}
+		wait(50*2);
+		ObjEnemy_SetDamageRate(objEnemy, (0.08)/1.5, (0.08)/3);
+	}
+}
+task KnifeFire(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(shot1,60);
+		ascent(p in 0..3)
+		{
+			ascent(i in 0..3)
+			{
+				ascent(o in 0..2)
+				{
+					if(o==0||(i>0))
+					{
+						let ang = globalAng+4*i*globalBit*(1-2*o) + 360/3*p*globalBit;
+						let objSourceShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4-i,ang,328,328,20,2,BLEND_ALPHA,true);
+					}
+				}
+			}
+		}
+		globalAng+=(180/3+19.332/2)*bit;
+		wait(16);
+	}
+}
+task CreateShurikenLine(x,y,bit,ang,maxSpd)
+{
+	SE_PlayLen(slash,40);
+	let t = 70;
+	let ini = round(rand(0,8));
+	ascent(i in 0..t)
+	{
+		let dis = -(GetStgFrameWidth/2+100) * (-1+2/(t-1)*i);
+		if((i+ini)%2==0&&(i+ini)%20<12)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(shot1,60);
+				let speedDif = 14-maxSpd;
+				CreateShurikenSmall(x+dis*cos(ang),y+dis*sin(ang),14,ang+90*bit,-speedDif/10,maxSpd,6*bit,bit);
+			}
+		}
+		yield;
+	}
+}
+task CreateShurikenSmall(x,y,speed,ang,accell,maxSpd,spinAmount,bit)
+{
+	let del = 8;
+	let objSourceShot = ShotA1(x,y,0,ang,80,420,del,2,BLEND_ADD_ARGB,false);
+	Obj_SetRenderPriority(objSourceShot,0.49);
+	ObjRender_SetBlendType(objSourceShot,BLEND_ALPHA);
+	let shurikenPoints = [];
+	let dis = 13;
+	let centreScale = 0.75;
+	let spdBt = 1;
+	if(speed>maxSpd){spdBt = -1;}
+	
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..1)
+		{
+			let x2 = x + dis * cos(ang);
+			let y2 = y + dis * sin(ang);
+			
+			
+			let angS = ang;
+			
+			let objS = ShotA1(x2,y2,0,angS,128,420,del,2,BLEND_ADD_ARGB,false);
+			ObjShot_SetAutoDelete(objS,false);
+			Obj_SetRenderPriority(objS,0.49);
+			shurikenPoints = shurikenPoints ~ [objS];
+
+			
+		}
+		ang+=90*bit;
+	}
+	wait(del);
+	
+	let xSpd = cos(ang);
+	let ySpd = sin(ang);
+	
+	while(!Obj_IsDeleted(objSourceShot))
+	{
+		
+		ascent(i in 0..length(shurikenPoints))
+		{
+			let obj = shurikenPoints[i];
+			if(!Obj_IsDeleted(obj))
+			{
+				let rotatedPos = Rotate2D(ObjMove_GetX(obj),ObjMove_GetY(obj),spinAmount,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
+				ObjMove_SetPosition(obj,rotatedPos[0]+xSpd*speed,rotatedPos[1]+ySpd*speed);
+				ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+spinAmount);
+			}
+		}
+		ObjMove_SetPosition(objSourceShot,ObjMove_GetX(objSourceShot)+xSpd*speed,ObjMove_GetY(objSourceShot)+ySpd*speed);
+		if(spdBt==1)
+		{
+			if(speed<maxSpd)
+			{
+				speed+=accell;
+			}
+			else
+			{
+				speed = maxSpd;
+			}
+		}
+		else
+		{
+			if(speed>maxSpd)
+			{
+				speed+=accell;
+			}
+			else
+			{
+				speed = maxSpd;
+			}
+		}
+		yield;
+	}
+	ascent(i in 0..length(shurikenPoints))
+	{
+		if(!Obj_IsDeleted(shurikenPoints[i]))
+		{
+			ObjShot_SetDeleteFrameA6(shurikenPoints[i],0,1);
+		}
+	}
 }
 task timer
 {
