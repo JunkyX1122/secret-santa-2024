@@ -116,6 +116,7 @@ task LoadBoss()
 	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
 	ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"Ns4.txt");
 	ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
+	ObjEnemyBossScene_Add(Boss,4,GetCurrentScriptDirectory~"S5.txt");
 
 
 	ObjEnemyBossScene_LoadInThread(Boss);

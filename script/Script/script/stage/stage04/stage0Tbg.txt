@@ -22,24 +22,40 @@ let counter = 0;
 task TCallBg
 {
 	LoadTexture(BGIMG1);
-	//FlatColor;
-	BlackHole(GetScreenWidth/2,GetScreenHeight/2-125);
-	StarField();
+	
+	//BlackHole(GetScreenWidth/2,GetScreenHeight/2-125);
+	//StarField();
 	SpellBG;
+	FlatColor;
 }
 let BGIMG1 = GetCurrentScriptDirectory~"./../../../img/background/BG1/01.png";
 task FlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj, 22); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj, 24); //描画優先度を設定
 	ObjPrim_SetTexture(obj, GetCurrentScriptDirectory~"./../../../img/background/BG1/pixel.png"); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestCenter(obj);
-	ObjRender_SetColor(obj,32,32,32);
-	
+	ObjRender_SetColor(obj,0,0,0);
+	let alpha1 = 0;
 	while(true)
 	{
+		if(GetCommonData("SpellCardBG1",false)==true)
+		{
+			if(alpha1 < 1)
+			{ 
+				alpha1 += 1/10;
+			}
+		} 
+		else
+		{
+			if(alpha1>0)
+			{
+				alpha1 -= 1/40;
+			}
+		}
+		ObjRender_SetAlpha(obj,128*alpha1);
 		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		yield;
 	}

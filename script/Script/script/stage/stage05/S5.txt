@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S5"]
-#Text["S5"]
+#Title["Celebration &quot;Celestial Blizzard&quot;"]
+#Text["S5 (Add blizzard sfx and texture)"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -48,14 +48,7 @@ let HEALTH_MAX = 225/3;
 	
 	end;
 
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Celebration &quot;Celestial Blizzard&quot;","", LENEN, 0,145,255);
 	
-	ScreenShake(60,4);
-
-	SE_PlayLen(compositespellcard,75);
-	SE_PlayLen(BossSpell,75);
 	
 }
 
@@ -97,12 +90,26 @@ let isEnemyDeleted = false;
 let DIST_MAX = 1500;
 let MIKO_ORB_ORDER = [400,407,405,402,401,404,403,408];
 let SHARD_ORDER = [146,144,153];
+
+let spellActive = false;
+task InitiateSpell()
+{
+	wait(60*3);
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("Celebration &quot;Celestial Blizzard&quot;","", LENEN, 0,145,255);
+	ScreenShake(60,4);
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	spellActive = true;
+}
 task Fire
 {
 	yield;
 	let ccc = 1;
 	let dis = 0;
 	let dis2 = 0;
+	InitiateSpell();
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		ObjMove_SetX(GetPlayerObjectID,ObjMove_GetX(GetPlayerObjectID)-0.5);
@@ -110,24 +117,6 @@ task Fire
 		if(ccc%30==0)
 		{
 			CreateWindArrow(ccc);
-		}
-		if(ccc%140==0)
-		{
-			SE_PlayLen(charge0,60);
-		}
-		if(ccc%12==0)
-		{
-			ascent(o in 0..3)
-			{
-				let randD = (ccc*-8.3242 + DIST_MAX/3*o)%DIST_MAX;
-				ascent(i in 0..6)
-				{
-					let obj = CreateShotA1(0,-100,0,90,SHARD_ORDER[round(rand(0,2))],0);
-					BulletTravelOval(obj,randD,0.45+i*0.005);
-					ObjRender_SetScale(obj,1.9-0.9/5*i);
-					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
-				}
-			}
 		}
 		if(ccc%9==0)
 		{
@@ -141,9 +130,30 @@ task Fire
 			dis2-=10.213;
 			dis = (-ccc * 60.342 + dis2) % 1500;
 		}
-		if(ccc%50==0)
+		if(spellActive)
 		{
-			CreateCelebrationLine(ccc);
+			if(ccc%140==0)
+			{
+				SE_PlayLen(charge0,60);
+			}
+			if(ccc%12==0)
+			{
+				ascent(o in 0..3)
+				{
+					let randD = (ccc*-8.3242 + DIST_MAX/3*o)%DIST_MAX;
+					ascent(i in 0..6)
+					{
+						let obj = CreateShotA1(0,-100,0,90,SHARD_ORDER[round(rand(0,2))],0);
+						BulletTravelOval(obj,randD,0.45+i*0.005);
+						ObjRender_SetScale(obj,1.9-0.9/5*i);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+			}
+			if(ccc%50==0)
+			{
+				CreateCelebrationLine(ccc);
+			}
 		}
 		ccc++;
 		yield;
