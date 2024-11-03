@@ -15,6 +15,7 @@ let vol = 100;
 let MusicFade = false;
 @Initialize
 {
+	
 	LoadBoss();
 	InitialiseIndiv();
 	SetPlayerLife(9999);

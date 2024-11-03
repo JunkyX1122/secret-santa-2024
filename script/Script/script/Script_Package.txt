@@ -34,14 +34,16 @@ task Loader
 	
 	TTitleScene;
 }
-let carryOn = false;
+let carryOn = true;
 task TTitleScene
 {
 	//タイトルシーン終了フラグ
 	wait(120);
-	TStageScene("",0,60);
-	TStageScene("",1,60);
-	
+	TStageScene("",4,60);
+	if(carryOn==true)
+	{
+		TStageScene("",5,60);
+	}
 }
 
 
@@ -51,6 +53,7 @@ task TTitleScene
 function TStageScene(let pathReplay,SELECT_ID,waiter)
 {
 	yield;
+	
 	LoadingBool = true;
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();
@@ -94,6 +97,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	//初期ステージ設定
 	let indexStage = 1; //ステージインデックス
 	loop(waiter){yield;}
+	SetCommonData("hasThingsInitialised",false);
 	SetStageIndex(indexStage);
 	SetStageMainScript(pathMainScript);
 	SetStagePlayerScript(pathPlayer);
@@ -330,7 +334,7 @@ task TTransition
 	while(alpha > 0)
 	{
 		ObjRender_SetAlpha(objImage, alpha);
-		alpha -= 16;
+		alpha -= 32;
 		yield;
 	}
 	Obj_Delete(objImage);

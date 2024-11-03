@@ -246,8 +246,17 @@ let LoadAllSoundsArray = [PlayerSplCall,SuperCharge,FlashBomb1,
 FlashBomb2,BossSpell,BossDead,BossEnd,Burst1,Burst2,Burst3,Burst4,UFO,Noise,Charge1,Charge2,Charge3,Charge4,Charge5,Drain,Damage1,Damage2,Shot1,Shot2,Chime1,
 Freeze,Bone,BulletDeleteSound,Time,EnamyDeath,LaserDelLong,LaserFireLong,LaserDelShort,LaserFireShort,Talk,GunReload,
 GunFire,Upgrade,BombGet,PointGet,LifeGet,
-shot1,shot2,chime1,chime2,spirit1,spirit2,spirit3,spirit4,timeout1,timeout2,laser0,laser1,laser2,laser3,laser4,MSpark,charge0,charge1,charge2,charge3,charge4,
-charge5,spawnfm1,spawnfm2,spawnfm3,gap,select,selected,cancel,dooropen,doorclose];
+poof,explode,drum,slash,boon0,boon1,ufo,
+shot1,shot2,
+chime1,chime2,
+spirit1,spirit2,spirit3,spirit4,
+timeout1,timeout2,
+laser0,laser1,laser2,laser3,laser4,MSpark,
+charge0,charge1,charge2,charge3,charge4,charge5,
+spawnfm1,spawnfm2,spawnfm3,
+spellcard,compositespellcard,
+nodamage,
+gap,select,selected,cancel];
 
 
 

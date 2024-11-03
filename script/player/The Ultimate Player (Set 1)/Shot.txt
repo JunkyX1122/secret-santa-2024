@@ -22,7 +22,11 @@ task TShotMarisa
 		while(!pShot){yield;}
 		if(IsPlayerSpellActive){DamageRate=0.5*2;}
 		else{DamageRate=1.0*2;}
-
+		MainDamage = 3;
+		if(GetKeyState(KEY_P)!=KEY_FREE)
+		{
+			MainDamage = 90;
+		}
 		MainShot(GetPlayerX()+8, GetPlayerY(), Speed, 270, MainDamage, 20);
 		MainShot(GetPlayerX()-8, GetPlayerY(), Speed, 270, MainDamage, 20);
 		MainShot(GetPlayerX()  , GetPlayerY(), Speed, 270, MainDamage/2, 20);

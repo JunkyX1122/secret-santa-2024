@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Lunar Poem &quot;Leviathan’s Moon&quot;","", LENEN, 0,0,255);
+	ObjCutin_SetSpellcardS4("Primal Poem &quot;Tidal Surge&quot;","", LENEN, 0,0,255);
 	
 	ScreenShake(60,4);
 

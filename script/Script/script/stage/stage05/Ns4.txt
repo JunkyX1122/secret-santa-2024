@@ -237,7 +237,7 @@ task CreateShurikenSmall(x,y,speed,ang,angVel,spinAmount,bit)
 	wait(del);
 	let angP = 0;
 	let angA = 0;
-	while(!Obj_IsDeleted(objSourceShot))
+	while(!Obj_IsDeleted(objSourceShot)&&!Obj_IsDeleted(objEnemy))
 	{
 		let xSpd = cos(ang+angP);
 		let ySpd = sin(ang+angP);
@@ -339,25 +339,28 @@ task CreateWall(ang,id,bit)
 {
 	ascent(i in 0..28)
 	{
-		SE_PlayLen(Shot1,60);
-		ascent(o in 0..2)
+		if(!Obj_IsDeleted(objEnemy))
 		{
-			if(true)
+			SE_PlayLen(Shot1,60);
+			ascent(o in 0..2)
 			{
-				let angleT = ang+1*i*bit*(1-2*o);
-				let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,angleT,-4/70,0,id,id,15,2,BLEND_SUBTRACT,true);
-				ObjRender_SetBlendType(obj,BLEND_SUBTRACT);
-				//ObjRender_SetScale(obj,1.2);
-				ObjMove_AddPatternA2(obj, 120, 0, ang-0.1*i*bit*(1-2*o), 7/100,7,0);
-				
-				let obj2 = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,angleT,-4/70,0,137,137,15,2,BLEND_ADD_ARGB,true);
-				ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
-				Obj_SetRenderPriority(obj2,0.49);
-				//ObjRender_SetScale(obj2,1.2);
-				ObjMove_AddPatternA2(obj2, 120, 0, ang-0.1*i*bit*(1-2*o), 7/100,7,0);
+				if(true)
+				{
+					let angleT = ang+1*i*bit*(1-2*o);
+					let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,angleT,-4/70,0,id,id,15,2,BLEND_SUBTRACT,true);
+					ObjRender_SetBlendType(obj,BLEND_SUBTRACT);
+					//ObjRender_SetScale(obj,1.2);
+					ObjMove_AddPatternA2(obj, 120, 0, ang-0.1*i*bit*(1-2*o), 7/100,7,0);
+					
+					let obj2 = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,angleT,-4/70,0,137,137,15,2,BLEND_ADD_ARGB,true);
+					ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+					Obj_SetRenderPriority(obj2,0.49);
+					//ObjRender_SetScale(obj2,1.2);
+					ObjMove_AddPatternA2(obj2, 120, 0, ang-0.1*i*bit*(1-2*o), 7/100,7,0);
+				}
 			}
+			yield;
 		}
-		yield;
 	}
 	
 }

@@ -188,7 +188,10 @@ task CreateFlashBomb(x,y,d,spd1,spd2,startAm,amPlus,multiplier)
 	wait(10);
 	ObjMove_SetDestAtFrameWeight(objSourceShot, x, y, d);
 	wait(d);
-	SE_PlayLen(explode,60);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(explode,60);
+	}
 	let ang = ObjMove_GetAngle(objSourceShot);
 	let hueue = rand(0,360);
 	//let multiplier = 0.6;
