@@ -141,6 +141,7 @@ task LaserSweep(xs,ys,bit,starter)
 	let y = ys;
 	let obj = CreateStraightLaserA1(x,y,ang,0,10,9999,26,0);
 	let obj2 = CreateStraightLaserA1(x,y,ang,0,20,9999,38,0);
+	
 	let laserss = [obj,obj2];
 	
 	
@@ -157,6 +158,8 @@ task LaserSweep(xs,ys,bit,starter)
 		{
 			ascent(obj in 0..2)
 			{
+				ObjShot_SetAutoDelete(laserss[obj],false);
+				ObjShot_SetAutoDelete(sourcess[obj],false);
 				ObjRender_SetBlendType(laserss[obj],BLEND_ADD_ARGB);
 				ObjStLaser_SetSource(laserss[obj],false);
 				let mAng = -90+flipAng*bit-(flipAng*2)/(t-1)*i*bit;

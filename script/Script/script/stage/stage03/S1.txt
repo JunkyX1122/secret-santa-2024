@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
-#Text["S1 (Circle at top, lasers sweeping across the bottom. Kiene like)"]
+#Title["Lunar Poem &quot;Leviathan’s Moon&quot;"]
+#Text["S1 "]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -40,7 +40,7 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 80, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -56,7 +56,7 @@ let finalSpellBool = false;
 
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
-	
+	//SetIntersectionVisualization(true);
 }
 
 
@@ -97,12 +97,133 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-
+task DamageDelay()
+{
+	wait(60*8);
+	ObjEnemy_SetDamageRate(objEnemy, (0.065/3)/1.5, (0.065/3)/3);
+}
 task Fire
 {
-	
+	let bit = 1-2*round(rand(0,1));
+	let cc = 0;
+	let cc2 = 0;
+	DamageDelay();
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		
+		let x = ObjMove_GetX(objEnemy);
+		let y = ObjMove_GetY(objEnemy);
+		let pDis = Get_Distance(x,y,GetPlayerX,GetPlayerY);
+		let pAng = Get_PointAngle(GetPlayerX,GetPlayerY,x,y);
+		if(pDis<150)
+		{
+			ObjMove_SetPosition(GetPlayerObjectID,x+150*cos(pAng),y+150*sin(pAng));
+		}
+		if(cc%66==0)
+		{
+			let dis = 50;
+			ascent(i in 0..20)
+			{
+				let ang = (cc/33)*14.213*bit + 360/20*i;
+				let obj = ShotA1(x+dis*cos(ang),y+dis*sin(ang),2,ang,356,356,100,3,BLEND_ADD_ARGB,true);
+			}
+		}
+		if(cc%7==0)
+		{
+			let dis = 150;
+			SE_PlayLen(Shot1,60);
+			ascent(i in 0..8)
+			{
+				let ang = 90+(cc/5)*4.92342*bit + 360/8*i;
+				ascent(p in 0..3)
+				{
+					let spd = 3+(1)*sin(cc*4.123);
+					ascent(o in 0..2)
+					{
+						let spdP = 0.05*p;
+						let obj = ShotA2(x+dis*cos(ang),y+dis*sin(ang),0+spdP,ang,spd/120,spd+spdP,432,420,30,3,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+						ObjRender_SetAlpha(obj,128);
+						ObjRender_SetColor(obj,128,128,200);
+						if(o==0)
+						{
+							ObjRender_SetAlpha(obj,200);
+							ObjRender_SetScale(obj,1.25);
+							let w = 200/2*p;
+							ObjRender_SetColor(obj,w,w,255);
+						}
+						
+					}
+				}
+			}
+		}
+		if(cc%6==0)
+		{
+			ascent(i in 0..2)
+			{
+				ascent(o in 0..1)
+				{
+					let ang = (cc/8)*8.1233*bit*[1,-1][o] + 360/2*i;
+					if(ang%360 > 180+30 && ang%360 < 360 - 30 && absolute(ang%360 - 270) <= 15)
+					{
+						SE_PlayLen(Shot2,60);
+						let obj = CreateStraightLaserA1(GetStgFrameWidth/2+400*cos(ang),GetStgFrameHeight + 31,ang,0,30,999,24,60);
+						LaserGrow(obj,1);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+			}
+		}
+		if(cc%2==0)
+		{
+			ascent(i in 0..2)
+			{
+				ascent(o in 0..2)
+				{
+					let ang = (cc/8)*8.1233*bit*[1,-1][o] + 360/2*i;
+					if(ang%360 > 180+30 && ang%360 < 360 - 30 && absolute(ang%360 - 270) > 15)
+					{
+						SE_PlayLen(Shot2,60);
+						let obj = CreateStraightLaserA1(GetStgFrameWidth/2+400*cos(ang),GetStgFrameHeight + 31,ang,0,60,60,404,60);
+						LaserGrow(obj,0);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+			}
+		}
+		cc++;
+		yield;
+	}
 }
-
+task LaserGrow(obj,type)
+{
+	let lasLength = 600;
+	ascent(i in 0..60)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjLaser_SetLength(obj,lasLength/59*i);
+			yield;
+		}
+	}
+	ObjLaser_SetIntersectionWidth(obj, 4);
+	SE_PlayLen(shot1,60);
+	if(type==1)
+	{
+		wait(10);
+		ascent(i in 0..60)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let scl = 1-1*cos(90/60*i);
+				ObjLaser_SetIntersectionWidth(obj, 4-4*scl);
+				ObjLaser_SetRenderWidth(obj, 30-30*scl);
+				yield;
+			}
+		}
+		Obj_Delete(obj);
+	}
+}
 task timer
 {
     loop(TIME-10)
