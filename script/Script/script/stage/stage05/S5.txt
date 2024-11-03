@@ -69,7 +69,7 @@ let HEALTH_MAX = 225/3;
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		SetCommonData("SpellCardBG1",true);
+		SetCommonData("SpellCardBG1",false);
 	}
     if(count == 95)
     {
@@ -102,6 +102,7 @@ task InitiateSpell()
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
 	spellActive = true;
+	SetCommonData("SpellCardBG1",true);
 }
 task Fire
 {
@@ -112,8 +113,7 @@ task Fire
 	InitiateSpell();
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		ObjMove_SetX(GetPlayerObjectID,ObjMove_GetX(GetPlayerObjectID)-0.5);
-		ObjMove_SetY(GetPlayerObjectID,ObjMove_GetY(GetPlayerObjectID)+0.5*0.3);
+		
 		if(ccc%30==0)
 		{
 			CreateWindArrow(ccc);
@@ -132,6 +132,8 @@ task Fire
 		}
 		if(spellActive)
 		{
+			ObjMove_SetX(GetPlayerObjectID,ObjMove_GetX(GetPlayerObjectID)-0.5);
+			ObjMove_SetY(GetPlayerObjectID,ObjMove_GetY(GetPlayerObjectID)+0.5*0.3);
 			if(ccc%140==0)
 			{
 				SE_PlayLen(charge0,60);
