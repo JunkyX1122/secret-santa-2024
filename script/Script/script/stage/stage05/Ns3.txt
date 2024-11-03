@@ -12,14 +12,14 @@ let objEnemy2;
 let count = 0;
    let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 60*60;
+let TIME = 90*60;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
   SetScriptResult(250);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(60);
+  SetScriptResult(90);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -92,32 +92,128 @@ task Fire
 		SE_PlayLen(charge0,60);
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+200*bit, 100, 50);
 	
-		AquaJet(GetPlayerX, GetPlayerY-150,GetStgFrameWidth/2+200*bit, 100,50,70);
-		wait(70+50);
-		SE_PlayLen(charge0,60);
-		AquaJet(GetStgFrameWidth/2-200*bit, 100, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),50,70);
-		wait(70+50+255);
+		AquaJet(GetStgFrameWidth/2, GetStgFrameHeight-175,GetStgFrameWidth/2+200*bit, 100,50,40,bit);
+		wait(70+50+30);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge0,60);
+			AquaJet(GetStgFrameWidth/2-200*bit, 100, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),50,40,bit);
+			wait(70+50+30);
+		}
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge0,60);
+			AquaJet(GetStgFrameWidth/2, 100, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),120,80,bit);
+		}
+		wait(70+120);
+		keepFiring = true;
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			PassiveFire(bit);
+		}
+		wait(225);
+		keepFiring = false;
 		bit*=-1;
+		ObjEnemy_SetDamageRate(objEnemy, (0.09)/1.5, (0.09)/3);
 	}
 }
-task AquaJet(x,y,xI,yI,d,t)
+let keepFiring = true;
+task PassiveFire(bit)
+{
+	let positions = [];
+	let dis = 100;
+	let centreScale = 1.2;
+	let ang = 0;
+	let size = 1;
+	let startAng = 90;
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..2)
+		{
+			let x1 = dis * centreScale * cos(ang-45*bit+90*o*bit) * size;
+			let y1 = dis * centreScale * sin(ang-45*bit+90*o*bit) * size;
+			
+			let x2 = dis * 2 * cos(ang) * size;
+			let y2 = dis * 2 * sin(ang) * size;
+			
+			let angS = Get_PointAngle(x2,y2,x1,y1);
+			let pAm = 4;
+			ascent(p in 0..pAm)
+			{
+				if(p<pAm-1||o==1)
+				{
+					let x3 = Interpolate_Linear(x1,x2,1/(pAm-1)*p);
+					let y3 = Interpolate_Linear(y1,y2,1/(pAm-1)*p);
+					if(p==pAm-1)
+					{
+						angS = ang;
+					}
+					positions = positions ~ [[x3,y3]];
+				}
+				
+			}
+		}
+		ang+=90*bit;
+	}
+	while(!Obj_IsDeleted(objEnemy)&&keepFiring)
+	{
+		ascent(i in 0..10)
+		{
+			if(!Obj_IsDeleted(objEnemy)&&keepFiring)
+			{
+				SE_PlayLen(shot1,60);
+				ascent(p in 0..length(positions))
+				{
+					let spdScl = Get_Distance(0,0,positions[p][0],positions[p][1])/100;
+					let ang = Get_PointAngle(positions[p][0],positions[p][1],0,0) + startAng;
+					let spd = 2 * spdScl;
+					
+					
+					let x = ObjMove_GetX(objEnemy) + positions[p][0] * 0.3;
+					let y = ObjMove_GetY(objEnemy) + positions[p][1] * 0.3;
+					
+					let xy = Rotate2D(x,y,startAng,ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy));
+					
+					let objS = ShotA1(xy[0],xy[1],spd,ang,277,420,10,2,BLEND_ADD_ARGB,false);
+					
+				}
+				startAng-=0.42321*bit;
+				wait(3);
+			}
+		}
+		startAng+=9.12321*bit;
+		wait(5);
+	}
+}
+task AquaJet(x,y,xI,yI,d,t,bit)
 {
 	let sprd = 70;
 	let ang = Get_PointAngle(x,y,xI,yI)+180;
-	ascent(i in 0..3)
+	WarningLaser(xI,yI,ang+180,d);
+	ascent(o in 0..4)
 	{
-		let ang2 = ang-sprd+(sprd*2)/2*i;
-		WarningLaser(xI,yI,ang2);
+		let iii = 1/3*o;
+		ascent(i in 0..3)
+		{
+			let ang2 = ang-sprd+(sprd*2)/2*i;
+			WarningLaser(Interpolate_Decelerate(xI,x,iii),Interpolate_Decelerate(yI,y,iii),ang2,d);
+		}
 	}
-	
 	wait(d);
-	ObjMove_SetDestAtFrameWeight(objEnemy, x,y, t);
-	
-	
-	ascent(i in 0..3)
+	let shur = 8;
+	if(!Obj_IsDeleted(objEnemy)) 
 	{
-		let ang2 = ang-sprd+(sprd*2)/2*i;
-		CreateJetStream(ang2,t);
+		loop(shur)
+		{
+			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,ang,3,0.3,-6*bit,bit);
+			ang+=360/shur;
+		}
+		ObjMove_SetDestAtFrameWeight(objEnemy, x,y, t);
+		ascent(i in 0..3)
+		{
+			let ang2 = ang-sprd+(sprd*2)/2*i;
+			CreateJetStream(ang2,t);
+		}
 	}
 }
 let shtIDA = [427,275,275,277,277,80,295];
@@ -127,36 +223,40 @@ task CreateJetStream(ang,t)
 	SE_PlayLen(slash,60);
 	ascent(i in 0..t)
 	{
-		SE_PlayLen(Shot1,60);
-		ascent(o in 0..5)
+		if(!Obj_IsDeleted(objEnemy)) 
 		{
-			let randIntens = rand(0,1);
-			let ang2 = ang -40 + 80*randIntens;
-			let dis = 60;
-			let x = ObjMove_GetX(objEnemy)+dis*cos(ang2);
-			let y = ObjMove_GetY(objEnemy)+dis*sin(ang2);
-			let spd = rand(4,5)*(3-2/(t-1)*i);
-			
-			let whiteScl = sin(180*randIntens);
-			
-			let xs = spd*cos(ang-4+8*randIntens);
-			let ys = spd*sin(ang-4+8*randIntens);
-			let shtID = shtIDA[round(rand(0,length(shtIDA)*2))%length(shtIDA)];
-			
-			
-			
-			let objS = ShotB2(x,y,xs,ys,0,0.1,0,100,shtID,420,5,3,BLEND_ADD_ARGB,false);
-			ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
-			
-			let witt = 100+155*whiteScl;
-			ObjRender_SetColor(objS,witt,witt,255);
+			SE_PlayLen(Shot1,60);
+			ascent(o in 0..5)
+			{
+				let randIntens = rand(0,1);
+				let ang2 = ang -40 + 80*randIntens;
+				let dis = 60;
+				let x = ObjMove_GetX(objEnemy)+dis*cos(ang2);
+				let y = ObjMove_GetY(objEnemy)+dis*sin(ang2);
+				let spd = rand(4,5)*(3-2/(t-1)*i);
+				
+				let whiteScl = sin(180*randIntens);
+				
+				let xs = spd*cos(ang-4+8*randIntens);
+				let ys = spd*sin(ang-4+8*randIntens);
+				let shtID = shtIDA[round(rand(0,length(shtIDA)*2))%length(shtIDA)];
+				
+				
+				
+				let objS = ShotB2(x,y,xs,ys,0,0.1,0,100,shtID,420,5,3,BLEND_ADD_ARGB,false);
+				ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
+				
+				let witt = 100+155*whiteScl;
+				ObjRender_SetColor(objS,witt,witt,255);
+			}
+			yield;
 		}
-		yield;
 	}
 }
-task WarningLaser(x,y,ang)
+
+task WarningLaser(x,y,ang,t)
 {
-	let t = 40;
+	
 	let slashWidth = 35;
 	let dis = 800;
 	ascent(i in 0..t)
@@ -177,6 +277,168 @@ task WarningLaser(x,y,ang)
 	}
 }
 
+task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit)
+{
+	let maxTraverse = 0.25;
+	let del = 10;
+
+	let objSourceShot = ShotA1(x,y,0,ang,295,420,del,4,BLEND_ADD_ARGB,false);
+	ObjShot_SetSpellResist(objSourceShot,true);
+	ObjRender_SetBlendType(objSourceShot,BLEND_ADD_ARGB);
+	let shurikenPoints = [];
+	let tips = [];
+	let dis = 50;
+	let centreScale = 0.75;
+
+	ascent(i in 0..4)
+	{
+		ascent(o in 0..2)
+		{
+			let x1 = x + dis * centreScale * cos(ang-45*bit+90*o*bit) * size;
+			let y1 = y + dis * centreScale * sin(ang-45*bit+90*o*bit) * size;
+			
+			let x2 = x + dis * 2 * cos(ang) * size;
+			let y2 = y + dis * 2 * sin(ang) * size;
+			
+			let angS = Get_PointAngle(x2,y2,x1,y1);
+			
+			ascent(p in 0..pAm)
+			{
+				if(p<pAm-1||o==1)
+				{
+					let x3 = Interpolate_Linear(x1,x2,1/(pAm-1)*p);
+					let y3 = Interpolate_Linear(y1,y2,1/(pAm-1)*p);
+					if(p==pAm-1)
+					{
+						angS = ang;
+					}
+					let objS = ShotA1(x3,y3,0,angS,427,420,del,4,BLEND_ADD_ARGB,false);
+					ObjShot_SetSpellResist(objS,true);
+					ObjShot_SetAutoDelete(objS,false);
+					ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
+					shurikenPoints = shurikenPoints ~ [objS];
+					if(p==pAm-1)
+					{
+						tips = tips ~ [objS];
+					}
+					
+				}
+				
+			}
+		}
+		ang+=90*bit;
+	}
+	wait(del);
+	let xSpd = speed*cos(ang);
+	let ySpd = speed*sin(ang);
+	let cc = 0;
+	let shid = 0;
+	let shid2 = 0;
+	while(!Obj_IsDeleted(objSourceShot)&&CheckInWalls(objSourceShot))
+	{
+		ascent(i in 0..length(shurikenPoints))
+		{
+			let obj = shurikenPoints[i];
+			if(!Obj_IsDeleted(obj))
+			{
+				let rotatedPos = Rotate2D(ObjMove_GetX(obj),ObjMove_GetY(obj),spinAmount,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
+				ObjMove_SetPosition(obj,rotatedPos[0]+xSpd,rotatedPos[1]+ySpd);
+				ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+spinAmount);
+			}
+		}
+		ObjMove_SetPosition(objSourceShot,ObjMove_GetX(objSourceShot)+xSpd,ObjMove_GetY(objSourceShot)+ySpd);
+		
+		loop(1)
+		{
+			if(cc%3==0)
+			{
+				let id= 64; 
+	
+				let spdd = 1;
+				ascent(o in 0..2)
+				{
+					let objW = ShotA2(ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot),0,ObjMove_GetAngle(objSourceShot)-180+(20-40*o),spdd/120,spdd,id,id,5,2,BLEND_ADD_ARGB,false);
+					ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
+					if(cc%(3*11)>0)
+					{
+						ObjShot_SetDeleteFrameA6(objW,40,1);
+					}
+					else
+					{
+						SE_PlayLen(chime1,60);
+					}
+				}
+				shid2++;
+			}
+		}
+		loop(1)
+		{
+			let dir=-90;
+
+			dir = atan2( GetPlayerY - ObjMove_GetY(objSourceShot), GetPlayerX - ObjMove_GetX(objSourceShot));
+							
+			// difference between 'dir' and 'angle'
+			if(!Obj_IsDeleted(objSourceShot))
+			{
+				let diff = dir - ang;
+				while(diff >= 180) { diff -= 360; }    // adjust the range
+				while(diff < -180) { diff += 360; }
+
+				let diffAbs = (|diff|);
+				if(diffAbs < maxTraverse) {
+					// if the difference is small,
+					// the bullet turns to the player's character
+					ang = dir;
+				} else {
+					// otherwise, the bullet turns 'maxTraverse' degrees
+					ang += maxTraverse * diff / diffAbs;
+				}
+			}
+			ObjMove_SetAngle(objSourceShot,ang);
+			xSpd = speed*cos(ang);
+			ySpd = speed*sin(ang);
+		}
+		cc++;
+		
+		yield;
+	}
+	ObjShot_SetDeleteFrameA5(objSourceShot,0,2);
+	
+	ascent(i in 0..length(shurikenPoints))
+	{
+		if(!Obj_IsDeleted(shurikenPoints[i]))
+		{
+			ObjShot_SetDeleteFrameA6(shurikenPoints[i],0,1);
+		}
+	}
+	
+}
+function CheckInWalls(obj)
+{
+	let x = ObjMove_GetX(obj);
+	let y = ObjMove_GetY(obj);
+	if(x<0)
+	{
+		ObjMove_SetX(obj,0);
+		return false;
+	}
+	if(y<0)
+	{
+		ObjMove_SetY(obj,0);
+		return false;
+	}
+	if(x>GetStgFrameWidth)
+	{
+		ObjMove_SetX(obj,GetStgFrameWidth);
+		return false;
+	}
+	if(y>GetStgFrameHeight)
+	{
+		ObjMove_SetY(obj,GetStgFrameHeight);
+		return false;
+	}
+	return true;
+}
 task LaserGrowFade(obj,dis,alpha)
 {
 	let t = 60;
