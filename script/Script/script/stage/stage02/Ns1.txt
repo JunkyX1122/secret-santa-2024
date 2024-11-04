@@ -8,7 +8,10 @@
 #include "./Initiate.txt"
 
 let objEnemy;
-let objEnemy2;
+
+let objEnemy2 = CreateFamiliar;
+//let objEnemy3 = CreateFamiliar;
+
 let count = 0;
    let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
@@ -38,7 +41,15 @@ let TIME = 60*60;
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,180 );
+	
 	renderYuuma(objEnemy);
+
+	ObjMove_SetPosition(objEnemy2, 100, GetStgFrameHeight/2);
+	//ObjMove_SetPosition(objEnemy3, GetStgFrameWidth-100, GetStgFrameHeight/2);
+	renderYuuma(objEnemy2);
+	//renderYuuma(objEnemy3);
+	HitCirc(objEnemy2);
+	//HitCirc(objEnemy3);
 
 	end;
 	SetCommonData("SpellCardBG1",false);
@@ -46,15 +57,20 @@ let TIME = 60*60;
 }
 @MainLoop
 {
-	SetCommonData("BossX", ObjMove_GetX(objEnemy));
-	SetCommonData("BossY", ObjMove_GetY(objEnemy));
+	
+	SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+	//SetCommonData("objEnemy3_Position", [ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3)]);
     ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
     ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
-        
         SetAutoDeleteObject(true);
     }
+	else
+	{
+		SetCommonData("BossX", ObjMove_GetX(objEnemy));
+		SetCommonData("BossY", ObjMove_GetY(objEnemy));
+	}
 	if(count == 0)
 	{
 		
@@ -118,6 +134,7 @@ task end
 	{
 		yield;
 	}
+	
 	SE_PlayLen(BossDead,50);
 	Obj_SetValue(objEnemy,"cast",0);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
@@ -133,17 +150,31 @@ task end
     CloseScript(GetOwnScriptID());
 	return;
 } 
-task move
+
+task HitCirc(objTarget)
 {
-	wait(150);
-	let cc = 1;
-    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
-    {
-        ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,10)*cc, rand(80,120), 140);
-		cc*=-1;
-		wait(280);
-    }
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 32);
+		ObjEnemy_SetIntersectionCircleToPlayer(objTarget, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 24);
+		yield;
+	}
+	/*
+	ScreenShake(60,20); 
+	SE_PlayLen(BossEnd,80);
+	loop(20)
+	{
+		ascent(i in 0..15)
+		{
+			ExplodeObject01(round(rand(0,4)),ObjMove_GetX(objTarget),ObjMove_GetY(objTarget),rand(1,5)*i,rand(0,360));
+		}
+	}
+	*/
+	Obj_Delete(objTarget);
 }
+
+
+
 
 function GetCenterX{
      return GetStgFrameWidth/2;
