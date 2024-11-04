@@ -62,9 +62,6 @@ let isBossTangible = true;
 
 @MainLoop
 {
-	SetCommonData("BossX", ObjMove_GetX(objEnemy));
-	SetCommonData("BossY", ObjMove_GetY(objEnemy));
-	
 	if(isBossTangible)
 	{
 		ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
@@ -72,9 +69,13 @@ let isBossTangible = true;
 	}
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
-        
         SetAutoDeleteObject(true);
     }
+	else
+	{
+		SetCommonData("BossX", ObjMove_GetX(objEnemy));
+		SetCommonData("BossY", ObjMove_GetY(objEnemy));
+	}
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
