@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S2"]
+#Title["Primal Poem &quot;Tidal Surge&quot;"]
 #Text["S2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -40,7 +40,7 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 80, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -56,6 +56,8 @@ let finalSpellBool = false;
 
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
+	//SetIntersectionVisualization(true);
+	
 	
 }
 
@@ -70,7 +72,7 @@ let finalSpellBool = false;
 	
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
-        
+        //SetShotAutoDeleteClip(64,32,64,32);
         SetAutoDeleteObject(true);
     }
 	if(count < 95)	
@@ -89,18 +91,158 @@ let finalSpellBool = false;
     {
        
     }
+	enemyIsAlive = !Obj_IsDeleted(objEnemy);
     count++;
     yield;
 }
-
+let enemyIsAlive = true;
 
 @Finalize
 {
 }
-
+let waveCC = 0;
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	let baseWaveHeight = 5;
+	let mult = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		bit*=-1;
+		let cc = 0;
+		let cc2 = 0;
+		let spnAm = 1.4123;
+		let waveVariation = 0.75;
+		SE_PlayLen(LaserDelLong,60);
+		
+		
+		while(!Obj_IsDeleted(objEnemy)&&cc < 60*10)
+		{
+			if(cc%12==0)
+			{
+				
+				CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm),427,bit,3,cc2, 0);
+				cc2++;
+				waveCC++;
+				if(waveCC > 360)
+				{
+					waveCC = round(rand(0,90));
+				}
+			}
+			if(sin(cc*spnAm)>0&&cc < 60*9)
+			{
+				if(cc%36==0)
+				{
+			
+					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 2,335,bit,16,cc2, 6);
+				}
+				
+				if(cc%84==0)
+				{
+
+					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 3,295,bit,32,cc2, 6);
+				}
+				
+				if(cc%93==0)
+				{
+			
+					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 4,64,bit,12,cc2, 0);
+				}
+			}
+			cc++;
+			yield;
+		}
+		if(baseWaveHeight<6)
+		{
+			baseWaveHeight+=0.25;
+			mult+=1;
+			ObjEnemy_SetDamageRate(objEnemy, ((0.05+0.008*mult)/3)/1.5, ((0.05+0.008*mult)/3)/3);
+		}
+	}
+}
+task CreateWave(height, id, bit, timeBetween,cc2, ySpeedLim)
+{
+	let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2 + 32) * bit;
+	let sideSpeed = 4;
+	let cc = round(rand(0,100))%timeBetween;
+	let personalWaveCounter = round(25+25*sin(cc2*20 + waveCC*2));
+	while(CheckX(x)&&!Obj_IsDeleted(objEnemy))
+	{
+		
+		let xs = -2*bit;
+		let ys = -height;
+		if(cc%timeBetween==0)
+		{
+			let objS = ShotB2(x,GetStgFrameHeight+30,xs,ys,0,0.1,0,10,id,420,0,3,BLEND_ADD_ARGB,false);
+			ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
+			ObjShot_SetSpellResist(objS,true);
+			BulletHandle(objS,max(0,personalWaveCounter));
+			ObjRender_SetScale(objS,1.5);
+			ObjShot_SetIntersectionScaleXY(objS,1.5,1.5);
+			if(id==427)
+			{
+				SE_PlayLen(Shot1,40);
+			}
+			else
+			{
+				SE_PlayLen(shot1,60);
+			}
+			if(personalWaveCounter==-10)
+			{
+				personalWaveCounter = 1000;
+			}
+			else
+			{
+				personalWaveCounter--;
+			}
+		}
+		cc2++;
+		cc++;
+		x+=sideSpeed * bit;
+		yield;
+	}
 	
+	function CheckX(x)
+	{
+		if(bit==1)
+		{
+			return x < GetStgFrameWidth+300;
+		}
+		else
+		{
+			return x > -300;
+		}
+		return true;
+	}
+	
+	task BulletHandle(obj,cc3)
+	{
+		ObjShot_SetAutoDelete(obj,false);
+		while(ObjMove_GetSpeedY(obj) < ySpeedLim &&!Obj_IsDeleted(obj) && enemyIsAlive)
+		{
+			if(id==427&&cc3%31>0)
+			{
+				let w = 255-255*(absolute(ObjMove_GetSpeedY(obj))/10);
+				ObjRender_SetColor(obj,w,w,255);
+			}
+			yield;
+		}
+		ObjShot_SetAutoDelete(obj,true);
+		if(!Obj_IsDeleted(obj))
+		{
+			ObjShot_SetIntersectionEnable(obj,false);
+			let t = 20;
+			ascent(i in 0..t)
+			{
+				ObjRender_SetAlpha(obj,255-255/t*i);
+				
+				let w = 255-255/t*i;
+				ObjRender_SetColor(obj,w,w,255);
+				yield;
+			}
+			Obj_Delete(obj);
+		}
+	}
 }
 
 task timer
@@ -140,7 +282,11 @@ task end
 	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
 	SetCommonData("SpellCardBG1",false);
-	wait(140);
+	loop(140)
+	{
+		//SetShotAutoDeleteClip(32,32,32,32);
+		yield;
+	}
 	
 	CloseScript(GetOwnScriptID());
 	return;

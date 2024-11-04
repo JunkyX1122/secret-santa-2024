@@ -68,7 +68,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	}
 	if(SELECT_ID==3)
 	{
-		pathMainScript = dirCurrent ~ "stage/stage04/stage.txt";
+		pathMainScript = dirCurrent ~ "stage/stage04a/stage.txt";
 	}
 	if(SELECT_ID==4)
 	{

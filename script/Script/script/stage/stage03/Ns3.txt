@@ -37,7 +37,7 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2,150 );
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2,150, 40);
 	renderYuuma(objEnemy);
 
 	end;
