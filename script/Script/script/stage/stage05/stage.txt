@@ -126,7 +126,7 @@ task StartStage
 {	
 	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
-	SetCommonData("MaxNumberOfPhases",5);
+	SetCommonData("MaxNumberOfPhases",4);
 	loop(120)
 	{
 		yield;

@@ -17,7 +17,7 @@ let MusicFade = false;
 {
 	LoadBoss();
 	InitialiseIndiv();
-	SetPlayerLife(1);
+	SetPlayerLife(999);
 	SetForbidPlayerSpell(true);
 	
 	EndStage;
@@ -110,6 +110,10 @@ task LoadBoss()
 	Boss=ObjEnemyBossScene_Create();
 	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
 	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
+	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"Ns3.txt");
+	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
 
 	ObjEnemyBossScene_LoadInThread(Boss);
 }
@@ -117,7 +121,7 @@ task StartStage
 {	
 	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
-	SetCommonData("MaxNumberOfPhases",5);
+	SetCommonData("MaxNumberOfPhases",2);
 	loop(120)
 	{
 		yield;

@@ -587,7 +587,7 @@ ShotData{ id=397 rect=(192,258,224,288) render=ALPHA angular_velocity = 0 delay_
 ShotData{ id=398 rect=(223,258,255,288) render=ALPHA angular_velocity = 0 delay_color= (64,255,144) } // Yellow-Green
 
 // Miko's Glowing Orbs
-ShotData{ id=399 rect=(1,389,65,453) render=ADD angular_velocity = 0 collision = 13 delay_color= (255,255,255) } // Gray
+ShotData{ id=399 rect=(1,389,65,453) render=ADD angular_velocity = 0 collision = (13,-2,0) delay_color= (255,255,255) } // Gray
 ShotData{ id=400 rect=(64,389,128,453) render=ADD angular_velocity = 0 collision = 13 delay_color= (255,64,64) } // Red
 ShotData{ id=401 rect=(1,453,64,517) render=ADD angular_velocity = 0 collision = 13 delay_color= (64,255,255) } // Aqua
 ShotData{ id=402 rect=(64,453,128,517) render=ADD angular_velocity = 0 collision = 13 delay_color= (64,255,64) } // Green
