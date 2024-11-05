@@ -67,6 +67,7 @@ let IMG_BOSS1PLACE = GetCurrentScriptDirectory() ~ "./../../img/title/1.png";
 let IMG_DOOR = GetCurrentScriptDirectory() ~ "./../../img/enemy/Door.png";
 let IMG_OKINA= GetCurrentScriptDirectory() ~ "./../../img/enemy/okinasprite.png";
 let IMG_YUUMA= GetCurrentScriptDirectory() ~ "./../../img/enemy/boss_toutetsu.png";
+let IMG_NITORI_SPRITE = GetCurrentScriptDirectory() ~ "./../../img/enemy/nitori_sprite.png";
 let IMG_EAGLE= GetCurrentScriptDirectory() ~ "./../../img/enemy/eagle.png";
 let IMG_ANIMALSPIRIT= GetCurrentScriptDirectory() ~ "./../../img/enemy/animal_spirits.png";
 

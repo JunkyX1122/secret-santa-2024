@@ -208,6 +208,84 @@ task renderOkina(obj){
 }
 let ShowMarker = true;
 
+task renderNitoriDS(obj){
+
+	let wi = 64;
+	let he = 80;
+	
+	let dir;
+	let speed;
+	let whichway = 0;
+	let frame = 0;
+	let idleframe = 0;
+	let castframe = 0;
+	Obj_SetValue(obj,"cast",0);
+	ObjPrim_SetTexture(obj,IMG_NITORI_SPRITE);
+	ObjSprite2D_SetSourceRect(obj,0,0,wi,he);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetScaleXYZ(obj,1,1,0);
+	ObjRender_SetAngleXYZ(obj,0,180,0);
+	Obj_SetRenderPriorityI(obj,39);
+	while(!Obj_IsDeleted(obj)){
+		
+		dir = ObjMove_GetAngle(obj);
+		speed = ObjMove_GetSpeed(obj);
+
+		if(speed == 0 && frame > 0){whichway = -1;}
+		else if(speed == 0 && frame < 0){whichway = 1;}
+		else if(speed == 0 && frame == 0){whichway = 0;}
+
+		else if(cos(dir) < 0){whichway=-1;}
+		else if(cos(dir) > 0){whichway=1;}
+		
+		if(Obj_GetValueD(obj,"cast",0) == 0 && speed == 0 && frame == 0){
+
+			castframe = 0;
+			if(idleframe >= 0 && idleframe < 10){ObjSprite2D_SetSourceRect(obj,0,0,wi,he);}
+			else if(idleframe >= 10 && idleframe < 20){ObjSprite2D_SetSourceRect(obj,wi,0,wi*2,he);}
+			else if(idleframe >= 20 && idleframe < 30){ObjSprite2D_SetSourceRect(obj,wi*2,0,wi*3,he);}
+			else if(idleframe >= 30 && idleframe < 40){ObjSprite2D_SetSourceRect(obj,wi*3,0,wi*4,he);}
+			
+			if(idleframe < 40){idleframe++;}
+			else if(idleframe == 40){idleframe=0;}
+			
+		}
+		
+		else if(Obj_GetValueD(obj,"cast",0) == 1 && speed == 0 && frame == 0){
+			
+			idleframe=0;
+			frame=0;
+			if(castframe >= 0 && castframe < 8){ObjSprite2D_SetSourceRect(obj,0,he*2,wi,he*3);}
+			if(castframe >= 8 && castframe < 16){ObjSprite2D_SetSourceRect(obj,wi,he*2,wi*2,he*3);}
+			if(castframe >= 16 && castframe < 24){ObjSprite2D_SetSourceRect(obj,wi*2,he*2,wi*3,he*3);}
+			if(castframe >= 24 && castframe < 25){ObjSprite2D_SetSourceRect(obj,wi*3,he*2,wi*4,he*3);}
+			if(castframe < 25){castframe++;}
+		}
+
+		else if(speed != 0 || frame != 0){
+		
+			if(frame < 0 && frame >= -8){ObjSprite2D_SetSourceRect(obj,0,he,wi,he*2); ObjRender_SetAngleXYZ(obj,0,180,0);}
+			if(frame < -8 && frame >= -16){ObjSprite2D_SetSourceRect(obj,wi,he,wi*2,he*2); ObjRender_SetAngleXYZ(obj,0,180,0);}
+			if(frame < -16 && frame >= -24){ObjSprite2D_SetSourceRect(obj,wi*2,he,wi*3,he*2); ObjRender_SetAngleXYZ(obj,0,180,0);}
+			if(frame < -24 && frame >= -25){ObjSprite2D_SetSourceRect(obj,wi*3,he,wi*4,he*2); ObjRender_SetAngleXYZ(obj,0,180,0);}
+			if(frame > 0 && frame <= 8){ObjSprite2D_SetSourceRect(obj,0,he,wi,he*2); ObjRender_SetAngleXYZ(obj,0,0,0);}
+			if(frame > 8 && frame <= 16){ObjSprite2D_SetSourceRect(obj,wi,he,wi*2,he*2); ObjRender_SetAngleXYZ(obj,0,0,0);}
+			if(frame > 16 && frame <= 24){ObjSprite2D_SetSourceRect(obj,wi*2,he,wi*3,he*2); ObjRender_SetAngleXYZ(obj,0,0,0);}
+			if(frame > 24 && frame <= 25){ObjSprite2D_SetSourceRect(obj,wi*3,he,wi*4,he*2); ObjRender_SetAngleXYZ(obj,0,0,0);}
+			idleframe=0;
+			castframe=0;
+			
+		}
+		EnemyMarker(ObjMove_GetX(obj),45);
+		frame=frame+whichway;
+		if(frame > 25){frame=25;}
+		if(frame < -25){frame=-25;}
+		yield;
+		
+	}
+	
+}
+
 task renderYuuma(obj)
 {
 	let wi = 80;

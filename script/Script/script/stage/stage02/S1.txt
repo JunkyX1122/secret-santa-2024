@@ -51,7 +51,7 @@ let objEnemy2 = CreateFamiliar;
 
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	//ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
-	renderYuuma(objEnemy2);
+	renderNitoriDS(objEnemy2);
 	//renderYuuma(objEnemy3);
 	HitCirc(objEnemy2);
 	//HitCirc(objEnemy3);
