@@ -125,6 +125,7 @@ task StartStage
 	//StartMusic;
 	//MusicChange;
 	SetCommonData("LifeBombAlpha",255);
+	SetForbidPlayerSpell(false);
 	//ObjSound_Seek(music1,135);
 	/*
 	*/

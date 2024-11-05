@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
+#Title["Daredevil &quot;Dust Strike&quot;"]
 #Text["S1"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -62,13 +62,13 @@ let objEnemy2 = CreateFamiliar;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Daredevil &quot;Dust Strike&quot;","", LENEN, 255,0,0);
 	
 	ScreenShake(60,4);
 
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
-	
+	//SetIntersectionVisualization(true);
 }
 
 
@@ -122,6 +122,35 @@ task Fire
 	let bit = 1-2*round(rand(0,1));
 	staffXY = [ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)];
 	StaffHandle(bit);
+	let cc = 0;
+	let angSpn = 4;
+	DamageDelay();
+	SE_PlayLen(boon1,60);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		staffXY = [ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)];
+		if(cc%18==0)
+		{
+			ascent(i in 0..angSpn)
+			{
+				let ang = (cc/18)*5.213*bit + 360/angSpn*i;
+				let x = GetStgFrameWidth/2+(GetStgFrameWidth/2+100)*bit * sin(ang);
+				let objS = ShotA2(x,GetStgFrameHeight,0,-90,6/120,6,299,299,20,3,BLEND_ADD_ARGB,false);
+			}
+		}
+		if(cc%120==119)
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50), 150+rand(10,-10), 60);
+		}
+		
+		cc++;
+		yield;
+	}
+	task DamageDelay()
+	{
+		wait(60*6);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+	}
 }
 let objFire = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SCYLLASTAFF, [0,0,512,32], BLEND_ALPHA, 0.48);
 task StaffHandle(bit)
@@ -133,27 +162,96 @@ task StaffHandle(bit)
 	ObjSprite2D_SetDestRect(objStaff,0, 0, 512, 32);
 	ObjSprite2D_SetDestCenter(objStaff);
 	ObjRender_SetScale(objStaff,0.5);
-	ObjMove_SetPosition(objStaff, staffXY[0], staffXY[1]);
+	
 	
 	let ang = 0;
-	let spnAm = 3.213*bit;
+	let spnAm = 8.213;
 	let cc = 0;
+	
+	let hitbox = CreateShotA1(staffXY[0], staffXY[1],0,0,1,0);
+	ObjShot_SetAutoDelete(hitbox,false);
+	ObjShot_SetSpellResist(hitbox,true);
+	ObjRender_SetAlpha(hitbox,false);
+	ObjShot_SetIntersectionScaleXY(hitbox,180);
+	let playerForce = 0;
 	while(!Obj_IsDeleted(objEnemy))
 	{
+		
+		let onHit = false;
+		ObjRender_SetAngleZ(objStaff,ang + spnAm*bit);
+		ObjMove_SetPosition(objStaff, staffXY[0], staffXY[1]);
+		ObjMove_SetPosition(hitbox, staffXY[0], staffXY[1]);
 		ang = ObjRender_GetAngleZ(objStaff);
-		ObjRender_SetAngleZ(objStaff,ang + spnAm);
-		if(cc%30==0)
+		
+		
+		
+		let barray = GetShotIdInCircleA2(staffXY[0], staffXY[1],125, TARGET_ENEMY);
+		let blength = length(barray);
+		if(blength>0)
 		{
+			ascent (i in 0..blength)
+			{
+				let buID = barray[i];
+				if(ObjShot_GetImageID(buID)==359||ObjShot_GetImageID(buID)==299)
+				{
+					SE_PlayLen(BulletDeleteSound,60);
+					SE_PlayLen(slash,60);
+					onHit = true;
+					ObjShot_SetDeleteFrameA6(buID,0,2);
+				}
+			}
+		}
+		if(Get_Distance(GetPlayerX,GetPlayerY,staffXY[0], staffXY[1])<125 && playerForce<=0)
+		{
+			SE_PlayLen(BulletDeleteSound,60);
+			SE_PlayLen(slash,60);
+			onHit = true;
+			playerForce = 10;
+		}
+		playerForce--;
+		if(cc%(3-2*ceil((spnAm-22)/30))==0)
+		{
+			SE_PlayLen(shot1,60);
+			ascent(o in 0..2)
+			{
+				let objS = ShotA2(staffXY[0]+125*cos(ang), staffXY[1]+125*sin(ang),0,ang,4/60,4,[57,50][o],[57,50][o],20,3,BLEND_ALPHA,false);
+				ang+=180;
+			}
+		}
+		if(onHit)
+		{
+			ascent(o in 0..20)
+			{
+				let objS = ShotA2(staffXY[0]+125*cos(ang), staffXY[1]+125*sin(ang),4,ang-90*bit,-3/60,1,152,152,5,3,BLEND_ALPHA,false);
+				ang+=360/20;
+			}
+			ascent(o in 0..10)
+			{
+				let ang2 = ang + 180/20*bit + 360/10*o*bit;
+				let objS = ShotA2(staffXY[0]+125*cos(ang2), staffXY[1]+125*sin(ang2),4,ang2-90*bit,-3/60,0.75,104,104,5,3,BLEND_ALPHA,false);
+			}
+			
 			Fader(staffXY[0], staffXY[1], ang, bit);
+			spnAm = 30;
+		}
+		
+		if(spnAm>8)
+		{
+			spnAm-=22/30;
+		}
+		else
+		{
+			spnAm = 8;
 		}
 		cc++;
 		yield;
 	}
+	Obj_Delete(hitbox);
 	Obj_Delete(objStaff);
 	
 	task Fader(x, y, ang, bit)
 	{
-		let startAlpha = 128;
+		let startAlpha = 32;
 		ascent(i in 0..60)
 		{
 			RenderFade(ang+180/60*i*bit, startAlpha-startAlpha/60*i);
