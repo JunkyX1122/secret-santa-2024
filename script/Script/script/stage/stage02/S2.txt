@@ -62,7 +62,7 @@ let objEnemy2 = CreateFamiliar;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Dual-Strike &quot;Polaric Rocket Charge&quot;","", LENEN, 255,128,128);
+	ObjCutin_SetSpellcardS4("Dual-Strike &quot;Polaric Rocket Charge&quot;","", LENEN, 128,255,128);
 	
 	ScreenShake(60,4);
 

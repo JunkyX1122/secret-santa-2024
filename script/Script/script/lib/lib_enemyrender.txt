@@ -375,7 +375,10 @@ task renderYuuma(obj)
 			castframe2 = 0;
 		}
 		ObjSprite2D_SetDestCenter(obj);
-		EnemyMarker(ObjMove_GetX(obj),45);
+		if(ShowMarker)
+		{
+			EnemyMarker(ObjMove_GetX(obj),45);
+		}
 		frame=frame+whichway;
 		if(frame > frameSpeed*2){frame=frameSpeed*2;}
 		if(frame < -frameSpeed*2){frame=-frameSpeed*2;}
