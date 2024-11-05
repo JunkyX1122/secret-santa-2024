@@ -1,0 +1,414 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["S2"]
+#Text["S2"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+
+let objEnemy;
+let count = 0;
+let objScene=GetEnemyBossSceneObjectID();
+let c = 0;
+let TIME = 65;
+let finalSpellBool = false;
+
+let objEnemy2 = CreateFamiliar;
+//let objEnemy3 = CreateFamiliar;
+
+@Event{
+ alternative(GetEventType())
+ case(EV_REQUEST_LIFE){
+  SetScriptResult(225/3);
+        }
+ case(EV_REQUEST_TIMER){
+  SetScriptResult(65);
+ }
+ case(EV_REQUEST_SPELL_SCORE){
+  SetScriptResult(1000000);
+ }
+
+}
+
+
+@Initialize
+{
+	InitialiseIndiv();
+	timer;
+	SetAutoDeleteObject(true);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	
+	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
+	ObjEnemy_Regist(objEnemy);
+	
+	ObjMove_SetPosition(objEnemy, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 40);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	
+	renderYuuma(objEnemy);
+
+	ObjMove_SetPosition(objEnemy2, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
+	//ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
+	renderYuuma(objEnemy2);
+	//renderYuuma(objEnemy3);
+	HitCirc(objEnemy2);
+	//HitCirc(objEnemy3);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+400, 150, 60);
+	//ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2+100, 150, 40);
+	
+	end;
+
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("Two-Strike &quot;Polaric Rocket Charge&quot;","", LENEN, 255,128,128);
+	
+	ScreenShake(60,4);
+
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	//SetIntersectionVisualization(true);
+}
+
+
+@MainLoop
+{
+	if(!Obj_IsDeleted(objEnemy2))
+	{
+		SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+	}
+	//SetCommonData("objEnemy3_Position", [ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3)]);
+	ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+	ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+	
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+        SetAutoDeleteObject(true);
+    }
+	else
+	{
+		SetCommonData("BossX", ObjMove_GetX(objEnemy));
+		SetCommonData("BossY", ObjMove_GetY(objEnemy));
+	}
+	if(count < 95)	
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		SetCommonData("SpellCardBG1",true);
+	}
+    if(count == 95)
+    {
+		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		Fire;
+		
+        //count = 1111;
+    }
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    {
+       
+    }
+    count++;
+    yield;
+}
+
+
+@Finalize
+{
+}
+
+task Fire
+{
+	let bit = 1-2*round(rand(0,1));
+	let sprd = 20;
+	let ang = 90+180/sprd*bit;
+	SE_PlayLen(charge0,60);
+	let x = GetStgFrameWidth/2;
+	WarningLaser(x,GetStgFrameHeight,-90, 60*2+80);
+	
+	ascent(i in 0..60*2)
+	{
+		
+		let dis = 500;
+		if(i%3==0)
+		{
+			SE_PlayLen(shot1,60);
+			ascent(i in 0..sprd)
+			{
+				let ang2 = ang + 360/sprd*i*bit;
+				let objS = CreateShotA1(ObjMove_GetX(objEnemy)+dis*cos(ang2),ObjMove_GetY(objEnemy)+dis*sin(ang2),0,ang2,65,0);
+				ObjShot_SetAutoDelete(objS,false);
+				ObjMove_SetDestAtFrameWeight(objS, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 120);
+				ObjShot_SetDeleteFrameA6(objS,round(rand(60,100)),0.5);
+			}
+		}
+		ang+=1.123/3*bit * 0.5;
+		yield;
+	}
+	
+	SE_PlayLen(charge0,60);
+	wait(80);
+	
+	ObjMove_SetY(objEnemy,-800);
+	LasterBlast(x);
+	ascent(i in 0..4)
+	{
+		BulletSweep(x,1,0,i);
+		BulletSweep(x,-1,1,i);
+		wait(10);
+	}
+	wait(60);
+	SE_PlayLen(charge0,60);
+	x = GetPlayerX;
+	//ObjMove_SetDestAtSpeed(objEnemy, x, y, speed);
+	
+}
+task BulletSweep(x,bit,cc,sprd)
+{
+	let adder = 3.5*bit*(1+0.1*sprd);
+	let angP = 0.8*bit;
+	let ang = -90;
+
+	while(x > -16 && x < GetStgFrameWidth + 16 && !Obj_IsDeleted(objEnemy))
+	{
+		if(cc%9==0)
+		{
+			SE_PlayLen(shot1,60);
+			let mspd = (3-1.5/3*sprd) * (1-0.005*cc);
+			let obj = CreateShotA2(x,GetStgFrameHeight + 31,0.5,ang,mspd/120,mspd,65,0);
+			ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+		
+		}
+		ang+=0.1*bit;
+		x+=adder;
+		cc++;
+		//yield;
+	}
+}
+
+task WarningLaser(x,y,ang,t)
+{
+
+	let slashWidth = 35;
+	let dis = 800;
+	ascent(i in 0..t)
+	{
+		let sideDis = 75*sin((360)/(t-1)*i);
+		ascent(o in 0..2)
+		{
+			if(i>0||o==0)
+			{
+				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,401,9000);
+				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+				ObjShot_SetAutoDelete(laser,false);
+				ObjStLaser_SetSource(laser,false);
+				LaserGrowFade(laser,dis,128-128/t*i);
+			}
+		}
+		yield;
+	}
+}
+
+task LaserGrowFade(obj,dis,alpha)
+{
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		ObjLaser_SetLength(obj,dis/t*i);
+		ObjRender_SetAlpha(obj,alpha-alpha/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
+
+task LasterBlast(x)
+{
+	SE_PlayLen(explode,100);
+	ScreenShake(60,6);
+	let randBuz = [];
+	let vCount = 20;
+	ascent(i in 0..vCount)
+	{
+		randBuz~=[rand(-1,1)*10*(1-1/vCount*i)];
+	}
+	let sclD = 1;
+	
+	//CreateBoom((3+2)*sclD,[255,255,255],BLEND_SUBTRACT,51);
+	//CreateBoom((3+2.5)*sclD,[255,200,200],BLEND_SUBTRACT,51);
+	ascent(i in 0..5)
+	{
+		CreateBoom((3+2*sin(90/4*i))*sclD,[255-255/5*i,255-128/5*i,255],BLEND_ADD_ARGB,52);
+	}
+	let objL = CreateShotA1(x,0,0,0,1,0);
+	ObjStLaser_SetSource(objL,false);
+	ObjLaser_SetInvalidLength(objL,0,0);
+	ObjRender_SetBlendType(objL,BLEND_ALPHA);
+	descent(i in 0..10)
+	{
+		ObjShot_SetIntersectionLine(objL, x, 0, x, GetStgFrameHeight,100);  
+		ObjRender_SetAlpha(objL,0);
+		loop(2)
+		{
+			Thunder(60+110/10*i);
+		}
+		yield;
+	}
+	Obj_Delete(objL);
+	task CreateBoom(width,color,rnd,priorityz)
+	{
+		let objLaser = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetPrimitiveType(objLaser,PRIMITIVE_TRIANGLESTRIP);
+		ObjRender_SetBlendType(objLaser, rnd);
+		Obj_SetRenderPriorityI(objLaser, priorityz);
+		ObjPrim_SetTexture(objLaser, IMG_PAGODA1);
+		ObjPrim_SetVertexCount(objLaser,vCount*2);
+		
+		let h = GetStgFrameHeight+50+100;
+		ascent(i in 0..vCount)
+		{
+			ObjPrim_SetVertexPosition(objLaser,i*2  ,-50+h/(vCount-1)*i,-16+randBuz[i],0);
+			ObjPrim_SetVertexPosition(objLaser,i*2+1,-50+h/(vCount-1)*i, 16+randBuz[i],0);
+			ObjPrim_SetVertexUVT(objLaser,i*2  ,-50+h/(vCount-1)*i,37);
+			ObjPrim_SetVertexUVT(objLaser,i*2+1,-50+h/(vCount-1)*i,69);
+		}
+		
+		ObjRender_SetPosition(objLaser,x,0,0);
+		ObjRender_SetColor(objLaser,color[0],color[1],color[2]);
+		ObjRender_SetAngleZ(objLaser,90);
+		let t = 3;
+		ascent(i in 0..t)
+		{
+			ObjRender_SetScaleY(objLaser,width/t*i);
+			yield;
+		}
+		t = 30;
+		ascent(i in 0..t)
+		{
+			ObjRender_SetAlpha(objLaser,255-(200)/t*i);
+			ObjRender_SetScaleY(objLaser,width+1*sin(90/t*i));
+			yield;
+		}
+		t = 5;
+		descent(i in 0..t)
+		{
+			ObjRender_SetAlpha(objLaser,55/t*i);
+			ObjRender_SetScaleY(objLaser,(width+1)*sin(90/t*i));
+			yield;
+		}
+		Obj_Delete(objLaser);
+	}
+	task Thunder(width)
+	{
+		let obj2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetPrimitiveType(obj2,PRIMITIVE_LINESTRIP);
+		ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+		let vc = 10;
+		ObjPrim_SetVertexCount(obj2,vc);
+		Obj_SetRenderPriorityI(obj2,51);
+		let height = 20;
+		ascent(i in 0..vc)
+		{
+			ObjPrim_SetVertexPosition(obj2,i,x+rand(width,-width),-10+(GetStgFrameHeight+70)/vc*i+rand(-height,height),0);
+		}
+		ascent(i in 0..20)
+		{
+			ObjRender_SetAlpha(obj2,255-255/20*i);
+			ObjRender_SetColor(obj2,255-255/20*i,255-255/20*i,255);
+			yield;
+		}
+		Obj_Delete(obj2);
+	}
+}
+
+
+task timer
+{
+    loop(TIME-10)
+    {
+        wait(60);
+    }
+    loop(5)
+    {
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout1,60);
+			wait(60);
+        }   
+    }
+    loop(5)
+    {
+		if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+        {
+            SE_PlayLen(timeout2,60);
+			wait(60);
+        }  
+    }
+}
+
+
+task end
+{
+    while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
+	{
+		yield;
+	}
+
+	SE_PlayLen(BossDead,50);
+	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+	SetAutoDeleteObject(true);
+	Obj_Delete(objEnemy);
+	SetCommonData("SpellCardBG1",false);
+	wait(140);
+	
+	CloseScript(GetOwnScriptID());
+	return;
+	
+} 
+task move
+{
+    while(ObjEnemy_GetInfo(objEnemy,INFO_LIFE)>0)
+    {
+		let angz = rand(0,360);
+		let dis = rand(10,30);
+		let x = ObjMove_GetX(objEnemy)+dis*cos(angz);
+		let y = ObjMove_GetY(objEnemy)+dis*sin(angz);
+		if(x<GetStgFrameWidth/2-100 || x>GetStgFrameWidth/2+100)
+		{
+			angz = 180-angz;
+			x = ObjMove_GetX(objEnemy)+dis*cos(angz);
+			y = ObjMove_GetY(objEnemy)+dis*sin(angz);
+		}
+		
+		if(y<75 || y>150)
+		{
+			angz = -1*angz;
+			x = ObjMove_GetX(objEnemy)+dis*cos(angz);
+			y = ObjMove_GetY(objEnemy)+dis*sin(angz);
+		}
+		ObjMove_SetDestAtFrameWeight(objEnemy, x, y, 100);
+        wait(200);
+    }
+}
+
+task HitCirc(objTarget)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 32);
+		ObjEnemy_SetIntersectionCircleToPlayer(objTarget, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 24);
+		yield;
+	}
+	/*
+	ScreenShake(60,20); 
+	SE_PlayLen(BossEnd,80);
+	loop(20)
+	{
+		ascent(i in 0..15)
+		{
+			ExplodeObject01(round(rand(0,4)),ObjMove_GetX(objTarget),ObjMove_GetY(objTarget),rand(1,5)*i,rand(0,360));
+		}
+	}
+	*/
+	Obj_Delete(objTarget);
+}

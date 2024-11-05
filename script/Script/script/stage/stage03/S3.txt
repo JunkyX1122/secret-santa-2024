@@ -143,6 +143,7 @@ task Fire
 				
 				if(i==timeToExplode - 150)
 				{
+					WarningLaser(x3, y3,-90);
 					SE_PlayLen(charge0,60);
 				}
 				yield;
@@ -177,6 +178,42 @@ task Fire
 		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
 	}
 }
+
+task WarningLaser(x,y,ang)
+{
+	let t = 150;
+	let slashWidth = 35;
+	let dis = 800;
+	ascent(i in 0..t)
+	{
+		let sideDis = 100*sin((360)/(t-1)*i);
+		ascent(o in 0..2)
+		{
+			if(i>0||o==0)
+			{
+				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,405,9000);
+				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+				ObjShot_SetAutoDelete(laser,false);
+				ObjStLaser_SetSource(laser,false);
+				LaserGrowFade(laser,dis,128-128/t*i);
+			}
+		}
+		yield;
+	}
+}
+
+task LaserGrowFade(obj,dis,alpha)
+{
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		ObjLaser_SetLength(obj,dis/t*i);
+		ObjRender_SetAlpha(obj,alpha-alpha/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
 task RotateAroundOrbPos(ang,bit)
 {
 	let obj = CreateShotA1(holyOrbPos[0],holyOrbPos[1],0,90,399,0);

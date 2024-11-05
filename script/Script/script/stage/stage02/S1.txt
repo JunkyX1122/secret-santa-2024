@@ -44,7 +44,7 @@ let objEnemy2 = CreateFamiliar;
 	ObjEnemy_Regist(objEnemy);
 	
 	ObjMove_SetPosition(objEnemy, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -62,7 +62,7 @@ let objEnemy2 = CreateFamiliar;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Daredevil &quot;Dust Strike&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Daredevil &quot;Dust Strike&quot;","", LENEN, 128,255,255);
 	
 	ScreenShake(60,4);
 
