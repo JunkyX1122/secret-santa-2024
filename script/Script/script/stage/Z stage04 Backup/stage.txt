@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Stage]
 #ScriptVersion[1]
-#Title["Stage4A"]
-#Text["Stage4A"]
+#Title["Stage4"]
+#Text["Stage4"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"

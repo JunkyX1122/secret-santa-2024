@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Ns3"]
-#Text["Ns3"]
+#Title["Ns2"]
+#Text["Ns2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
