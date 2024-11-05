@@ -46,7 +46,7 @@ let TIME = 60*60;
 	renderYuuma(objEnemy);
 
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
-	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 200, 60);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 150, 60);
 	//ObjMove_SetPosition(objEnemy3, GetStgFrameWidth-100, GetStgFrameHeight/2);
 	renderNitoriDS(objEnemy2);
 	//renderYuuma(objEnemy3);
@@ -116,7 +116,7 @@ task KeiranFire(bit)
 	let colArray = [[255,255,255],[255,165,0]];
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(25,-25), 200+rand(25,-25), 50);
+		ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(25,-25), 150+rand(25,-25), 50);
 		SE_PlayLen(spawnfm1,60);
 		let t = 6;
 		let ang = GetAngleToPlayer(objEnemy);
@@ -130,7 +130,7 @@ task KeiranFire(bit)
 		{
 			ang = GetAngleToPlayer(objEnemy);
 			SE_PlayLen(spawnfm1,60);
-			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(25,-25), 200+rand(25,-25), 50);
+			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(25,-25), 150+rand(25,-25), 50);
 			ascent(i in 0..t)
 			{
 				let ang2 = ang+360/t*i*bit + 180/t*bit;

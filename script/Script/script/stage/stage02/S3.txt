@@ -280,6 +280,7 @@ task ManageBladeGyros(bit)
 	
 	while(!Obj_IsDeleted(objEnemy))
 	{
+		SE_PlayLen(charge0,60);
 		bit*=-1;
 		let randG = round(spacing/2 + rand(0.51,spacing/2-0.51-1)*bit);
 	
