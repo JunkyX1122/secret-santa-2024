@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
-#Text["S1"]
+#Title["S2"]
+#Text["S2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -40,10 +40,10 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
+	ObjMove_SetPosition(objEnemy,GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	
-	renderYuuma(objEnemy);
+	renderNitoriDS(objEnemy);
 	
 	
 	end;

@@ -45,11 +45,8 @@ let TIME = 60*60;
 	renderYuuma(objEnemy);
 
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
-	//ObjMove_SetPosition(objEnemy3, GetStgFrameWidth-100, GetStgFrameHeight/2);
 	renderNitoriDS(objEnemy2);
-	//renderYuuma(objEnemy3);
 	HitCirc(objEnemy2);
-	//HitCirc(objEnemy3);
 
 	end;
 	SetCommonData("SpellCardBG1",false);
@@ -299,17 +296,6 @@ task HitCirc(objTarget)
 		ObjEnemy_SetIntersectionCircleToPlayer(objTarget, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 24);
 		yield;
 	}
-	/*
-	ScreenShake(60,20); 
-	SE_PlayLen(BossEnd,80);
-	loop(20)
-	{
-		ascent(i in 0..15)
-		{
-			ExplodeObject01(round(rand(0,4)),ObjMove_GetX(objTarget),ObjMove_GetY(objTarget),rand(1,5)*i,rand(0,360));
-		}
-	}
-	*/
 	Obj_Delete(objTarget);
 }
 

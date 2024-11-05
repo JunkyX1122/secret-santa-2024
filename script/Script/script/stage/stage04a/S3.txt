@@ -1,26 +1,30 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Ns1"]
-#Text["Ns1"]
+#Title["S3"]
+#Text["S3"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./Initiate.txt"
 
+
 let objEnemy;
 let objEnemy2 = CreateFamiliar;
-
+let objEnemy3 = CreateFamiliar;
 let count = 0;
-   let objScene=GetEnemyBossSceneObjectID();
+let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 60*60;
+let TIME = 65;
+let finalSpellBool = false;
+
+
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
-  SetScriptResult(215);
+  SetScriptResult(225/3);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(60);
+  SetScriptResult(65);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -28,38 +32,58 @@ let TIME = 60*60;
 
 }
 
+
 @Initialize
 {
 	InitialiseIndiv();
 	timer;
+	SetAutoDeleteObject(true);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	
-	SetAutoDeleteObject(true);
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100+100 );
 	
-	renderYuuma(objEnemy);
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2);
+	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	//renderNitoriDS(objEnemy); 
 
-	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
-	ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
-	renderNitoriDS(objEnemy2);
+
+
+	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
+	renderYuuma(objEnemy2);
 	HitCirc(objEnemy2);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2-100, 100, 60);
+
+	ObjMove_SetPosition(objEnemy3, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
+	renderNitoriDS(objEnemy3);
+	HitCirc(objEnemy3);
+	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2+100, 100, 60);
+	
+	
 	end;
-	SetCommonData("SpellCardBG1",false);
+
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	
+	ScreenShake(60,4);
+
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
 	
 }
+
+
 @MainLoop
 {
+	//ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+	//ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
 	if(!Obj_IsDeleted(objEnemy2))
 	{
 		SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+		SetCommonData("objEnemy3_Position", [ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3)]);
 	}
-	
-    ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
-    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
-    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
         SetAutoDeleteObject(true);
     }
@@ -68,45 +92,43 @@ let TIME = 60*60;
 		SetCommonData("BossX", ObjMove_GetX(objEnemy));
 		SetCommonData("BossY", ObjMove_GetY(objEnemy));
 	}
-	if(count == 0)
+	if(count < 95)	
 	{
-		
-	}
-    if(count < 95)
-    {
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-    }
+		SetCommonData("SpellCardBG1",true);
+	}
     if(count == 95)
     {
-		//move;
-		Fire;	
+		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		Fire;
 		
-		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
-        count = 1111;
+        //count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
        
     }
-	
     count++;
     yield;
 }
+
+
 @Finalize
 {
 }
-
+let initGSpeed = 8;
+let gSpeed = initGSpeed;
+let phase = 0;
 task Fire
 {
-
+	
 }
 
 task timer
 {
-    while(TIME>60*10)
+    loop(TIME-10)
     {
-        TIME--;
-		yield;
+        wait(60);
     }
     loop(5)
     {
@@ -125,28 +147,26 @@ task timer
         }  
     }
 }
+
+
 task end
 {
     while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
 	{
 		yield;
 	}
+
 	SE_PlayLen(BossDead,50);
-	Obj_SetValue(objEnemy,"cast",0);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-    SetAutoDeleteObject(true);
+	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
-
-	loop(60)
-	{
-		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		yield;
-	}
+	SetCommonData("SpellCardBG1",false);
+	wait(140);
 	
-    CloseScript(GetOwnScriptID());
+	CloseScript(GetOwnScriptID());
 	return;
+	
 } 
-
 task HitCirc(objTarget)
 {
 	while(!Obj_IsDeleted(objEnemy))
@@ -157,11 +177,3 @@ task HitCirc(objTarget)
 	}
 	Obj_Delete(objTarget);
 }
-
-function GetCenterX{
-     return GetStgFrameWidth/2;
-}
-function GetCenterY{
-     return GetStgFrameHeight/2;
-}
-
