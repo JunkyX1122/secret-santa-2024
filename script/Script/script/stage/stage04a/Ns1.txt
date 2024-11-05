@@ -39,7 +39,7 @@ let TIME = 60*60;
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100+100 );
-	
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 60);
 	renderYuuma(objEnemy);
 
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
@@ -81,7 +81,7 @@ let TIME = 60*60;
 		//move;
 		Fire;	
 		
-		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+		ObjEnemy_SetDamageRate(objEnemy, (0.065)/1.5, (0.065)/3);
         count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
@@ -98,9 +98,132 @@ let TIME = 60*60;
 
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ascent(i in 0..6)
+		{
+			ascent(o in 0..2)
+			{
+				let innrBit = [1,-1][o]*bit;
+				let ang = 90 - 135*innrBit+ 18*i*innrBit;
+				let x = ObjMove_GetX(objEnemy)+30*cos(ang);
+				let y = ObjMove_GetY(objEnemy)+30*sin(ang);
+				CreateVine(x,y,ang,bit);
+			}
+		}
+		ascent(i in 0..8)
+		{
+			let ang = 90+rand(5,-5);
+			let sprdAm = 20;
+			ascent(o in 0..sprdAm)
+			{
+				let ang2 = ang - 70*bit + 140/(sprdAm-1)*o*bit;
+				let dis = 10 + 10*i;
+				let spd = 1+0.5*i;
+				let spd2 = (1+0.75*i)/2;
+				let x = ObjMove_GetX(objEnemy) + dis*cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + dis*sin(ang2);
+				let obj = ShotA2(x,y,spd,ang2,-spd/40,0,44,44,5,2,BLEND_ALPHA,false);
+				ObjMove_AddPatternA2(obj,40+60,0,NO_CHANGE,spd2/120,spd2,0);
+			}
+			
+		}
+		ascent(i in 0..8)
+		{
+			let ang = -90;
+			if(i%2==1)
+			{
+				let sprdAm = 34;
+				ascent(o in 0..sprdAm)
+				{
+					let ang2 = ang - 110*bit + 220/(sprdAm-1)*o*bit;
+					let dis = 10 + 10*i;
+					let spd = 1+0.5*i;
+					let spd2 = (1+0.75*i)/2;
+					let x = ObjMove_GetX(objEnemy) + dis*cos(ang2);
+					let y = ObjMove_GetY(objEnemy) + dis*sin(ang2);
+					
+					
+					let obj = ShotA2(x,y,spd,ang2,-spd/40,1,57,423,5,2,BLEND_ALPHA,false);
+					ObjRender_SetColor(obj,255,255,200);
+					if(o==1||o==sprdAm-2||i==3)
+					{
+						ObjRender_SetColor(obj,225,128,128);
+					}
+					if(o==0||o==sprdAm-1||i==1)
+					{
+						ObjRender_SetColor(obj,128,255,128);
+					}
+		
+				}
+			}
+		}
+		
+		wait(100);
+		SE_PlayLen(chime1,60);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50), 150+rand(20,0), 60);
+		wait(160);
+		bit*=-1;
+	}
+}//44
 
+task CreateVine(x,y,ang,bit)
+{
+	let spd = 12;
+	let cc = 0;
+	let angChange = round(rand(5,10));
+	let randThorn = round(rand(0,3));
+	while(x>-16 && x<GetStgFrameWidth+16 && y>-16 && y<GetStgFrameHeight+16 && !Obj_IsDeleted(objEnemy))
+	{
+		if(cc%4==randThorn)
+		{
+			ascent(i in 0..2)
+			{
+				SE_PlayLen(shot1,60);
+				let obj = ShotA2(x,y,3,ang+90*bit-180*bit*i,-3/10,0,56,56,20,2,BLEND_ALPHA,false);
+				ObjMove_AddPatternA2(obj,20+60,0,NO_CHANGE,2/120,2,0);
+			}
+			angChange--;
+		}
+		if(cc%1==0)
+		{
+			SE_PlayLen(Shot1,60);
+			let obj = ShotA1(x,y,0,rand(0,360),84,422,20,2,BLEND_ALPHA,false);
+			ObjShot_SetDeleteFrameA6(obj,100,1);
+			WaitVineSound();
+			angChange--;
+		}
+		if(angChange<=0)
+		{
+			angChange = round(rand(1,10));
+			let am = max(30-cc/30,0);
+			let randam = rand(-1,1)*am;
+			if(absolute(((ang+randam)%360) - 90) < 30)
+			{
+				ang-=randam;
+			}
+			else
+			{
+				ang+=randam;
+			}
+		}
+		
+		x+=spd*cos(ang);
+		y+=spd*sin(ang);
+		cc++;
+		yield;
+	}
+	
+	task WaitVineSound()
+	{
+		wait(100);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(shot1,60);
+		}
+	}
 }
-
 task timer
 {
     while(TIME>60*10)
