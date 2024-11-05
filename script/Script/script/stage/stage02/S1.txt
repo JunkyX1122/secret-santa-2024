@@ -44,7 +44,7 @@ let objEnemy2 = CreateFamiliar;
 	ObjEnemy_Regist(objEnemy);
 	
 	ObjMove_SetPosition(objEnemy, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+100, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -74,7 +74,10 @@ let objEnemy2 = CreateFamiliar;
 
 @MainLoop
 {
-	SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+	if(!Obj_IsDeleted(objEnemy2))
+	{
+		SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+	}
 	//SetCommonData("objEnemy3_Position", [ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3)]);
 	ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
 	ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
@@ -112,14 +115,66 @@ let objEnemy2 = CreateFamiliar;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+let objStaff;
+let staffXY = [0,0];
 task Fire
 {
-	
+	let bit = 1-2*round(rand(0,1));
+	staffXY = [ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)];
+	StaffHandle(bit);
 }
-
+let objFire = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SCYLLASTAFF, [0,0,512,32], BLEND_ALPHA, 0.48);
+task StaffHandle(bit)
+{
+	objStaff = CreateFamiliar;
+	ObjPrim_SetTexture(objStaff, IMG_SCYLLASTAFF);
+	Obj_SetRenderPriorityI(objStaff, 49);
+	ObjSprite2D_SetSourceRect(objStaff,0, 0, 512, 32);
+	ObjSprite2D_SetDestRect(objStaff,0, 0, 512, 32);
+	ObjSprite2D_SetDestCenter(objStaff);
+	ObjRender_SetScale(objStaff,0.5);
+	ObjMove_SetPosition(objStaff, staffXY[0], staffXY[1]);
+	
+	let ang = 0;
+	let spnAm = 3.213*bit;
+	let cc = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ang = ObjRender_GetAngleZ(objStaff);
+		ObjRender_SetAngleZ(objStaff,ang + spnAm);
+		if(cc%30==0)
+		{
+			Fader(staffXY[0], staffXY[1], ang, bit);
+		}
+		cc++;
+		yield;
+	}
+	Obj_Delete(objStaff);
+	
+	task Fader(x, y, ang, bit)
+	{
+		let startAlpha = 128;
+		ascent(i in 0..60)
+		{
+			RenderFade(ang+180/60*i*bit, startAlpha-startAlpha/60*i);
+		}
+		
+		task RenderFade(ang, alpha)
+		{
+			let t = 32;
+			ascent(o in 0..t)
+			{
+				ObjParticleList_SetAlpha(objFire, alpha - alpha/t*o);
+				ObjParticleList_SetScale(objFire, 0.5, 0.5,0);
+				ObjParticleList_SetPosition(objFire, x, y,0);
+				ObjParticleList_SetAngleZ(objFire,ang);
+				ObjParticleList_AddInstance(objFire);
+				yield;
+			}
+	
+		}
+	}
+}
 task timer
 {
     loop(TIME-10)

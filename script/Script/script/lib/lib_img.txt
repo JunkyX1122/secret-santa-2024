@@ -75,8 +75,9 @@ let IMG_WING = GetCurrentScriptDirectory()~"./../../img/enemy/wing.png";
 let IMG_SWORD = GetCurrentScriptDirectory()~"./../../img/enemy/sword.png";
 let IMG_DRAGONMAW = GetCurrentScriptDirectory()~"./../../img/enemy/dragon_maw.png";
 let IMG_REDRINSHIELD = GetCurrentScriptDirectory()~"./../../img/enemy/redrinShield.png";
+let IMG_SCYLLASTAFF = GetCurrentScriptDirectory()~"./../../img/enemy/staff.png";
 
-let BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD];
+let BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF];
 
 //---------------------------------------
 //--------------FACE IMAGES--------------

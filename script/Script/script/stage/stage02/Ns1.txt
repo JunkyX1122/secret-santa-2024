@@ -40,11 +40,11 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,180 );
-	
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2-100,100+100 );
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 200, 60);
 	renderYuuma(objEnemy);
 
-	ObjMove_SetPosition(objEnemy2, 100, GetStgFrameHeight/2);
+	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
 	//ObjMove_SetPosition(objEnemy3, GetStgFrameWidth-100, GetStgFrameHeight/2);
 	renderYuuma(objEnemy2);
 	//renderYuuma(objEnemy3);
@@ -57,8 +57,10 @@ let TIME = 60*60;
 }
 @MainLoop
 {
-	
-	SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+	if(!Obj_IsDeleted(objEnemy2))
+	{
+		SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
+	}
 	//SetCommonData("objEnemy3_Position", [ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3)]);
     ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
     ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
@@ -98,12 +100,150 @@ let TIME = 60*60;
 @Finalize
 {
 }
-
+let GETPLAYERYCHECK = -99999;
 task Fire
 {
-
+	let bit = 1-2*round(rand(0,1));
+	ScyllaFire(bit);
+	KeiranFire(bit);
 }
 
+task KeiranFire(bit)
+{
+	SE_PlayLen(spawnfm1,60);
+	let objGyro = CreateFamiliar;
+	renderTinyGoreF(objGyro,0);
+	ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2));
+	
+	let ang = 90;
+	let dis = 0;
+	let x = ObjMove_GetX(objEnemy2);
+	let y = ObjMove_GetY(objEnemy2);
+	let cc = 0;
+	let pXY = [0,0];
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		x = x * 0.95 + ObjMove_GetX(objEnemy2) * 0.05;
+		y = y * 0.95 + ObjMove_GetY(objEnemy2) * 0.05;
+		dis = dis * 0.97 + 75 * 0.03;
+		ObjMove_SetPosition(objGyro,x + dis * cos(ang),y + dis * sin(ang));
+		ang+=1.231*bit;
+		if(cc%155==0)
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(-50,50), rand(95,110), 90);
+		}
+		if(cc%(7*(5+3))==0)
+		{
+			pXY = [GetPlayerX, GetPlayerY];
+			
+		}
+		if(cc%7==0 && cc%(7*(5+3)) < 7*5)
+		{
+			SE_PlayLen(chime1,30);
+			SE_PlayLen(shot1,60);
+			let sprd = 70;
+			let sprdCount = 9;
+		
+			ascent(i in 0..sprdCount)
+			{
+				let ang3 = Get_PointAngle(pXY[0],pXY[1],ObjMove_GetX(objGyro),ObjMove_GetY(objGyro));
+				let ang2 = ang3 - sprd * bit + (sprd*2)/(sprdCount-1)*i * bit;
+				let objS = ShotA2(ObjMove_GetX(objGyro),ObjMove_GetY(objGyro),12,ang2,-9/20,3,187,187,5,3,BLEND_ALPHA,true);
+			}
+		}
+		
+		cc++;
+		yield;
+	}
+	Obj_Delete(objGyro);
+}
+
+task ScyllaFire(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		loop(3)
+		{
+			TeleportToSide(bit,GETPLAYERYCHECK);
+			while(isTeleporting&&!Obj_IsDeleted(objEnemy)){yield;}
+			wait(1);
+			let spread = 7;
+			let t = 30;
+			ascent(i in 0..t)
+			{
+				if(!Obj_IsDeleted(objEnemy)) 
+				{
+					if(i%2==0)
+					{
+						SE_PlayLen(shot1,60);
+						let dis = 30 + (180-30)/(t-1)*i;
+						let spd = 0.5+9/(t-1)*i;
+						ascent(o in 0..spread)
+						{
+							
+							let ang = 90 - 90*bit - dis*bit + (dis*2*bit)/(spread-1)*o;
+							let objS = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,331,331,10,3,BLEND_ALPHA,true);
+						}
+					}
+					yield;
+				}
+			}
+			wait(20);
+			bit*=-1;
+		}
+		bit*=-1;
+		wait(60);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 200, 40);
+		let t = 40;
+		let spread = 7;
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				if(i%2==0)
+				{
+					SE_PlayLen(shot1,60);
+					let dis = 30 + (180-30)/(t-1)*i;
+					let spd = 0.5+9/(t-1)*i;
+					ascent(o in 0..spread)
+					{
+						
+						let ang = GetAngleToPlayer(objEnemy) - dis*bit + (dis*2*bit)/(spread-1)*o;
+						let objS = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,130,130,10,3,BLEND_ALPHA,false);
+					}
+				}
+				yield;
+			}
+		}
+		wait(60);
+		bit*=-1;
+		ObjEnemy_SetDamageRate(objEnemy, (0.08)/1.5, (0.08)/3);
+	}
+}
+
+let isTeleporting = false;
+task TeleportToSide(bit,yTarg)
+{
+	isTeleporting = true;
+	let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+64) * bit;
+	let y = ObjMove_GetY(objEnemy);
+	let i = 0;
+	let speed = 0;
+	while(ObjMove_GetX(objEnemy) != x && !Obj_IsDeleted(objEnemy))
+	{
+		speed = 1+3/30*i;
+		ObjMove_SetDestAtSpeed(objEnemy, x, y, speed);
+		i++;
+		yield;
+	}
+	if(yTarg == GETPLAYERYCHECK) { yTarg = GetPlayerY; }
+	x = GetStgFrameWidth/2 - (GetStgFrameWidth/2+64) * bit;
+	ObjMove_SetPosition(objEnemy,x,yTarg);
+	let t = 164/speed;
+	ObjMove_SetDestAtFrameWeight(objEnemy,GetStgFrameWidth/2 - (GetStgFrameWidth/2 - 100) * bit, yTarg,t);
+	wait(t);
+	isTeleporting = false;
+}
 task timer
 {
     while(TIME>60*10)
