@@ -298,9 +298,9 @@ task end
 		ascent(i in 0..3)
 		{
 			let bit = 1-2*round(rand(0,1));
-			let apa = rand(0,128);
-			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+			let apa = rand(0,165);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[0,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[0,apa,255],1,BLEND_ADD_ARGB,5,90,79);
 		}
 		ScreenShake(30,9); 
 		SE_PlayLen(BossEnd,80);
@@ -309,6 +309,18 @@ task end
 		{
 
 			wait(6);
+		}
+	}
+	loop(1)
+	{
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,25,100);
+	
+		ascent(i in 0..3)
+		{
+			let bit = 1-2*round(rand(0,1));
+			let apa = rand(0,165);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[0,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[0,apa,255],1,BLEND_ADD_ARGB,5,90,79);
 		}
 	}
 	ScreenShake(190,12); 

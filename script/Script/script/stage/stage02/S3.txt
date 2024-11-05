@@ -147,7 +147,6 @@ task timer
     }
 }
 
-
 task end
 {
     while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
@@ -155,12 +154,78 @@ task end
 		yield;
 	}
 
-	SE_PlayLen(BossDead,50);
+	ascent(o in 0..15)
+	{
+		SE_PlayLen(BossDead,80);
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,10,10);
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,10,10);
+		loop(6)
+		{
+			ObjEnemy_SetLife(objEnemy, 0);
+			let shake = 4;
+			Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+			Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+			yield;
+			Reset2DCamera;
+		}
+	}
+	ascent(o in 0..2)
+	{
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,25,100);
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,25,100);
+	
+		ascent(i in 0..3)
+		{
+			let bit = 1-2*round(rand(0,1));
+			let apa = rand(0,128+64);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,0,4+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,1,1+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
+			
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,0,4+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,1,1+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+		}
+		ScreenShake(30,9); 
+		SE_PlayLen(BossEnd,80);
+		StartSlow(TARGET_ALL,20);
+		loop(30/6)
+		{
+
+			wait(6);
+		}
+	}
+	loop(1)
+	{
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,25,100);
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,25,100);
+	
+		ascent(i in 0..3)
+		{
+			let bit = 1-2*round(rand(0,1));
+			let apa = rand(0,128)+64;
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,0,4+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,1,1+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
+			
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,0,4+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,1,1+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+		}
+	}
+	
+	ScreenShake(190,12); 
+	StopSlow(TARGET_ALL);
+	SE_PlayLen(BossEnd,80);
+	SE_PlayLen(BossSpell,100);
+	//FlasherZ(150);
+	SE_PlayLen(BossDead,80);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
 	SetCommonData("SpellCardBG1",false);
-	wait(140);
+	loop(20)
+	{
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	wait(100);
 	
 	CloseScript(GetOwnScriptID());
 	return;
