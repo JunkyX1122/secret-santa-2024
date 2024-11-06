@@ -263,7 +263,7 @@ task LightDaze(bit)
 						let angL = Get_PointAngle(x,y,ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3));
 						
 						let inacTim = 120;
-						let objL = CreateStraightLaserA1(x,y,angL,0,7,999,13,ObjShot_GetImageID(buID));
+						let objL = CreateStraightLaserA1(x,y,angL,0,7,999,13,inacTim);
 						LaserSource(x,y,423,inacTim,1,1,inacTim+120+10,60);
 						LaserGrow(objL,inacTim,120,7,3);
 						ObjShot_SetAutoDelete(objL,false);
@@ -291,8 +291,10 @@ task LaserGrow(obj,t,d,rw,w)
 		}
 	}
 	ObjLaser_SetIntersectionWidth(obj, w);
-	SE_PlayLen(laser0,10);
-	
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(laser0,40);
+	}
 	wait(d);
 	ascent(i in 0..60)
 	{
