@@ -124,8 +124,10 @@ task Fire
 				let spd2 = (1+0.75*i)/2;
 				let x = ObjMove_GetX(objEnemy) + dis*cos(ang2);
 				let y = ObjMove_GetY(objEnemy) + dis*sin(ang2);
-				let obj = ShotA2(x,y,spd,ang2,-spd/40,0,44,44,5,2,BLEND_ALPHA,false);
+				let obj = ShotA2(x,y,spd,ang2,-spd/40,0,52,52,5,2,BLEND_ALPHA,false);
 				ObjMove_AddPatternA2(obj,40+60,0,NO_CHANGE,spd2/120,spd2,0);
+				ObjRender_SetScaleX(obj,0.8);
+				ObjRender_SetScaleY(obj,1.5);
 			}
 			
 		}

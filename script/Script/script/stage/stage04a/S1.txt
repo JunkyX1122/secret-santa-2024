@@ -12,7 +12,7 @@ let objEnemy;
 let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 65;
+let TIME = 90;
 let finalSpellBool = false;
 
 
@@ -22,7 +22,7 @@ let finalSpellBool = false;
   SetScriptResult(225/3);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(65);
+  SetScriptResult(90);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -50,13 +50,13 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Grass Arts &quot;Wood Hammer&quot;","", LENEN, 128,255,128);
 	
 	ScreenShake(60,4);
 
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
-	
+	//SetIntersectionVisualization(true);
 }
 
 
@@ -97,13 +97,274 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+let TREE_STAY = 200;
 task Fire
 {
 	
+	let bit = 1-2*round(rand(0,1));
+	let hammerHilt = [ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)];
+	let hammerAngle = 90+90*bit;
+	let hammerObjects = [];
+	let hammerDistances = [];
+	let hammerAngleTos = [];
+	let hammerLaserAngles = [];
+	
+	AddToHammer(hammerHilt[0]+20,hammerHilt[1],40,160,0);
+	ascent(i in 0..4)
+	{
+		AddToHammer(hammerHilt[0]+20+175+25*i,hammerHilt[1]-100,30,200,90);
+	}
+	AddToHammer(hammerHilt[0]+20+175+25*3+15,hammerHilt[1],40,30,0);
+	HandleHammer();
+	
+	
+	ScreenShake(60,3);
+	SE_PlayLen(ufo,60);
+	wait(30);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(boon1,70);
+		let t = 60*4;
+		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2+100*bit, 100, 60*3-1,LERP_SMOOTH);
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				if(i==30)
+				{
+					SE_PlayLen(charge0,70);
+				}
+				if(i==60*2)
+				{
+					SE_PlayLen(charge0,70);
+				}
+				if(i==60*3)
+				{
+					SE_PlayLen(charge1,70);
+				}
+				if(i==60*3+35)
+				{
+					SE_PlayLen(slash,70);
+					ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2+100*bit, GetStgFrameHeight-125, 25,LERP_ACCELERATE);
+				}
+				hammerAngle = 90+90*bit + (-(360*2+20)*bit)*((1/(t-1)*i)^4);
+				yield;
+			}
+		}
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(explode,70);
+			SE_PlayLen(drum,70);
+			ScreenShake(120,8);
+			let x = GetStgFrameWidth/2-105*bit;
+			ascent(i in 0..10)
+			{
+				let a1 = (3-6/9*i)*0.75;
+				let a2 = a1;
+				CreateVine(x + rand(70,-70),GetStgFrameHeight,-90,bit,a1,a2);
+			}
+			LaserSweep(x,bit);
+			LaserSweep(x,-bit);
+		}
+		ascent(i in 0..40)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				loop(1)
+				{
+					let x = GetStgFrameWidth/2-105*bit - (GetStgFrameWidth/2+10) * bit + (GetStgFrameWidth+200)/39*i*bit;
+					let y = 255/2 + rand(-122,122) *sin(180/39*i);
+					let obj = ShotA1(x,y,0,90,293,293,20,2,BLEND_ADD_ARGB,false);
+					Obj_SetRenderPriority(obj,0.52);
+					ObjRender_SetColor(obj,255,128,128);
+					ObjMove_AddPatternA2(obj,TREE_STAY,0,NO_CHANGE,3/120,3,0);
+				}
+				loop(4)
+				{
+					let obj = ShotA1(rand(0,GetStgFrameWidth),rand(0,225),0,90,357,357,20,2,BLEND_ADD_ARGB,false);
+					ObjShot_SetDeleteFrameA5(obj,TREE_STAY+round(rand(-10,20)),3);
+					Obj_SetRenderPriority(obj,0.51);
+				}
+				yield;
+			}
+		}
+		wait(TREE_STAY-80-40);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(Bone,70);
+			ScreenShake(70,3);
+			ObjMove_SetDestAtFrameWeight(objEnemy, ObjMove_GetX(objEnemy), GetStgFrameHeight-125-50, 40);
+		}
+		ascent(i in 0..80)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				hammerAngle = 90+90*bit + (-(360*2+20)*bit) + 110*bit*sin(90/79*i);
+				yield;
+			}
+		}
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(boon1,60);
+			ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, 150, 90,LERP_SMOOTH);
+		}
+		ascent(i in 0..90)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				hammerAngle = Interpolate_Smoother(-90,-90+90*bit,1/89*i);
+				yield;
+			}
+		}
+		bit*=-1;
+	}
+	task HandleHammer()
+	{
+		while(!Obj_IsDeleted(objEnemy))
+		{
+			hammerHilt = [ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)];
+			ascent(i in 0..length(hammerObjects))
+			{
+				let dis = hammerDistances[i];
+				let ang1 = hammerAngle+hammerAngleTos[i];
+				let ang2 = hammerAngle+hammerLaserAngles[i];
+				ObjMove_SetPosition(hammerObjects[i],hammerHilt[0]+dis*cos(ang1),hammerHilt[1]+dis*sin(ang1));
+				ObjStLaser_SetAngle(hammerObjects[i],ang2);
+			}
+			yield;
+		}
+	}
+	
+	task AddToHammer(x,y,width,lengthh,ang)
+	{
+		let obj = CreateStraightLaserA1(x,y,ang,lengthh,width,60*999,15,0);
+		ObjLaser_SetIntersectionWidth(obj,width*1.35);
+		ObjLaser_SetInvalidLength(obj,0.05,0.05);
+		ObjShot_SetAutoDelete(obj,false);
+		ObjRender_SetColor(obj,205*1.5,133*1.5,63*1.5);
+		ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+		hammerObjects ~= [obj];
+		hammerDistances ~= [Get_Distance(x,y,hammerHilt[0],hammerHilt[1])];
+		hammerAngleTos ~= [Get_PointAngle(x,y,hammerHilt[0],hammerHilt[1])];
+		hammerLaserAngles ~= [ang];
+		ObjShot_SetIntersectionEnable(obj,false);
+		ascent(i in 0..30)
+		{
+			ObjRender_SetAlpha(obj,255/29*i);
+			yield;
+		}
+		ObjShot_SetIntersectionEnable(obj,true);
+	}
 }
+task LaserSweep(x,bit)
+{
+	let adder = 10*bit;
+	let angP = 2.12*bit;
+	let ang = -90;
+	if(bit==1)
+	{
+		x+=adder;
+	}
+	let counter = 1;
+	while(x > -16 && x < GetStgFrameWidth + 16 && !Obj_IsDeleted(objEnemy))
+	{
+		let obj = CreateStraightLaserA1(x,GetStgFrameHeight + 31,ang,0,30,999,30,60);
+		ObjShot_SetAutoDelete(obj,false);
+		ObjLaser_SetInvalidLength(obj,0.2,0.2);
+		Obj_SetRenderPriority(obj,0.51);
+		let dis = 75;
+		if(counter%3==0)
+		{
+			dis = 250;
+		}
+		LaserGrow(obj,70,dis,TREE_STAY-60);
+		ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+		x+=adder;
+		ang+=angP;
+		counter++;
+		wait(1);
+	}
+}
+task LaserGrow(obj,t,lasLength,d)
+{
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjLaser_SetLength(obj,lasLength/(t-1)*i);
+			yield;
+		}
+	}
+	ObjLaser_SetIntersectionWidth(obj, 4);
+	SE_PlayLen(laser2,60);
+	
+	wait(d);
+	ascent(i in 0..60)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = 1-1*cos(90/60*i);
+			ObjLaser_SetIntersectionWidth(obj, 4-4*scl);
+			ObjLaser_SetRenderWidth(obj, 30-30*scl);
+			yield;
+		}
+	}
+	Obj_Delete(obj);
+	
+}
+
+
+task CreateVine(x,y,ang,bit,r1,r2)
+{
+	let spd = 12;
+	let cc = 0;
+	let cc2 = round(rand(0,1));
+	let randThorn = round(rand(0,1));
+	while(x>-16 && x<GetStgFrameWidth+16 && y>-16 && y<GetStgFrameHeight+16 && !Obj_IsDeleted(objEnemy))
+	{
+		if(cc%2==randThorn && cc > 15)
+		{
+			ascent(i in 0..2)
+			{
+				SE_PlayLen(shot1,60);
+				let obj = ShotA2(x,y,3,ang+90*bit-180*bit*i,-3/10,0,52,52,20,2,BLEND_ALPHA,false);
+				let a = ObjMove_GetAngle(obj);
+				let spdX = 1*cos(a);
+				let spdy = 1*sin(a);
+				ObjMove_AddPatternB2(obj, TREE_STAY, spdX, spdy, 0, 0.02, 0, 10);
+			}
+		}
+		if(cc%1==0)
+		{
+			SE_PlayLen(Shot1,60);
+			let obj = ShotA1(x,y,0,rand(0,360),89,422,20,2,BLEND_ALPHA,false);
+			ObjShot_SetDeleteFrameA6(obj,TREE_STAY,1);
+			ObjRender_SetColor(obj,139,69,19);
+			WaitVineSound();
+		}
+
+	
+		ang+=rand(r1,r2);
+			
+		
+		
+		x+=spd*cos(ang);
+		y+=spd*sin(ang);
+		cc++;
+		yield;
+	}
+	
+	task WaitVineSound()
+	{
+		wait(TREE_STAY);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(shot1,60);
+		}
+	}
+}
+
+
 
 task timer
 {
