@@ -30,6 +30,21 @@ task LaserSource(x,y,deleygraphic,startingdeley,size,deletdeley,deleteframe)
 	}
 }
 
+task LaserSource(x,y,deleygraphic,startingdeley,size,delaySize,deletdeley,deleteframe)
+{
+	loop(2)
+	{
+		let stars = ShotA1(x,y,0,rand(0,360),deleygraphic,deleygraphic,startingdeley,delaySize,BLEND_ADD_ARGB,false);
+		ObjShot_SetDeleteFrameA3(stars,deletdeley,size,deleteframe);
+		ObjRender_SetScaleXYZ(stars,size,size,size);
+		ObjMove_SetAngularVelocity(stars,5);
+		ObjRender_SetBlendType(stars,BLEND_ADD_ARGB);
+		ObjShot_SetSpellResist(stars, true);
+		Obj_SetRenderPriorityI(stars,Obj_GetRenderPriorityI(stars)+1);
+		ObjShot_SetIntersectionEnable(stars,false);
+	}
+}
+
 function ShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);

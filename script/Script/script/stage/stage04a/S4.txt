@@ -52,19 +52,18 @@ let finalSpellBool = false;
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	renderYuuma(objEnemy2);
 	HitCirc(objEnemy2);
-	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+100, 100, 60);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 175, 60);
 
 	ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
-	renderNitoriDS(objEnemy3);
+	
 	HitCirc(objEnemy3);
-	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2-100, 100, 60);
-	
-	
+	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 100, 60);
+	renderNitoriDS(objEnemy3);
 	end;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Paladin &quot;Hero's Sword and Shield&quot;","", LENEN, 128,255,128);
 	
 	ScreenShake(60,4);
 
