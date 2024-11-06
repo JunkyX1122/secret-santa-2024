@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
+#Title["Grass Arts &quot;Wood Hammer&quot;"]
 #Text["S1"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -125,11 +125,17 @@ task Fire
 	{
 		SE_PlayLen(boon1,70);
 		let t = 60*4;
-		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2+100*bit, 100, 60*3-1,LERP_SMOOTH);
+		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2+100*bit, 75, 60*3-1,LERP_SMOOTH);
 		ascent(i in 0..t)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
+				if(i%(i>60*3 ? 1 : 3)==0)
+				{
+					SE_PlayLen(Shot1,60);
+					let obj = ShotA2(ObjMove_GetX(hammerObjects[5]),ObjMove_GetY(hammerObjects[5]),0,hammerAngle,1/120,1,297,297,20,2,BLEND_ADD_ARGB,false);
+					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+				}
 				if(i==30)
 				{
 					SE_PlayLen(charge0,70);

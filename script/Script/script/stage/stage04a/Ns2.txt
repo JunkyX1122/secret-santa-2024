@@ -48,7 +48,7 @@ let TIME = 60*60;
 	HitCirc(objEnemy2);
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	//SetIntersectionVisualization(true);
 }
 @MainLoop
 {
@@ -98,7 +98,162 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		loop(2)
+		{
+			let ang = -90-20*bit;
+			let x = ObjMove_GetX(objEnemy2)-175*bit;
+			let y = ObjMove_GetY(objEnemy2);
+			let dis = 80;
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				SE_PlayLen(boon1,60);
+				Slasher(x+dis*cos(ang),y+dis*sin(ang),x+dis*2*cos(ang+180),y+dis*2*sin(ang+180),10,0,false);
+			}
+			wait(10);
+			ang-=90*bit;
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				Slasher(x+dis*cos(ang),y+dis*sin(ang),x+dis*cos(ang+180),y+dis*sin(ang+180),10,0,false);
+			}
+			wait(20);
+			bit*=-1;
+		}
+		//StartSlow(TARGET_ALL,20);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(70,10)*bit, rand(90,120), 90);
+			SE_PlayLen(charge0,60);
+		}
+		let x = GetPlayerX;
+		let y = GetPlayerY;
+		let disMax = 400;
+		ascent(o in 0..2)
+		{
+			ascent(i in 0..7)
+			{
+				if(!Obj_IsDeleted(objEnemy)) 
+				{
+					SE_PlayLen(LaserDelLong,60);
+					let ang = 90-60*bit;
+					let dis = -disMax+(disMax*2)/6*i;
+					let x2 = x + dis * cos(ang);
+					let y2 = y + dis * sin(ang) - 400+400*o;
+					WarningSlasher(x2,y2,bit);
+					wait(7);
+				}
+			}
+			bit*=-1;
+		}
+		bit*=-1;
+		wait(120);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+	}
+}
+task WarningSlasher(x,y,bit)
+{
+	
+	ascent(o in 0..2)
+	{
+		ascent(i in 0..[4,1][o])
+		{
+			let ang = -90;
+			let dis = 80;
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				Slasher(x+dis*cos(ang),y+dis*sin(ang),x+dis*2*cos(ang+180),y+dis*2*sin(ang+180),10,1,[true,false][o]);
+			}
+			wait(10);
+			ang-=90*bit;
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				Slasher(x+dis*cos(ang),y+dis*sin(ang),x+dis*cos(ang+180),y+dis*sin(ang+180),10,1,[true,false][o]);
+			}
+			wait(10);
+		}
+	}
+}
+task Slasher(x,y,x2,y2,tim,shootBullets,isWarning)
+{
+	if(!isWarning)
+	{
+		SE_PlayLen(slash,60);
+	}
+	let dis = Get_Distance(x, y, x2, y2);
+	let ang = Get_PointAngle(x2,y2,x,y);
+	let angTot = 26;
+	if(shootBullets==0)
+	{
+		ascent(i in 0..angTot)
+		{
+			ascent(o in 0..5)
+			{
+				let s = 0.5+0.25/5*o;
+				let shot = ShotA2(x,y,4*s,ang+360/angTot*i,((6-4)*s)/40,6*s,55,423,10,2,BLEND_ADD_ARGB,false);
+				ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);
+			}
+		}
+	}
+	ascent(i in 0..tim)
+	{
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			let scl = 1*sin(180/tim*i);
+			let obj = CreateStraightLaserA1(x+(dis/tim*i-160/2)*cos(ang),y+(dis/tim*i-160/2)*sin(ang),ang+rand(5,-5)*scl,160,5+25*scl,9999,314,0);
+			Shrinky(obj,scl,10);
+			ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+			ObjStLaser_SetSource(obj,false);
+			ObjShot_SetAutoDelete(obj,false);
+			ObjLaser_SetInvalidLength(obj,0.05,0.6);
+			
+			let obj2 = CreateStraightLaserA1(x+(dis/tim*i-220/2)*cos(ang),y+(dis/tim*i-220/2)*sin(ang),ang,220,5+25*scl*4,9999,405,0);
+			Shrinky(obj2,scl*2,15);
+			ObjShot_SetIntersectionEnable(obj2,false);
+			ObjRender_SetAlpha(obj2,32);
+			ObjRender_SetColor(obj2,255,255-128/tim*i,255-255/tim*i);
+			ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+			ObjStLaser_SetSource(obj2,false);
+			ObjShot_SetAutoDelete(obj2,false);
+			ObjLaser_SetInvalidLength(obj2,0.05,0.5);
+			
+			if(isWarning)
+			{
+				ObjShot_SetIntersectionEnable(obj,false);
+				ObjRender_SetAlpha(obj,8);
+				ObjRender_SetAlpha(obj2,8);
+			}
+			
+			yield;
+		}
+	}
+	let b = 1;
+	if(shootBullets==0&&!Obj_IsDeleted(objEnemy))
+	{
+		angTot /= 2;
+		ascent(i in 0..angTot)
+		{
+			ascent(o in 0..10)
+			{
+				let s = 0.25+1/10*o;
+				let shot = ShotA2(x2,y2,4*s,ang+360/angTot*i,((6-4)*s)/40,6*s,56,423,10,2,BLEND_ADD_ARGB,false);
+				ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);
+			}
+		}
+	}
+}
+task Shrinky(obj,scl,tim)
+{
+	ascent(i in 0..tim)
+	{
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			ObjLaser_SetRenderWidth(obj, 30*sin(180/tim*i)*scl);
+			yield;
+		}
+	}
+	Obj_Delete(obj);
 }
 
 task timer

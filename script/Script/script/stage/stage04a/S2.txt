@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S2"]
+#Title["Cracked Sky &quot;Holy Light&quot;"]
 #Text["S2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -50,13 +50,13 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Cracked Sky &quot;Holy Light&quot;","", LENEN, 64,64,64);
 	
 	ScreenShake(60,4);
 
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
-	
+	//SetIntersectionVisualization(true);
 }
 
 
@@ -100,11 +100,256 @@ let finalSpellBool = false;
 let initGSpeed = 8;
 let gSpeed = initGSpeed;
 let phase = 0;
+let WAITER = 15;
 task Fire
 {
-	
+	let bit = 1-2*round(rand(0,1));
+	let x = 0;
+	let y = 0;
+	let iniY = 0;
+		
+	let xs = 0;
+	let ys = 0;
+	let yp = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,150)*bit, 150+rand(-50,10), 70);
+		x = GetStgFrameWidth/2-GetStgFrameWidth/2*bit-rand(10,100)*bit;
+		y = rand(0,-60)-200;
+		xs = rand(20,60);
+		ys = rand(10,40);
+		yp = rand(80,110);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(drum,70);
+			ScreenShake(120,4);
+		}
+		ascent(i in 0..10)
+		{	
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ChainCrackSky(x,y,xs,yp,bit,true);
+				x+=150*bit;
+				y+=ys;
+				wait(WAITER);
+			}
+		}
+		
+		bit*=-1;
+		
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge0,60);
+			SE_PlayLen(drum,70);
+			ScreenShake(120,2);
+		}
+		x = GetStgFrameWidth/2-GetStgFrameWidth/2*bit-rand(10,20)*bit;
+		y = rand(0,-60)-200;
+		iniY = y;
+		xs = rand(20,60);
+		ys = rand(10,40);
+		yp = rand(80,110)*0.75;
+		
+		
+		ascent(i in 0..15)
+		{	
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ChainCrackSky(x,y,xs,yp,bit,false);
+				x+=75*bit;
+
+				y+=ys;
+				
+				wait(WAITER);
+			}
+		}
+		
+		
+		wait(60*2);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge0,60);
+		}
+		wait(60*2);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+	}
 }
 
+task ChainCrackSky(x,y,xp,yp,bit,shootBullet)
+{
+	ascent(i in 0..16)
+	{
+		if(IsInScreen(x,y,-32) && !Obj_IsDeleted(objEnemy))
+		{
+			HolyStrike(x,y,60,90,bit,shootBullet);
+			//wait(20);
+		}
+		x-=xp*bit;
+		y+=yp;
+	}
+}
+
+function CheckXOutside(x,bit)
+{
+	if(bit==1)
+	{
+		return x < GetStgFrameWidth;
+	}
+	else
+	{
+		return x > 0;
+	}
+}
+
+task HolyStrike(x,y,del,stay,bit,shootBullet)
+{
+	SE_PlayLen(LaserDelShort,60);
+	
+
+	let obj = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( obj, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture( obj, IMG_PIXEL );
+	ObjRender_SetAlpha(obj,255);
+	ObjPrim_SetVertexCount(obj, 33*2);
+	Obj_SetRenderPriorityI(obj,48);
+	ObjRender_SetPosition(obj,x,y,0);
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	if(!shootBullet)
+	{
+		ObjRender_SetColor(obj,255,255,0);
+	}
+	else
+	{
+		
+	}
+	let obj1 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(obj1,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(obj1, 33);
+	Obj_SetRenderPriorityI(obj1,49);
+	ObjRender_SetPosition(obj1,x,y,0);
+	let ovalAng = 0;
+	let ovalCos = cos(ovalAng);
+	let ovalSin = sin(ovalAng);
+	let maxRad = 30;
+	let cosX = [];
+	let sinY = [];
+	ascent(i in 0..33)
+	{
+		let ang = -90+360/32*i;
+		cosX~=[cos(ang)];
+		sinY~=[sin(ang)];
+	}
+	ascent(o in 0..del)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			
+			let rad = maxRad*sin(90/(del-1)*o);
+			ascent(i in 0..33)
+			{
+				
+				let xx = 0+rad  *cosX[i];
+				let yy = 0+rad/2*sinY[i];
+
+				let xc=(xx)*ovalCos - (yy)*ovalSin;
+				let yc=(xx)*ovalSin + (yy)*ovalCos;
+				ObjPrim_SetVertexPosition(obj1, i, xc,yc,0);
+				
+				
+				ObjPrim_SetVertexPosition(obj, i*2+0, 0,0,0);
+				ObjPrim_SetVertexPosition(obj, i*2+1, xc*2,yc*2,0);
+				ObjPrim_SetVertexAlpha(obj,i*2+0,200);
+				ObjPrim_SetVertexAlpha(obj,i*2+1,0);
+				
+			}
+		
+			yield;
+		}
+	}
+	if(!Obj_IsDeleted(objEnemy))
+	{	
+		let rad = 30;
+		let amount = 12;
+		let speedMult = shootBullet ? 1 : 0.6;
+		ascent(i in 0..amount)
+		{
+			ascent(o in 0..2)
+			{
+				let ang = -90+360/amount*i + 180/amount*o;
+				let xx = 0+rad  *cos(ang);
+				let yy = 0+rad/2*sin(ang);
+
+				let xc=(xx)*ovalCos - (yy)*ovalSin;
+				let yc=(xx)*ovalSin + (yy)*ovalCos;
+				
+				let disTo = Get_Distance  (xc,yc,0,0);
+				let angTo = Get_PointAngle(xc,yc,0,0);
+				let speed = disTo/maxRad * (8+4*o)*speedMult;
+				
+				let shot = ShotA2(x,y,speed,angTo,-(speed)/8,speed*0.01,[58,103][o],417,0,2,BLEND_ADD_ARGB,false);
+				ObjMove_AddPatternA2(shot,stay,NO_CHANGE,NO_CHANGE,(speed*0.1 - speed*0.01)/120,speed*0.1,0);
+				ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);
+				if(!shootBullet)
+				{
+					ObjShot_SetDeleteFrameA6(shot,stay,1);
+				}
+			}
+		}
+		
+		SE_PlayLen(LaserFireShort,60);
+		let obj2 = CreateStraightLaserA1(x, y,-90,GetStgFrameHeight*1.25,1,99999,24,0);
+		ObjShot_SetAutoDelete(obj2,false);
+		ObjLaser_SetInvalidLength(obj2,0,0);
+		ObjShot_SetIntersectionEnable(obj2,false);
+		ObjRender_SetAlpha(obj2,shootBullet ? 200 : 96);
+		ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+		ascent(i in 0..5)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ObjLaser_SetRenderWidth(obj2,90*sin(90/4*i));
+				yield;
+			}
+		}
+		
+		ascent(i in 0..90-5)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ObjLaser_SetRenderWidth(obj2,90+rand(1,-1)*2);
+				yield;
+			}
+		}
+		ascent(i in 0..30)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let coss = cos(90/29*i);
+				ObjLaser_SetRenderWidth(obj2,90*coss);
+				ObjRender_SetScale(obj,1*coss);
+				ObjRender_SetScale(obj1,1*coss);
+				yield;
+			}
+		}
+		Obj_Delete(obj2);
+	}
+	Obj_Delete(obj);
+	Obj_Delete(obj1);
+	
+	/*
+	let disTo = Get_Distance  (x2,y2,x,y);
+	let angTo = Get_PointAngle(x2,y2,x,y);
+	*/
+}
+
+function IsInScreen(x,y,padding)
+{
+	if(x < padding) return false;
+	if(y < padding) return false;
+	if(x > GetStgFrameWidth  - padding) return false;
+	if(y > GetStgFrameHeight - padding) return false;
+	return true;
+}
 task timer
 {
     loop(TIME-10)

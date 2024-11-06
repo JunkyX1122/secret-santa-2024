@@ -120,7 +120,7 @@ task Fire
 			{
 				let ang2 = ang - 70*bit + 140/(sprdAm-1)*o*bit;
 				let dis = 10 + 10*i;
-				let spd = 1+0.5*i;
+				let spd = 2+0.5*i;
 				let spd2 = (1+0.75*i)/2;
 				let x = ObjMove_GetX(objEnemy) + dis*cos(ang2);
 				let y = ObjMove_GetY(objEnemy) + dis*sin(ang2);
