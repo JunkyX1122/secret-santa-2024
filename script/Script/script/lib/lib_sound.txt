@@ -223,7 +223,7 @@ task SE_PlayLen(let path, let vl)
 	ObjSound_Play(seobj);
 	ObjSound_SetLoopEnable(seobj, false);
 	ObjSound_SetSoundDivision(seobj,SOUND_SE);
-	ObjSound_SetVolumeRate(seobj,vl*gbSound);
+	ObjSound_SetVolumeRate(seobj,vl*gbSound*GetCommonData("SFXVolume",1));
 	ObjSound_SetPanRate(seobj,0);
 	//Obj_Delete(seobj);
 	//RemoveSound(path);

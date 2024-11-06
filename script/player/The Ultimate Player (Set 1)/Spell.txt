@@ -1,7 +1,7 @@
 task TSpell
 {
 	FLASH;
-	PlaySE(SPELLTHING);
+	SE_PlayLen(SPELLTHING);
 	SpellMarisa;
 	let amount = 3;
 	loop(30)
@@ -58,8 +58,8 @@ task SpellMarisa
 	Obj_Delete(objManage);
 	
 
-	//PlaySE(SE_SPELL1);
-	PlaySE(SE_SPELL2);
+	//SE_PlayLen(SE_SPELL1);
+	SE_PlayLen(SE_SPELL2);
 	let SparkAngle=270;
 	ClimaxCircle(GetPlayerX,GetPlayerY-30,4,0.05,80,0,70,0,rand(0,360),255);
 	SparkGrad;
@@ -79,7 +79,7 @@ task SpellMarisa
 		yield;
 	}
 	OnSpell=false;
-	PlaySE(BARRIERON);
+	SE_PlayLen(BARRIERON);
 
 	task DarkSpark(adding)
 	{
@@ -512,8 +512,8 @@ task SpellMarisa2
 
 
 
-	//PlaySE(SE_SPELL1);
-	//PlaySE(SE_SPELL2);
+	//SE_PlayLen(SE_SPELL1);
+	//SE_PlayLen(SE_SPELL2);
 	let SparkAngle=270;
 	SparkGrad;
 

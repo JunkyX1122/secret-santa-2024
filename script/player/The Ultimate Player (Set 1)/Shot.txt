@@ -30,7 +30,7 @@ task TShotMarisa
 		MainShot(GetPlayerX()+8, GetPlayerY(), Speed, 270, MainDamage, 20);
 		MainShot(GetPlayerX()-8, GetPlayerY(), Speed, 270, MainDamage, 20);
 		MainShot(GetPlayerX()  , GetPlayerY(), Speed, 270, MainDamage/2, 20);
-		PlaySE(SE_SHOT);
+		SE_PlayLen(SE_SHOT,50);
 		
 		loop(3)
 		{

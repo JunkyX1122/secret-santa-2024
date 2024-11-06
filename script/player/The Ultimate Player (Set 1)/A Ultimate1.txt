@@ -90,6 +90,7 @@ let IMG_OPTION="";
 #include"./Shot.txt"
 #include"./Option.txt"
 #include"./Spell.txt"
+#include"./Sound.txt"
 
 function CreateParticleListRect(type, path, source, blend, priority) //possibly copied from tcl
 {
@@ -194,7 +195,7 @@ task PlayerLoad
 
 	if(DownFrames==0)
 	{
-		PlaySE(BARRIERON);
+		SE_PlayLen(BARRIERON);
 	}
 	DownFrames--;
 	
@@ -212,7 +213,7 @@ task PlayerLoad
 		cooldown = 0;
 		OptionX=[GetPlayerX,GetPlayerX,GetPlayerX,GetPlayerX];
 		OptionY=[GetPlayerY,GetPlayerY,GetPlayerY,GetPlayerY];
-		//PlaySE(GAP);
+		//SE_PlayLen(GAP);
 		ShockEffect(255,255,255,1,1);
 	}
 	SELECT_TEST = SELECT_PLAYER;
@@ -304,7 +305,7 @@ let ysp = 0;
         }
         else
         {
-			PlaySE(HIT);
+			SE_PlayLen(HIT);
             TExplosion();
         }
     }
@@ -323,49 +324,49 @@ let ysp = 0;
         case(ITEM_1UP)
         {
             WriteLog("ITEM_1UP");
-            PlaySE(LIFEGET);
+            SE_PlayLen(LIFEGET);
         }
         case(ITEM_1UP_S)
         {
             WriteLog("ITEM_SPELL_S");
-            PlaySE(LIFEGET);
+            SE_PlayLen(LIFEGET);
         }
         case(ITEM_SPELL)
         {
             WriteLog("ITEM_SPELL");
-            PlaySE(SPELLGET);
+            SE_PlayLen(SPELLGET);
         }
         case(ITEM_SPELL_S)
         {
             WriteLog("ITEM_SPELL_S");
-            PlaySE(SPELLGET);
+            SE_PlayLen(SPELLGET);
         }
         case(ITEM_POWER)
         {
             WriteLog("ITEM_POWER");
-            PlaySE(ITEMGET);
+            SE_PlayLen(ITEMGET);
         }
         case(ITEM_POWER_S)
         {
             WriteLog("ITEM_POWER_S");
-            PlaySE(ITEMGET);
+            SE_PlayLen(ITEMGET);
         }
         case(ITEM_POINT)
         {
             WriteLog("ITEM_POINT");
-            PlaySE(ITEMGET);
+            SE_PlayLen(ITEMGET);
         }
         case(ITEM_POINT_S)
         {
             WriteLog("ITEM_POINT_S");
-            PlaySE(ITEMGET);
+            SE_PlayLen(ITEMGET);
         }
     }
     case(EV_GRAZE)
     {
         //グレイズ通知
         //GrazeEffect(GetEventArgument(1));
-        PlaySE(SE_GRAZE);
+        SE_PlayLen(SE_GRAZE);
     }
 	
 	case(EV_DELETE_SHOT_PLAYER)
@@ -411,7 +412,7 @@ task PlayerDeletionEffect1(obj)
 	{
 		if(y>0)
 		{
-	//		PlaySE(SE_MISSILE2);
+	//		SE_PlayLen(SE_MISSILE2);
 			let dis = 30;
 			let bit = 1-2*round(rand(0,1));
 			HitEffect(x,y);
@@ -901,7 +902,7 @@ task TExplosion
 	{
 		
 		Shaker;
-		PlaySE(SE_PLAYERDOWN);
+		SE_PlayLen(SE_PLAYERDOWN);
 		RebirthEffect(GetStgFrameWidth/2,466);
 		
 		ExplodeEffect;
