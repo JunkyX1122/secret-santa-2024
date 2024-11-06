@@ -64,7 +64,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Darkness Overcome &quot;Purified Aura&quot;","", LENEN, 64,64,64);
 	
 	ScreenShake(60,4);
 

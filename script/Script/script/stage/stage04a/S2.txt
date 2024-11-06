@@ -171,7 +171,7 @@ task Fire
 			SE_PlayLen(charge0,60);
 		}
 		wait(60*2);
-		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+		ObjEnemy_SetDamageRate(objEnemy, (0.09/3)/1.5, (0.09/3)/3);
 	}
 }
 
