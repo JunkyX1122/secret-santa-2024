@@ -13,14 +13,14 @@ let objEnemy2 = CreateFamiliar;
 let count = 0;
    let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 60*60;
+let TIME = 60*85;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
   SetScriptResult(215);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(60);
+  SetScriptResult(85);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -39,13 +39,13 @@ let TIME = 60*60;
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
-	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, 50, 60, LERP_SMOOTHER);
+	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, 150, 60, LERP_SMOOTHER);
 	renderNitoriDS(objEnemy);
 	
 	
 
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth+100,-100);
-	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 150, 60);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 75, 60);
 	renderYuuma(objEnemy2);
 	HitCirc(objEnemy2);
 	end;
@@ -100,9 +100,193 @@ let TIME = 60*60;
 
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SullenFire(bit);
+		wait(20);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			DaisukeFire(bit);
+		}
+		wait(60*5);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+	}
+}
+
+task DaisukeFire(bit)
+{
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		
+		SE_PlayLen(charge1,60);
+		ObjMove_SetDestAtFrameWeight(objEnemy2, GetPlayerX, GetPlayerY - 85, 50);
+		wait(60);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(Bone,60);
+			SE_PlayLen(explode,50);
+		}
+		let bit2 = GetPlayerX > ObjMove_GetX(objEnemy) ? 1 : -1;
+		ascent(i in 0..10)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				ScreenShake(5,2);
+				SE_PlayLen(shot1,80);
+				let x = ObjMove_GetX(objEnemy2)+50*bit2+rand(20,-20);
+				let y = ObjMove_GetY(objEnemy2)+30+rand(5,-15);
+				let ang = rand(0,360);
+				let spd = rand(8,10);
+				ascent(o in 0..10)
+				{
+					let obj = ShotA2(x,y,spd,ang+360/10*o*bit,-spd/10,0,293,293,5,2,BLEND_ADD_ARGB,false);
+					ObjShot_SetDeleteFrameA6(obj,15,1);
+				}
+				ascent(o in 0..20)
+				{
+					let obj = ShotA2(x,y,spd*1.2,ang+360/20*o*bit,-spd/10,1,140,140,5,2,BLEND_ADD_ARGB,false);
+					//ObjShot_SetDeleteFrameA6(obj,15,1);
+				}
+				wait(5);
+			}
+			bit2*=-1;
+		}
+		bit2 = GetPlayerX > ObjMove_GetX(objEnemy2) ? 1 : -1;
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			ScreenShake(60*2.5,3);
+			SE_PlayLen(Burst2,50);
+		}
+		let x = ObjMove_GetX(objEnemy2);
+		let y = ObjMove_GetY(objEnemy2);
+		let ang = 90;
+		ascent(i in 0..80)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				let t = 190 * (1 - (1 - 1/79*i)^11);
+				ObjMove_SetY(objEnemy2, y - t);
+				let spd = 6;
+				if(i<30)
+				{
+					let dis = 50-50/30*i;
+					let obj = ShotA2(ObjMove_GetX(objEnemy2)+dis*cos(ang),ObjMove_GetY(objEnemy2)+dis*sin(ang),spd,ang,-spd/10,0.4,293,293,0,2,BLEND_ADD_ARGB,false);
+					ObjMove_AddPatternA2(obj,120,NO_CHANGE,NO_CHANGE,3/100,3,0);
+					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					let scl = 2-1/30*i;
+					ObjShot_SetIntersectionScaleXY(obj,scl,scl);
+					ObjRender_SetScale(obj,scl);
+					
+					if(i%3>0)
+					{
+						ObjShot_SetDeleteFrameA6(obj,120,scl*2);
+					}
+					ang-=135/30*bit2;
+				}
+				
+				yield;
+			}
+		}
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge0,60);
+		}
+		wait(60*2);
+	}
+}
+
+task SullenFire(bit)
+{
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);
+		let am = 3;
+		ascent(i in 0..am)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				TrinityKnot(ObjMove_GetX(objEnemy) - 200 * bit + (200*2*bit)/(am-1)*i ,ObjMove_GetY(objEnemy)+100-100*sin(180/(am-1)*i),-90,bit);
+				wait(30);
+			}
+		}
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(40,-40), 150+rand(10,-10), 90);
+		wait(60*5);
+		bit*=-1;
+	}
+}
+task TrinityKnot(sourceX,sourceY,angS,bit)
+{
+	let DELAY_KNOT = 100;
+	let dis = 100;
+	ascent(i in 0..3)
+	{
+		TrinityKnotPoint(angS+360/3*i*bit,dis,bit,103);
+	}
+	dis *= 0.85;
+	let am = 15;
+	ascent(i in 0..am)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(Shot1,60);
+			ascent(o in 0..3)
+			{
+				let ang = angS+(360/3)/am*i*bit + (360/3*o*bit);
+				let x = sourceX+dis*cos(ang);
+				let y = sourceY+dis*sin(ang);
+				let shot = ShotA1(x,y,0,ang+90*bit,89,89,10,2,BLEND_ADD_ARGB,false);
+				ObjMove_AddPatternA2(shot,DELAY_KNOT-i,0,NO_CHANGE,3/100,3,0);
+			}
+		}
+		//ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);
+		yield;
+	}
+	wait(DELAY_KNOT-am);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(chime1,60);
+	}
+	task TrinityKnotPoint(ang,dis,bit,id)
+	{
+
+		let t = 30;
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(Shot1,60);
+				let x = sourceX+dis*0.66*cos(ang+180/3*bit);
+				let y = sourceY+dis*0.66*sin(ang+180/3*bit);
+				
+				let x1 = sourceX+dis*cos(ang);
+				let y1 = sourceY+dis*sin(ang);
+				
+				let dis2 = Get_Distance(x1,y1,x,y);
+				let ang2 = Get_PointAngle(x1,y1,x,y);
+				let ang2Dis = (ang - 360/3*bit) - ang2;
+				ang2Dis = modCustom(ang2Dis + 180, 360) - 180;
+
+				let ang3 = ang2 + (ang2Dis*2)/(t-1)*i;
+				
+				let x2 = x + dis2 * cos(ang3);
+				let y2 = y + dis2 * sin(ang3);
+				
+				let ang4 = ang + (360/3)/(t-1)*i*bit;
+				let shot = ShotA1(x2,y2,0,ang4,id,id,10,2,BLEND_ADD_ARGB,false);
+				
+				ObjMove_AddPatternA2(shot,DELAY_KNOT-i,0,NO_CHANGE,2/100,2,0);
+				yield;
+			}
+		}
+	}
 
 }
 
+function modCustom(a, n)
+{
+	return a - floor(a/n) * n;
+}
 task timer
 {
     while(TIME>60*10)
