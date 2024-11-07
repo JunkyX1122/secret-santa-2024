@@ -107,10 +107,14 @@ task Fire
 	StartPortalSystem();
 	
 
-	let portal1 = CreatePortal(GetStgFrameWidth/2,	  GetStgFrameHeight/2-100,0, 1, 1);
+	let portal1 = CreatePortal(GetStgFrameWidth/2,	  GetStgFrameHeight/2-100,0, 0, 0);
 	let portal2 = CreatePortal(GetStgFrameWidth/2+100,GetStgFrameHeight/2+100,45, 1, 0.5);
 	let portal3 = CreatePortal(GetStgFrameWidth/2-100,GetStgFrameHeight/2+100,45, 1, 0.5);
-	
+	ObjPortal_Grow(portal1, 1, 0, 1, 0.5, 30);
+	ObjPortal_Grow(portal2, 1, 0, 1, 0.5, 30);
+	ObjPortal_Grow(portal3, 1, 0, 1, 0.5, 30);
+	wait(120);
+
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		let ang = 0;

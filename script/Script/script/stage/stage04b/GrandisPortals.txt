@@ -32,9 +32,19 @@ task StartPortalSystem()
 	ManageAllPortals();
 	while(isManagingPortals)
 	{
+		let portalsEnabledCount = 0;
+		ascent(i in 0..length(portalPositionsArray))
+		{
+			if(ObjPortal_IsEnabled(portalsEnabledCount))
+			{
+				portalsEnabledCount++;
+			}
+		}
+		//WriteLog(portalsEnabledCount);
 		ClearPortalTargets();
 		yield;
 	}
+	ClearPortalTargets();
 }
 
 task ClearPortalTargets()
@@ -89,6 +99,7 @@ task SetInPortal(obj)
 	ObjRender_SetRenderTarget(obj, tex_rd);
 	ObjShot_SetIntersectionEnable(obj,false);
 }
+
 task SetOutPortal(obj)
 {
 	Obj_SetValue(obj,"inPortal", false);
@@ -96,6 +107,20 @@ task SetOutPortal(obj)
 	Obj_SetRenderPriorityI(obj,11);
 	ObjRender_SetRenderTarget(obj, tex_rd2);
 	ObjShot_SetIntersectionEnable(obj,true);
+}
+
+task ObjPortal_Grow(portalID, x1, y1, x2, y2, t)
+{
+	let obj = portalID;
+	ascent(i in 0..t)
+	{
+		if(!ObjPortal_IsDeleted(obj))
+		{
+			let tVal = 1/(t-1)*i;
+			ObjPortal_SetScale(obj,Interpolate_Decelerate(x1,x2,tVal), Interpolate_Decelerate(y1, y2, tVal));
+		}
+		yield;
+	}
 }
 
 task ManageAllPortals()
@@ -117,6 +142,7 @@ task ManageAllPortals()
 		// Check if the player is even near a portal to begin with.
 		let skip = true;
 		let idsToCheck = [];
+		let portalsEnabledCount = 0;
 		ascent(i in 0..length(portalPositionsArray))
 		{
 			let portalX = portalPositionsArray[i][PORTAL_X];
@@ -127,10 +153,12 @@ task ManageAllPortals()
 			{
 				skip = false;
 				idsToCheck ~= [i];
+				portalsEnabledCount++;
 			}
 		}
 		if(!skip) // If so, then run tests on bullets.
 		{
+			WriteLog(portalsEnabledCount);
 			ascent(id in 0..length(idsToCheck))// Get all the bullets.
 			{
 				
