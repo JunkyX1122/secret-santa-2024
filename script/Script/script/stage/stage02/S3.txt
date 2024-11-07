@@ -131,6 +131,7 @@ task Fire
 {
 	let bit = 1-2*round(rand(0,1));
 	ManageScyllaHide(bit);
+	SE_PlayLen(ufo,60);
 	wait(60);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 75, 60);
 	ManageScyllaSpin(bit);

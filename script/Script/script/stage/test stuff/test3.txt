@@ -223,6 +223,7 @@ task Slasher(x,y,x2,y2,tim)
 
 task LaserGrowFade(obj,dis,alpha)
 {
+	ObjLaser_SetItemDistance(obj, 1000);
 	let t = 10;
 	ascent(i in 0..t)
 	{

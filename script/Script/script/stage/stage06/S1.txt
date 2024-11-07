@@ -181,6 +181,7 @@ task WarningLaser(x,y,ang)
 
 task LaserGrowFade(obj,dis,alpha)
 {
+	ObjLaser_SetItemDistance(obj, 1000);
 	let t = 60;
 	ascent(i in 0..t)
 	{

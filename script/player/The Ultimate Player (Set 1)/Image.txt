@@ -36,4 +36,5 @@ let IMG_PIXEL=GetCurrentScriptDirectory~"./img/pixel.png";
 
 task ImageLoad() {
 	LoadTexture(IMG_MOVEMAGICCIRCLE);
+	LoadTexture(IMG_SHOT);
 }

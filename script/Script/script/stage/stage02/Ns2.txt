@@ -267,6 +267,7 @@ task KeiranFire(bit)
 				//ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
 			}
 		}
+		Obj_Delete(objGyro);
 	}
 }
 
