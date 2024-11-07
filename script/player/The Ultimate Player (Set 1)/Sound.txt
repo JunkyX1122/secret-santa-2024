@@ -73,7 +73,39 @@ let SANAESLICE=current ~ "./se/sanaeslice.wav";
 let SPELLTHING=current ~ "./se/se_spellthing.wav";
 
 
+task SoundLoad
+{
+	
+	LoadSound(SE_GRAZE);
+	LoadSound(SE_PLAYERDOWN);
+	LoadSound(SE_PLAYERDOWN2);
+	LoadSound(SE_SHOT);
+	LoadSound(SE_SPELL1);
+	LoadSound(SE_SPELL2);
+	LoadSound(SE_SPELL3);
+	LoadSound(SE_BONUS);
 
+	LoadSound(ITEMGET);
+
+	LoadSound(SPELLGET);
+	LoadSound(BOON);
+	LoadSound(TIMESTOP);
+	LoadSound(SHOUT);
+	LoadSound(SHOT);
+	LoadSound(KHIT);
+	//LoadSound(EX);
+	//LoadSound(EX2);
+	LoadSound(BOON2);
+	LoadSound(CHARGE);
+
+	LoadSound(BIGBOOM);
+	LoadSound(LASER);
+
+	LoadSound(HIT);
+	LoadSound(BARRIERON);
+
+	LoadSound(SPELLTHING);
+}
 
 //======================================================
 //===================Sound Loader=======================

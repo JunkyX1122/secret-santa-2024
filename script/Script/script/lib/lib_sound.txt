@@ -193,6 +193,7 @@ let textchange = GetCurrentScriptDirectory~"./../../se2/se_text.wav";
 
 let spellcard = GetCurrentScriptDirectory~"./../../se2/seUseSpellCard.wav";
 let compositespellcard = GetCurrentScriptDirectory~"./../../se2/compositespell.wav";
+let spellCapture = GetCurrentScriptDirectory~"./../../se2/se_spellget.wav";
 
 let warning = GetCurrentScriptDirectory~"./../../se2/warning.wav";
 

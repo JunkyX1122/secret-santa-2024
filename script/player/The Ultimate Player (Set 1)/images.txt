@@ -16,18 +16,6 @@ let IMG_PHONECAM_O=GetCurrentScriptDirectory~"./bombimg/phone.png";
 let IMG_ICEBACK=GetCurrentScriptDirectory~"./bombimg/cirnoice.png";
 let IMG_NINE=GetCurrentScriptDirectory~"./bombimg/nine.png";
 
-
-let REIMU_CARD = GetCurrentScriptDirectory~"./cards/Reimu Card.png";
-let MARISA_CARD = GetCurrentScriptDirectory~"./cards/Marisa Card.png";
-let SAKUYA_CARD = GetCurrentScriptDirectory~"./cards/Sakuya Card.png";
-let REISEN_CARD = GetCurrentScriptDirectory~"./cards/Reisen Card.png";
-let SANAE_CARD = GetCurrentScriptDirectory~"./cards/Sanae Card.png";
-let YOUMU_CARD = GetCurrentScriptDirectory~"./cards/Youmu Card.png";
-let AYA_CARD = GetCurrentScriptDirectory~"./cards/Aya Card.png";
-let ALICE_CARD = GetCurrentScriptDirectory~"./cards/Alice Card.png";
-let CIRNO_CARD = GetCurrentScriptDirectory~"./cards/Cirno Card.png";
-let SEIJA_CARD = GetCurrentScriptDirectory~"./cards/Seija Card.png";
-
 let IMG_STAR=GetCurrentScriptDirectory~"./bombimg/star.png";
 let IMG_STAR2=GetCurrentScriptDirectory~"./bombimg/star2.png";
 let IMG_PUREWHITE=GetCurrentScriptDirectory~"./img/whiteness.png";
@@ -45,3 +33,7 @@ let IMG_MSD=GetCurrentScriptDirectory~"./img/MSDEffect.png";
 let IMG_CLIMAX=GetCurrentScriptDirectory~"./img/ClimaxRing.png";
 let IMG_BACKGROUND=GetCurrentScriptDirectory~"./img/mask_ball.png";
 let IMG_PIXEL=GetCurrentScriptDirectory~"./img/pixel.png";
+
+task ImageLoad() {
+	LoadTexture(IMG_MOVEMAGICCIRCLE);
+}
