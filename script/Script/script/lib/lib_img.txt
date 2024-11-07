@@ -1,22 +1,22 @@
 
 
-let IMG_SHOT = GetCurrentScriptDirectory() ~ "./../../img/bullet/bullet01.png";
+const IMG_SHOT = GetCurrentScriptDirectory() ~ "./../../img/bulconst/bulconst01.png";
 
 //---------------------------------------
 //-----------BACKGROUND IMAGES-----------
 //---------------------------------------
 
-let IMG_FLATBG  = GetCurrentScriptDirectory() ~ "./../../img/background/bg.png";
-let IMG_CLOUDMASK = GetCurrentScriptDirectory() ~ "./../../img/background/cloudmask.png";
-let IMG_IESUA_EFF_2A = GetCurrentScriptDirectory() ~ "./../../img/background/Iesua_efc2a.png";
-let IMG_IESUA_EFF_2B = GetCurrentScriptDirectory() ~ "./../../img/background/Iesua_efc2b.png";
-let IMG_SUNGLOW = GetCurrentScriptDirectory() ~ "./../../img/background/sunglow.png";
+const IMG_FLATBG  = GetCurrentScriptDirectory() ~ "./../../img/background/bg.png";
+const IMG_CLOUDMASK = GetCurrentScriptDirectory() ~ "./../../img/background/cloudmask.png";
+const IMG_IESUA_EFF_2A = GetCurrentScriptDirectory() ~ "./../../img/background/Iesua_efc2a.png";
+const IMG_IESUA_EFF_2B = GetCurrentScriptDirectory() ~ "./../../img/background/Iesua_efc2b.png";
+const IMG_SUNGLOW = GetCurrentScriptDirectory() ~ "./../../img/background/sunglow.png";
 
-let IMG_YUUMA_BG1 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg0.png";
-let IMG_YUUMA_BG2 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg1.png";
-let IMG_YUUMA_BG3 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg2.png";
+const IMG_YUUMA_BG1 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg0.png";
+const IMG_YUUMA_BG2 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg1.png";
+const IMG_YUUMA_BG3 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg2.png";
 
-let Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
+const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
 ------------------------------------------EVERYTHING PAST HERE GETS LOADED AT THE LOADING SCREEN. EVERYTHING BEFORE GETS LOADED BEFORE THE STAGE REQUIRED
 */
@@ -24,128 +24,130 @@ let Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_E
 //---------------------------------------
 //------------SYSTEM IMAGES--------------
 //---------------------------------------
-let IMG_STGSTARS = GetCurrentScriptDirectory() ~ "./../../img/stgsystem/stars.png";
+const IMG_STGSTARS = GetCurrentScriptDirectory() ~ "./../../img/stgsystem/stars.png";
 
-let StageSystem_ImgArray = [IMG_STGSTARS];
+const StageSystem_ImgArray = [IMG_STGSTARS];
 
 //---------------------------------------
 //-------------ENEMY IMAGES--------------
 //---------------------------------------
 
-let IMG_FAIRY01 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_1.png";
-let IMG_FAIRY02 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_2.png";
-let IMG_FAIRY03 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_3.png";
-let IMG_FAIRY04 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_4.png";
+const IMG_FAIRY01 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_1.png";
+const IMG_FAIRY02 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_2.png";
+const IMG_FAIRY03 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_3.png";
+const IMG_FAIRY04 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_1_4.png";
 
-let IMG_FAIRY11 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_1.png";
-let IMG_FAIRY12 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_2.png";
-let IMG_FAIRY13 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_3.png";
-let IMG_FAIRY14 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_4.png";
+const IMG_FAIRY11 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_1.png";
+const IMG_FAIRY12 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_2.png";
+const IMG_FAIRY13 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_3.png";
+const IMG_FAIRY14 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_2_4.png";
 
-let IMG_FAIRY21 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_1.png";
-let IMG_FAIRY22 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_2.png";
-let IMG_FAIRY23 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_3.png";
-let IMG_FAIRY24 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_4.png";
+const IMG_FAIRY21 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_1.png";
+const IMG_FAIRY22 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_2.png";
+const IMG_FAIRY23 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_3.png";
+const IMG_FAIRY24 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_3_4.png";
 
-let IMG_BIRD = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Bird.png";
-let IMG_GHOST = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Ghost.png";	
+const IMG_BIRD = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Bird.png";
+const IMG_GHOST = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Ghost.png";	
 
-let IMG_GORE_FAIRY = GetCurrentScriptDirectory() ~ "./../../img/stgenm/enemy.png";
+const IMG_GORE_FAIRY = GetCurrentScriptDirectory() ~ "./../../img/stgenm/enemy.png";
 
-let Enemy_ImgArray = [IMG_FAIRY01,IMG_FAIRY02,IMG_FAIRY03,IMG_FAIRY04,IMG_FAIRY11,IMG_FAIRY12,IMG_FAIRY13,IMG_FAIRY14,IMG_FAIRY21,IMG_FAIRY22,IMG_FAIRY23,IMG_FAIRY24,IMG_BIRD,IMG_GHOST,IMG_GORE_FAIRY];
+
+const Enemy_ImgArray = [IMG_FAIRY01,IMG_FAIRY02,IMG_FAIRY03,IMG_FAIRY04,IMG_FAIRY11,IMG_FAIRY12,IMG_FAIRY13,IMG_FAIRY14,IMG_FAIRY21,IMG_FAIRY22,IMG_FAIRY23,IMG_FAIRY24,IMG_BIRD,IMG_GHOST,IMG_GORE_FAIRY];
 
 //---------------------------------------
 //--------------BOSS IMAGES--------------
 //---------------------------------------
 
-let IMG_GHOSTORIN = GetCurrentScriptDirectory() ~ "./../../img/enemy/ghost.png";
-let IMG_FAMILIAR = GetCurrentScriptDirectory() ~ "./../../img/enemy/familiar.png";
-let IMG_BOSS1PLACE = GetCurrentScriptDirectory() ~ "./../../img/title/1.png";
-let IMG_YUUMA= GetCurrentScriptDirectory() ~ "./../../img/enemy/boss_toutetsu.png";
-let IMG_NITORI_SPRITE = GetCurrentScriptDirectory() ~ "./../../img/enemy/nitori_sprite.png";
-let IMG_EAGLE= GetCurrentScriptDirectory() ~ "./../../img/enemy/eagle.png";
-let IMG_ANIMALSPIRIT= GetCurrentScriptDirectory() ~ "./../../img/enemy/animal_spirits.png";
+const IMG_GHOSTORIN = GetCurrentScriptDirectory() ~ "./../../img/enemy/ghost.png";
+const IMG_FAMILIAR = GetCurrentScriptDirectory() ~ "./../../img/enemy/familiar.png";
+const IMG_BOSS1PLACE = GetCurrentScriptDirectory() ~ "./../../img/title/1.png";
+const IMG_YUUMA= GetCurrentScriptDirectory() ~ "./../../img/enemy/boss_toutetsu.png";
+const IMG_NITORI_SPRITE = GetCurrentScriptDirectory() ~ "./../../img/enemy/nitori_sprite.png";
+const IMG_EAGLE= GetCurrentScriptDirectory() ~ "./../../img/enemy/eagle.png";
+const IMG_ANIMALSPIRIT= GetCurrentScriptDirectory() ~ "./../../img/enemy/animal_spirits.png";
 
 
-let IMG_WING = GetCurrentScriptDirectory()~"./../../img/enemy/wing.png";
-let IMG_SWORD = GetCurrentScriptDirectory()~"./../../img/enemy/sword.png";
-let IMG_DRAGONMAW = GetCurrentScriptDirectory()~"./../../img/enemy/dragon_maw.png";
-let IMG_REDRINSHIELD = GetCurrentScriptDirectory()~"./../../img/enemy/redrinShield.png";
-let IMG_SCYLLASTAFF = GetCurrentScriptDirectory()~"./../../img/enemy/staff.png";
+const IMG_WING = GetCurrentScriptDirectory()~"./../../img/enemy/wing.png";
+const IMG_SWORD = GetCurrentScriptDirectory()~"./../../img/enemy/sword.png";
+const IMG_DRAGONMAW = GetCurrentScriptDirectory()~"./../../img/enemy/dragon_maw.png";
+const IMG_REDRINSHIELD = GetCurrentScriptDirectory()~"./../../img/enemy/redrinShield.png";
+const IMG_SCYLLASTAFF = GetCurrentScriptDirectory()~"./../../img/enemy/staff.png";
+const IMG_GRANDISPORTAL = GetCurrentScriptDirectory() ~ "./../../img/enemy/grandisPortal.png";
 
-let BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF];
+const BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL];
 
 //---------------------------------------
 //--------------FACE IMAGES--------------
 //---------------------------------------
 
-let CharacterImg_ImgArray = [];
+const CharacterImg_ImgArray = [];
 
 //---------------------------------------
 //--------------TEXT IMAGES--------------
 //---------------------------------------
 
 
-let TextImg_ImgArray =  [];
+const TextImg_ImgArray =  [];
 
 
 //---------------------------------------
 //---------------EFFECTS-----------------
 //---------------------------------------
 
-let IMG_ENEMY_DEL0= GetCurrentScriptDirectory() ~ "./../../img/effect/del_eff_00.png";
-let IMG_ENEMY_DEL1= GetCurrentScriptDirectory() ~ "./../../img/effect/spellChargeA0000.png";
+const IMG_ENEMY_DEL0= GetCurrentScriptDirectory() ~ "./../../img/effect/del_eff_00.png";
+const IMG_ENEMY_DEL1= GetCurrentScriptDirectory() ~ "./../../img/effect/spellChargeA0000.png";
 
-let IMG_BULLET_DEL= GetCurrentScriptDirectory() ~ "./../../img/effect/shot_del_eff.png";
-let IMG_ITEM = GetCurrentScriptDirectory()~"./../../img/stgsystem/img_item.png";
-let IMG_BOSSPOS = GetCurrentScriptDirectory()~"./../../img/effect/enemy_board.png";
-let IMG_LIGHT = GetCurrentScriptDirectory()~"./../../img/effect/light.png";
-let IMG_MOMI = GetCurrentScriptDirectory()~"./../../img/effect/boss_eff_momiji_001.png";
+const IMG_BULconst_DEL= GetCurrentScriptDirectory() ~ "./../../img/effect/shot_del_eff.png";
+const IMG_ITEM = GetCurrentScriptDirectory()~"./../../img/stgsystem/img_item.png";
+const IMG_BOSSPOS = GetCurrentScriptDirectory()~"./../../img/effect/enemy_board.png";
+const IMG_LIGHT = GetCurrentScriptDirectory()~"./../../img/effect/light.png";
+const IMG_MOMI = GetCurrentScriptDirectory()~"./../../img/effect/boss_eff_momiji_001.png";
 
-let IMG_SMOKE = GetCurrentScriptDirectory()~"./../../img/effect/smoke_00.png";
+const IMG_SMOKE = GetCurrentScriptDirectory()~"./../../img/effect/smoke_00.png";
 
-let IMG_WARINING = GetCurrentScriptDirectory()~"./../../img/effect/auraWarining.png";
-let IMG_PIXEL = GetCurrentScriptDirectory()~"./../../img/effect/pixel.png";
-let IMG_AURA = GetCurrentScriptDirectory()~"./../../img/effect/aura.png";
-let IMG_LEFTEYE = GetCurrentScriptDirectory()~"./../../img/effect/eyes.png";
+const IMG_WARINING = GetCurrentScriptDirectory()~"./../../img/effect/auraWarining.png";
+const IMG_PIXEL = GetCurrentScriptDirectory()~"./../../img/effect/pixel.png";
+const IMG_AURA = GetCurrentScriptDirectory()~"./../../img/effect/aura.png";
+const IMG_LEFTEYE = GetCurrentScriptDirectory()~"./../../img/effect/eyes.png";
 
-let IMG_SUN1 = GetCurrentScriptDirectory()~"./../../img/effect/Sun1.png";
-let IMG_SUN2 = GetCurrentScriptDirectory()~"./../../img/effect/Sun2.png";
-let IMG_SUN3 = GetCurrentScriptDirectory()~"./../../img/effect/Sun3.png";
-let IMG_SUN4 = GetCurrentScriptDirectory()~"./../../img/effect/Sun4.png";
-let IMG_MASTER_SPARK = GetCurrentScriptDirectory()~"./../../img/bullet/pl01_th14_bomba.png";
+const IMG_SUN1 = GetCurrentScriptDirectory()~"./../../img/effect/Sun1.png";
+const IMG_SUN2 = GetCurrentScriptDirectory()~"./../../img/effect/Sun2.png";
+const IMG_SUN3 = GetCurrentScriptDirectory()~"./../../img/effect/Sun3.png";
+const IMG_SUN4 = GetCurrentScriptDirectory()~"./../../img/effect/Sun4.png";
+const IMG_MASTER_SPARK = GetCurrentScriptDirectory()~"./../../img/bulconst/pl01_th14_bomba.png";
 
-let IMG_PAGODA1 = GetCurrentScriptDirectory ~ "./../../img/bullet/PagodaLaser.png";
-let IMG_PAGODA2 = GetCurrentScriptDirectory ~ "./../../img/bullet/PagodaLaser_Fire.png";
+const IMG_PAGODA1 = GetCurrentScriptDirectory ~ "./../../img/bulconst/PagodaLaser.png";
+const IMG_PAGODA2 = GetCurrentScriptDirectory ~ "./../../img/bulconst/PagodaLaser_Fire.png";
 
-let IMG_BOTTOMWARNING = GetCurrentScriptDirectory()~"./../../img/effect/bottomWarning.png";
+const IMG_BOTTOMWARNING = GetCurrentScriptDirectory()~"./../../img/effect/bottomWarning.png";
 
-let IMG_FADERING = GetCurrentScriptDirectory()~"./../../img/effect/fadering.png";
-let IMG_GUARDRING = GetCurrentScriptDirectory()~"./../../img/effect/guardringA.png";
-let IMG_FLASHEFF = GetCurrentScriptDirectory()~"./../../img/effect/flashEffectA.png";
-let IMG_CHARGEEFF = GetCurrentScriptDirectory()~"./../../img/effect/spellChargeA0000.png";
+const IMG_FADERING = GetCurrentScriptDirectory()~"./../../img/effect/fadering.png";
+const IMG_GUARDRING = GetCurrentScriptDirectory()~"./../../img/effect/guardringA.png";
+const IMG_FLASHEFF = GetCurrentScriptDirectory()~"./../../img/effect/flashEffectA.png";
+const IMG_CHARGEEFF = GetCurrentScriptDirectory()~"./../../img/effect/spellChargeA0000.png";
 
-let IMG_STAR = GetCurrentScriptDirectory()~"./../../img/effect/star.png";
+const IMG_STAR = GetCurrentScriptDirectory()~"./../../img/effect/star.png";
 
-let IMG_GRADIENT = GetCurrentScriptDirectory()~"./../../img/effect/gradient.png";
+const IMG_GRADIENT = GetCurrentScriptDirectory()~"./../../img/effect/gradient.png";
 
-let IMG_MAGICCIRCLE = GetCurrentScriptDirectory~"./../../img/effect/touhoucircle.png";
+const IMG_MAGICCIRCLE = GetCurrentScriptDirectory~"./../../img/effect/touhoucircle.png";
 
-let IMG_FDFCHARGE = GetCurrentScriptDirectory()~"./../../img/effect/fdfcharge.png";
-let IMG_FDFBURST = GetCurrentScriptDirectory()~"./../../img/effect/fdfburst.png";
-let IMG_FDFLINES = GetCurrentScriptDirectory()~"./../../img/effect/absorblines.png";
+const IMG_FDFCHARGE = GetCurrentScriptDirectory()~"./../../img/effect/fdfcharge.png";
+const IMG_FDFBURST = GetCurrentScriptDirectory()~"./../../img/effect/fdfburst.png";
+const IMG_FDFLINES = GetCurrentScriptDirectory()~"./../../img/effect/absorblines.png";
 
-let IMG_FADEBALL = GetCurrentScriptDirectory()~"./../../img/effect/fade_ball_0000.png";
+const IMG_FADEBALL = GetCurrentScriptDirectory()~"./../../img/effect/fade_ball_0000.png";
 
-let IMG_SAURA = GetCurrentScriptDirectory()~"./../../img/effect/switchaura.png";
-let IMG_SAURA2 = GetCurrentScriptDirectory()~"./../../img/effect/switchaura2.png";
-let IMG_SWITCHAURA = GetCurrentScriptDirectory()~"./../../img/effect/possfire.png";
+const IMG_SAURA = GetCurrentScriptDirectory()~"./../../img/effect/switchaura.png";
+const IMG_SAURA2 = GetCurrentScriptDirectory()~"./../../img/effect/switchaura2.png";
+const IMG_SWITCHAURA = GetCurrentScriptDirectory()~"./../../img/effect/possfire.png";
 
-let IMG_SLASH = GetCurrentScriptDirectory()~"./../../img/effect/Slash.png";
-let IMG_FIRERING = GetCurrentScriptDirectory()~"./../../img/effect/FireRing.png";
+const IMG_SLASH = GetCurrentScriptDirectory()~"./../../img/effect/Slash.png";
+const IMG_FIRERING = GetCurrentScriptDirectory()~"./../../img/effect/FireRing.png";
 
 
-let Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,
+const Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULconst_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,
 IMG_WARINING,IMG_AURA,IMG_LEFTEYE,IMG_FADERING,IMG_SUN1,IMG_SUN2,IMG_SUN3,IMG_SUN4,IMG_MASTER_SPARK,IMG_PAGODA1,IMG_PAGODA2,IMG_BOTTOMWARNING,
 IMG_GUARDRING,IMG_FLASHEFF,IMG_CHARGEEFF,IMG_STAR,IMG_GRADIENT,IMG_MAGICCIRCLE,IMG_FDFCHARGE,IMG_FDFBURST,IMG_FDFLINES,
 IMG_SAURA,IMG_SAURA2,IMG_SWITCHAURA,IMG_FADEBALL,
@@ -155,46 +157,46 @@ IMG_SLASH,IMG_FIRERING];
 //---------------CARDS EF----------------
 //---------------------------------------
 
-let SpellAttack_img =   GetCurrentScriptDirectory()~"./../../img/cutin/SpellAttack.png"; 
-let img_SpellAttack =   GetCurrentScriptDirectory()~"./../../img/cutin/SpellAttackText.png"; 
-let img_SpellAttack_L = GetCurrentScriptDirectory()~"./../../img/cutin/Light.png";
-let img_chains =  		GetCurrentScriptDirectory()~"./../../img/cutin/spell_009.png";
-let img_card1 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card1.png";
-let img_card2 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card2.png";
-let img_card3 = 		GetCurrentScriptDirectory()~"./../../img/cutin/card3.png";
-let img_card4 = 		GetCurrentScriptDirectory()~"./../../img/cutin/card4.png";
-let img_card5 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card5.png";
-let img_card6 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card6.png";
-let img_card7 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card7.png";
-let img_card8 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card8.png";
-let img_circle1 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle1.png";
-let img_circle2 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle2.png";
-let img_circle3 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle3.png";
-let img_circle4 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle4.png";
-let img_circle5 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle5.png";
-let img_circle6 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle6.png";
+const SpellAttack_img =   GetCurrentScriptDirectory()~"./../../img/cutin/SpellAttack.png"; 
+const img_SpellAttack =   GetCurrentScriptDirectory()~"./../../img/cutin/SpellAttackText.png"; 
+const img_SpellAttack_L = GetCurrentScriptDirectory()~"./../../img/cutin/Light.png";
+const img_chains =  		GetCurrentScriptDirectory()~"./../../img/cutin/spell_009.png";
+const img_card1 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card1.png";
+const img_card2 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card2.png";
+const img_card3 = 		GetCurrentScriptDirectory()~"./../../img/cutin/card3.png";
+const img_card4 = 		GetCurrentScriptDirectory()~"./../../img/cutin/card4.png";
+const img_card5 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card5.png";
+const img_card6 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card6.png";
+const img_card7 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card7.png";
+const img_card8 =  		GetCurrentScriptDirectory()~"./../../img/cutin/card8.png";
+const img_circle1 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle1.png";
+const img_circle2 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle2.png";
+const img_circle3 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle3.png";
+const img_circle4 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle4.png";
+const img_circle5 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle5.png";
+const img_circle6 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle6.png";
 
-let Card_ImgArray = [SpellAttack_img,img_SpellAttack,img_SpellAttack_L,img_chains,img_card1,img_card2,img_card3,img_card4,img_card5,img_card6,img_card7,img_card8,img_circle1,img_circle2,img_circle3,img_circle4,img_circle5,img_circle6];
+const Card_ImgArray = [SpellAttack_img,img_SpellAttack,img_SpellAttack_L,img_chains,img_card1,img_card2,img_card3,img_card4,img_card5,img_card6,img_card7,img_card8,img_circle1,img_circle2,img_circle3,img_circle4,img_circle5,img_circle6];
 
 
 //---------------------------------------
 //-------------TITLE SCREEN--------------
 //---------------------------------------
 
-let IMG_SELECTIONS =  		GetCurrentScriptDirectory()~"./../../img/title/img_selections.png";
-let IMG_TITLEBACK =  		GetCurrentScriptDirectory()~"./../../img/title/img_titleback.png";
+const IMG_SELECTIONS =  		GetCurrentScriptDirectory()~"./../../img/title/img_selections.png";
+const IMG_TITLEBACK =  		GetCurrentScriptDirectory()~"./../../img/title/img_titleback.png";
 
 
-let IMG_TITLE_00 =  		GetCurrentScriptDirectory()~"./../../img/title/title_00.png";
-let IMG_TITLE_00BLUR =  		GetCurrentScriptDirectory()~"./../../img/title/title_00blur.png";
-let IMG_TITLE_01 =  		GetCurrentScriptDirectory()~"./../../img/title/title_01.png";
-let IMG_TITLE_02 =  		GetCurrentScriptDirectory()~"./../../img/title/title_02.png";
-let IMG_TITLE_03 =  		GetCurrentScriptDirectory()~"./../../img/title/title_03.png";
+const IMG_TITLE_00 =  		GetCurrentScriptDirectory()~"./../../img/title/title_00.png";
+const IMG_TITLE_00BLUR =  		GetCurrentScriptDirectory()~"./../../img/title/title_00blur.png";
+const IMG_TITLE_01 =  		GetCurrentScriptDirectory()~"./../../img/title/title_01.png";
+const IMG_TITLE_02 =  		GetCurrentScriptDirectory()~"./../../img/title/title_02.png";
+const IMG_TITLE_03 =  		GetCurrentScriptDirectory()~"./../../img/title/title_03.png";
 
-let IMG_TITLESHOW_01 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_01.png";
-let IMG_TITLESHOW_02 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_02.png";
+const IMG_TITLESHOW_01 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_01.png";
+const IMG_TITLESHOW_02 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_02.png";
 
-let TitleScreen_ImgArray = [IMG_SELECTIONS,IMG_TITLEBACK,IMG_TITLE_00,IMG_TITLE_00BLUR,IMG_TITLE_01,IMG_TITLE_02,IMG_TITLE_03];
+const TitleScreen_ImgArray = [IMG_SELECTIONS,IMG_TITLEBACK,IMG_TITLE_00,IMG_TITLE_00BLUR,IMG_TITLE_01,IMG_TITLE_02,IMG_TITLE_03];
 
 
 

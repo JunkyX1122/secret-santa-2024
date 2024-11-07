@@ -28,6 +28,10 @@ let TIME = 60*60;
 
 }
 
+let tex_rd = GetReservedRenderTargetName( 0 );
+let tex_rd2 = GetReservedRenderTargetName( 1 );
+let tex_rdMask;
+
 @Initialize
 {
 	InitialiseIndiv();
@@ -38,7 +42,7 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100+100 );
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100 );
 	
 	renderYuuma(objEnemy);
 
@@ -48,10 +52,18 @@ let TIME = 60*60;
 	HitCirc(objEnemy2);
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	//SetInvalidRenderPriorityA1(55, 57);
+	tex_rdMask = CreateRenderTargetEx("textureMask", GetStgFrameWidth, GetStgFrameHeight);
 }
 @MainLoop
 {
+	if(count%1==0 && !Obj_IsDeleted(objEnemy))
+	{
+		ClearRenderTargetA1( tex_rd );
+		ClearRenderTargetA1( tex_rd2 );
+		ClearRenderTargetA1( "textureMask" );
+	}
+	
 	if(!Obj_IsDeleted(objEnemy2))
 	{
 		SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
@@ -96,12 +108,237 @@ let TIME = 60*60;
 @Finalize
 {
 }
+let xArray = [];
+let yArray = [];
+const PORTAL_WIDTH = 100;
+const PORTAL_HEIGHT = 50;
 
+
+let portalPositionsArray = [];
 task Fire
 {
+	//StartSlow(20,TARGET_ALL);
+	CreateRegularBulletTarget();
+	ascent(i in 0..32)
+	{
+		xArray ~= [-PORTAL_WIDTH+(PORTAL_WIDTH*2)/31*i];
+		yArray ~= [PORTAL_HEIGHT*sin(180/31*i)];
+	}
 
+	CreateRift(GetStgFrameWidth/2,	  GetStgFrameHeight/2-100,0,0, 1, 1);
+	CreateRift(GetStgFrameWidth/2+100,GetStgFrameHeight/2+100,1,45, 1, 0.5);
+	CreateRift(GetStgFrameWidth/2-100,GetStgFrameHeight/2+100,2,45, 1, 0.5);
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		let ang = 0;
+		loop(20)
+		{
+			let obj = CreateShotA1(GetStgFrameWidth/2, 100, 1, ang+180/40, 75, 0);
+			ObjShot_SetIntersectionEnable(obj,false);
+			HandlePortaling(obj,true);
+			ang+=360/20;
+		}
+		//wait(60);
+		loop(40)
+		{
+			let obj = CreateShotA1(GetStgFrameWidth/2, 100, 1, ang, 78, 0);
+			
+			HandlePortaling(obj,false);
+			ang+=360/40;
+		}
+		wait(20);
+	}
+}
+task CreateRegularBulletTarget()
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, tex_rd2);
+	Obj_SetRenderPriorityI(obj, 60);
+	ObjSprite2D_SetSourceRect(obj,0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestRect(obj,0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+	//ObjRender_SetAlpha(obj,120);
+	
+	let objMaskBack = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMaskBack, IMG_PIXEL);
+	Obj_SetRenderPriorityI(objMaskBack, 9);
+	ObjSprite2D_SetSourceRect(objMaskBack,0, 0, GetScreenWidth*2, GetScreenHeight*2);
+	ObjSprite2D_SetDestRect(objMaskBack,0, 0, GetScreenWidth*2, GetScreenHeight*2);
+	ObjSprite2D_SetDestCenter(objMaskBack);
+	ObjRender_SetPosition(objMaskBack, GetScreenWidth/2, GetScreenWidth/2,0);
+	ObjRender_SetColor(objMaskBack,255,255,255);
+	ObjRender_SetRenderTarget(objMaskBack,"textureMask");
+	
+	let dir = GetCurrentScriptDirectory();
+	let pathShader = dir ~ "SamplePS02_HLSL.txt";
+	
+	ObjShader_SetShaderF(obj, pathShader);
+	ObjShader_SetTechnique(obj, "TecMask");
+
+	ObjShader_SetTexture(obj, "textureMask_", "textureMask");
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		yield;
+	}
+}
+task HandlePortaling(obj,inPortal)
+{
+	ObjShot_SetSpellResist(obj,true);
+	if(inPortal)
+	{
+		Obj_SetRenderPriorityI(obj,11);
+		ObjRender_SetRenderTarget(obj, tex_rd);
+	}
+	else
+	{
+		Obj_SetRenderPriorityI(obj,11);
+		ObjRender_SetRenderTarget(obj, tex_rd2);
+	}
+	let portalStatus = 0;
+	
+	while(!Obj_IsDeleted(obj))
+	{
+		ObjShot_SetIntersectionEnable(obj,!inPortal);
+		
+		let skip = true;
+		let idsToCheck = [];
+		ascent(i in 0..length(portalPositionsArray))
+		{
+			let portalX = portalPositionsArray[i][0];
+			let portalY = portalPositionsArray[i][1];
+			let portalXScale = portalPositionsArray[i][3];
+			if(Get_Distance(GetPlayerX,GetPlayerY,portalX,portalY) < PORTAL_WIDTH * portalXScale)
+			{
+				skip = false;
+				idsToCheck ~= [i];
+			}
+		}
+		
+		if(!skip || !inPortal)
+		{
+			let spd = ObjMove_GetSpeed(obj);
+			let ang = ObjMove_GetAngle(obj);
+			
+			let shotXInitial = ObjMove_GetX(obj);
+			let shotYInitial = ObjMove_GetY(obj);
+			let xSpd = spd*cos(ang);
+			let ySpd = spd*sin(ang);
+			let shotX = shotXInitial + xSpd;
+			let shotY = shotYInitial + ySpd;
+			
+			
+			
+			ascent(id in 0..length(idsToCheck))
+			{
+				let i = idsToCheck[id];
+				
+				let portalX = portalPositionsArray[i][0];
+				let portalY = portalPositionsArray[i][1];
+				let portalXScale = portalPositionsArray[i][3];
+				let portalYScale = portalPositionsArray[i][4];
+				let shotPos = Rotate2D(shotX, shotY, -portalPositionsArray[i][2], portalX, portalY);
+				
+				if(shotPos[0] > portalX - PORTAL_WIDTH * portalXScale  && 				   shotPos[0] < portalX + PORTAL_WIDTH * portalXScale &&
+				   shotPos[1] > portalY - PORTAL_HEIGHT  * portalYScale && shotPos[1] < portalY + PORTAL_HEIGHT * portalYScale)
+				{
+					let dis = absolute((portalX - shotPos[0])) / (PORTAL_WIDTH * portalXScale);
+					let sinY = PORTAL_HEIGHT*sin(90-90*dis) * portalYScale;
+					if(shotPos[1] < portalY + sinY && shotPos[1] > portalY - sinY)
+					{
+						ObjShot_SetIntersectionEnable(obj,inPortal);
+					}
+				}
+				
+			}
+		}
+		yield;
+
+	}
 }
 
+task CreateRift(x,y,id,ang,xScale, yScale)
+{
+	let obj = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( obj, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture(obj, tex_rd );
+	ObjRender_SetAlpha(obj,255);
+	ObjPrim_SetVertexCount(obj, 32*2);
+	Obj_SetRenderPriorityI(obj,60);
+
+	
+	let objLine = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine, 32);
+	Obj_SetRenderPriorityI(objLine,60);
+	let objLine2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine2,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine2, 32);
+	Obj_SetRenderPriorityI(objLine2,60);
+	
+	
+	let objB = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( objB, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture(objB, IMG_GRANDISPORTAL );
+	ObjRender_SetAlpha(objB,255);
+	ObjPrim_SetVertexCount(objB, 32*2);
+	Obj_SetRenderPriorityI(objB,39);
+	
+	let objMask = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( objMask, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture(objMask, IMG_PIXEL );
+	ObjRender_SetAlpha(objMask,255);
+	ObjPrim_SetVertexCount(objMask, 32*2);
+	Obj_SetRenderPriorityI(objMask,9);
+
+	
+	ObjRender_SetColor(objMask,0,0,0);
+	ObjRender_SetRenderTarget(objMask,"textureMask");
+	
+	portalPositionsArray ~= [[x, y, ang, xScale, yScale]];
+	WriteLog(portalPositionsArray);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		
+		ascent(i in 0..32)
+		{
+			let positionTop = 	 Rotate2D(xArray[i]*portalPositionsArray[id][3], -yArray[i]*portalPositionsArray[id][4], ang);
+			let positionBottom = Rotate2D(xArray[i]*portalPositionsArray[id][3],  yArray[i]*portalPositionsArray[id][4], ang);
+	
+			ObjPrim_SetVertexPosition(obj , i*2+0, positionTop[0]	, positionTop[1],0);
+			ObjPrim_SetVertexPosition(obj , i*2+1, positionBottom[0], positionBottom[1],0);
+			ObjPrim_SetVertexPosition(objB, i*2+0, positionTop[0]	, positionTop[1],0);
+			ObjPrim_SetVertexPosition(objB, i*2+1, positionBottom[0], positionBottom[1],0);
+			
+			ObjPrim_SetVertexPosition(objMask, i*2+0, positionTop[0]	, positionTop[1],0);
+			ObjPrim_SetVertexPosition(objMask, i*2+1, positionBottom[0]	, positionBottom[1],0);
+			
+			ObjPrim_SetVertexPosition(objLine, i    ,  positionTop[0]	,  positionTop[1], 0);
+			ObjPrim_SetVertexPosition(objLine2, i    , positionBottom[0]	,  positionBottom[1], 0);
+		
+			ObjPrim_SetVertexUVT(obj , i*2+0, x + 107 + positionTop[0],   positionTop[1] + y);
+			ObjPrim_SetVertexUVT(obj , i*2+1, x + 107 + positionBottom[0],positionBottom[1] + y);
+			
+			ObjPrim_SetVertexUVT(objB, i*2+0, x + 107 + positionTop[0],   positionTop[1] + y);
+			ObjPrim_SetVertexUVT(objB, i*2+1, x + 107 + positionBottom[0],positionBottom[1] + y);
+		}
+	
+		
+		portalPositionsArray[id] = [x,y,ang, xScale, yScale];
+		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetPosition(objLine ,x,y,0);
+		ObjRender_SetPosition(objLine2,x,y,0);
+		ObjRender_SetPosition(objB,x,y,0);
+		ObjRender_SetPosition(objMask,x,y,0);
+		
+		yield;
+	}
+	Obj_Delete(obj);
+	Obj_Delete(objLine);
+	Obj_Delete(objB);
+}
 task timer
 {
     while(TIME>60*10)

@@ -88,7 +88,15 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	loop
+	{
+		ShotA1(100,100,2,90,76,418,20,2,BLEND_ALPHA,true);
+		ShotA1(200,100,2,90,76,418,20,2,BLEND_ALPHA,false);
+		
+		ShotA2(100,300,2,90,2/60,4,76,418,20,2,BLEND_ALPHA,true);
+		ShotA2(200,400,2,90,2/60,4,76,418,20,2,BLEND_ALPHA,false);
+		wait(60);
+	}
 }
 
 task timer

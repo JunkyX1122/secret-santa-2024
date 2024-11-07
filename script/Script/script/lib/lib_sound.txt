@@ -2,83 +2,83 @@ let gbSound = 1;
 //======================================================
 //====================Spell Sounds======================
 //======================================================
-let PlayerSplCall =  GetCurrentScriptDirectory~"./../../se/bom_00.wav";
-let SuperCharge =  GetCurrentScriptDirectory~"./../../se/bom_10.wav";
+const PlayerSplCall =  GetCurrentScriptDirectory~"./../../se/bom_00.wav";
+const SuperCharge =  GetCurrentScriptDirectory~"./../../se/bom_10.wav";
 
-let FlashBomb1 =  GetCurrentScriptDirectory~"./../../se/bom_flash_00.wav";
-let FlashBomb2 =  GetCurrentScriptDirectory~"./../../se/bom_flash_01.wav";
+const FlashBomb1 =  GetCurrentScriptDirectory~"./../../se/bom_flash_00.wav";
+const FlashBomb2 =  GetCurrentScriptDirectory~"./../../se/bom_flash_01.wav";
 
-let BossSpell =  GetCurrentScriptDirectory~"./../../se/spell_0.wav";
+const BossSpell =  GetCurrentScriptDirectory~"./../../se/spell_0.wav";
 
 
 
 //======================================================
 //=====================Boss Death=======================
 //======================================================
-let BossDead =  GetCurrentScriptDirectory~"./../../se/boss_d.wav";
-let BossEnd =  GetCurrentScriptDirectory~"./../../se/boss_end.wav";
+const BossDead =  GetCurrentScriptDirectory~"./../../se/boss_d.wav";
+const BossEnd =  GetCurrentScriptDirectory~"./../../se/boss_end.wav";
 
-let BossEndRev =  GetCurrentScriptDirectory~"./../../se/boss_endrev.wav";
+const BossEndRev =  GetCurrentScriptDirectory~"./../../se/boss_endrev.wav";
 
 //======================================================
 //=======================Bursts=========================
 //======================================================
-let Burst1 =  GetCurrentScriptDirectory~"./../../se/burst_00.wav";
-let Burst2 =  GetCurrentScriptDirectory~"./../../se/burst_01.wav";
-let Burst3 =  GetCurrentScriptDirectory~"./../../se/burst_02.wav";
-let Burst4 =  GetCurrentScriptDirectory~"./../../se/burst_03.wav";
-let UFO =  GetCurrentScriptDirectory~"./../../se/haniwa_00.wav";
-let Noise =  GetCurrentScriptDirectory~"./../../se/noise_00.wav";
-let Heart =  GetCurrentScriptDirectory~"./../../se/heart.wav";
+const Burst1 =  GetCurrentScriptDirectory~"./../../se/burst_00.wav";
+const Burst2 =  GetCurrentScriptDirectory~"./../../se/burst_01.wav";
+const Burst3 =  GetCurrentScriptDirectory~"./../../se/burst_02.wav";
+const Burst4 =  GetCurrentScriptDirectory~"./../../se/burst_03.wav";
+const UFO =  GetCurrentScriptDirectory~"./../../se/haniwa_00.wav";
+const Noise =  GetCurrentScriptDirectory~"./../../se/noise_00.wav";
+const Heart =  GetCurrentScriptDirectory~"./../../se/heart.wav";
 
 //======================================================
 //=======================Charge=========================
 //======================================================
-let Charge1 =  GetCurrentScriptDirectory~"./../../se/charge_0.wav";
-let Charge2 =  GetCurrentScriptDirectory~"./../../se/charge_1.wav";
-let Charge3 =  GetCurrentScriptDirectory~"./../../se/charge_2.wav";
-let Charge4 =  GetCurrentScriptDirectory~"./../../se/charge_3.wav";
-let Charge5 =  GetCurrentScriptDirectory~"./../../se/charge_up.wav";
-let Drain =  GetCurrentScriptDirectory~"./../../se/rei_drain_00.wav";
+const Charge1 =  GetCurrentScriptDirectory~"./../../se/charge_0.wav";
+const Charge2 =  GetCurrentScriptDirectory~"./../../se/charge_1.wav";
+const Charge3 =  GetCurrentScriptDirectory~"./../../se/charge_2.wav";
+const Charge4 =  GetCurrentScriptDirectory~"./../../se/charge_3.wav";
+const Charge5 =  GetCurrentScriptDirectory~"./../../se/charge_up.wav";
+const Drain =  GetCurrentScriptDirectory~"./../../se/rei_drain_00.wav";
 
 //======================================================
 //=======================Damage=========================
 //======================================================
-let Damage1 =  GetCurrentScriptDirectory~"./../../se/damage_00.wav";
-let Damage2 =  GetCurrentScriptDirectory~"./../../se/damage_01.wav";
+const Damage1 =  GetCurrentScriptDirectory~"./../../se/damage_00.wav";
+const Damage2 =  GetCurrentScriptDirectory~"./../../se/damage_01.wav";
 
 //======================================================
 //========================Shot==========================
 //======================================================
-let Shot1 =  GetCurrentScriptDirectory~"./../../se/e_shot_00.wav";
-let Shot2 =  GetCurrentScriptDirectory~"./../../se/e_shot_01.wav";
-let Chime1 =  GetCurrentScriptDirectory~"./../../se/warning.wav";
-let Freeze =  GetCurrentScriptDirectory~"./../../se/freeze_00.wav";
-let Bone =  GetCurrentScriptDirectory~"./../../se/hone_shot.wav";
-let BulletDeleteSound =  GetCurrentScriptDirectory~"./../../se/bullet_del.wav";
+const Shot1 =  GetCurrentScriptDirectory~"./../../se/e_shot_00.wav";
+const Shot2 =  GetCurrentScriptDirectory~"./../../se/e_shot_01.wav";
+const Chime1 =  GetCurrentScriptDirectory~"./../../se/warning.wav";
+const Freeze =  GetCurrentScriptDirectory~"./../../se/freeze_00.wav";
+const Bone =  GetCurrentScriptDirectory~"./../../se/hone_shot.wav";
+const BulletDeleteSound =  GetCurrentScriptDirectory~"./../../se/bullet_del.wav";
 
 //======================================================
 //=======================TimeOut========================
 //======================================================
-let Time =  GetCurrentScriptDirectory~"./../../se/endtime.wav";
+const Time =  GetCurrentScriptDirectory~"./../../se/endtime.wav";
 
 //======================================================
 //=======================TimeOut========================
 //======================================================
-let EnamyDeath =  GetCurrentScriptDirectory~"./../../se/enemy_death.wav";
+const EnamyDeath =  GetCurrentScriptDirectory~"./../../se/enemy_death.wav";
 
 //======================================================
 //=======================Lasers=========================
 //======================================================
-let LaserDelLong =  GetCurrentScriptDirectory~"./../../se/laser_0.wav";
-let LaserFireLong =  GetCurrentScriptDirectory~"./../../se/laser_1.wav";
-let LaserDelShort =  GetCurrentScriptDirectory~"./../../se/laser_2.wav";
-let LaserFireShort =  GetCurrentScriptDirectory~"./../../se/laser_3.wav";
+const LaserDelLong =  GetCurrentScriptDirectory~"./../../se/laser_0.wav";
+const LaserFireLong =  GetCurrentScriptDirectory~"./../../se/laser_1.wav";
+const LaserDelShort =  GetCurrentScriptDirectory~"./../../se/laser_2.wav";
+const LaserFireShort =  GetCurrentScriptDirectory~"./../../se/laser_3.wav";
 
 //======================================================
 //=======================Talking========================
 //======================================================
-let Talk =  GetCurrentScriptDirectory~"./../../se/talk_00.wav";
+const Talk =  GetCurrentScriptDirectory~"./../../se/talk_00.wav";
 
 //======================================================
 //=======================Cursors========================
@@ -87,13 +87,13 @@ let Talk =  GetCurrentScriptDirectory~"./../../se/talk_00.wav";
 //======================================================
 //==================Sanra Gun Fire======================
 //======================================================
-let GunReload =  GetCurrentScriptDirectory~"./../../se/scope_reload.wav";
-let GunFire =  GetCurrentScriptDirectory~"./../../se/scope_gun.wav";
+const GunReload =  GetCurrentScriptDirectory~"./../../se/scope_reload.wav";
+const GunFire =  GetCurrentScriptDirectory~"./../../se/scope_gun.wav";
 
 //======================================================
 //===================Xeno a Sounds======================
 //======================================================
-let Upgrade =  GetCurrentScriptDirectory~"./../../se/buy_upgrade.wav";
+const Upgrade =  GetCurrentScriptDirectory~"./../../se/buy_upgrade.wav";
 
 //======================================================
 //=====================Sub Events=======================
@@ -102,107 +102,107 @@ let Upgrade =  GetCurrentScriptDirectory~"./../../se/buy_upgrade.wav";
 //======================================================
 //=======================Items==========================
 //======================================================
-let BombGet =  GetCurrentScriptDirectory~"./../../se/bom_get.wav";
-let PointGet =  GetCurrentScriptDirectory~"./../../se/item_00.wav";
-let LifeGet =  GetCurrentScriptDirectory~"./../../se/1up.wav";
+const BombGet =  GetCurrentScriptDirectory~"./../../se/bom_get.wav";
+const PointGet =  GetCurrentScriptDirectory~"./../../se/item_00.wav";
+const LifeGet =  GetCurrentScriptDirectory~"./../../se/1up.wav";
 
 
 
 //======================================================
 //===================TOUHOU SOUNDS======================
 //======================================================
-let poof =  GetCurrentScriptDirectory~"./../../se2/se_enep00_2.wav";
-let explosion = GetCurrentScriptDirectory~"./../../se2/se_enep01.wav";
-let bigexplosion = GetCurrentScriptDirectory~"./../../se2/EXPLOSION.wav";
-let explode = GetCurrentScriptDirectory~"./../../se2/se_enep02.wav";
-let drum = GetCurrentScriptDirectory~"./../../se2/don.wav";
-let slash = GetCurrentScriptDirectory~"./../../se2/Slash.wav";
-let boon0 = GetCurrentScriptDirectory~"./../../se2/se_boon00.wav";
-let boon1 = GetCurrentScriptDirectory~"./../../se2/se_boon01.wav";
-let ufo = GetCurrentScriptDirectory~"./../../se2/se_ufo.wav";
-let timestop = GetCurrentScriptDirectory~"./../../se2/timestop.wav";
-let cat = GetCurrentScriptDirectory~"./../../se2/se_cat01.wav";
-let dog = GetCurrentScriptDirectory~"./../../se2/wolf.wav";
-let laugh = GetCurrentScriptDirectory~"./../../se2/ex.wav";
+const poof =  GetCurrentScriptDirectory~"./../../se2/se_enep00_2.wav";
+const explosion = GetCurrentScriptDirectory~"./../../se2/se_enep01.wav";
+const bigexplosion = GetCurrentScriptDirectory~"./../../se2/EXPLOSION.wav";
+const explode = GetCurrentScriptDirectory~"./../../se2/se_enep02.wav";
+const drum = GetCurrentScriptDirectory~"./../../se2/don.wav";
+const slash = GetCurrentScriptDirectory~"./../../se2/Slash.wav";
+const boon0 = GetCurrentScriptDirectory~"./../../se2/se_boon00.wav";
+const boon1 = GetCurrentScriptDirectory~"./../../se2/se_boon01.wav";
+const ufo = GetCurrentScriptDirectory~"./../../se2/se_ufo.wav";
+const timestop = GetCurrentScriptDirectory~"./../../se2/timestop.wav";
+const cat = GetCurrentScriptDirectory~"./../../se2/se_cat01.wav";
+const dog = GetCurrentScriptDirectory~"./../../se2/wolf.wav";
+const laugh = GetCurrentScriptDirectory~"./../../se2/ex.wav";
 
 //======================================================
 //====================Shot Sounds=======================
 //======================================================
-let shot1 = GetCurrentScriptDirectory~"./../../se2/Shot1.wav";
-let shot2 = GetCurrentScriptDirectory~"./../../se2/Shot2.wav";
+const shot1 = GetCurrentScriptDirectory~"./../../se2/Shot1.wav";
+const shot2 = GetCurrentScriptDirectory~"./../../se2/Shot2.wav";
 
 //======================================================
 //====================Chime Sounds======================
 //======================================================
-let chime1 = GetCurrentScriptDirectory~"./../../se2/se_kira00.wav";
-let chime2 = GetCurrentScriptDirectory~"./../../se2/se_kira01.wav";
-let chime3 = GetCurrentScriptDirectory~"./../../se2/Eff1.wav";
-let chime4 = GetCurrentScriptDirectory~"./../../se2/Eff2.wav";
-let chime5 = GetCurrentScriptDirectory~"./../../se2/Eff3.wav";
-let chime6 = GetCurrentScriptDirectory~"./../../se2/Eff4.wav";
-let chime7 = GetCurrentScriptDirectory~"./../../se2/Eff5.wav";
-let chime8 = GetCurrentScriptDirectory~"./../../se2/Eff6.wav";
+const chime1 = GetCurrentScriptDirectory~"./../../se2/se_kira00.wav";
+const chime2 = GetCurrentScriptDirectory~"./../../se2/se_kira01.wav";
+const chime3 = GetCurrentScriptDirectory~"./../../se2/Eff1.wav";
+const chime4 = GetCurrentScriptDirectory~"./../../se2/Eff2.wav";
+const chime5 = GetCurrentScriptDirectory~"./../../se2/Eff3.wav";
+const chime6 = GetCurrentScriptDirectory~"./../../se2/Eff4.wav";
+const chime7 = GetCurrentScriptDirectory~"./../../se2/Eff5.wav";
+const chime8 = GetCurrentScriptDirectory~"./../../se2/Eff6.wav";
 
 //======================================================
 //====================Spirit Sounds=====================
 //======================================================
-let spirit1 = GetCurrentScriptDirectory~"./../../se2/spirit1.wav";
-let spirit2 = GetCurrentScriptDirectory~"./../../se2/spirit2.wav";
-let spirit3 = GetCurrentScriptDirectory~"./../../se2/spirit3.wav";
-let spirit4 = GetCurrentScriptDirectory~"./../../se2/spirit4.wav";
+const spirit1 = GetCurrentScriptDirectory~"./../../se2/spirit1.wav";
+const spirit2 = GetCurrentScriptDirectory~"./../../se2/spirit2.wav";
+const spirit3 = GetCurrentScriptDirectory~"./../../se2/spirit3.wav";
+const spirit4 = GetCurrentScriptDirectory~"./../../se2/spirit4.wav";
 
 //======================================================
 //===================Timeout Sounds=====================
 //======================================================
-let timeout1 = GetCurrentScriptDirectory~"./../../se2/se_timeout.wav";
-let timeout2 = GetCurrentScriptDirectory~"./../../se2/se_timeout2.wav";
+const timeout1 = GetCurrentScriptDirectory~"./../../se2/se_timeout.wav";
+const timeout2 = GetCurrentScriptDirectory~"./../../se2/se_timeout2.wav";
 
 //======================================================
 //====================Laser Sounds======================
 //======================================================
-let laser0 = GetCurrentScriptDirectory~"./../../se2/se_lazer00.wav";
-let laser1 = GetCurrentScriptDirectory~"./../../se2/se_gun00.wav";
-let laser2 = GetCurrentScriptDirectory~"./../../se2/se_lazer01.wav";
-let laser3 = GetCurrentScriptDirectory~"./../../se2/beam.wav";
-let laser4 = GetCurrentScriptDirectory~"./../../se2/se_LaserDelay.wav";
-let MSpark = GetCurrentScriptDirectory~"./../../se2/se_nep00.wav";
+const laser0 = GetCurrentScriptDirectory~"./../../se2/se_lazer00.wav";
+const laser1 = GetCurrentScriptDirectory~"./../../se2/se_gun00.wav";
+const laser2 = GetCurrentScriptDirectory~"./../../se2/se_lazer01.wav";
+const laser3 = GetCurrentScriptDirectory~"./../../se2/beam.wav";
+const laser4 = GetCurrentScriptDirectory~"./../../se2/se_LaserDelay.wav";
+const MSpark = GetCurrentScriptDirectory~"./../../se2/se_nep00.wav";
 
 //======================================================
 //===================Charge Sounds======================
 //======================================================
-let charge0 = GetCurrentScriptDirectory~"./../../se2/se_ch00.wav";
-let charge1 = GetCurrentScriptDirectory~"./../../se2/se_ch02.wav";
-let charge2 = GetCurrentScriptDirectory~"./../../se2/se_power0.wav";
-let charge3 = GetCurrentScriptDirectory~"./../../se2/charge.wav";
-let charge4 = GetCurrentScriptDirectory~"./../../se2/power0.wav";
-let charge5 = GetCurrentScriptDirectory~"./../../se2/Charge2.wav";
+const charge0 = GetCurrentScriptDirectory~"./../../se2/se_ch00.wav";
+const charge1 = GetCurrentScriptDirectory~"./../../se2/se_ch02.wav";
+const charge2 = GetCurrentScriptDirectory~"./../../se2/se_power0.wav";
+const charge3 = GetCurrentScriptDirectory~"./../../se2/charge.wav";
+const charge4 = GetCurrentScriptDirectory~"./../../se2/power0.wav";
+const charge5 = GetCurrentScriptDirectory~"./../../se2/Charge2.wav";
 
 //======================================================
 //==================Familiar Sounds=====================
 //======================================================
-let spawnfm1 = GetCurrentScriptDirectory~"./../../se2/fam.wav";
-let spawnfm2 = GetCurrentScriptDirectory~"./../../se2/Weird1.wav";
-let spawnfm3 = GetCurrentScriptDirectory~"./../../se2/se_water.wav";
+const spawnfm1 = GetCurrentScriptDirectory~"./../../se2/fam.wav";
+const spawnfm2 = GetCurrentScriptDirectory~"./../../se2/Weird1.wav";
+const spawnfm3 = GetCurrentScriptDirectory~"./../../se2/se_water.wav";
 
 //======================================================
 //===================Other Sounds=======================
 //======================================================
-let ping = GetCurrentScriptDirectory~"./../../se2/ormchange.wav";
+const ping = GetCurrentScriptDirectory~"./../../se2/ormchange.wav";
 
-let textchange = GetCurrentScriptDirectory~"./../../se2/se_text.wav";
+const textchange = GetCurrentScriptDirectory~"./../../se2/se_text.wav";
 
-let spellcard = GetCurrentScriptDirectory~"./../../se2/seUseSpellCard.wav";
-let compositespellcard = GetCurrentScriptDirectory~"./../../se2/compositespell.wav";
-let spellCapture = GetCurrentScriptDirectory~"./../../se2/se_spellget.wav";
+const spellcard = GetCurrentScriptDirectory~"./../../se2/seUseSpellCard.wav";
+const compositespellcard = GetCurrentScriptDirectory~"./../../se2/compositespell.wav";
+const spellCapture = GetCurrentScriptDirectory~"./../../se2/se_spellget.wav";
 
-let warning = GetCurrentScriptDirectory~"./../../se2/warning.wav";
+const warning = GetCurrentScriptDirectory~"./../../se2/warning.wav";
 
-let nodamage = GetCurrentScriptDirectory~"./../../se2/se_nodamage.wav";
+const nodamage = GetCurrentScriptDirectory~"./../../se2/se_nodamage.wav";
 
-let select = GetCurrentScriptDirectory~"./../../se2/se_select00.wav";
-let selected = GetCurrentScriptDirectory~"./../../se2/se_ok00.wav";
-let cancel = GetCurrentScriptDirectory~"./../../se2/se_cancel00.wav";
-let gap = GetCurrentScriptDirectory~"./../../se2/gap.wav";
+const select = GetCurrentScriptDirectory~"./../../se2/se_select00.wav";
+const selected = GetCurrentScriptDirectory~"./../../se2/se_ok00.wav";
+const cancel = GetCurrentScriptDirectory~"./../../se2/se_cancel00.wav";
+const gap = GetCurrentScriptDirectory~"./../../se2/gap.wav";
 
 
 //======================================================
@@ -212,8 +212,8 @@ let gap = GetCurrentScriptDirectory~"./../../se2/gap.wav";
 //======================================================
 //=======================EXTRA=========================
 //======================================================
-let dooropen = GetCurrentScriptDirectory~"./../../se3/DoorOpen.wav";
-let doorclose = GetCurrentScriptDirectory~"./../../se3/DoorClose.wav";
+const dooropen = GetCurrentScriptDirectory~"./../../se3/DoorOpen.wav";
+const doorclose = GetCurrentScriptDirectory~"./../../se3/DoorClose.wav";
 //======================================================
 //===================Sound Loader=======================
 let seobj = ObjSound_Create;
