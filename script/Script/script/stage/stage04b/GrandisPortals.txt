@@ -1,0 +1,353 @@
+let tex_rd = GetReservedRenderTargetName( 0 );
+let tex_rd2 = GetReservedRenderTargetName( 1 );
+let tex_rdMask;
+
+const PORTAL_X = 0;
+const PORTAL_Y = 1;
+const PORTAL_ANGLE = 2;
+const PORTAL_WIDTHSCALE = 3;
+const PORTAL_HEIGHTSCALE = 4;
+const PORTAL_ENABLE = 5;
+let isManagingPortals = true;
+
+let xArray = [];
+let yArray = [];
+const PORTAL_WIDTH = 100;
+const PORTAL_HEIGHT = 50;
+
+let portalPositionsArray = [];
+
+
+task StartPortalSystem()
+{
+	tex_rdMask = CreateRenderTargetEx("textureMask", GetStgFrameWidth, GetStgFrameHeight);
+	
+	ascent(i in 0..32)
+	{
+		xArray ~= [-PORTAL_WIDTH+(PORTAL_WIDTH*2)/31*i];
+		yArray ~= [PORTAL_HEIGHT*sin(180/31*i)];
+	}
+	
+	CreateRegularBulletTarget();
+	ManageAllPortals();
+	while(isManagingPortals)
+	{
+		ClearPortalTargets();
+		yield;
+	}
+}
+
+task ClearPortalTargets()
+{
+	ClearRenderTargetA1( tex_rd );
+	ClearRenderTargetA1( tex_rd2 );
+	ClearRenderTargetA1( "textureMask" );
+}
+
+task CreateRegularBulletTarget()
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, tex_rd2);
+	Obj_SetRenderPriorityI(obj, 60);
+	ObjSprite2D_SetSourceRect(obj,0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestRect(obj,0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+	//ObjRender_SetAlpha(obj,120);
+	
+	let objMaskBack = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMaskBack, IMG_PIXEL);
+	Obj_SetRenderPriorityI(objMaskBack, 9);
+	ObjSprite2D_SetSourceRect(objMaskBack,0, 0, GetScreenWidth*2, GetScreenHeight*2);
+	ObjSprite2D_SetDestRect(objMaskBack,0, 0, GetScreenWidth*2, GetScreenHeight*2);
+	ObjSprite2D_SetDestCenter(objMaskBack);
+	ObjRender_SetPosition(objMaskBack, GetScreenWidth/2, GetScreenWidth/2,0);
+	ObjRender_SetColor(objMaskBack,255,255,255);
+	ObjRender_SetRenderTarget(objMaskBack,"textureMask");
+	
+	let dir = GetCurrentScriptDirectory();
+	let pathShader = dir ~ "SamplePS02_HLSL.txt";
+	
+	ObjShader_SetShaderF(obj, pathShader);
+	ObjShader_SetTechnique(obj, "TecMask");
+
+	ObjShader_SetTexture(obj, "textureMask_", "textureMask");
+	
+	while(isManagingPortals)
+	{
+		yield;
+	}
+	Obj_Delete(obj);
+	Obj_Delete(objMaskBack);
+}
+
+task SetInPortal(obj)
+{
+	Obj_SetValue(obj,"inPortal", true);
+	ObjShot_SetSpellResist(obj,true);
+	Obj_SetRenderPriorityI(obj,11);
+	ObjRender_SetRenderTarget(obj, tex_rd);
+	ObjShot_SetIntersectionEnable(obj,false);
+}
+task SetOutPortal(obj)
+{
+	Obj_SetValue(obj,"inPortal", false);
+	ObjShot_SetSpellResist(obj,true);
+	Obj_SetRenderPriorityI(obj,11);
+	ObjRender_SetRenderTarget(obj, tex_rd2);
+	ObjShot_SetIntersectionEnable(obj,true);
+}
+
+task ManageAllPortals()
+{
+	while(isManagingPortals)
+	{
+		// Reset all bullet hitboxes
+		let barray = GetShotIdInCircleA2(GetPlayerX, GetPlayerY, 200, TARGET_ENEMY);
+		let blength = length(barray);
+		if(blength>0)
+		{
+			ascent (i in 0..blength)
+			{
+				let obj = barray[i];
+				ObjShot_SetIntersectionEnable(obj,!Obj_GetValueD(obj,"inPortal",false));
+			}
+		}
+		
+		// Check if the player is even near a portal to begin with.
+		let skip = true;
+		let idsToCheck = [];
+		ascent(i in 0..length(portalPositionsArray))
+		{
+			let portalX = portalPositionsArray[i][PORTAL_X];
+			let portalY = portalPositionsArray[i][PORTAL_Y];
+			let portalXScale = portalPositionsArray[i][PORTAL_WIDTHSCALE];
+			let isPortalEnabled = ObjPortal_IsEnabled(i);
+			if(Get_Distance(GetPlayerX,GetPlayerY,portalX,portalY) < PORTAL_WIDTH * portalXScale * 1.15 && isPortalEnabled)
+			{
+				skip = false;
+				idsToCheck ~= [i];
+			}
+		}
+		if(!skip) // If so, then run tests on bullets.
+		{
+			ascent(id in 0..length(idsToCheck))// Get all the bullets.
+			{
+				
+				let i = idsToCheck[id];
+				let portalX =      portalPositionsArray[i][PORTAL_X];
+				let portalY = 	   portalPositionsArray[i][PORTAL_Y];
+				let portalAngle =  portalPositionsArray[i][PORTAL_ANGLE];
+				let portalXScale = portalPositionsArray[i][PORTAL_WIDTHSCALE];
+				let portalYScale = portalPositionsArray[i][PORTAL_HEIGHTSCALE];
+				
+				let checkRad = max(PORTAL_WIDTH*portalXScale*1.15, PORTAL_HEIGHT*portalYScale*1.15);
+				
+				let barray = GetShotIdInCircleA2(portalX, portalY, checkRad, TARGET_ENEMY);
+				let blength = length(barray);
+				if(blength>0)
+				{
+					ascent (i in 0..blength)
+					{
+						let obj = barray[i];
+			
+						
+						let shotX = ObjMove_GetX(obj) + ObjMove_GetSpeedX(obj);
+						let shotY = ObjMove_GetY(obj) + ObjMove_GetSpeedY(obj);
+						let shotPos = Rotate2D(shotX, shotY, -portalAngle, portalX, portalY); // Rotate bullets around portal until in line with flat portal
+						
+						// If bullet is within the portal bounding box:
+						if(shotPos[0] > portalX - PORTAL_WIDTH * portalXScale  &&  shotPos[0] < portalX + PORTAL_WIDTH * portalXScale &&
+						   shotPos[1] > portalY - PORTAL_HEIGHT  * portalYScale && shotPos[1] < portalY + PORTAL_HEIGHT * portalYScale)
+						{
+							let dis = absolute((portalX - shotPos[0])) / (PORTAL_WIDTH * portalXScale);
+							let sinY = PORTAL_HEIGHT*sin(90-90*dis) * portalYScale;
+							if(shotPos[1] < portalY + sinY && shotPos[1] > portalY - sinY)
+							{
+								ObjShot_SetIntersectionEnable(obj,Obj_GetValueD(obj,"inPortal",false));
+							}
+						}
+					}
+				}				
+			}
+		}	
+		yield;
+	}
+}
+
+function ObjPortal_SetX(portalID, x)
+{
+	portalPositionsArray[portalID][PORTAL_X] = x;
+}
+function ObjPortal_GetX(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_X];
+}
+
+function ObjPortal_SetY(portalID, y)
+{
+	portalPositionsArray[portalID][PORTAL_Y] = y;
+}
+function ObjPortal_GetY(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_Y];
+}
+
+function ObjPortal_SetPosition(portalID, x, y)
+{
+	ObjPortal_SetX(portalID, x);
+	ObjPortal_SetY(portalID, y);
+}
+function ObjPortal_GetPosition(portalID)
+{
+	return [ObjPortal_GetX(portalID), ObjPortal_GetY(portalID)];
+}
+
+function ObjPortal_SetAngle(portalID, a)
+{
+	portalPositionsArray[portalID][PORTAL_ANGLE] = a;
+}
+function ObjPortal_GetAngle(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_ANGLE];
+}
+
+function ObjPortal_SetScaleX(portalID, x)
+{
+	portalPositionsArray[portalID][PORTAL_WIDTHSCALE] = x;
+}
+function ObjPortal_GetScaleX(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_WIDTHSCALE];
+}
+
+function ObjPortal_SetScaleY(portalID, y)
+{
+	portalPositionsArray[portalID][PORTAL_HEIGHTSCALE] = y;
+}
+function ObjPortal_GetScaleY(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_HEIGHTSCALE];
+}
+
+function ObjPortal_SetScale(portalID, xy)
+{
+	ObjPortal_SetScaleX(portalID, xy);
+	ObjPortal_SetScaleY(portalID, xy);
+}
+function ObjPortal_SetScale(portalID, x, y)
+{
+	ObjPortal_SetScaleX(portalID, x);
+	ObjPortal_SetScaleY(portalID, y);
+}
+function ObjPortal_GetScale(portalID)
+{
+	return [ObjPortal_GetScaleX(portalID), ObjPortal_GetScaleY(portalID)];
+}
+
+function ObjPortal_Delete(portalID)
+{
+	portalPositionsArray[portalID][PORTAL_ENABLE] = false;
+}
+function ObjPortal_IsDeleted(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_ENABLE] == false;
+}
+function ObjPortal_IsEnabled(portalID)
+{
+	return portalPositionsArray[portalID][PORTAL_ENABLE] == true;
+}
+
+function CreatePortal(x,y,ang,xScale, yScale)
+{
+	let obj = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( obj, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture(obj, tex_rd );
+	ObjRender_SetAlpha(obj,255);
+	ObjPrim_SetVertexCount(obj, 32*2);
+	Obj_SetRenderPriorityI(obj,60);
+
+	
+	let objLine = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine, 32);
+	Obj_SetRenderPriorityI(objLine,60);
+	let objLine2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine2,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine2, 32);
+	Obj_SetRenderPriorityI(objLine2,60);
+	
+	
+	let objB = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( objB, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture(objB, IMG_GRANDISPORTAL );
+	ObjRender_SetAlpha(objB,255);
+	ObjPrim_SetVertexCount(objB, 32*2);
+	Obj_SetRenderPriorityI(objB,39);
+	
+	let objMask = ObjPrim_Create( OBJ_PRIMITIVE_2D );
+	ObjPrim_SetPrimitiveType( objMask, PRIMITIVE_TRIANGLESTRIP );
+	ObjPrim_SetTexture(objMask, IMG_PIXEL );
+	ObjRender_SetAlpha(objMask,255);
+	ObjPrim_SetVertexCount(objMask, 32*2);
+	Obj_SetRenderPriorityI(objMask,9);
+
+	
+	ObjRender_SetColor(objMask,0,0,0);
+	ObjRender_SetRenderTarget(objMask,"textureMask");
+	
+	portalPositionsArray ~= [[x, y, ang, xScale, yScale, true]];
+	let id = length(portalPositionsArray) - 1;
+	
+	RenderPortal();
+	
+	return id;
+	
+	task RenderPortal()
+	{
+		let isEnabled = ObjPortal_IsEnabled(id);
+		while(isManagingPortals && isEnabled)
+		{
+			isEnabled = ObjPortal_IsEnabled(id);
+			x = portalPositionsArray[id][PORTAL_X];
+			y = portalPositionsArray[id][PORTAL_Y];
+			ascent(i in 0..32)
+			{
+				let positionTop = 	 Rotate2D(xArray[i]*portalPositionsArray[id][PORTAL_WIDTHSCALE], -yArray[i]*portalPositionsArray[id][PORTAL_HEIGHTSCALE], ang);
+				let positionBottom = Rotate2D(xArray[i]*portalPositionsArray[id][PORTAL_WIDTHSCALE],  yArray[i]*portalPositionsArray[id][PORTAL_HEIGHTSCALE], ang);
+		
+				ObjPrim_SetVertexPosition(obj , i*2+0, positionTop[0]	, positionTop[1],0);
+				ObjPrim_SetVertexPosition(obj , i*2+1, positionBottom[0], positionBottom[1],0);
+				ObjPrim_SetVertexPosition(objB, i*2+0, positionTop[0]	, positionTop[1],0);
+				ObjPrim_SetVertexPosition(objB, i*2+1, positionBottom[0], positionBottom[1],0);
+				
+				ObjPrim_SetVertexPosition(objMask, i*2+0, positionTop[0]	, positionTop[1],0);
+				ObjPrim_SetVertexPosition(objMask, i*2+1, positionBottom[0]	, positionBottom[1],0);
+				
+				ObjPrim_SetVertexPosition(objLine, i    ,  positionTop[0]	,  positionTop[1], 0);
+				ObjPrim_SetVertexPosition(objLine2, i    , positionBottom[0]	,  positionBottom[1], 0);
+			
+				ObjPrim_SetVertexUVT(obj , i*2+0, x + 107 + positionTop[0],   positionTop[1] + y);
+				ObjPrim_SetVertexUVT(obj , i*2+1, x + 107 + positionBottom[0],positionBottom[1] + y);
+				
+				ObjPrim_SetVertexUVT(objB, i*2+0, x + 107 + positionTop[0],   positionTop[1] + y);
+				ObjPrim_SetVertexUVT(objB, i*2+1, x + 107 + positionBottom[0],positionBottom[1] + y);
+			}
+		
+			
+			
+			ObjRender_SetPosition(obj,x,y,0);
+			ObjRender_SetPosition(objLine ,x,y,0);
+			ObjRender_SetPosition(objLine2,x,y,0);
+			ObjRender_SetPosition(objB,x,y,0);
+			ObjRender_SetPosition(objMask,x,y,0);
+			
+			yield;
+		}
+		Obj_Delete(obj);
+		Obj_Delete(objLine);
+		Obj_Delete(objLine2);
+		Obj_Delete(objB);
+		Obj_Delete(objMask);
+	}
+}

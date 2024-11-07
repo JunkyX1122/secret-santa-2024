@@ -48,21 +48,21 @@ task LaserSource(x,y,deleygraphic,startingdeley,size,delaySize,deletdeley,delete
 function ShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
 function ShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
 function ShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
     DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
@@ -71,7 +71,7 @@ function ShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
@@ -79,7 +79,7 @@ function ShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blend
 {
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
@@ -142,21 +142,21 @@ task DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 function ShotA1S(x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 {
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotA2S(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype)
 {
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotOA1S(obj,spd,dir,graphic,cloud,delay,size,blendtype)
 {
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudS(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     DelayCloudS(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     return shot;
@@ -165,7 +165,7 @@ function ShotB2S(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blen
 {
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudS(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype);
     return shot;
 }
@@ -222,21 +222,21 @@ task DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 function ShotA1F(x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 {
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotA2F(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype)
 {
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotOA1F(obj,spd,dir,graphic,cloud,delay,size,blendtype)
 {
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudF(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     DelayCloudF(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     return shot;
@@ -245,7 +245,7 @@ function ShotB2F(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blen
 {
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	BulletDelete(shot);
+	
     DelayCloudF(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype);
     return shot;
 }
@@ -305,10 +305,6 @@ task ObjShot_SetAutoDeleteA2(obj,boolen)
 {
 	Obj_SetValue(obj,"AutoDelete",boolen);
 	ObjShot_SetAutoDelete(obj,boolen);
-}
-task BulletDelete(obj)
-{
-	
 }
 task Obj_DeleteBullet(obj)
 {
