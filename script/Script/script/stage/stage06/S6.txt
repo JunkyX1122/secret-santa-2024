@@ -74,7 +74,8 @@ let MAX_HEALTH = 300/3;
     {
 		ObjEnemy_SetDamageRate(objEnemy, (0.03/3)/1.5, (0.03/3)/3);
 		Fire;
-		
+		magiccircle(objEnemy,1);
+		SizeCircle();
         //count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)

@@ -409,12 +409,11 @@ function PagodaLaser(x,y,xmov,ymov,scale,angle,prerotation,postrotation,maxwidth
 
 }
 
-
 task magiccircle(boss,type)
 { // draw magic circle
 	let obj=ObjPrim_Create(OBJ_SPRITE_2D);
 	let img=IMG_MAGICCIRCLE;
-	let spin = 0;
+	let spin = GetCommonData("CircleSpin",0);
 	let s = 0;
 	let size = 0;
 	ObjPrim_SetTexture(obj,img);
@@ -427,6 +426,7 @@ task magiccircle(boss,type)
 	while(!Obj_IsDeleted(boss) && !Obj_IsDeleted(obj))
 	{
 		spin += 1/3;
+		SetCommonData("CircleSpin",spin);
 		size = GetCommonData("CircleSize",1);
 		ObjRender_SetAngleXYZ(obj,30*sin(spin*1.5)*type,30*cos(spin*1.5-30*sin(spin*3))*type,spin*3*type);
 		ObjRender_SetPosition(obj,ObjMove_GetX(boss),ObjMove_GetY(boss),0);

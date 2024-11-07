@@ -44,7 +44,7 @@ let finalSpellBool = false;
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	renderNitoriDS(objEnemy);
-	
+	magiccircle(objEnemy,1);
 	
 	end;
 

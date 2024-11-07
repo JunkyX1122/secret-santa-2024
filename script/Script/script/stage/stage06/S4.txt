@@ -44,7 +44,7 @@ let finalSpellBool = false;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
-	
+	magiccircle(objEnemy,1);
 	
 	end;
 	//WingAura(objEnemy);

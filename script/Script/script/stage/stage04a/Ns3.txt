@@ -82,7 +82,9 @@ let TIME = 60*85;
     {
 		//move;
 		Fire;	
-		
+		magiccircle(objEnemy,1);
+		magiccircle(objEnemy2,1);
+		SizeCircle();
 		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
         count = 1111;
     }

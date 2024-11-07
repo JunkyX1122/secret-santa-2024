@@ -48,7 +48,8 @@ let objEnemy2 = CreateFamiliar;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderNitoriDS(objEnemy);
-
+	magiccircle(objEnemy,1);
+		
 	ObjMove_SetPosition(objEnemy2, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
 	//ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
 	renderYuuma(objEnemy2);

@@ -95,6 +95,8 @@ let spellActive = false;
 task InitiateSpell()
 {
 	wait(60*3);
+	magiccircle(objEnemy,1);
+	SizeCircle();
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
 	ObjCutin_SetSpellcardS4("Celebration &quot;Celestial Blizzard&quot;","", LENEN, 0,145,255);

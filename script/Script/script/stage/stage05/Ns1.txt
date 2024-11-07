@@ -68,6 +68,8 @@ let TIME = 60*60;
     if(count == 95)
     {
 		//move;
+		magiccircle(objEnemy,1);
+		SizeCircle();
 		Fire;	
 		
 		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);

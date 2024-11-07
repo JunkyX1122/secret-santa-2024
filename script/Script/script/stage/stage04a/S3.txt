@@ -59,6 +59,9 @@ let finalSpellBool = false;
 	HitCirc(objEnemy3);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2+100, 100, 60);
 	
+	magiccircle(objEnemy2,1);
+	magiccircle(objEnemy3,1);
+	
 	
 	end;
 

@@ -49,13 +49,10 @@ let IMG_FAIRY24 = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Fairy/Fairy_
 
 let IMG_BIRD = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Bird.png";
 let IMG_GHOST = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Ghost.png";	
-let IMG_ORBEN = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Orb.png";	
-let IMG_BUG = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Bug.png";	
-let IMG_ARROW = GetCurrentScriptDirectory() ~ "./../../img/stgenm/Arrow.png";
-	
+
 let IMG_GORE_FAIRY = GetCurrentScriptDirectory() ~ "./../../img/stgenm/enemy.png";
 
-let Enemy_ImgArray = [IMG_FAIRY01,IMG_FAIRY02,IMG_FAIRY03,IMG_FAIRY04,IMG_FAIRY11,IMG_FAIRY12,IMG_FAIRY13,IMG_FAIRY14,IMG_FAIRY21,IMG_FAIRY22,IMG_FAIRY23,IMG_FAIRY24,IMG_BIRD,IMG_GHOST,IMG_ORBEN,IMG_BUG,IMG_ARROW,IMG_GORE_FAIRY];
+let Enemy_ImgArray = [IMG_FAIRY01,IMG_FAIRY02,IMG_FAIRY03,IMG_FAIRY04,IMG_FAIRY11,IMG_FAIRY12,IMG_FAIRY13,IMG_FAIRY14,IMG_FAIRY21,IMG_FAIRY22,IMG_FAIRY23,IMG_FAIRY24,IMG_BIRD,IMG_GHOST,IMG_GORE_FAIRY];
 
 //---------------------------------------
 //--------------BOSS IMAGES--------------
@@ -64,8 +61,6 @@ let Enemy_ImgArray = [IMG_FAIRY01,IMG_FAIRY02,IMG_FAIRY03,IMG_FAIRY04,IMG_FAIRY1
 let IMG_GHOSTORIN = GetCurrentScriptDirectory() ~ "./../../img/enemy/ghost.png";
 let IMG_FAMILIAR = GetCurrentScriptDirectory() ~ "./../../img/enemy/familiar.png";
 let IMG_BOSS1PLACE = GetCurrentScriptDirectory() ~ "./../../img/title/1.png";
-let IMG_DOOR = GetCurrentScriptDirectory() ~ "./../../img/enemy/Door.png";
-let IMG_OKINA= GetCurrentScriptDirectory() ~ "./../../img/enemy/okinasprite.png";
 let IMG_YUUMA= GetCurrentScriptDirectory() ~ "./../../img/enemy/boss_toutetsu.png";
 let IMG_NITORI_SPRITE = GetCurrentScriptDirectory() ~ "./../../img/enemy/nitori_sprite.png";
 let IMG_EAGLE= GetCurrentScriptDirectory() ~ "./../../img/enemy/eagle.png";
@@ -140,9 +135,7 @@ let IMG_FDFCHARGE = GetCurrentScriptDirectory()~"./../../img/effect/fdfcharge.pn
 let IMG_FDFBURST = GetCurrentScriptDirectory()~"./../../img/effect/fdfburst.png";
 let IMG_FDFLINES = GetCurrentScriptDirectory()~"./../../img/effect/absorblines.png";
 
-
 let IMG_FADEBALL = GetCurrentScriptDirectory()~"./../../img/effect/fade_ball_0000.png";
-
 
 let IMG_SAURA = GetCurrentScriptDirectory()~"./../../img/effect/switchaura.png";
 let IMG_SAURA2 = GetCurrentScriptDirectory()~"./../../img/effect/switchaura2.png";
@@ -150,8 +143,6 @@ let IMG_SWITCHAURA = GetCurrentScriptDirectory()~"./../../img/effect/possfire.pn
 
 let IMG_SLASH = GetCurrentScriptDirectory()~"./../../img/effect/Slash.png";
 let IMG_FIRERING = GetCurrentScriptDirectory()~"./../../img/effect/FireRing.png";
-
-
 
 
 let Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,

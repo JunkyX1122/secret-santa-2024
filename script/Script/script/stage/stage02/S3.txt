@@ -64,14 +64,8 @@ let objEnemy3 = CreateFamiliar;
 	
 	end;
 
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Sneak Attack &quot;Stealth Strike&quot;","", LENEN, 165,165,165);
 	
-	ScreenShake(60,4);
-
-	SE_PlayLen(compositespellcard,75);
-	SE_PlayLen(BossSpell,75);
+	
 	//SetIntersectionVisualization(true);
 }
 
@@ -105,7 +99,7 @@ let objEnemy3 = CreateFamiliar;
 	{
 		SetEnemyAutoDeleteClip(32,32,32,64);
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		SetCommonData("SpellCardBG1",true);
+		SetCommonData("SpellCardBG1",false);
 	}
     if(count == 95)
     {
@@ -133,9 +127,23 @@ task Fire
 	ManageScyllaHide(bit);
 	SE_PlayLen(ufo,60);
 	wait(60);
+	//magiccircle(objEnemy2,1);
+	magiccircle(objEnemy3,1);
+	SizeCircle();
+	SetCommonData("SpellCardBG1",true);
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("Sneak Attack &quot;Stealth Strike&quot;","", LENEN, 165,165,165);
+	ScreenShake(60,4);
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	
+	wait(80);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 75, 60);
 	ManageScyllaSpin(bit);
 	ManageBladeGyros(bit);
+	
+	
 }
 
 task ManageScyllaSpin(bit)
