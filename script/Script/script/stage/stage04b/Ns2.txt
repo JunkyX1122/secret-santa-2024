@@ -43,7 +43,7 @@ let TIME = 60*60;
 	renderYuuma(objEnemy);
 
 	ObjMove_SetPosition(objEnemy2, -100,-100);
-	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 100, 60);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 70, 60);
 	renderNitoriDS(objEnemy2);
 	HitCirc(objEnemy2);
 	end;
@@ -96,26 +96,207 @@ let TIME = 60*60;
 @Finalize
 {
 }
-
+let needMount = false;
 task Fire
 {
-	Stab(90);
+	yield;
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		TazueHandle(bit);
+		ascent(o in 0..4)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(charge1,60);
+				let startAng = 90-(15+o*1)*o*bit*[1,-1][o%2];
+				let dis = 40;
+				ObjMove_SetDestAtFrameWeight(objEnemy2, ObjMove_GetX(objEnemy2)+dis*cos(startAng), ObjMove_GetY(objEnemy2)+dis*sin(startAng), 20);
+				ascent(i in 0..3)
+				{
+					let ang = startAng - 20*bit + 40/2*i*bit;
+					Stab(ang);
+				}
+				wait(40);
+			}
+		}
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2 - 200*bit, 100, 50);
+			let startAng = ObjMove_GetAngle(objEnemy2)+180;
+			ascent(i in 0..3)
+			{
+				let ang = startAng - 20*bit + 40/2*i*bit;
+				Stab(ang);
+			}
+			wait(60);
+		}
+		needMount = true;
+		let startX = GetStgFrameWidth/2 - 200*bit;
+		let desX = GetStgFrameWidth/2 + 200*bit;
+		let t = 60*3;
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let x = 1/(t-1)*i;
+				ObjMove_SetX(objEnemy2,Interpolate_Smooth(startX,desX,x));
+				if(i%(t/10)==0)
+				{
+					let ang = GetAngleToPlayer(objEnemy2);
+					Stab(ang);
+				}
+				yield;
+			}
+		}
+		needMount = false;
+		ObjMove_SetDestAtFrame(objEnemy2, GetPlayerX, 70, 150-1, LERP_SMOOTHER);
+		wait(30);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge0,60);
+		}
+		wait(150-30);
+		bit*=-1;
+		ObjEnemy_SetDamageRate(objEnemy, (0.09)/1.5, (0.09)/3);
+	}
 }
+task TazueHandle(bit)
+{
+	
+	let objTazue = CreateFamiliar;
+	renderTinyGoreF(objTazue,0);
+	ObjMove_SetPosition(objTazue,GetStgFrameWidth/2 + (GetStgFrameWidth/2+100)*bit,100+40);
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2 - 200*bit, 100+40, 40*4, LERP_SMOOTH);
+	let startX = GetStgFrameWidth/2 - 200*bit;
+	let desX = GetStgFrameWidth/2 + 200*bit;
+	let t = 40*3;
+	ascent(i in 0..60*3)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let x = 1/(t-1)*i;
+			let tDiv = 15;
+			if(i%(t/tDiv)==0)
+			{
+				let a = floor(i/tDiv);
+				let am = 20;
+				let ang = 90 - am*bit + (am*2)*bit/(t/tDiv)*a;
+				SE_PlayLen(spawnfm1,60);
+				NukeShot(objTazue,ang,bit);
+			}
+			yield;
+		}
+	}
+	while(!needMount && !Obj_IsDeleted(objEnemy)){yield;}
+	t = 60*3;
+	ascent(i in 0..60*3)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let x = 1/(t-1)*i;
+			ObjMove_SetX(objTazue,Interpolate_Smooth(startX,desX,x));
+			yield;
+		}
+	}
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2 + (GetStgFrameWidth/2+200)*bit, 100+40, 180, LERP_SMOOTHER);
+	loop(180)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			yield;
+		}
+	}
+	//Intentionally Not IsDeleteEnemy This.
+	ObjMove_SetDestAtFrame(objTazue, ObjMove_GetX(objTazue), -150, 40, LERP_SMOOTHER);
+	wait(40);
+	Obj_Delete(objTazue);
+}
+
 // Borrowing this from Meowstic
+task NukeShot(zuzu,angB,bit)
+{
+	ascent(i in 0..1)
+	{
+		let spd = rand(0, 0.15);
+		let ang =  rand(0,360);
+		let shot = ShotA1(ObjMove_GetX(zuzu), ObjMove_GetY(zuzu), spd, ang, 400, 400,  15, 3, BLEND_ADD_ARGB, false);
+		let shotAesthethic = ShotA1(ObjMove_GetX(zuzu), ObjMove_GetY(zuzu), spd, ang, 400, 400, 15, 3, BLEND_ADD_ARGB, false);
+		ObjShot_SetIntersectionEnable(shotAesthethic, false);
+		ShotAesthethic(shotAesthethic, shot, 15);
+	}
+	
+	task ShotAesthethic(obj, tar, del)
+	{
+		wait(del);
+		ObjRender_SetScaleXYZ(obj, 1.5, 1.5, 1.5);
+		ObjRender_SetAlpha(obj, 200);
+		
+		let sinn = 0;
+		let sped = 0;
+		while(!Obj_IsDeleted(tar) && sped < 30 && !Obj_IsDeleted(objEnemy))
+		{
+			ObjRender_SetColorHSV(obj, 30+25*sin(sinn), 255, 255);
+			ObjRender_SetScaleXYZ(obj, 1.5+sped/100, 1.5+sped/100, 1.5);
+			sinn+=1+sped;
+			sped+=0.3;
+			yield;
+		}
+		if(!Obj_IsDeleted(tar) && !Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(shot1,60);
+			SE_PlayLen(chime1,60);
+			let random = angB;
+			let sprd = 3;
+			ascent(i in 0..3)
+			{
+				ascent(o in 0..3)
+				{
+					ascent(j in 0..24/3)
+					{
+						let adR = o*0.8;
+						let spd = rand(0.75, 1.25)+adR;
+						let fObj = ShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), spd, random+i*360/3+rand(-1, 1)*sprd, 425, 425, 15, 2, BLEND_ADD_ARGB, true);
+						ObjRender_SetBlendType(fObj,BLEND_ADD_ARGB);
+					}
+				}
+			}
+			ascent(o in 0..3)
+			{
+				let sprd = 14;
+				ascent(i in 0..sprd)
+				{
+					let fObj = ShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 1.65-0.12*o, random+i*360/sprd*bit, 104, 104, 15, 2, BLEND_ADD_ARGB, true);
+					ObjRender_SetBlendType(fObj,BLEND_ADD_ARGB);
+					ObjRender_SetColorHSV(fObj, 20*o, 255, 255);
+				}
+			}
+			Obj_Delete(obj);
+			Obj_Delete(tar);
+		}
+	}
+}
+
 task Stab(ang)
 {
+	SE_PlayLen(slash,60);
 	//let las = CreateCurveLaserA1(GetBossX, GetBossY, 10, 270, 200, 15, C_LASER_GRAY, 15);
 	//ObjMove_AddPatternA2(las, 15, NO_CHANGE, NO_CHANGE, -1, 0, 0);
 	//ObjShot_SetDeleteFrame(las, 20);
-	let cosDis = 30*cos(ang+180);
-	let sinDis = 30*sin(ang+180);
+	let cosDis = 60*cos(ang+180);
+	let sinDis = 60*sin(ang+180);
+	let spdMult = 1;
 	ascent(i in 0..3)
 	{
-		ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, i+5, ang, 42, 42, 10, 2, BLEND_ALPHA, true);
+		let id = i==2 ? 55 : 42;
+		
+		let obj1 = ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5)*spdMult, ang, id, id, 20, 2, BLEND_ALPHA, true);
+
 		ascent(o in 1..5)
 		{
-			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, i+5-o/2, ang+o, 42, 42, 10, 2, BLEND_ALPHA, true);
-			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, i+5-o/2, ang-o, 42, 42, 10, 2, BLEND_ALPHA, true);
+			
+			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5-o/2)*spdMult, ang+o, id, id, 20, 2, BLEND_ALPHA, true);
+			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5-o/2)*spdMult, ang-o, id, id, 20, 2, BLEND_ALPHA, true);
 		}				
 	}
 

@@ -12,6 +12,7 @@ const PORTAL_COLOR_R = 6;
 const PORTAL_COLOR_G = 7;
 const PORTAL_COLOR_B = 8;
 const PORTAL_FUNCTIONAL = 9;
+const PORTAL_PLAYERCHECK = 10;
 let isManagingPortals = true;
 
 let xArray = [];
