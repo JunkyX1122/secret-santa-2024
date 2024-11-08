@@ -6,7 +6,7 @@
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./Initiate.txt"
-
+#include "./GrandisPortals.txt"
 
 let objEnemy;
 let count = 0;

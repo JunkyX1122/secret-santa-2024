@@ -8,6 +8,9 @@ const PORTAL_ANGLE = 2;
 const PORTAL_WIDTHSCALE = 3;
 const PORTAL_HEIGHTSCALE = 4;
 const PORTAL_ENABLE = 5;
+const PORTAL_COLOR_R = 6;
+const PORTAL_COLOR_G = 7;
+const PORTAL_COLOR_B = 8;
 let isManagingPortals = true;
 
 let xArray = [];
@@ -15,7 +18,7 @@ let yArray = [];
 const PORTAL_WIDTH = 100;
 const PORTAL_HEIGHT = 50;
 
-let portalPositionsArray = [];
+let portalObjectArray = [];
 
 
 task StartPortalSystem()
@@ -33,7 +36,7 @@ task StartPortalSystem()
 	while(isManagingPortals)
 	{
 		let portalsEnabledCount = 0;
-		ascent(i in 0..length(portalPositionsArray))
+		ascent(i in 0..length(portalObjectArray))
 		{
 			if(ObjPortal_IsEnabled(portalsEnabledCount))
 			{
@@ -43,6 +46,10 @@ task StartPortalSystem()
 		//WriteLog(portalsEnabledCount);
 		ClearPortalTargets();
 		yield;
+	}
+	ascent(i in 0..length(portalObjectArray))
+	{
+		ObjPortal_Delete(i);
 	}
 	ClearPortalTargets();
 }
@@ -109,6 +116,11 @@ task SetOutPortal(obj)
 	ObjShot_SetIntersectionEnable(obj,true);
 }
 
+task SetPortalManaging(b)
+{
+	isManagingPortals = b;
+}
+
 task ObjPortal_Grow(portalID, x1, y1, x2, y2, t)
 {
 	let obj = portalID;
@@ -120,6 +132,24 @@ task ObjPortal_Grow(portalID, x1, y1, x2, y2, t)
 			ObjPortal_SetScale(obj,Interpolate_Decelerate(x1,x2,tVal), Interpolate_Decelerate(y1, y2, tVal));
 		}
 		yield;
+	}
+}
+
+task ObjPortal_Grow(portalID, x1, y1, x2, y2, t, closeBool)
+{
+	let obj = portalID;
+	ascent(i in 0..t)
+	{
+		if(!ObjPortal_IsDeleted(obj))
+		{
+			let tVal = 1/(t-1)*i;
+			ObjPortal_SetScale(obj,Interpolate_Decelerate(x1,x2,tVal), Interpolate_Decelerate(y1, y2, tVal));
+		}
+		yield;
+	}
+	if(closeBool)
+	{
+		ObjPortal_Delete(obj);
 	}
 }
 
@@ -143,11 +173,11 @@ task ManageAllPortals()
 		let skip = true;
 		let idsToCheck = [];
 		let portalsEnabledCount = 0;
-		ascent(i in 0..length(portalPositionsArray))
+		ascent(i in 0..length(portalObjectArray))
 		{
-			let portalX = portalPositionsArray[i][PORTAL_X];
-			let portalY = portalPositionsArray[i][PORTAL_Y];
-			let portalXScale = portalPositionsArray[i][PORTAL_WIDTHSCALE];
+			let portalX = portalObjectArray[i][PORTAL_X];
+			let portalY = portalObjectArray[i][PORTAL_Y];
+			let portalXScale = portalObjectArray[i][PORTAL_WIDTHSCALE];
 			let isPortalEnabled = ObjPortal_IsEnabled(i);
 			if(Get_Distance(GetPlayerX,GetPlayerY,portalX,portalY) < PORTAL_WIDTH * portalXScale * 1.15 && isPortalEnabled)
 			{
@@ -163,11 +193,11 @@ task ManageAllPortals()
 			{
 				
 				let i = idsToCheck[id];
-				let portalX =      portalPositionsArray[i][PORTAL_X];
-				let portalY = 	   portalPositionsArray[i][PORTAL_Y];
-				let portalAngle =  portalPositionsArray[i][PORTAL_ANGLE];
-				let portalXScale = portalPositionsArray[i][PORTAL_WIDTHSCALE];
-				let portalYScale = portalPositionsArray[i][PORTAL_HEIGHTSCALE];
+				let portalX =      portalObjectArray[i][PORTAL_X];
+				let portalY = 	   portalObjectArray[i][PORTAL_Y];
+				let portalAngle =  portalObjectArray[i][PORTAL_ANGLE];
+				let portalXScale = portalObjectArray[i][PORTAL_WIDTHSCALE];
+				let portalYScale = portalObjectArray[i][PORTAL_HEIGHTSCALE];
 				
 				let checkRad = max(PORTAL_WIDTH*portalXScale*1.15, PORTAL_HEIGHT*portalYScale*1.15);
 				
@@ -205,20 +235,20 @@ task ManageAllPortals()
 
 function ObjPortal_SetX(portalID, x)
 {
-	portalPositionsArray[portalID][PORTAL_X] = x;
+	portalObjectArray[portalID][PORTAL_X] = x;
 }
 function ObjPortal_GetX(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_X];
+	return portalObjectArray[portalID][PORTAL_X];
 }
 
 function ObjPortal_SetY(portalID, y)
 {
-	portalPositionsArray[portalID][PORTAL_Y] = y;
+	portalObjectArray[portalID][PORTAL_Y] = y;
 }
 function ObjPortal_GetY(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_Y];
+	return portalObjectArray[portalID][PORTAL_Y];
 }
 
 function ObjPortal_SetPosition(portalID, x, y)
@@ -233,29 +263,29 @@ function ObjPortal_GetPosition(portalID)
 
 function ObjPortal_SetAngle(portalID, a)
 {
-	portalPositionsArray[portalID][PORTAL_ANGLE] = a;
+	portalObjectArray[portalID][PORTAL_ANGLE] = a;
 }
 function ObjPortal_GetAngle(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_ANGLE];
+	return portalObjectArray[portalID][PORTAL_ANGLE];
 }
 
 function ObjPortal_SetScaleX(portalID, x)
 {
-	portalPositionsArray[portalID][PORTAL_WIDTHSCALE] = x;
+	portalObjectArray[portalID][PORTAL_WIDTHSCALE] = x;
 }
 function ObjPortal_GetScaleX(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_WIDTHSCALE];
+	return portalObjectArray[portalID][PORTAL_WIDTHSCALE];
 }
 
 function ObjPortal_SetScaleY(portalID, y)
 {
-	portalPositionsArray[portalID][PORTAL_HEIGHTSCALE] = y;
+	portalObjectArray[portalID][PORTAL_HEIGHTSCALE] = y;
 }
 function ObjPortal_GetScaleY(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_HEIGHTSCALE];
+	return portalObjectArray[portalID][PORTAL_HEIGHTSCALE];
 }
 
 function ObjPortal_SetScale(portalID, xy)
@@ -275,15 +305,30 @@ function ObjPortal_GetScale(portalID)
 
 function ObjPortal_Delete(portalID)
 {
-	portalPositionsArray[portalID][PORTAL_ENABLE] = false;
+	ObjPortal_SetScale(portalID, 0, 0);
+	ObjPortal_SetColor(portalID, 255, 255, 255);
+	portalObjectArray[portalID][PORTAL_ENABLE] = false;
 }
 function ObjPortal_IsDeleted(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_ENABLE] == false;
+	return portalObjectArray[portalID][PORTAL_ENABLE] == false;
 }
 function ObjPortal_IsEnabled(portalID)
 {
-	return portalPositionsArray[portalID][PORTAL_ENABLE] == true;
+	return portalObjectArray[portalID][PORTAL_ENABLE] == true;
+}
+
+function ObjPortal_SetColor(portalID, r, g, b)
+{
+	portalObjectArray[portalID][PORTAL_COLOR_R] = r;
+	portalObjectArray[portalID][PORTAL_COLOR_G] = g;
+	portalObjectArray[portalID][PORTAL_COLOR_B] = b;
+}
+function ObjPortal_GetColor(portalID)
+{
+	return [portalObjectArray[portalID][PORTAL_COLOR_R], 
+			portalObjectArray[portalID][PORTAL_COLOR_G], 
+			portalObjectArray[portalID][PORTAL_COLOR_B]];
 }
 
 function CreatePortal(x,y,ang,xScale, yScale)
@@ -300,6 +345,7 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
 	ObjPrim_SetVertexCount(objLine, 32);
 	Obj_SetRenderPriorityI(objLine,60);
+	
 	let objLine2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
 	ObjPrim_SetPrimitiveType(objLine2,PRIMITIVE_LINESTRIP);
 	ObjPrim_SetVertexCount(objLine2, 32);
@@ -313,6 +359,7 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	ObjPrim_SetVertexCount(objB, 32*2);
 	Obj_SetRenderPriorityI(objB,39);
 	
+	
 	let objMask = ObjPrim_Create( OBJ_PRIMITIVE_2D );
 	ObjPrim_SetPrimitiveType( objMask, PRIMITIVE_TRIANGLESTRIP );
 	ObjPrim_SetTexture(objMask, IMG_PIXEL );
@@ -324,8 +371,8 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	ObjRender_SetColor(objMask,0,0,0);
 	ObjRender_SetRenderTarget(objMask,"textureMask");
 	
-	portalPositionsArray ~= [[x, y, ang, xScale, yScale, true]];
-	let id = length(portalPositionsArray) - 1;
+	portalObjectArray ~= [[x, y, ang, xScale, yScale, true, 255, 255, 255]];
+	let id = length(portalObjectArray) - 1;
 	
 	RenderPortal();
 	
@@ -337,12 +384,13 @@ function CreatePortal(x,y,ang,xScale, yScale)
 		while(isManagingPortals && isEnabled)
 		{
 			isEnabled = ObjPortal_IsEnabled(id);
-			x = portalPositionsArray[id][PORTAL_X];
-			y = portalPositionsArray[id][PORTAL_Y];
+			x = portalObjectArray[id][PORTAL_X];
+			y = portalObjectArray[id][PORTAL_Y];
+			
 			ascent(i in 0..32)
 			{
-				let positionTop = 	 Rotate2D(xArray[i]*portalPositionsArray[id][PORTAL_WIDTHSCALE], -yArray[i]*portalPositionsArray[id][PORTAL_HEIGHTSCALE], ang);
-				let positionBottom = Rotate2D(xArray[i]*portalPositionsArray[id][PORTAL_WIDTHSCALE],  yArray[i]*portalPositionsArray[id][PORTAL_HEIGHTSCALE], ang);
+				let positionTop = 	 Rotate2D(xArray[i]*portalObjectArray[id][PORTAL_WIDTHSCALE], -yArray[i]*portalObjectArray[id][PORTAL_HEIGHTSCALE], ang);
+				let positionBottom = Rotate2D(xArray[i]*portalObjectArray[id][PORTAL_WIDTHSCALE],  yArray[i]*portalObjectArray[id][PORTAL_HEIGHTSCALE], ang);
 		
 				ObjPrim_SetVertexPosition(obj , i*2+0, positionTop[0]	, positionTop[1],0);
 				ObjPrim_SetVertexPosition(obj , i*2+1, positionBottom[0], positionBottom[1],0);
@@ -361,8 +409,10 @@ function CreatePortal(x,y,ang,xScale, yScale)
 				ObjPrim_SetVertexUVT(objB, i*2+0, x + 107 + positionTop[0],   positionTop[1] + y);
 				ObjPrim_SetVertexUVT(objB, i*2+1, x + 107 + positionBottom[0],positionBottom[1] + y);
 			}
-		
-			
+			let col = ObjPortal_GetColor(id);
+			ObjRender_SetColor(objLine,  col[0], col[1], col[2]);
+			ObjRender_SetColor(objLine2, col[0], col[1], col[2]);
+			ObjRender_SetColor(objB, col[0], col[1], col[2]);
 			
 			ObjRender_SetPosition(obj,x,y,0);
 			ObjRender_SetPosition(objLine ,x,y,0);
@@ -378,4 +428,106 @@ function CreatePortal(x,y,ang,xScale, yScale)
 		Obj_Delete(objB);
 		Obj_Delete(objMask);
 	}
+}
+
+function PShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
+{
+    let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
+	
+    PDelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
+    return shot;
+}
+function PShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
+{
+    let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
+	
+    PDelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
+    return shot;
+}
+function PShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
+{
+    let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
+	
+    PDelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
+    PDelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
+    return shot;
+}
+function PShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
+{
+    let angle = atan2(yspd,xspd);
+    let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
+	
+    PDelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
+    return shot;
+}
+function PShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
+{
+    let angle = atan2(yspd,xspd);
+    let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
+	
+    PDelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
+    return shot;
+}
+
+task PDelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
+{
+    let obj=CreateShotA1(x,y,0,dir,cloud,0);
+	ObjShot_SetAutoDelete(obj,false);
+	if(inPortal)
+	{
+		SetInPortal(obj);
+	}
+	else
+	{
+		SetOutPortal(obj);
+	}
+	if(delaymove==true)
+	{
+		ObjMove_SetSpeed(obj,spd);
+	}
+	ObjShot_SetIntersectionEnable(obj,false);
+    let c = 0;
+    let v = false;
+    let px = 0;
+    let adc = false;
+    let s = size;
+	let c2 = 0;
+	let coord = GetShotDataInfoA1(graphic,TARGET_ENEMY,INFO_RECT);
+	let coordc = GetShotDataInfoA1(cloud,TARGET_ENEMY,INFO_RECT);
+	let xwid = coord[2]-coord[0];
+	let ywid = coord[3]-coord[1];
+	
+	let xwidc = coordc[2]-coordc[0];
+	let ywidc = coordc[3]-coordc[1];
+    if(!Obj_IsDeleted(shot))
+    {
+		ObjRender_SetBlendType(obj,blendtype);
+		
+		
+        let s_value = s-1;
+        Obj_SetRenderPriorityI(obj,Obj_GetRenderPriorityI(shot)+1);
+        while(c<delay-1 &&  !Obj_IsDeleted(shot))
+        {
+			/*
+            ObjRender_SetScaleXYZ(obj,xwid/xwidc*s,ywid/ywidc*s,0);
+			if((cloud>=417&&cloud<=424)||(cloud>=443&&cloud<=450))
+			{
+				ObjRender_SetScaleXYZ(obj,(xwid*2)/xwidc*s,(ywid*2)/ywidc*s,0);
+			}*/
+			ObjRender_SetScaleXYZ(obj,s,s,0);
+			ObjRender_SetAlpha(obj,c2);
+            if(v==true)
+            { ObjRender_SetAngleXYZ(obj,0,0,dir-c*3);}
+            ;
+            if(s>=1)
+            {s -= s_value/(delay-1);
+            }
+            c++;
+			c2+=255/(delay-1);
+            
+            yield;
+        }
+		ObjMove_SetPosition(shot,ObjMove_GetX(obj),ObjMove_GetY(obj));
+        Obj_Delete(obj);
+    }
 }
