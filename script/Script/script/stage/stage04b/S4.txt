@@ -6,7 +6,7 @@
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./Initiate.txt"
-
+#include "./GrandisPortals.txt"
 
 let objEnemy;
 let objEnemy2 = CreateFamiliar;
@@ -77,6 +77,7 @@ let finalSpellBool = false;
 
 @MainLoop
 {
+	SetPortalManaging(!Obj_IsDeleted(objEnemy));
 	//ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
 	//ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
 	if(!Obj_IsDeleted(objEnemy2))
@@ -97,6 +98,10 @@ let finalSpellBool = false;
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		SetCommonData("SpellCardBG1",true);
+	}
+    if(count == 90)
+	{
+		StartPortalSystem();
 	}
     if(count == 95)
     {

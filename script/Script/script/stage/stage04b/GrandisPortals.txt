@@ -188,7 +188,7 @@ task ManageAllPortals()
 		}
 		if(!skip) // If so, then run tests on bullets.
 		{
-			WriteLog(portalsEnabledCount);
+			//WriteLog(portalsEnabledCount);
 			ascent(id in 0..length(idsToCheck))// Get all the bullets.
 			{
 				

@@ -6,6 +6,7 @@
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./Initiate.txt"
+#include "./GrandisPortals.txt"
 
 let objEnemy;
 let objEnemy2 = CreateFamiliar;
@@ -54,6 +55,7 @@ let TIME = 60*60;
 }
 @MainLoop
 {
+	SetPortalManaging(!Obj_IsDeleted(objEnemy));
 	if(!Obj_IsDeleted(objEnemy2))
 	{
 		SetCommonData("objEnemy2_Position", [ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2)]);
@@ -78,6 +80,10 @@ let TIME = 60*60;
     {
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
     }
+    if(count == 90)
+	{
+		StartPortalSystem();
+	}
     if(count == 95)
     {
 		//move;

@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Ns1"]
-#Text["Ns1"]
+#Title["PortalTest"]
+#Text["PortalTest"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -54,6 +54,7 @@ let TIME = 60*60;
 }
 @MainLoop
 {
+	
 	SetPortalManaging(!Obj_IsDeleted(objEnemy));
 	if(!Obj_IsDeleted(objEnemy2))
 	{
@@ -82,6 +83,7 @@ let TIME = 60*60;
 	if(count == 90)
 	{
 		StartPortalSystem();
+
 	}
     if(count == 95)
     {
@@ -303,7 +305,6 @@ task CreateLine(x,y,ang,d,t)
 			yield;
 		}
 	}
-	Obj_Delete(objLine);
 }
 task timer
 {
