@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S2"]
+#Title["Nuke Sign &quot;Freidyne&quot;"]
 #Text["S2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
