@@ -88,6 +88,7 @@ task DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
     let obj=CreateShotA1(x,y,0,dir,cloud,0);
 	ObjShot_SetAutoDelete(obj,false);
+	ObjShot_SetSpellResist(obj,true);
 	if(delaymove==true)
 	{
 		ObjMove_SetSpeed(obj,spd);
@@ -174,6 +175,7 @@ task DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 {
     let obj=CreateShotA1(x,y,0,dir,cloud,0);
 	ObjShot_SetIntersectionEnable(obj,false);
+	ObjShot_SetSpellResist(obj,true);
     let c = 0;
     let v = false;
     let px = 0;
@@ -253,6 +255,7 @@ function ShotB2F(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blen
 task DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 {
     let obj=CreateShotA1(x,y,0,dir,cloud,0);
+	ObjShot_SetSpellResist(obj,true);
     let c = 0;
     let v = false;
     let px = 0;

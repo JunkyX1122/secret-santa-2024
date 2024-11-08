@@ -160,6 +160,7 @@ task Sweep(bit)
 		wait(15);
 	}
 }
+
 task KnifeFire(bit)
 {
 	let counter = 82;
@@ -244,8 +245,10 @@ task SweepDown(bit)
 
 task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl)
 {
-	SE_PlayLen(charge0,60);
-
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);
+	}
 	ascent(i in 0..d)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -325,6 +328,7 @@ task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl)
 	}
 	Obj_Delete(objC);
 }
+
 task PortalSlashHitbox(x, y, ang, width, t)
 {
 	let objspell = CreateShotA1(x,y,0,0,1,0);
@@ -342,6 +346,7 @@ task PortalSlashHitbox(x, y, ang, width, t)
 	}
 	Obj_Delete(objspell);
 }
+
 task PortalSlashEffect(x, y, ang, width, t)
 {
 	let objs = [];
@@ -415,6 +420,7 @@ task CreateLine(x,y,ang,d,t)
 	}
 	Obj_Delete(objLine);
 }
+
 task timer
 {
     loop(TIME-10)

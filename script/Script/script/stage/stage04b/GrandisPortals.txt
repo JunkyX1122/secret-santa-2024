@@ -101,6 +101,7 @@ task CreateRegularBulletTarget()
 
 task SetInPortal(obj)
 {
+	Obj_SetValue(obj,"portalConcern", true);
 	Obj_SetValue(obj,"inPortal", true);
 	ObjShot_SetSpellResist(obj,true);
 	Obj_SetRenderPriorityI(obj,11);
@@ -110,6 +111,7 @@ task SetInPortal(obj)
 
 task SetOutPortal(obj)
 {
+	Obj_SetValue(obj,"portalConcern", true);
 	Obj_SetValue(obj,"inPortal", false);
 	ObjShot_SetSpellResist(obj,true);
 	Obj_SetRenderPriorityI(obj,11);
@@ -180,7 +182,8 @@ task ManageAllPortals()
 			let portalY = portalObjectArray[i][PORTAL_Y];
 			let portalXScale = portalObjectArray[i][PORTAL_WIDTHSCALE];
 			let isPortalEnabled = ObjPortal_IsEnabled(i);
-			if(Get_Distance(GetPlayerX,GetPlayerY,portalX,portalY) < PORTAL_WIDTH * portalXScale * 1.15 && isPortalEnabled)
+			let isPortalFunctional = ObjPortal_IsFunctional(i);
+			if(Get_Distance(GetPlayerX,GetPlayerY,portalX,portalY) < PORTAL_WIDTH * portalXScale * 1.15 && isPortalEnabled && isPortalFunctional)
 			{
 				skip = false;
 				idsToCheck ~= [i];
@@ -209,21 +212,24 @@ task ManageAllPortals()
 					ascent (i in 0..blength)
 					{
 						let obj = barray[i];
-			
 						
-						let shotX = ObjMove_GetX(obj) + ObjMove_GetSpeedX(obj);
-						let shotY = ObjMove_GetY(obj) + ObjMove_GetSpeedY(obj);
-						let shotPos = Rotate2D(shotX, shotY, -portalAngle, portalX, portalY); // Rotate bullets around portal until in line with flat portal
-						
-						// If bullet is within the portal bounding box:
-						if(shotPos[0] > portalX - PORTAL_WIDTH * portalXScale  &&  shotPos[0] < portalX + PORTAL_WIDTH * portalXScale &&
-						   shotPos[1] > portalY - PORTAL_HEIGHT  * portalYScale && shotPos[1] < portalY + PORTAL_HEIGHT * portalYScale)
+						if(Obj_GetValueD(obj,"portalConcern",false)==true)
 						{
-							let dis = absolute((portalX - shotPos[0])) / (PORTAL_WIDTH * portalXScale);
-							let sinY = PORTAL_HEIGHT*sin(90-90*dis) * portalYScale;
-							if(shotPos[1] < portalY + sinY && shotPos[1] > portalY - sinY)
+							
+							let shotX = ObjMove_GetX(obj) + ObjMove_GetSpeedX(obj);
+							let shotY = ObjMove_GetY(obj) + ObjMove_GetSpeedY(obj);
+							let shotPos = Rotate2D(shotX, shotY, -portalAngle, portalX, portalY); // Rotate bullets around portal until in line with flat portal
+							
+							// If bullet is within the portal bounding box:
+							if(shotPos[0] > portalX - PORTAL_WIDTH * portalXScale  &&  shotPos[0] < portalX + PORTAL_WIDTH * portalXScale &&
+							   shotPos[1] > portalY - PORTAL_HEIGHT  * portalYScale && shotPos[1] < portalY + PORTAL_HEIGHT * portalYScale)
 							{
-								ObjShot_SetIntersectionEnable(obj,Obj_GetValueD(obj,"inPortal",false));
+								let dis = absolute((portalX - shotPos[0])) / (PORTAL_WIDTH * portalXScale);
+								let sinY = PORTAL_HEIGHT*sin(90-90*dis) * portalYScale;
+								if(shotPos[1] < portalY + sinY && shotPos[1] > portalY - sinY)
+								{
+									ObjShot_SetIntersectionEnable(obj,Obj_GetValueD(obj,"inPortal",false));
+								}
 							}
 						}
 					}
@@ -332,7 +338,14 @@ function ObjPortal_GetColor(portalID)
 			portalObjectArray[portalID][PORTAL_COLOR_B]];
 }
 
-
+function ObjPortal_SetFunctional(portalID, f)
+{
+	portalObjectArray[portalID][PORTAL_FUNCTIONAL] = f;
+}
+function ObjPortal_IsFunctional(portalID)
+{
+	return portalObjectArray[portalID][PORTAL_FUNCTIONAL];
+}
 
 function CreatePortal(x,y,ang,xScale, yScale)
 {
@@ -374,7 +387,7 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	ObjRender_SetColor(objMask,0,0,0);
 	ObjRender_SetRenderTarget(objMask,"textureMask");
 	
-	portalObjectArray ~= [[x, y, ang, xScale, yScale, true, 255, 255, 255]];
+	portalObjectArray ~= [[x, y, ang, xScale, yScale, true, 255, 255, 255, true]];
 	let id = length(portalObjectArray) - 1;
 	
 	RenderPortal();
