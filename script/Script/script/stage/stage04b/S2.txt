@@ -226,6 +226,7 @@ task Fire
 						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
 						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,86,86,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+						ObjMove_SetAngularVelocity(obj,0.3*internalBit);
 					}
 				}
 				
@@ -268,6 +269,7 @@ task Fire
 						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
 						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,86,86,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+						ObjMove_SetAngularVelocity(obj,0.3*internalBit);
 					}
 				}
 				cc++;
