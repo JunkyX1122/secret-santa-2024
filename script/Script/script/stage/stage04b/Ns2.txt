@@ -175,6 +175,7 @@ task TazueHandle(bit)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
+			SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
 			let x = 1/(t-1)*i;
 			let tDiv = 15;
 			if(i%(t/tDiv)==0)
@@ -188,12 +189,17 @@ task TazueHandle(bit)
 			yield;
 		}
 	}
-	while(!needMount && !Obj_IsDeleted(objEnemy)){yield;}
+	while(!needMount && !Obj_IsDeleted(objEnemy))
+	{
+		SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
+		yield;
+	}
 	t = 60*3;
 	ascent(i in 0..60*3)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
+			SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
 			let x = 1/(t-1)*i;
 			ObjMove_SetX(objTazue,Interpolate_Smooth(startX,desX,x));
 			yield;
@@ -204,12 +210,10 @@ task TazueHandle(bit)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
+			SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
 			yield;
 		}
 	}
-	//Intentionally Not IsDeleteEnemy This.
-	ObjMove_SetDestAtFrame(objTazue, ObjMove_GetX(objTazue), -150, 40, LERP_SMOOTHER);
-	wait(40);
 	Obj_Delete(objTazue);
 }
 

@@ -12,7 +12,7 @@ let objEnemy;
 let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 65;
+let TIME = 75;
 let finalSpellBool = false;
 
 
@@ -22,7 +22,7 @@ let finalSpellBool = false;
   SetScriptResult(225/3);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(65);
+  SetScriptResult(75);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -46,16 +46,16 @@ let finalSpellBool = false;
 	renderNitoriDS(objEnemy);
 	magiccircle(objEnemy,1);
 	
-	end;
-
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 163,43,255);
-	
+	ObjCutin_SetSpellcardS4("Nuke Sign &quot;Freidyne&quot;","", LENEN, 163,43,255);
 	ScreenShake(60,4);
-
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
+	
+	TazueHandle(globalBit);
+	end;
+
 	
 }
 
@@ -93,16 +93,334 @@ let finalSpellBool = false;
     yield;
 }
 
-
+//SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+let globalBit = 1-2*round(rand(0,1));
 task Fire
 {
+	let bit = globalBit;
 	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ResetNuke();
+		
+		Nuke(bit);
+		tazueRotateSpeed = 2;
+		tazueRadius = 175;
+		let t = 110*5;
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ObjMove_SetDestAtSpeed(objEnemy, GetPlayerX, 150,0.5);
+				nukeX = ObjMove_GetX(objEnemy);
+				tazueRadius = 50 + 200/(t-1)*i;
+				tazueRotateSpeed = 2 + 3/(t-1)*i;
+				nukeScale = 10/(t-1)*i;
+				if(i%110==0)
+				{
+					SE_PlayLen(charge0,60);
+					ScreenShake(110+30,1.5+0.3*i/110);
+				}
+				if(i%3==0)
+				{
+					let ang = tazueAng;
+					ascent(i in 0..3)
+					{
+						let obj = ShotA1(tazueX, tazueY,1,ang+360/3*i,429,429,20,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+				if(i%5==0)
+				{
+					SE_PlayLen(Shot1,60);
+					
+					let dis = 50;
+					ascent(o in 0..4)
+					{
+						let ang = tazueAng+360/4*o;
+						let obj = ShotA1(tazueX, tazueY,2,ang,66,66,5,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+				if(i%9==0)
+				{
+					SE_PlayLen(chime1,60);
+					
+					let dis = 50;
+					ascent(o in 0..5)
+					{
+						let ang = tazueAng+360/5*o;
+						let obj = ShotA1(ObjMove_GetX(objEnemy) + dis*cos(ang),ObjMove_GetY(objEnemy) + dis*sin(ang),4,ang,297,297,5,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+						MoveDel(obj);
+					}
+				}
+				
+				yield;
+			}
+		}
+		
+		ObjMove_SetDestAtSpeed(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),1);
+		ObjMove_SetDestAtFrameWeight(objEnemy, ObjMove_GetX(objEnemy), 75, 60);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(boon1,70);
+			SE_PlayLen(explode,70);
+			SE_PlayLen(LaserDelLong,70);
+		}
+		tazueRadius = 20;
+		tazueRotateSpeed = 3;
+		let spd = 0;
+		while(nukeY<GetStgFrameHeight&&!Obj_IsDeleted(objEnemy))
+		{
+			nukeScale = nukeScale * 0.97 + (0.1) * 0.03;
+			nukeY+=spd;
+			spd+=0.03;
+			yield;
+		}
+		nukeY = GetStgFrameHeight;
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(Burst2,80);
+			SE_PlayLen(Burst3,80);
+			SE_PlayLen(MSpark,80);
+		}
+		let shake = 10;
+		t = 60*5;
+		let internalBit = GetPlayerX < nukeX ? 1 : -1;
+		let cc = 0;
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				nukeScale = nukeScale * 0.93 + (17) * 0.07;
+				
+				Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+				Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+				
+				shake = shake * 0.97 + (3) * 0.03;
+				
+				if(cc%3==0 && nukeScale > 15)
+				{
+					
+					let dis = 13*nukeScale;
+					let sprd = 40;
+					ascent(o in 0..sprd)
+					{
+						let ang = cc/3 * 0.1231 * internalBit +360/sprd*o;
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),4,ang,429,429,10,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+				
+				if(cc%29==0 && nukeScale > 15)
+				{
+					
+					let dis = 13*nukeScale;
+					let sprd = 46;
+					ascent(o in 0..sprd)
+					{
+						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,86,86,10,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+				
+				cc++;
+				yield;
+			}
+			Reset2DCamera;
+		}
+		t = 60*3;
+		let shakeIni = shake;
+		let currntNukeScl = nukeScale;
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+				Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+				shake = shakeIni - shakeIni/t*i; 
+				nukeScale = currntNukeScl - currntNukeScl/(t-1)*i;
+				if(cc%3==0)
+				{
+					
+					let dis = 13*nukeScale;
+					let sprd = 40;
+					ascent(o in 0..sprd)
+					{
+						let ang = cc/3 * 0.1231 * internalBit +360/sprd*o;
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),4,ang,429,429,10,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+				
+				if(cc%16==0)
+				{
+					
+					let dis = 13*nukeScale;
+					let sprd = 46;
+					ascent(o in 0..sprd)
+					{
+						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,86,86,10,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+					}
+				}
+				cc++;
+				yield;
+			}
+			Reset2DCamera;
+		}
+		nukeActive = false;
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 60);
+		wait(120);
+		bit*=-1;
+		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+	}
+}
+
+task MoveDel(obj)
+{
+	wait(5);
+	if(!Obj_IsDeleted(obj))
+	{
+		ObjMove_SetDestAtFrameWeight(obj, nukeX, nukeY, 60);
+	}
+}
+
+let nukeX = 0;
+let nukeY = 0;
+let nukeScale = 0;
+let nukeActive = true;
+
+task ResetNuke()
+{
+	nukeX = GetStgFrameWidth/2;
+	nukeY = 0;
+	nukeScale = 0;
+	nukeActive = true;
+}
+task Nuke(bit)
+{
+	let nukeObjs = [];
+	
+	let objNuke = CreateShotA1(GetStgFrameWidth/2,100,0,90,402,0);
+	ObjShot_SetSpellResist(objNuke,true);
+	ObjShot_SetAutoDelete(objNuke,false);
+	ObjRender_SetAlpha(objNuke,0);
+	ObjRender_SetBlendType(objNuke,BLEND_ADD_ARGB);
+
+	let IMGS = [IMG_SUN3, IMG_SUN3, IMG_SUN3, IMG_SUN2];
+	let COLS = [[255,0,255],[0,255,0], [0,255,0],[255,255,255]];
+	ascent(i in 0..4)
+	{
+		let objF = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(objF,[51,52,52,52][i]);
+		ObjPrim_SetTexture(objF,IMGS[i]);
+		ObjSprite2D_SetSourceRect(objF,0,0,512,512);
+		ObjSprite2D_SetDestRect(objF,0,0,512,512);
+		ObjSprite2D_SetDestCenter(objF);
+		ObjRender_SetBlendType(objF,[BLEND_SUBTRACT,BLEND_ADD_ARGB, BLEND_ADD_ARGB,BLEND_ADD_ARGB][i]);
+		ObjRender_SetColor(objF,COLS[i][0],COLS[i][1],COLS[i][2]);
+		nukeObjs ~= [objF];
+	}
+
+	while(!Obj_IsDeleted(objEnemy)&&nukeActive)
+	{
+		
+		let s = nukeScale * (1);
+		ObjRender_SetScale(objNuke,s);
+		ObjShot_SetIntersectionScaleXY(objNuke,s,s);
+		ObjMove_SetPosition(objNuke, nukeX, nukeY);
+		ascent(i in 0..length(nukeObjs))
+		{
+			ObjRender_SetAlpha(nukeObjs[i],255/2);
+			ObjRender_SetPosition(nukeObjs[i], nukeX, nukeY, 0);
+			//
+			ObjRender_SetScale(nukeObjs[i], s*0.18 * [1,0.6,0.5,0.4][i]);
+			ObjRender_SetAngleZ(nukeObjs[i], ObjRender_GetAngleZ(nukeObjs[i]) + 0.3 * [1,-1,1,0][i] * bit);
+		}
+		let barray = GetShotIdInCircleA2(nukeX, nukeY,14*nukeScale, TARGET_ENEMY);
+		let blength = length(barray);
+		if(blength>0)
+		{
+			ascent (i in 0..blength)
+			{
+				let buID = barray[i];
+				if(ObjShot_GetImageID(buID)==297)
+				{
+					SE_PlayLen(BulletDeleteSound,30);
+					ObjShot_SetDeleteFrameA5(buID,0,2);
+				}
+			}
+		}
+		yield;
+	}
+	Obj_Delete(objNuke);
+	ascent(i in 0..length(nukeObjs))
+	{
+		Obj_Delete(nukeObjs[i]);
+	}
+}
+
+task Homing(obj,maxTraverse,x,y,d)
+{
+	wait(d);
+	while(!Obj_IsDeleted(obj))
+	{
+		let ang = ObjMove_GetAngle(obj);
+		let dir=-90;
+		dir = atan2( y - ObjMove_GetY(obj), x - ObjMove_GetX(obj));
+		
+		let diff = dir - ang;
+		while(diff >= 180) { diff -= 360; }    
+		while(diff < -180) { diff += 360; }
+
+		let diffAbs = (|diff|);
+		if(diffAbs < maxTraverse) {
+			ang = dir;
+		} else {
+			ang += maxTraverse * diff / diffAbs;
+		}
+		ObjMove_SetAngle(obj,ang);
+		yield;
+	}
+}
+
+
+let tazueRotateSpeed = 1;
+let tazueRadius = 50;
+let tazueAng = -90;
+let tazueX = 0;
+let tazueY = 0;
+task TazueHandle(bit)
+{
+	let objTazue = CreateFamiliar;
+	renderTinyGoreF(objTazue,0);
+	ObjMove_SetPosition(objTazue,GetCommonData("tazuePosition", [0,0])[0], GetCommonData("tazuePosition", [0,0])[1]);
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, 100, 95, LERP_SMOOTHER);
+	wait(95);
+	tazueX = ObjMove_GetX(objTazue);
+	tazueY = ObjMove_GetY(objTazue);
+	let dis = 50;
+	let rott = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ObjMove_SetPosition(objTazue, ObjMove_GetX(objEnemy) + dis * cos(tazueAng), ObjMove_GetY(objEnemy) + dis * sin(tazueAng));
+		SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
+		tazueX = ObjMove_GetX(objTazue);
+		tazueY = ObjMove_GetY(objTazue);
+		dis = dis * 0.97 + tazueRadius * 0.03;
+		rott = rott * 0.95 + tazueRotateSpeed * 0.05;
+		
+		tazueAng += rott * bit;
+		yield;
+	}
+	Obj_Delete(objTazue);
 }
 
 task timer
