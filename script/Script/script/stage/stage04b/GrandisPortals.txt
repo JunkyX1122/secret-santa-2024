@@ -11,6 +11,7 @@ const PORTAL_ENABLE = 5;
 const PORTAL_COLOR_R = 6;
 const PORTAL_COLOR_G = 7;
 const PORTAL_COLOR_B = 8;
+const PORTAL_FUNCTIONAL = 9;
 let isManagingPortals = true;
 
 let xArray = [];
@@ -331,6 +332,8 @@ function ObjPortal_GetColor(portalID)
 			portalObjectArray[portalID][PORTAL_COLOR_B]];
 }
 
+
+
 function CreatePortal(x,y,ang,xScale, yScale)
 {
 	let obj = ObjPrim_Create( OBJ_PRIMITIVE_2D );
@@ -357,7 +360,7 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	ObjPrim_SetTexture(objB, IMG_GRANDISPORTAL );
 	ObjRender_SetAlpha(objB,255);
 	ObjPrim_SetVertexCount(objB, 32*2);
-	Obj_SetRenderPriorityI(objB,39);
+	Obj_SetRenderPriorityI(objB,29);
 	
 	
 	let objMask = ObjPrim_Create( OBJ_PRIMITIVE_2D );
@@ -430,24 +433,48 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	}
 }
 
+const IN_PORTAL = true;
+const OUT_PORTAL = false;
+
 function PShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	
+	if(inPortal)
+	{
+		SetInPortal(shot);
+	}
+	else
+	{
+		SetOutPortal(shot);
+	}
     PDelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
     return shot;
 }
 function PShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	
+	if(inPortal)
+	{
+		SetInPortal(shot);
+	}
+	else
+	{
+		SetOutPortal(shot);
+	}
     PDelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
     return shot;
 }
 function PShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	
+	if(inPortal)
+	{
+		SetInPortal(shot);
+	}
+	else
+	{
+		SetOutPortal(shot);
+	}
     PDelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
     PDelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
     return shot;
@@ -456,7 +483,14 @@ function PShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove, inP
 {
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
-	
+	if(inPortal)
+	{
+		SetInPortal(shot);
+	}
+	else
+	{
+		SetOutPortal(shot);
+	}
     PDelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
     return shot;
 }
@@ -464,7 +498,14 @@ function PShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blen
 {
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	
+	if(inPortal)
+	{
+		SetInPortal(shot);
+	}
+	else
+	{
+		SetOutPortal(shot);
+	}
     PDelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove, inPortal);
     return shot;
 }

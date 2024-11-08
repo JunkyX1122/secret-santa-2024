@@ -118,16 +118,14 @@ task Fire
 		loop(20)
 		{
 			let obj = PShotA1(GetStgFrameWidth/2, 100, 5, ang+180/40, 75, 418,20, 2, BLEND_ALPHA, true, true);
-			SetInPortal(obj);
-	
+
 			ang+=360/20;
 		}
 		//wait(60);
 		loop(40)
 		{
 			let obj = PShotA1(GetStgFrameWidth/2, 100, 5, ang, 78, 419, 10, 2, BLEND_ALPHA, true, false);
-			SetOutPortal(obj);
-		
+
 			ang+=360/40;
 		}
 		wait(5);

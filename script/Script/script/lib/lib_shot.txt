@@ -378,14 +378,14 @@ ShotData{ id=322 rect=(448,64,480,93) render=ALPHA angular_velocity = 0 delay_co
 ShotData{ id=323 rect=(480,64,512,93) render=ALPHA angular_velocity = 0 delay_color= (255,128,64) } // Orange
 
 // Sakuya Knives
-ShotData{ id=324 rect=(260,93,284,127) render=ALPHA angular_velocity = 0 delay_color= (255,255,255) } // Gray
-ShotData{ id=325 rect=(292,93,316,127) render=ALPHA angular_velocity = 0 delay_color= (255,64,64) } // Red
-ShotData{ id=326 rect=(324,93,348,127) render=ALPHA angular_velocity = 0 delay_color= (255,64,255) } // Purple
-ShotData{ id=327 rect=(356,93,380,127) render=ALPHA angular_velocity = 0 delay_color= (64,64,255) } // Blue
-ShotData{ id=328 rect=(388,93,412,127) render=ALPHA angular_velocity = 0 delay_color= (64,255,255) } // Aqua
-ShotData{ id=329 rect=(420,93,444,127) render=ALPHA angular_velocity = 0 delay_color= (64,255,64) } // Green
-ShotData{ id=330 rect=(452,93,476,127) render=ALPHA angular_velocity = 0 delay_color= (255,255,64) } // Yellow
-ShotData{ id=331 rect=(484,93,508,127) render=ALPHA angular_velocity = 0 delay_color= (255,128,64) } // Orange
+ShotData{ id=324 rect=(260,93,284,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (255,255,255) } // Gray
+ShotData{ id=325 rect=(292,93,316,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (255,64,64) } // Red
+ShotData{ id=326 rect=(324,93,348,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (255,64,255) } // Purple
+ShotData{ id=327 rect=(356,93,380,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (64,64,255) } // Blue
+ShotData{ id=328 rect=(388,93,412,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (64,255,255) } // Aqua
+ShotData{ id=329 rect=(420,93,444,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (64,255,64) } // Green
+ShotData{ id=330 rect=(452,93,476,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (255,255,64) } // Yellow
+ShotData{ id=331 rect=(484,93,508,127) render=ALPHA angular_velocity = 0 collision = 2 delay_color= (255,128,64) } // Orange
 
 // Oval Bullets
 ShotData{ id=332 rect=(258,127,286,157) render=ALPHA angular_velocity = 0 delay_color= (255,255,255) } // Gray
