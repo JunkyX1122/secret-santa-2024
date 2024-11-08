@@ -99,9 +99,27 @@ let TIME = 60*60;
 
 task Fire
 {
+	Stab(90);
+}
+// Borrowing this from Meowstic
+task Stab(ang)
+{
+	//let las = CreateCurveLaserA1(GetBossX, GetBossY, 10, 270, 200, 15, C_LASER_GRAY, 15);
+	//ObjMove_AddPatternA2(las, 15, NO_CHANGE, NO_CHANGE, -1, 0, 0);
+	//ObjShot_SetDeleteFrame(las, 20);
+	let cosDis = 30*cos(ang+180);
+	let sinDis = 30*sin(ang+180);
+	ascent(i in 0..3)
+	{
+		ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, i+5, ang, 42, 42, 10, 2, BLEND_ALPHA, true);
+		ascent(o in 1..5)
+		{
+			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, i+5-o/2, ang+o, 42, 42, 10, 2, BLEND_ALPHA, true);
+			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, i+5-o/2, ang-o, 42, 42, 10, 2, BLEND_ALPHA, true);
+		}				
+	}
 
 }
-
 task timer
 {
     while(TIME>60*10)

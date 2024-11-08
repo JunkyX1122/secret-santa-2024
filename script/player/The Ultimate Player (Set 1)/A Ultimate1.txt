@@ -126,7 +126,7 @@ function CreateParticleListRect(type, path, source, blend,
 let debugDamageRate = false;
 let debugShowHitboxes = false;
 let debugInvincible = false;
-
+let debugSlow = false;
 task DebugKeys()
 {
 	while(true) {
@@ -140,6 +140,11 @@ task DebugKeys()
 		if (GetKeyState(KEY_I) == KEY_PUSH ) {
 			debugInvincible = !debugInvincible;
 			SetCommonData("ForceInvincible", debugInvincible);
+		}
+		if (GetKeyState(KEY_U) == KEY_PUSH ) {
+			debugSlow = !debugSlow;
+			if(debugSlow) { StartSlow(20, TARGET_ALL); }
+			else { StopSlow(TARGET_ALL); }
 		}
 		yield;
 	}

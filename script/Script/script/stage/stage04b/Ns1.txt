@@ -86,7 +86,8 @@ let TIME = 60*60;
     if(count == 95)
     {
 		//move;
-		SetShotAutoDeleteClip(32,GetStgFrameHeight+GetStgFrameHeight/2,32,121);
+		
+		SetShotAutoDeleteClip(32,GetStgFrameHeight+GetStgFrameHeight,32,121);
 		Fire;	
 		magiccircle(objEnemy,1);
 		SizeCircle();
@@ -97,7 +98,7 @@ let TIME = 60*60;
     {
        
     }
-	
+	//Set2DCameraRatio(0.25);
     count++;
     yield;
 }
@@ -232,7 +233,7 @@ task PortalSlash(x,y,ang,d, xScl, yScl)
 	//ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
 	if(!Obj_IsDeleted(objEnemy))
 	{
-		ScreenShake(60,3);
+		ScreenShake(60,7);
 		SE_PlayLen(drum,60);
 		SE_PlayLen(ufo,60);
 		SE_PlayLen(slash,60);
