@@ -117,10 +117,14 @@ task Fire()
 		SE_PlayLen(boon1,60);
 		GravityShooting(bit);
 		wait(60*10);
-		SE_PlayLen(charge0,60);
-		bit*=-1;	
-		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50),120 ,89);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge0,60);
+			bit*=-1;	
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50),120 ,89);
+		}
 		wait(90);
+		ObjEnemy_SetDamageRate(objEnemy, (0.085)/1.5, (0.085)/3);
 	}
 }
 
