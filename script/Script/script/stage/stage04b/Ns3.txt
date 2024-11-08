@@ -52,6 +52,7 @@ let TIME = 60*60;
 	end;
 	SetCommonData("SpellCardBG1",false);
 	
+	TazueHandle();
 }
 @MainLoop
 {
@@ -111,6 +112,14 @@ task Fire
 
 }
 
+
+task TazueHandle()
+{
+	let objTazue = CreateFamiliar;
+	renderTinyGoreF(objTazue,0);
+	ObjMove_SetPosition(objTazue,GetCommonData("tazuePosition", [0,0])[0], GetCommonData("tazuePosition", [0,0])[1]);
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, -100, 60*3, LERP_SMOOTHER);
+}
 task timer
 {
     while(TIME>60*10)

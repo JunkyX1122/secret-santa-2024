@@ -112,7 +112,7 @@ task Fire()
 	yield;
 	PortalSlash(GetStgFrameWidth/2,GetStgFrameHeight,0,60*2, 3, 1.5);
 	PortalSlash(GetStgFrameWidth/2,				   0,0,60*2, 3, 1.5);
-	wait(60*2);
+	wait(60*2+40);
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(boon1,60);
