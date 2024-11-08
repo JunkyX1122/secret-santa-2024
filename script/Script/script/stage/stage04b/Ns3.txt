@@ -109,9 +109,142 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	yield;
+	PortalSlash(GetStgFrameWidth/2,GetStgFrameHeight,0,60*2, 3, 1.5);
+	PortalSlash(GetStgFrameWidth/2,				   0,0,60*2, 3, 1.5);
+	
+	let bit = 1-2*round(rand(0,1));
+	
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+50*bit, 150, 60);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2-50*bit, 150, 60);
+	wait(150);
+	EvacDoom(bit);
+	EvacDoom2(bit);
 }
 
+task EvacDoom(bit)
+{
+	let ang = -90;
+	let cc = 0;
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		let spinner = 70*sin(cc/3 * 1.24);
+		let spacing = 16;
+		if(cc%3==0 && cc%70<30)
+		{
+			SE_PlayLen(Shot1,60);
+			ascent(i in 0..spacing)
+			{
+				let ang2 = ang + 360/spacing*i*bit + spinner*bit;
+				if(ang2%360>90 && ang2%360 < 270)
+				{
+					let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+200)*sin(ang2);
+					let obj = ShotA1(x, GetStgFrameHeight + 30,2.5, - 90,336,336,0,2,BLEND_ADD_ARGB,false);
+					ObjShot_SetSpinAngularVelocity(obj, 4*bit);
+				}
+			}
+		}
+		if(cc%28==0)
+		{
+			SE_PlayLen(shot1,60);
+			ascent(i in 0..spacing)
+			{
+				let ang2 = ang + 360/spacing*i*bit + spinner*bit;
+				if(ang2%360>90 && ang2%360 < 270)
+				{
+					let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2+200)*sin(ang2);
+					let spc = 10;
+					ascent(o in 0..3)
+					{
+						let obj = ShotA1(x, -30, 2, 90-spc*bit+(spc*2)/2*o*bit,92,92,0,2,BLEND_ADD_ARGB,false);
+					}
+				}
+			}
+		}
+		cc++;
+		yield;
+	}
+}
+
+task EvacDoom2(bit)
+{
+	wait(60*3);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		bit*=-1;
+		let rX = rand(50,-50);
+		let rY = rand(10,-10);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+50*bit+rX, 150+rY, 60);
+		ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2-50*bit+rX, 150+rY, 60);
+		SE_PlayLen(chime1,60);
+		ascent(i in 0..5)
+		{
+			GrandisKnives(-90+15*bit*i,bit);
+		}
+		Stab(GetAngleToPlayer(objEnemy),bit);
+		wait(60*3);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge1,60);
+		}
+		wait(55);
+		ObjEnemy_SetDamageRate(objEnemy, (0.06)/1.5, (0.06)/3);
+	}
+}
+task Stab(ang,bit)
+{
+	SE_PlayLen(slash,60);
+	//let las = CreateCurveLaserA1(GetBossX, GetBossY, 10, 270, 200, 15, C_LASER_GRAY, 15);
+	//ObjMove_AddPatternA2(las, 15, NO_CHANGE, NO_CHANGE, -1, 0, 0);
+	//ObjShot_SetDeleteFrame(las, 20);
+	let cosDis = 120*cos(ang+180);
+	let sinDis = 120*sin(ang+180);
+	let spdMult = 1;
+	ascent(i in 0..3)
+	{
+		let id = i==2 ? 55 : 42;
+		
+		let obj1 = ShotA1(ObjMove_GetX(objEnemy)+cosDis, ObjMove_GetY(objEnemy)+sinDis, (i+5)*spdMult, ang, id, id, 20, 2, BLEND_ALPHA, true);
+		let sprd = 0.7;
+		ascent(o in 1..5)
+		{
+			ShotA1(ObjMove_GetX(objEnemy)+cosDis, ObjMove_GetY(objEnemy)+sinDis, (i+5-o/2)*spdMult, ang+o*sprd*bit, id, id, 20, 2, BLEND_ALPHA, true);
+			ShotA1(ObjMove_GetX(objEnemy)+cosDis, ObjMove_GetY(objEnemy)+sinDis, (i+5-o/2)*spdMult, ang-o*sprd*bit, id, id, 20, 2, BLEND_ALPHA, true);
+		}				
+	}
+
+}
+task GrandisKnives(ang,bit)
+{
+	let t = 80;
+	let obj = ShotA2(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),3,ang,-3/t,0,324,324,20,2,BLEND_ALPHA,false);
+	wait(20);
+	
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjRender_SetAngleZ(obj,(360*3)*(cos(90-90/(t-1)*i*bit)) + GetAngleToPlayer(obj) - ang);
+			yield;
+		}
+	}
+	if(!Obj_IsDeleted(objEnemy) && !Obj_IsDeleted(obj))
+	{
+		SE_PlayLen(chime1,60);
+		ObjRender_SetAngleZ(obj,0);
+		ObjMove_SetAngle(obj,GetAngleToPlayer(obj));
+		ObjMove_SetMaxSpeed(obj,10);
+		ObjMove_SetAcceleration(obj,10/120);
+	}
+	while(!Obj_IsDeleted(obj) && !Obj_IsDeleted(objEnemy) )
+	{
+		SE_PlayLen(Shot2,60);
+		let obj2 = ShotA2(ObjMove_GetX(obj),ObjMove_GetY(obj),0,ObjMove_GetAngle(obj),10/120,10,324,324,20,2,BLEND_ADD_ARGB,false);
+		ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+		wait(4);
+	}
+}
 
 task TazueHandle()
 {
@@ -119,7 +252,157 @@ task TazueHandle()
 	renderTinyGoreF(objTazue,0);
 	ObjMove_SetPosition(objTazue,GetCommonData("tazuePosition", [0,0])[0], GetCommonData("tazuePosition", [0,0])[1]);
 	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, -100, 60*3, LERP_SMOOTHER);
+	wait(60*3);
+	Obj_Delete(objTazue);
 }
+
+task PortalSlash(x,y,ang,d, xScl, yScl)
+{
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);
+	}
+	ascent(i in 0..d)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			if(i%5==0)
+			{
+				CreateLine(x,y,ang, PORTAL_HEIGHT*yScl,20);
+				CreateLine(x,y,ang,-PORTAL_HEIGHT*yScl,20);
+			}
+			yield;
+		}
+	}
+	
+	let objC = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objC, IMG_GRANDISPORTALCRACK);
+	Obj_SetRenderPriorityI(objC, 28);
+	ObjSprite2D_SetSourceRect(objC,0, 0, 512, 512);
+	ObjSprite2D_SetDestRect(objC,0, 0, 512, 512);
+	ObjSprite2D_SetDestCenter(objC);
+	ObjRender_SetPosition(objC, x, y,0);
+	ObjRender_SetAngleZ(objC, ang);
+	let xR = 1-2*round(rand(0,1));
+	let yR = 1-2*round(rand(0,1));
+	ObjRender_SetScaleXYZ(objC, xScl*0.5 * xR, yScl*0.5 * yR, 0);
+	//ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		ScreenShake(60,7);
+		SE_PlayLen(drum,60);
+		SE_PlayLen(ufo,60);
+		SE_PlayLen(slash,60);
+	}
+	
+	let portal1 = CreatePortal(x, y, ang, 0, 0);
+	ObjPortal_Grow(portal1, xScl, 0, xScl, yScl, 10);
+	ObjPortal_SetFunctional(portal1,false);
+	PortalSlashHitbox(x, y, ang, PORTAL_HEIGHT*yScl, 10);
+	PortalSlashEffect(x, y, ang, PORTAL_HEIGHT*yScl, 60);
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		yield;
+	}
+	
+	ObjPortal_Delete(portal1);
+	Obj_Delete(objC);
+}
+
+task PortalSlashHitbox(x, y, ang, width, t)
+{
+	let objspell = CreateShotA1(x,y,0,0,1,0);
+	ObjRender_SetAlpha(objspell,0);
+	ObjShot_SetSpellResist(objspell,true);
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = sin(90/(t-1)*i);
+			let dis = 1024;
+			ObjShot_SetIntersectionLine(objspell,x-dis*cos(ang),y-dis*sin(ang),x+dis*cos(ang),y+dis*sin(ang), width*scl*2);
+			yield;
+		}
+	}
+	Obj_Delete(objspell);
+}
+
+task PortalSlashEffect(x, y, ang, width, t)
+{
+	let objs = [];
+	ascent(o in 0..3)
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj, IMG_PIXEL);
+		Obj_SetRenderPriorityI(obj, 55);
+		let www = o == 2 ? GetStgFrameWidth+50 : 1024;
+		let hhh = o == 2 ? GetStgFrameHeight+50 : width * 2;
+		ObjSprite2D_SetSourceRect(obj,0, 0, www, hhh);
+		ObjSprite2D_SetDestRect(obj,0, 0, www, hhh);
+		ObjSprite2D_SetDestCenter(obj);
+		if(o==2)
+		{
+			x = GetStgFrameWidth/2;
+			y = GetStgFrameHeight/2;
+			ang = 0;
+		}
+		ObjRender_SetPosition(obj, x, y,0);
+		ObjRender_SetAngleZ(obj, ang);
+		ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+		
+		objs ~= [obj];
+	}
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let sclP9 = (1 - (1 - 1/(t-1)*i)^9);
+			let sclP2 = (1 - (1 - 1/(t-1)*i)^2);
+			ObjRender_SetAlpha(objs[0],255-255*sclP2);
+			ObjRender_SetScaleY(objs[0],sclP9);
+			
+			ObjRender_SetAlpha(objs[1],64-64/t*i);
+			ObjRender_SetScaleY(objs[1],2 - 1/t*i);
+			
+			ObjRender_SetAlpha(objs[2],32-32/t*i);
+			
+			yield;
+		}
+	}
+	ascent(o in 0..3)
+	{
+		Obj_Delete(objs[o]);
+	}
+}
+
+task CreateLine(x,y,ang,d,t)
+{
+	let objLine = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine, 2);
+	Obj_SetRenderPriorityI(objLine,38);
+	ObjPrim_SetVertexPosition(objLine , 0, -1024, 0,0);
+	ObjPrim_SetVertexPosition(objLine , 1,  1024, 0,0);
+	ObjRender_SetAngleZ(objLine,ang);
+	ObjRender_SetPosition(objLine, x, y, 0);
+	
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = sin(90/(t-1)*i);
+			let dis = d*scl * 1.5;
+			let ang2 = ang + 90;
+			ObjRender_SetAlpha(objLine,255-255*scl);
+			ObjRender_SetPosition(objLine, x + dis * cos(ang2), y + dis * sin(ang2), 0);
+			yield;
+		}
+	}
+	Obj_Delete(objLine);
+}
+
+
 task timer
 {
     while(TIME>60*10)
