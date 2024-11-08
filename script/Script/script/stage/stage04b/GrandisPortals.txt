@@ -25,6 +25,7 @@ let portalObjectArray = [];
 
 task StartPortalSystem()
 {
+	let hasBeenReset = false;
 	tex_rdMask = CreateRenderTargetEx("textureMask", GetStgFrameWidth, GetStgFrameHeight);
 	
 	ascent(i in 0..32)
@@ -43,17 +44,26 @@ task StartPortalSystem()
 			if(ObjPortal_IsEnabled(portalsEnabledCount))
 			{
 				portalsEnabledCount++;
+				hasBeenReset = false;
 			}
+		}
+		if(portalsEnabledCount==0&&!hasBeenReset)
+		{
+			ResetPortalArray();
+			hasBeenReset = true;
 		}
 		//WriteLog(portalsEnabledCount);
 		ClearPortalTargets();
 		yield;
 	}
-	ascent(i in 0..length(portalObjectArray))
-	{
-		ObjPortal_Delete(i);
-	}
+	ResetPortalArray();
 	ClearPortalTargets();
+}
+
+task ResetPortalArray()
+{
+	WriteLog("Portal Array Reset!");
+	portalObjectArray = [];
 }
 
 task ClearPortalTargets()
@@ -241,99 +251,124 @@ task ManageAllPortals()
 	}
 }
 
+function IsInvalidID(portalID)
+{
+	return portalID >= length(portalObjectArray);
+}
+
 function ObjPortal_SetX(portalID, x)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_X] = x;
 }
 function ObjPortal_GetX(portalID)
 {
+	if(IsInvalidID(portalID)) return 0;
 	return portalObjectArray[portalID][PORTAL_X];
 }
 
 function ObjPortal_SetY(portalID, y)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_Y] = y;
 }
 function ObjPortal_GetY(portalID)
 {
+	if(IsInvalidID(portalID)) return 0;
 	return portalObjectArray[portalID][PORTAL_Y];
 }
 
 function ObjPortal_SetPosition(portalID, x, y)
 {
+	if(IsInvalidID(portalID)) return false;
 	ObjPortal_SetX(portalID, x);
 	ObjPortal_SetY(portalID, y);
 }
 function ObjPortal_GetPosition(portalID)
 {
+	if(IsInvalidID(portalID)) return [0,0];
 	return [ObjPortal_GetX(portalID), ObjPortal_GetY(portalID)];
 }
 
 function ObjPortal_SetAngle(portalID, a)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_ANGLE] = a;
 }
 function ObjPortal_GetAngle(portalID)
 {
+	if(IsInvalidID(portalID)) return 0;
 	return portalObjectArray[portalID][PORTAL_ANGLE];
 }
 
 function ObjPortal_SetScaleX(portalID, x)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_WIDTHSCALE] = x;
 }
 function ObjPortal_GetScaleX(portalID)
 {
+	if(IsInvalidID(portalID)) return 0;
 	return portalObjectArray[portalID][PORTAL_WIDTHSCALE];
 }
 
 function ObjPortal_SetScaleY(portalID, y)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_HEIGHTSCALE] = y;
 }
 function ObjPortal_GetScaleY(portalID)
 {
+	if(IsInvalidID(portalID)) return 0;
 	return portalObjectArray[portalID][PORTAL_HEIGHTSCALE];
 }
 
 function ObjPortal_SetScale(portalID, xy)
 {
+	if(IsInvalidID(portalID)) return false;
 	ObjPortal_SetScaleX(portalID, xy);
 	ObjPortal_SetScaleY(portalID, xy);
 }
 function ObjPortal_SetScale(portalID, x, y)
 {
+	if(IsInvalidID(portalID)) return false;
 	ObjPortal_SetScaleX(portalID, x);
 	ObjPortal_SetScaleY(portalID, y);
 }
 function ObjPortal_GetScale(portalID)
 {
+	if(IsInvalidID(portalID)) return [0,0];
 	return [ObjPortal_GetScaleX(portalID), ObjPortal_GetScaleY(portalID)];
 }
 
 function ObjPortal_Delete(portalID)
 {
+	if(IsInvalidID(portalID)) return false;
 	ObjPortal_SetScale(portalID, 0, 0);
 	ObjPortal_SetColor(portalID, 255, 255, 255);
 	portalObjectArray[portalID][PORTAL_ENABLE] = false;
 }
 function ObjPortal_IsDeleted(portalID)
 {
+	if(IsInvalidID(portalID)) return true;
 	return portalObjectArray[portalID][PORTAL_ENABLE] == false;
 }
 function ObjPortal_IsEnabled(portalID)
 {
+	if(IsInvalidID(portalID)) return false;
 	return portalObjectArray[portalID][PORTAL_ENABLE] == true;
 }
 
 function ObjPortal_SetColor(portalID, r, g, b)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_COLOR_R] = r;
 	portalObjectArray[portalID][PORTAL_COLOR_G] = g;
 	portalObjectArray[portalID][PORTAL_COLOR_B] = b;
 }
 function ObjPortal_GetColor(portalID)
 {
+	if(IsInvalidID(portalID)) return [0,0,0];
 	return [portalObjectArray[portalID][PORTAL_COLOR_R], 
 			portalObjectArray[portalID][PORTAL_COLOR_G], 
 			portalObjectArray[portalID][PORTAL_COLOR_B]];
@@ -341,10 +376,12 @@ function ObjPortal_GetColor(portalID)
 
 function ObjPortal_SetFunctional(portalID, f)
 {
+	if(IsInvalidID(portalID)) return false;
 	portalObjectArray[portalID][PORTAL_FUNCTIONAL] = f;
 }
 function ObjPortal_IsFunctional(portalID)
 {
+	if(IsInvalidID(portalID)) return false;
 	return portalObjectArray[portalID][PORTAL_FUNCTIONAL];
 }
 
@@ -398,16 +435,17 @@ function CreatePortal(x,y,ang,xScale, yScale)
 	task RenderPortal()
 	{
 		let isEnabled = ObjPortal_IsEnabled(id);
-		while(isManagingPortals && isEnabled)
+		while(isManagingPortals && isEnabled && !IsInvalidID(id))
 		{
 			isEnabled = ObjPortal_IsEnabled(id);
-			x = portalObjectArray[id][PORTAL_X];
-			y = portalObjectArray[id][PORTAL_Y];
-			
+			x = ObjPortal_GetX(id);
+			y = ObjPortal_GetY(id);
+			let portalWidth = ObjPortal_GetScaleX(id);
+			let portalHeight = ObjPortal_GetScaleY(id);
 			ascent(i in 0..32)
 			{
-				let positionTop = 	 Rotate2D(xArray[i]*portalObjectArray[id][PORTAL_WIDTHSCALE], -yArray[i]*portalObjectArray[id][PORTAL_HEIGHTSCALE], ang);
-				let positionBottom = Rotate2D(xArray[i]*portalObjectArray[id][PORTAL_WIDTHSCALE],  yArray[i]*portalObjectArray[id][PORTAL_HEIGHTSCALE], ang);
+				let positionTop = 	 Rotate2D(xArray[i]*portalWidth, -yArray[i]*portalHeight, ang);
+				let positionBottom = Rotate2D(xArray[i]*portalWidth,  yArray[i]*portalHeight, ang);
 		
 				ObjPrim_SetVertexPosition(obj , i*2+0, positionTop[0]	, positionTop[1],0);
 				ObjPrim_SetVertexPosition(obj , i*2+1, positionBottom[0], positionBottom[1],0);

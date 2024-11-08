@@ -108,9 +108,10 @@ task Fire
 	let bit = 1-2*round(rand(0,1));
 	while(!Obj_IsDeleted(objEnemy))
 	{
+		
 		Sweep(bit);
 		KnifeFire(bit);
-		wait(60*13);
+		wait(60*13+10);
 		bit*=-1;
 	}
 }
