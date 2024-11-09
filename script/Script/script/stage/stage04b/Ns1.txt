@@ -381,7 +381,7 @@ task end
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
     SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
-
+	SetPortalManaging(false);
 	loop(60)
 	{
 		SetShotAutoDeleteClip(32,32,32,32);

@@ -454,6 +454,7 @@ task end
 		yield;
 	}
 
+	SetPortalManaging(false);
 	SE_PlayLen(BossDead,50);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	SetAutoDeleteObject(true);

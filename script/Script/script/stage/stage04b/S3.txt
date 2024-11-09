@@ -15,7 +15,7 @@ let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
 
-let TIME_MAX = 40;
+let TIME_MAX = 38;
 let HEALTH_MAX = 225/3;
 let TIME = TIME_MAX;
 let finalSpellBool = false;
@@ -55,12 +55,12 @@ let finalSpellBool = false;
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	renderYuuma(objEnemy2);
 	HitCirc(objEnemy2);
-	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 100, 60);
+	//ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 100, 60);
 
 	ObjMove_SetPosition(objEnemy3, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
 	renderNitoriDS(objEnemy3);
 	//HitCirc(objEnemy3);
-	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 175, 60);
+	//ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 175, 60);
 	
 	
 	end;
@@ -78,6 +78,9 @@ let finalSpellBool = false;
 	magiccircle(objEnemy3,1);
 	ShrinkCircle();
 	SetCommonData("bossBarDampenAmount",1);
+	
+	StartPortalSystem();
+	Fire;
 }
 
 
@@ -107,12 +110,12 @@ let finalSpellBool = false;
 	}
     if(count == 90)
 	{
-		StartPortalSystem();
+		
 	}
     if(count == 95)
     {
-		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
-		Fire;
+		//ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		
 		
         //count = 1111;
     }
@@ -133,40 +136,64 @@ let gSpeed = initGSpeed;
 let phase = 0;
 task Fire
 {
+	yield;
 	let bit = 1-2*round(rand(0,1));
 	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2 + 400*bit, 100, 60);
 
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2 - 400*bit, 175, 60);
 	
 	let sprd = 5;
+	let cc = 0;
+	let d = 25;
 	ascent(i in 0..sprd)
 	{
-		let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2 - 50)*bit + (GetStgFrameWidth-100)/(sprd-1)*i*bit;
-		CrossSlashVertical(x, 120+90*i, 1*[1,-1][i%2]);
-		wait(30);
+		if(i!=2)
+		{
+			let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2 - d)*bit + (GetStgFrameWidth-d*2)/(sprd-1)*i*bit;
+			CrossSlashVertical(x, 60+100*cc, 1*[1,-1][i%2]);
+			cc++;
+			wait(20);
+		}
 	}
-	loop(2)
+	wait(60*9);
+	cc = 0;
+	sprd = 3;
+	ascent(i in 0..sprd)
 	{
 		
-		//CrossSlashVertical(GetPlayerX, 0, bit);
-		//wait(60*9);
-		//bit*=-1;
+		let y = GetStgFrameHeight/2 - (GetStgFrameHeight/2 - d) + (GetStgFrameHeight-d*2)/(sprd-1)*i;
+		CrossSlashHorizontal(y, 60+100*cc, 1*[1,-1][i%2]*bit);
+		cc++;
+		wait(20);
+		
 	}
-	
+	wait(60*9);
+	let vBit = 1;
+	loop(2)
+	{
+		let x = GetPlayerX;
+		let y = GetPlayerY;
+		
+		CrossSlashVertical(x, 60, vBit);
+		CrossSlashHorizontal(y, 60, bit);
+		vBit*=-1;
+		bit*=-1;
+		wait(60*7);
+	}
 }
 let SLASH_DELAY = 60 * 2.5;
 
 let SLASH_STAY = 90; 
 let SLASH_WARN = 60 * 1;
 let SLASH_CLOSE = 30;
-let ATTACK_DELAY = SLASH_STAY;
+let ATTACK_DELAY = 45;
 task CrossSlashVertical(x, extraDelay, bit)
 {
 	Obj_SetValue(objEnemy3, "isHittable", false);
 	PortalSlash(x, 				   0, 90, SLASH_DELAY, SLASH_STAY+extraDelay+ATTACK_DELAY, SLASH_WARN, SLASH_CLOSE, 0.75, 1, true);
 	PortalSlash(x, GetStgFrameHeight, 90, SLASH_DELAY, SLASH_STAY+extraDelay+ATTACK_DELAY, SLASH_WARN, SLASH_CLOSE, 0.75, 1, false);
 	wait(SLASH_DELAY+extraDelay);
-	
+	SE_PlayLen(LaserDelLong,60);
 	MegaSlash(x, bit, ATTACK_DELAY);
 	ObjMove_SetPosition(objEnemy3, x, GetStgFrameHeight/2 + (GetStgFrameHeight)*bit);
 	wait(ATTACK_DELAY);
@@ -182,9 +209,10 @@ task CrossSlashVertical(x, extraDelay, bit)
 task CrossSlashHorizontal(y, extraDelay, bit)
 {
 	Obj_SetValue(objEnemy2, "isHittable", false);
-	PortalSlash(			  0 , y, 0, SLASH_DELAY, SLASH_STAY+extraDelay, SLASH_WARN, SLASH_CLOSE, 0.75, 1, true);
-	PortalSlash(GetStgFrameWidth, y, 0, SLASH_DELAY, SLASH_STAY+extraDelay, SLASH_WARN, SLASH_CLOSE, 0.75, 1, false);
+	PortalSlash(			  0 , y, 0, SLASH_DELAY, SLASH_STAY+extraDelay+ATTACK_DELAY, SLASH_WARN, SLASH_CLOSE, 0.75, 1, true);
+	PortalSlash(GetStgFrameWidth, y, 0, SLASH_DELAY, SLASH_STAY+extraDelay+ATTACK_DELAY, SLASH_WARN, SLASH_CLOSE, 0.75, 1, false);
 	wait(SLASH_DELAY+extraDelay);
+	SE_PlayLen(LaserDelLong,60);
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2 + (GetStgFrameWidth/2 + 100)*bit, y);
 	GrandisDash(y, bit, ATTACK_DELAY);
 	wait(ATTACK_DELAY);
@@ -238,15 +266,15 @@ task MegaSlash(xS,bit,waiter)
 				randY = rand(-10, 10);		
 				ascent(p in 0..2)
 				{
-					let xB = xS+3*(i*(i+0.1))*[1,-1][p];
+					let xB = xS+4.5*(i*(i+0.1))*[1,-1][p];
 					if(xB > -20 && xB < GetStgFrameWidth + 20)
 					{
 						if(o>0)
 						{
-							let las = CreateStraightLaserA1(xB, yStart, ang, 400, 15, 60, 36, 0);
+							let las = CreateStraightLaserA1(xB, yStart, ang, 400, 15, 40, 36, 0);
 							Length(las);
 						}
-						let lasExpand = CreateStraightLaserA1(xB, yStart, ang, 400, 15, 999, [7,36][o], 1);
+						let lasExpand = CreateStraightLaserA1(xB, yStart, ang, 400, 15, 999, [7,36][o], [99999,1][o]);
 						ObjLaser_SetItemDistance(lasExpand, 1000);
 						ObjShot_SetIntersectionEnable(lasExpand, false);
 						ObjStLaser_SetSource(lasExpand, 0);
@@ -267,15 +295,16 @@ task MegaSlash(xS,bit,waiter)
 	}
 	task BulletBeams(x, y, angle)
 	{
+		let sprd = 75;
 		ascent(h in 0..12)
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
-				let obj2 = ShotA2(x, y+h*50*-bit, 0.2-0.05, angle-1, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
+				let obj2 = ShotA2(x, y+h*sprd*-bit, 0.2-0.05, angle-1, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
 				ObjMove_AddPatternA2(obj2, 45, NO_CHANGE, NO_CHANGE, 0.02, 2, 0);
 				ascent(i in -2..1)
 				{
-					let obj = ShotA2(x, y+h*50*-bit, 0.2+0.05*sin(180+i*90), angle+i, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
+					let obj = ShotA2(x, y+h*sprd*-bit, 0.2+0.05*sin(180+i*90), angle+i, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
 					ObjMove_AddPatternA2(obj, 45, NO_CHANGE, NO_CHANGE, 0.02, 2, 0);
 				}
 				yield;
@@ -411,7 +440,7 @@ task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl, slashBool)
 	}
 	if(!Obj_IsDeleted(objEnemy))
 	{
-		SE_PlayLen(LaserDelLong,60);
+		//SE_PlayLen(LaserDelLong,60);
 	}
 	ascent(i in 0..warn)
 	{
@@ -567,6 +596,8 @@ task end
 	{
 		yield;
 	}
+	
+	SetPortalManaging(false);
 	SetCommonData("bossBarDampenAmount",0.05);
 	SE_PlayLen(BossDead,50);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
