@@ -5,8 +5,8 @@
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
-#include "./Initiate.txt"
-
+#include "./../Initiate.txt"
+#include "./RedrinFunctions.txt"
 let objEnemy;
 let objEnemy2;
 let count = 0;

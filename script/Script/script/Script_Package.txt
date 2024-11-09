@@ -37,16 +37,23 @@ task Loader
 let carryOn = true;
 task TTitleScene
 {
+	
 	//タイトルシーン終了フラグ
 	wait(120);
+	StartStageProgression();
+	ClosePackage();
+}
+
+function StartStageProgression()
+{
+	carryOn = true;
+	SetCommonData("hasThingsInitialised",false);
 	TStageScene("",4,60);
 	if(carryOn==true)
 	{
 		TStageScene("",5,60);
 	}
 }
-
-
 //----------------------------------------------------
 // ステージシーン
 //----------------------------------------------------
@@ -121,7 +128,8 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 			{
 				TTransition();
 				TerminateStageScene();
-				TStageScene(1,SELECT_ID,1);
+				carryOn = false;
+				StartStageProgression();
 				//return;
 			
 			}

@@ -5,7 +5,7 @@
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
-#include "./Initiate.txt"
+#include "./../Initiate.txt"
 
 let objEnemy;
 let objEnemy2;

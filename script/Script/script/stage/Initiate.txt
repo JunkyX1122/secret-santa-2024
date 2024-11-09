@@ -6,6 +6,8 @@ x2 = (GetScreenWidth-107);
 task InitialiseIndiv()
 {
 	if(GetCommonData("hasThingsInitialised",false)==true) return;
+	WriteLog("INITIALISE THINGS");
+	SetCommonData("bossBarDampenAmount",0.05);
 	SetCommonData("Smoother",0);
 	SetCommonData("WideScreen",true);
 	SetPlayerLife(999);
@@ -16,6 +18,7 @@ task InitialiseIndiv()
 	SetCommonData("GlobalAlpha",255);
 	SetCommonData("PlayBorder",GetPlayerClip);
 	SetCommonData("GlobalColour",[255,255,255]);
+	SetCommonData("SpellCardBG1",false);
 	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	SetCommonData("hasThingsInitialised",true);
 }

@@ -10,6 +10,11 @@ task LoadThings
 		LoadTexture(StageSystem_ImgArray[i]);
 		yield;
 	}
+	ascent(i in 0..length(StageSystem_ImgArray))
+	{
+		LoadTexture(StageSystem_ImgArray[i]);
+		yield;
+	}
 	ascent(i in 0..length(Enemy_ImgArray))
 	{
 		LoadTexture(Enemy_ImgArray[i]);
@@ -60,7 +65,7 @@ task LoadThings
 	//-----------------Load Sound-----------------
 	ascent(i in 0..length(LoadAllSoundsArray))
 	{
-		LoadTexture(LoadAllSoundsArray[i]);
+		LoadSound(LoadAllSoundsArray[i]);
 		yield;
 	}
 	loop(120){yield;}

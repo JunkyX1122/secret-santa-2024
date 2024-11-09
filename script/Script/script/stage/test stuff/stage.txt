@@ -125,7 +125,7 @@ task Dialog
 }
 task StartStage
 {	
-	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
+	//ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
 	SetCommonData("MaxNumberOfPhases",10);
 	loop(60)

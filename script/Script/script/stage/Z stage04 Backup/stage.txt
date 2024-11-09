@@ -5,7 +5,7 @@
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
-#include "./Initiate.txt"
+#include "./../Initiate.txt"
 
 let music1 = ObjSound_Create;
 let startMusic = false;
@@ -119,7 +119,7 @@ task LoadBoss()
 }
 task StartStage
 {	
-	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
+	//ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
 	SetCommonData("MaxNumberOfPhases",5);
 	loop(120)
