@@ -184,11 +184,11 @@ task end
 		{
 			let bit = 1-2*round(rand(0,1));
 			let apa = (rand(0,128+64))/2;
-			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,0,4+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,1,1+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,0,4+i,bit,[apa,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,1,1+i,bit,[apa,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
 			
-			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,0,4+i,bit,[apa,255,apa],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,1,1+i,bit,[apa,255,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,0,4+i,bit,[apa/1.5,apa/6,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,1,1+i,bit,[apa/1.5,apa/6,255],1,BLEND_ADD_ARGB,5,90,79);
 		}
 		ScreenShake(30,9); 
 		SE_PlayLen(BossEnd,80);
@@ -208,11 +208,11 @@ task end
 		{
 			let bit = 1-2*round(rand(0,1));
 			let apa = (rand(0,128)+64)/3;
-			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,0,4+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,1,1+i,bit,[apa,255,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,0,4+i,bit,[apa,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),1,1,1+i,bit,[apa,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
 			
-			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,0,4+i,bit,[apa,255,apa],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,1,1+i,bit,[apa,255,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,0,4+i,bit,[apa/1.5,apa/6,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),1,1,1+i,bit,[apa/1.5,apa/6,255],1,BLEND_ADD_ARGB,5,90,79);
 		}
 	}
 	

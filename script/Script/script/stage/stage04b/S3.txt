@@ -14,17 +14,20 @@ let objEnemy3 = CreateFamiliar;
 let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 65;
+
+let TIME_MAX = 65;
+let HEALTH_MAX = 225/3;
+let TIME = TIME_MAX;
 let finalSpellBool = false;
 
 
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
-  SetScriptResult(225/3);
+  SetScriptResult(HEALTH_MAX);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(65);
+  SetScriptResult(TIME_MAX);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -52,19 +55,19 @@ let finalSpellBool = false;
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	renderYuuma(objEnemy2);
 	HitCirc(objEnemy2);
-	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2-100, 100, 60);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 100, 60);
 
 	ObjMove_SetPosition(objEnemy3, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
 	renderNitoriDS(objEnemy3);
-	HitCirc(objEnemy3);
-	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2+100, 100, 60);
+	//HitCirc(objEnemy3);
+	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 175, 60);
 	
 	
 	end;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Lance Art &quot;Cross Slash&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Lance Art &quot;Cross Slash&quot;","", LENEN, 163,43,255);
 	
 	ScreenShake(60,4);
 
@@ -74,7 +77,7 @@ let finalSpellBool = false;
 	magiccircle(objEnemy2,1);
 	magiccircle(objEnemy3,1);
 	SizeCircle();
-	
+	SetCommonData("bossBarDampenAmount",1);
 }
 
 
@@ -113,10 +116,10 @@ let finalSpellBool = false;
 		
         //count = 1111;
     }
-    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
+    if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
     {
-       
-    }
+		ObjEnemy_AddLife(objEnemy,-(HEALTH_MAX)/(60*TIME_MAX-2));
+	}
     count++;
     yield;
 }
@@ -130,7 +133,201 @@ let gSpeed = initGSpeed;
 let phase = 0;
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	CrossSlashHorizontal(GetPlayerY, bit);
+	CrossSlashVertical(GetPlayerX, bit);
+}
+let SLASH_DELAY = 60 * 1.5;
+task CrossSlashVertical(x, bit)
+{
+	PortalSlash(x, 				   0, 90, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, true);
+	PortalSlash(x, GetStgFrameHeight, 90, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, false);
+	wait(SLASH_DELAY);
+}
+task CrossSlashHorizontal(y, bit)
+{
+	PortalSlash(			  0 , y, 0, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, true);
+	PortalSlash(GetStgFrameWidth, y, 0, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, false);
+	wait(SLASH_DELAY);
+}
+task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl, slashBool)
+{
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge0,60);
+	}
+	ascent(i in 0..d)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			if(i%5==0 && slashBool)
+			{
+				CreateLine(x,y,ang, PORTAL_HEIGHT*yScl,20);
+				CreateLine(x,y,ang,-PORTAL_HEIGHT*yScl,20);
+			}
+			yield;
+		}
+	}
 	
+	let objC = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objC, IMG_GRANDISPORTALCRACK);
+	Obj_SetRenderPriorityI(objC, 28);
+	ObjSprite2D_SetSourceRect(objC,0, 0, 512, 512);
+	ObjSprite2D_SetDestRect(objC,0, 0, 512, 512);
+	ObjSprite2D_SetDestCenter(objC);
+	ObjRender_SetPosition(objC, x, y,0);
+	ObjRender_SetAngleZ(objC, ang);
+	let xR = 1-2*round(rand(0,1));
+	let yR = 1-2*round(rand(0,1));
+	ObjRender_SetScaleXYZ(objC, xScl*0.5 * xR, yScl*0.5 * yR, 0);
+	//ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	if(!Obj_IsDeleted(objEnemy) && slashBool)
+	{
+		ScreenShake(60,3);
+		SE_PlayLen(drum,60);
+		SE_PlayLen(ufo,60);
+		SE_PlayLen(slash,60);
+	}
+	
+	let portal1 = CreatePortal(x, y, ang, 0, 0);
+	ObjPortal_Grow(portal1, xScl, 0, xScl, yScl, 10);
+	if(slashBool)
+	{
+		PortalSlashHitbox(x, y, ang, PORTAL_HEIGHT*yScl, 10);
+		PortalSlashEffect(x, y, ang, PORTAL_HEIGHT*yScl, 60);
+	}
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			yield;
+		}
+	}
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(LaserDelLong,60);
+	}
+	ascent(i in 0..warn)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let cc = 200+55*cos((360*3)/warn*i);
+			ObjPortal_SetColor(portal1, 255, cc, cc);
+			ObjRender_SetColor(objC, 255, cc, cc);
+			yield;
+		}
+	}
+	
+	ObjPortal_SetColor(portal1, 255, 255, 255);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(gap,60);
+	}
+	ObjPortal_Grow(portal1, xScl, yScl, xScl*0.5, 0, closT, true);
+	closT = round(closT*0.5);
+	ascent(i in 0..closT)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = Interpolate_Accelerate(1, 0.75, 1/closT*i);
+			ObjRender_SetAlpha(objC, Interpolate_Linear(255, 0, 1/closT*i));
+			//ObjRender_SetScaleXYZ(objC, xScl*0.7 * xR, yScl*0.7 * yR * scl, 0);
+			yield;
+		}
+	}
+	Obj_Delete(objC);
+}
+
+task PortalSlashHitbox(x, y, ang, width, t)
+{
+	let objspell = CreateShotA1(x,y,0,0,1,0);
+	ObjRender_SetAlpha(objspell,0);
+	ObjShot_SetSpellResist(objspell,true);
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = sin(90/(t-1)*i);
+			let dis = GetScreenWidth;
+			ObjShot_SetIntersectionLine(objspell,x-dis*cos(ang),y-dis*sin(ang),x+dis*cos(ang),y+dis*sin(ang), width*scl*2);
+			yield;
+		}
+	}
+	Obj_Delete(objspell);
+}
+
+task PortalSlashEffect(x, y, ang, width, t)
+{
+	let objs = [];
+	ascent(o in 0..3)
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj, IMG_PIXEL);
+		Obj_SetRenderPriorityI(obj, 55);
+		let www = GetScreenWidth * 2;
+		let hhh = o == 2 ? GetStgFrameHeight+50 : width * 2;
+		ObjSprite2D_SetSourceRect(obj,0, 0, www, hhh);
+		ObjSprite2D_SetDestRect(obj,0, 0, www, hhh);
+		ObjSprite2D_SetDestCenter(obj);
+		if(o==2)
+		{
+			x = GetStgFrameWidth/2;
+			y = GetStgFrameHeight/2;
+			ang = 0;
+		}
+		ObjRender_SetPosition(obj, x, y,0);
+		ObjRender_SetAngleZ(obj, ang);
+		ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+		
+		objs ~= [obj];
+	}
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let sclP9 = (1 - (1 - 1/(t-1)*i)^9);
+			let sclP2 = (1 - (1 - 1/(t-1)*i)^2);
+			ObjRender_SetAlpha(objs[0],255-255*sclP2);
+			ObjRender_SetScaleY(objs[0],sclP9);
+			
+			ObjRender_SetAlpha(objs[1],64-64/t*i);
+			ObjRender_SetScaleY(objs[1],2 - 1/t*i);
+			
+			ObjRender_SetAlpha(objs[2],32-32/t*i);
+			
+			yield;
+		}
+	}
+	ascent(o in 0..3)
+	{
+		Obj_Delete(objs[o]);
+	}
+}
+
+task CreateLine(x,y,ang,d,t)
+{
+	let objLine = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine, 2);
+	Obj_SetRenderPriorityI(objLine,38);
+	ObjPrim_SetVertexPosition(objLine , 0, -1024, 0,0);
+	ObjPrim_SetVertexPosition(objLine , 1,  1024, 0,0);
+	ObjRender_SetAngleZ(objLine,ang);
+	ObjRender_SetPosition(objLine, x, y, 0);
+	
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = sin(90/(t-1)*i);
+			let dis = d*scl * 1.5;
+			let ang2 = ang + 90;
+			ObjRender_SetAlpha(objLine,255-255*scl);
+			ObjRender_SetPosition(objLine, x + dis * cos(ang2), y + dis * sin(ang2), 0);
+			yield;
+		}
+	}
+	Obj_Delete(objLine);
 }
 
 task timer
@@ -164,7 +361,7 @@ task end
 	{
 		yield;
 	}
-
+	SetCommonData("bossBarDampenAmount",0.05);
 	SE_PlayLen(BossDead,50);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	SetAutoDeleteObject(true);

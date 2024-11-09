@@ -50,7 +50,7 @@ let HEALTH_MAX = 225/3;
 
 	//WingAura(objEnemy);
 	//SetIntersectionVisualization(true);
-	
+	SetCommonData("bossBarDampenAmount",1);
 }
 
 
@@ -85,7 +85,7 @@ let HEALTH_MAX = 225/3;
     }
 	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
     {
-		ObjEnemy_AddLife(objEnemy,-(HEALTH_MAX)/(TIME*TIME_MAX-2));
+		ObjEnemy_AddLife(objEnemy,-(HEALTH_MAX)/(60*TIME_MAX-2));
 	}
     count++;
     yield;
@@ -779,7 +779,7 @@ task end
 	{
 		yield;
 	}
-
+	SetCommonData("bossBarDampenAmount",0.05);
 	SE_PlayLen(BossDead,50);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	SetAutoDeleteObject(true);

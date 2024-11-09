@@ -6,6 +6,7 @@ x2 = (GetScreenWidth-107);
 task InitialiseIndiv()
 {
 	if(GetCommonData("hasThingsInitialised",false)==true) return;
+	SetCommonData("bossBarDampenAmount",0.05);
 	SetCommonData("Smoother",0);
 	SetCommonData("WideScreen",true);
 	SetPlayerLife(999);
@@ -18,86 +19,4 @@ task InitialiseIndiv()
 	SetCommonData("GlobalColour",[255,255,255]);
 	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	SetCommonData("hasThingsInitialised",true);
-}
-
-task WingAura(target)
-{
-	while(!Obj_IsDeleted(target))
-	{
-		WingFlap(target,100);
-		wait(100);
-	}
-}
-task WingFlap(target,time)
-{
-	Wing(target,1,1,-10,time);
-	Wing(target,1,-1,10,time);
-
-}
-task Wing(target,totalscl,bit,ang,time)
-{
-	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
-	ObjPrim_SetTexture(obj,IMG_WING);
-	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
-	ObjPrim_SetVertexCount(obj, 4);
-	Obj_SetRenderPriorityI(obj,29);
-	ObjRender_SetScaleXYZ(obj,totalscl*bit,totalscl,0);
-	ObjPrim_SetDestCenter(obj,0,0,512,128);
-	ObjRender_SetAngleZ(obj,ang);
-	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
-	let c = 0;
-	let totAng = ang;
-	loop(time)
-	{
-		if(!Obj_IsDeleted(target))
-		{
-			ObjRender_SetScaleXYZ(obj,totalscl*bit*(0.6+0.4*cos(c)),totalscl,0);
-			ObjRender_SetAngleZ(obj,ang);
-			
-			ObjRender_SetPosition(obj,ObjMove_GetX(target),ObjMove_GetY(target),0);
-		
-			if(c%360<180)
-			{
-				loop(7)
-				{
-					ang+=0.5*bit*sin(c);
-					c+=1.5;
-				}
-			}
-			if(c%360<270)
-			{
-				loop(1)
-				{
-					ang+=0.5*bit*sin(c);
-					c+=1.5;
-				}
-			}
-			ang+=0.5*bit*sin(c);
-			c+=1.5;
-			
-			CreateWing(ObjMove_GetX(target),ObjMove_GetY(target),3*bit*(0.6+0.4*cos(c)),ang);
-			
-			yield;
-		}
-	}
-	Obj_Delete(obj);
-	task CreateWing(x,y,xscl,ang)
-	{
-		let obj2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
-		ObjPrim_SetTexture(obj2,IMG_WING);
-		ObjPrim_SetPrimitiveType(obj2, PRIMITIVE_TRIANGLEFAN);
-		ObjPrim_SetVertexCount(obj2, 4);
-		Obj_SetRenderPriorityI(obj2,28);
-		ObjPrim_SetDestCenter(obj2,0,0,512,128);
-		ObjRender_SetScaleXYZ(obj2,totalscl*bit*(0.6+0.4*cos(c)),totalscl,0);
-		ObjRender_SetAngleZ(obj2,ang);
-		ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
-		ObjRender_SetPosition(obj2,ObjMove_GetX(target),ObjMove_GetY(target),0);
-		ascent(i in 0..20)
-		{
-			ObjRender_SetAlpha(obj2,16-16/20*i);
-			yield;
-		}
-		Obj_Delete(obj2);
-	}
 }

@@ -6,6 +6,7 @@ x2 = (GetScreenWidth-107);
 task InitialiseIndiv()
 {
 	if(GetCommonData("hasThingsInitialised",false)==true) return;
+	SetCommonData("bossBarDampenAmount",0.05);
 	SetCommonData("Smoother",0);
 	SetCommonData("WideScreen",true);
 	SetPlayerLife(999);
