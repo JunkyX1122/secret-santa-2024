@@ -44,44 +44,89 @@ task TTitleScene
 	ClosePackage();
 }
 
+const STAGE_1a = 0;
+const STAGE_1b = 1;
+const STAGE_1c = 2;
+const STAGE_2  = 3;
+const STAGE_3  = 4;
+const STAGE_4a = 5;
+const STAGE_4b = 6;
+const STAGE_4c = 7;
+const STAGE_5  = 8;
+const STAGE_6  = 9;
+
 function StartStageProgression()
 {
 	carryOn = true;
 	SetCommonData("hasThingsInitialised",false);
-	TStageScene("",4,60);
+	let WAITER = 0;
+	TStageScene("",STAGE_2,WAITER);
 	if(carryOn==true)
 	{
-		TStageScene("",5,60);
+		TStageScene("",STAGE_3,WAITER);
+	}
+	if(carryOn==true)
+	{
+		TStageScene("",STAGE_4a,WAITER);
+	}
+	if(carryOn==true)
+	{
+		TStageScene("",STAGE_5,WAITER);
+	}
+	if(carryOn==true)
+	{
+		TStageScene("",STAGE_6,WAITER);
 	}
 }
 //----------------------------------------------------
 // ステージシーン
 //----------------------------------------------------
+
 function TStageScene(let pathReplay,SELECT_ID,waiter)
 {
-	yield;
-	
+
 	LoadingBool = true;
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();
 	let pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
-	if(SELECT_ID==1)
+	alternative(SELECT_ID)
+	case(STAGE_1a)
+	{
+		pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+	}
+	case(STAGE_1b)
+	{
+		pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+	}
+	case(STAGE_1c)
+	{
+		pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+	}
+	case(STAGE_2)
 	{
 		pathMainScript = dirCurrent ~ "stage/stage02/stage.txt";
 	}
-	if(SELECT_ID==2)
+	case(STAGE_3)
 	{
 		pathMainScript = dirCurrent ~ "stage/stage03/stage.txt";
 	}
-	if(SELECT_ID==3)
+	case(STAGE_4a)
 	{
 		pathMainScript = dirCurrent ~ "stage/stage04a/stage.txt";
 	}
-	if(SELECT_ID==4)
+	case(STAGE_4b)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage04b/stage.txt";
+	}
+	case(STAGE_4c)
+	{
+		pathMainScript = dirCurrent ~ "stage/stage04c/stage.txt";
+	}
+	case(STAGE_5)
 	{
 		pathMainScript = dirCurrent ~ "stage/stage05/stage.txt";
 	}
-	if(SELECT_ID==5)
+	case(STAGE_6)
 	{
 		pathMainScript = dirCurrent ~ "stage/stage06/stage.txt";
 	}
@@ -104,7 +149,6 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	//初期ステージ設定
 	let indexStage = 1; //ステージインデックス
 	loop(waiter){yield;}
-	SetCommonData("hasThingsInitialised",false);
 	SetStageIndex(indexStage);
 	SetStageMainScript(pathMainScript);
 	SetStagePlayerScript(pathPlayer);

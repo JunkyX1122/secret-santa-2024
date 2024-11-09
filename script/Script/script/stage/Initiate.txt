@@ -20,5 +20,7 @@ task InitialiseIndiv()
 	SetCommonData("GlobalColour",[255,255,255]);
 	SetCommonData("SpellCardBG1",false);
 	ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
+	SetCommonData("PlayerX", GetStgFrameWidth/2);
+    SetCommonData("PlayerY", 416);
 	SetCommonData("hasThingsInitialised",true);
 }

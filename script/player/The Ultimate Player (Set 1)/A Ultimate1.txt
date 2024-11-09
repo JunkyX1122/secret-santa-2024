@@ -89,8 +89,18 @@ function CreateParticleListRect(type, path, source, blend,
 }
 
 @Initialize {
+	let initialPlayerPos = [GetCommonData("PlayerX", GetStgFrameWidth/2), GetCommonData("PlayerY", 416)];
+	ObjMove_SetPosition(objPlayer,initialPlayerPos[0], initialPlayerPos[1]);
+	
+	ascent(i in 0..length(OptionX))
+	{
+		OptionX[i] = GetPlayerX;
+		OptionY[i] = GetPlayerY;
+	}
+	
     SetCommonData("FINALBURST",
                   [ 0, GetStgFrameWidth / 2, GetStgFrameHeight / 2 ]);
+				  
     PlayerLoad();
     SoundLoad();
 	ImageLoad();
@@ -154,8 +164,8 @@ let xPos = [];
 let yPos = [];
 task PlayerLoad {}
 @MainLoop {
-    SetCommonData("PlayerX", 0);
-    SetCommonData("PlayerY", 0);
+    SetCommonData("PlayerX", GetPlayerX);
+    SetCommonData("PlayerY", GetPlayerY);
     if (GetCommonData("ForceInvincible", false) == true) {
         SetPlayerInvincibilityFrame_Special(2);
     }

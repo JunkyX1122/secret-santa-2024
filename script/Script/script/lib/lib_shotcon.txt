@@ -19,9 +19,7 @@ local
 	let CSD = GetCurrentScriptDirectory;
 	let path = CSD ~ "lib_shot.txt";
 	LoadEnemyShotData(path);
-	
-	path = CSD ~ "Minoriko's shot.txt";
-	LoadEnemyShotData(path);
+
 }
 // Straight Lasers --------------------------------
 let ST_LASER_GRAY		= 1;
