@@ -41,7 +41,7 @@ task StartPortalSystem()
 		let portalsEnabledCount = 0;
 		ascent(i in 0..length(portalObjectArray))
 		{
-			if(ObjPortal_IsEnabled(portalsEnabledCount))
+			if(ObjPortal_IsEnabled(i))
 			{
 				portalsEnabledCount++;
 				hasBeenReset = false;
@@ -52,10 +52,12 @@ task StartPortalSystem()
 			ResetPortalArray();
 			hasBeenReset = true;
 		}
+		
 		//WriteLog(portalsEnabledCount);
 		ClearPortalTargets();
 		yield;
 	}
+	WriteLog("End Portal Manager.");
 	ResetPortalArray();
 	ClearPortalTargets();
 }
@@ -343,7 +345,10 @@ function ObjPortal_GetScale(portalID)
 
 function ObjPortal_Delete(portalID)
 {
+	//WriteLog("Deleting portal: ");
+	//WriteLog(portalID);
 	if(IsInvalidID(portalID)) return false;
+	//WriteLog("Deletion Successful!");
 	ObjPortal_SetScale(portalID, 0, 0);
 	ObjPortal_SetColor(portalID, 255, 255, 255);
 	portalObjectArray[portalID][PORTAL_ENABLE] = false;

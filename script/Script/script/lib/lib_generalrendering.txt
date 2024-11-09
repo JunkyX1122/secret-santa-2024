@@ -446,6 +446,15 @@ task SizeCircle
 	}
 }
 
+task ShrinkCircle
+{
+	descent(i in 0..60)
+	{
+		SetCommonData("CircleSize",sin(i*1.5));
+		yield;
+	}
+}
+
 task RenderFlare(obj,imgID,getto,Blender,overscale,scalespeed,stayer,shrink,bit,CoolDown,overGlow)
 {
 	let objF = ObjPrim_Create(OBJ_SPRITE_2D);

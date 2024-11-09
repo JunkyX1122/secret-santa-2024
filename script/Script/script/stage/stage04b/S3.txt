@@ -15,7 +15,7 @@ let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
 
-let TIME_MAX = 65;
+let TIME_MAX = 40;
 let HEALTH_MAX = 225/3;
 let TIME = TIME_MAX;
 let finalSpellBool = false;
@@ -76,7 +76,7 @@ let finalSpellBool = false;
 	
 	magiccircle(objEnemy2,1);
 	magiccircle(objEnemy3,1);
-	SizeCircle();
+	ShrinkCircle();
 	SetCommonData("bossBarDampenAmount",1);
 }
 
@@ -134,22 +134,226 @@ let phase = 0;
 task Fire
 {
 	let bit = 1-2*round(rand(0,1));
-	CrossSlashHorizontal(GetPlayerY, bit);
-	CrossSlashVertical(GetPlayerX, bit);
+	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2 + 400*bit, 100, 60);
+
+	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2 - 400*bit, 175, 60);
+	
+	let sprd = 5;
+	ascent(i in 0..sprd)
+	{
+		let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2 - 50)*bit + (GetStgFrameWidth-100)/(sprd-1)*i*bit;
+		CrossSlashVertical(x, 120+90*i, 1*[1,-1][i%2]);
+		wait(30);
+	}
+	loop(2)
+	{
+		
+		//CrossSlashVertical(GetPlayerX, 0, bit);
+		//wait(60*9);
+		//bit*=-1;
+	}
+	
 }
-let SLASH_DELAY = 60 * 1.5;
-task CrossSlashVertical(x, bit)
+let SLASH_DELAY = 60 * 2.5;
+
+let SLASH_STAY = 90; 
+let SLASH_WARN = 60 * 1;
+let SLASH_CLOSE = 30;
+let ATTACK_DELAY = SLASH_STAY;
+task CrossSlashVertical(x, extraDelay, bit)
 {
-	PortalSlash(x, 				   0, 90, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, true);
-	PortalSlash(x, GetStgFrameHeight, 90, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, false);
-	wait(SLASH_DELAY);
+	Obj_SetValue(objEnemy3, "isHittable", false);
+	PortalSlash(x, 				   0, 90, SLASH_DELAY, SLASH_STAY+extraDelay+ATTACK_DELAY, SLASH_WARN, SLASH_CLOSE, 0.75, 1, true);
+	PortalSlash(x, GetStgFrameHeight, 90, SLASH_DELAY, SLASH_STAY+extraDelay+ATTACK_DELAY, SLASH_WARN, SLASH_CLOSE, 0.75, 1, false);
+	wait(SLASH_DELAY+extraDelay);
+	
+	MegaSlash(x, bit, ATTACK_DELAY);
+	ObjMove_SetPosition(objEnemy3, x, GetStgFrameHeight/2 + (GetStgFrameHeight)*bit);
+	wait(ATTACK_DELAY);
+	
+	ObjMove_SetPosition(objEnemy3, x, GetStgFrameHeight/2 + (GetStgFrameHeight/2 + 100)*bit);
+	Obj_SetValue(objEnemy3, "isHittable", false);
+	SE_PlayLen(slash,60);
+	ObjMove_SetDestAtFrame(objEnemy3, x, GetStgFrameHeight/2 - (GetStgFrameHeight/2 + 100)*bit, 40);
+	wait(40);
+	Obj_SetValue(objEnemy3, "isHittable", false);
+	
 }
-task CrossSlashHorizontal(y, bit)
+task CrossSlashHorizontal(y, extraDelay, bit)
 {
-	PortalSlash(			  0 , y, 0, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, true);
-	PortalSlash(GetStgFrameWidth, y, 0, SLASH_DELAY, 60*2, 60*1, 60*2, 0.75, 1, false);
-	wait(SLASH_DELAY);
+	Obj_SetValue(objEnemy2, "isHittable", false);
+	PortalSlash(			  0 , y, 0, SLASH_DELAY, SLASH_STAY+extraDelay, SLASH_WARN, SLASH_CLOSE, 0.75, 1, true);
+	PortalSlash(GetStgFrameWidth, y, 0, SLASH_DELAY, SLASH_STAY+extraDelay, SLASH_WARN, SLASH_CLOSE, 0.75, 1, false);
+	wait(SLASH_DELAY+extraDelay);
+	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2 + (GetStgFrameWidth/2 + 100)*bit, y);
+	GrandisDash(y, bit, ATTACK_DELAY);
+	wait(ATTACK_DELAY);
+	Obj_SetValue(objEnemy2, "isHittable", true);
+	SE_PlayLen(slash,60);
+	ObjMove_SetDestAtFrame(objEnemy2, GetStgFrameWidth/2 - (GetStgFrameWidth/2 + 100)*bit, y, 20);
+	let SHTID = [324,325];
+	let waiter = 2;
+	let t = round(20 / waiter);
+	ascent(i in 0..t)
+	{
+		
+		ascent(o in 0..5)
+		{
+			let spd = (0.5+o*1.5)/3;
+			let sprd = 20+70/4*o;
+			let acclTime = 120;
+			let id = SHTID[(i/2)%2];
+			ascent(p in 0..5)
+			{
+				ascent(j in 0..2)
+				{
+					let ang = 90 - sprd*bit + (sprd*2*bit)/4*p + 180*j;
+					let obj = ShotA2(ObjMove_GetX(objEnemy2), ObjMove_GetY(objEnemy2), 0, ang, spd/acclTime, spd, id, id, 20, 2, BLEND_ADD_ARGB, false);
+					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+				}
+			}
+		}
+		
+		wait(waiter);
+	}
+	wait(20 - t);
+	Obj_SetValue(objEnemy2, "isHittable", false);
 }
+
+
+task MegaSlash(xS,bit,waiter)
+{
+	
+	let randY = 0;
+	let yStart = GetStgFrameHeight/2 + (GetStgFrameHeight/2 + 25)*bit;
+	let ang = -90*bit;
+	ascent(o in 0..2)
+	{
+		let x = 1;
+		let decreaseWait = 0;
+		descent(i in 0..17)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				randY = rand(-10, 10);		
+				ascent(p in 0..2)
+				{
+					let xB = xS+3*(i*(i+0.1))*[1,-1][p];
+					if(xB > -20 && xB < GetStgFrameWidth + 20)
+					{
+						if(o>0)
+						{
+							let las = CreateStraightLaserA1(xB, yStart, ang, 400, 15, 60, 36, 0);
+							Length(las);
+						}
+						let lasExpand = CreateStraightLaserA1(xB, yStart, ang, 400, 15, 999, [7,36][o], 1);
+						ObjLaser_SetItemDistance(lasExpand, 1000);
+						ObjShot_SetIntersectionEnable(lasExpand, false);
+						ObjStLaser_SetSource(lasExpand, 0);
+						Length(lasExpand);
+						Expand(lasExpand, [2,10][o], [0,6][o],[128,255][o],[waiter,40][o]);
+						if(o>0)
+						{
+							BulletBeams(xB, yStart+randY, 90-90*[1,-1][p]+(61.5*x));
+						}
+					}
+				}
+				x = -x;
+				decreaseWait++;
+				wait(1);
+			}
+		}
+		wait(waiter-decreaseWait);
+	}
+	task BulletBeams(x, y, angle)
+	{
+		ascent(h in 0..12)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let obj2 = ShotA2(x, y+h*50*-bit, 0.2-0.05, angle-1, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
+				ObjMove_AddPatternA2(obj2, 45, NO_CHANGE, NO_CHANGE, 0.02, 2, 0);
+				ascent(i in -2..1)
+				{
+					let obj = ShotA2(x, y+h*50*-bit, 0.2+0.05*sin(180+i*90), angle+i, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
+					ObjMove_AddPatternA2(obj, 45, NO_CHANGE, NO_CHANGE, 0.02, 2, 0);
+				}
+				yield;
+			}
+		}
+	}
+	
+	task Expand(las,base,grow,alp,t)
+	{
+		
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ObjLaser_SetRenderWidth(las, base+i*grow);
+				ObjRender_SetAlpha(las, alp-alp/t*i);
+				yield;
+			}
+		}
+		Obj_Delete(las);
+	}
+	
+	task Length(las)
+	{
+		let len = 700;
+		let lencurrent = 0;
+		
+		while(lencurrent < len && !Obj_IsDeleted(objEnemy))
+		{
+			ObjLaser_SetLength(las, lencurrent);
+			lencurrent+=50;
+			yield;
+		}
+	}
+}
+
+task GrandisDash(yS, bit, waiter)
+{
+	ascent(i in 0..4)
+	{
+		let sprd = 40;
+		ascent(o in 0..2)
+		{
+			if(i>0 || o == 0)
+			{
+				let lasExpand = CreateStraightLaserA1(GetStgFrameWidth/2 + (GetStgFrameWidth/2+10)*bit, yS, 90, 0, 15, 999, 3, 99999);
+				ObjShot_SetIntersectionEnable(lasExpand, false);
+				ObjStLaser_SetSource(lasExpand, 0);
+				Length(lasExpand, 90+90*bit, 90+90*bit + (sprd*i)*bit * [1,-1][o]);
+			}
+		}
+	}
+	wait(waiter);
+	task Length(obj, ang1, ang2)
+	{
+		ObjRender_SetAlpha(obj, 128);
+		ObjLaser_SetItemDistance(obj, 1000);
+		ascent(i in 0..waiter)
+		{
+			ObjLaser_SetLength(obj, 999/(waiter-1)*i);
+			ObjStLaser_SetAngle(obj, Interpolate_Decelerate(ang2, ang1, 1/(waiter-1)*i));
+			
+			yield;
+		}
+		let t = 10;
+		ascent(i in 0..t)
+		{
+			ObjRender_SetAlpha(obj, 128 - 128/t*i);
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+}
+
+
+
+
+
 task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl, slashBool)
 {
 	if(!Obj_IsDeleted(objEnemy))
@@ -190,7 +394,9 @@ task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl, slashBool)
 	}
 	
 	let portal1 = CreatePortal(x, y, ang, 0, 0);
+	WriteLog(portal1);
 	ObjPortal_Grow(portal1, xScl, 0, xScl, yScl, 10);
+	ObjPortal_SetFunctional(portal1, false);
 	if(slashBool)
 	{
 		PortalSlashHitbox(x, y, ang, PORTAL_HEIGHT*yScl, 10);
@@ -373,12 +579,18 @@ task end
 	return;
 	
 } 
+
+
+
 task HitCirc(objTarget)
 {
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 32);
-		ObjEnemy_SetIntersectionCircleToPlayer(objTarget, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 24);
+		if(Obj_GetValueD(objTarget, "isHittable", true) == true)
+		{
+			ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 32);
+			ObjEnemy_SetIntersectionCircleToPlayer(objTarget, ObjMove_GetX(objTarget), ObjMove_GetY(objTarget), 24);
+		}
 		yield;
 	}
 	Obj_Delete(objTarget);
