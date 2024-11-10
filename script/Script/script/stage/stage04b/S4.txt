@@ -64,7 +64,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Cleave &quot;Atomic Sepperation&quot;","", LENEN, 128,0,0);
 	
 	ScreenShake(60,4);
 
@@ -122,12 +122,10 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+
 task Fire
 {
-	
+	StartPortalSystem();
 }
 
 task timer
@@ -226,6 +224,7 @@ task end
 	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
 	SetCommonData("SpellCardBG1",false);
+	SetPortalManaging(false);
 	loop(20)
 	{
 		SetEnemyAutoDeleteClip(32,32,32,32);

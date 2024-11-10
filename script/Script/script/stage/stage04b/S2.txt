@@ -129,7 +129,7 @@ task Fire
 					let ang = tazueAng;
 					ascent(i in 0..3)
 					{
-						let obj = ShotA1(tazueX, tazueY,1,ang+360/3*i,429,429,20,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(tazueX, tazueY,1,ang+360/3*i,430,430,20,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
 				}
@@ -141,7 +141,7 @@ task Fire
 					ascent(o in 0..4)
 					{
 						let ang = tazueAng+360/4*o;
-						let obj = ShotA1(tazueX, tazueY,2,ang,66,66,5,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(tazueX, tazueY,2,ang,65,65,5,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
 				}
@@ -153,7 +153,7 @@ task Fire
 					ascent(o in 0..5)
 					{
 						let ang = tazueAng+360/5*o;
-						let obj = ShotA1(ObjMove_GetX(objEnemy) + dis*cos(ang),ObjMove_GetY(objEnemy) + dis*sin(ang),4,ang,297,297,5,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(ObjMove_GetX(objEnemy) + dis*cos(ang),ObjMove_GetY(objEnemy) + dis*sin(ang),4,ang,296,296,5,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 						MoveDel(obj);
 					}
@@ -211,7 +211,7 @@ task Fire
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 0.1231 * internalBit +360/sprd*o;
-						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),4,ang,429,429,10,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),4,ang,430,430,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
 				}
@@ -224,7 +224,7 @@ task Fire
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
-						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,86,86,10,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,81,81,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 						ObjMove_SetAngularVelocity(obj,0.3*internalBit);
 					}
@@ -254,7 +254,7 @@ task Fire
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 0.1231 * internalBit +360/sprd*o;
-						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),4,ang,429,429,10,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),4,ang,430,430,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
 				}
@@ -267,7 +267,7 @@ task Fire
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
-						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,86,86,10,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(nukeX+dis*cos(ang), nukeY+dis*sin(ang),2,ang,81,81,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 						ObjMove_SetAngularVelocity(obj,0.3*internalBit);
 					}
@@ -317,7 +317,7 @@ task Nuke(bit)
 	ObjRender_SetBlendType(objNuke,BLEND_ADD_ARGB);
 
 	let IMGS = [IMG_SUN3, IMG_SUN3, IMG_SUN3, IMG_SUN2];
-	let COLS = [[255,0,255],[0,255,0], [0,255,0],[255,255,255]];
+	let COLS = [[255,0,0],[0,255,255], [0,255,255],[255,255,255]];
 	ascent(i in 0..4)
 	{
 		let objF = ObjPrim_Create(OBJ_SPRITE_2D);
