@@ -439,7 +439,7 @@ ShotData{ id=370 rect=(704,257,768,321) render=ALPHA angular_velocity = 15 delay
 // Mokou Fireballs
 
 //Red
-ShotData{ id=371 render=ADD angular_velocity = 0 delay_color= (255,64,64) 
+ShotData{ id=371 render=ADD angular_velocity = 0 collision = (4, -1, 5) delay_color= (255,64,64) 
 	AnimationData{
 		animation_data=(4,257,324,288,356) 
 		animation_data=(4,289,324,320,356) 	

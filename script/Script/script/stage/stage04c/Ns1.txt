@@ -44,7 +44,7 @@ let HEALTH_MAX = 220 * 3;
 	BossPhaseManager();
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	SetShotAutoDeleteClip(48,48,48,32);
 }
 
 let isEnemyHittable = true;
@@ -88,6 +88,10 @@ let isEnemyHittable = true;
     }
 	if(GetKeyState(KEY_Q)==KEY_PUSH)
 	{
+		ObjEnemy_SetLife(objEnemy,(HEALTH_MAX)/3*2);
+	}
+	if(GetKeyState(KEY_W)==KEY_PUSH)
+	{
 		ObjEnemy_SetLife(objEnemy,(HEALTH_MAX)/3);
 	}
     count++;
@@ -107,6 +111,7 @@ task BossPhaseManager()
 	{
 		yield;
 	}
+	phaseTransitioning = true;
 	SE_PlayLen(boon1,60);
 	isPhase1Over = true;
 	
@@ -114,6 +119,7 @@ task BossPhaseManager()
 	{
 		yield;
 	}
+	phaseTransitioning = true;
 	SE_PlayLen(boon1,60);
 	isPhase2Over = true;
 	
@@ -124,16 +130,32 @@ task BossPhaseManager()
 	SE_PlayLen(boon1,60);
 	isPhase3Over = true;
 }
+
+task InvincibilityHandle()
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		if(phaseTransitioning)
+		{
+			ObjEnemy_SetDamageRate(objEnemy, (0.01)/1.5, (0.01)/3);
+		}
+		yield;
+	}
+}
 let isPhase1Over = false;
 let isPhase2Over = false;
 let isPhase3Over = false;
 
 let isPhase2Started = false;
 let isPhase3Started = false;
+
+let phaseTransitioning = false;
 task Fire
 {
 	let bit = 1-2*round(rand(0,1));
+	let bitRestart = bit;
 	Sandstorm(bit);
+	InvincibilityHandle();
 	ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
 	//wait(60*4);
 	//HandleFutureSight();
@@ -175,8 +197,79 @@ task Fire
 		}
 		ObjEnemy_SetDamageRate(objEnemy, (0.1)/1.5, (0.1)/3);
 	}
+	phaseTransitioning = false;
 	ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
 	isPhase2Started = true;
+	bit = bitRestart;
+	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 60, LERP_SMOOTHER);
+	wait(60);
+	while(!isPhase2Over && !Obj_IsDeleted(objEnemy))
+	{
+		
+		let ang = -90 + 45*bit;
+		
+		let dis = 300;
+		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 + dis*cos(ang), GetStgFrameHeight/2 + dis*sin(ang), 60*3, LERP_SMOOTH);
+		let idd = 0;
+		SE_PlayLen(charge0,60);
+		ascent(i in 0..60*3)
+		{
+			if(i%15==0)
+			{
+				FireWall(ang, bit, idd);
+				idd++;
+			}
+			yield;
+		}
+		wait(60);
+		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 60*1, LERP_SMOOTH);
+		let cosAng = cos(ang);
+		let sinAng = sin(ang);
+		
+		let cosAng2 = cos(ang+180);
+		let sinAng2 = sin(ang+180);
+		
+		let cosAng3 = cos(ang+90*bit);
+		let sinAng3 = sin(ang+90*bit);
+		let riseSpeed = 3;
+		let accelSpeed = 3/100;
+		let fallSpeedMax = 3;
+		wait(60);
+		ascent(i in 0..(60*10))
+		{
+			if(i % 20 == 0)
+			{
+				SE_PlayLen(shot1,60);
+				let randStrt = rand(1,-1)*3;
+				ascent(o in 0..20)
+				{
+					let spd = 5-10/19*o + randStrt;
+					let obj = ShotB2(
+								ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 
+								riseSpeed*cosAng + spd * cosAng3, riseSpeed*sinAng  + spd * sinAng3, 
+								accelSpeed*cosAng2, 			  accelSpeed*sinAng2, 
+								fallSpeedMax*cosAng2, 			  fallSpeedMax*sinAng2, 
+								371, 371, 10, 2, BLEND_ADD_ARGB, false);
+				}
+			}
+			yield;
+		}
+		wait(60*2);
+		SE_PlayLen(charge2,60);
+		ascent(i in 0..60*3)
+		{
+			angSand = 90 + 45*sandBit - 90/(60*3-1)*i*sandBit;
+			yield;
+		}
+		bit*=-1;
+		sandBit = bit;
+		yield;
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+	}
+	phaseTransitioning = false;
+	ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+	isPhase3Started = true;
+	bit = bitRestart;
 }
 
 
@@ -258,13 +351,16 @@ task HandleFutureSight()
 	
 }	
 
+let angSand = 90;
+let sandBit = 1;
 task Sandstorm(bit)
 {
 
 	let cc = 0;
 	let cB = 10;
 	let cB2 = 10;
-	let ang = 90 + 90*bit;
+	angSand = 90 + 90*bit;
+	sandBit = bit;
 	let am = 6;
 	
 	let ccR = 0;
@@ -289,8 +385,8 @@ task Sandstorm(bit)
 		}
 		
 		let wvAng = cc/1.21321;
-		let xC = GetStgFrameWidth/2 - (GetStgFrameWidth/2+100)*cos(ang);
-		let yC = GetStgFrameHeight/2 - (GetStgFrameWidth/2+100)*sin(ang);
+		let xC = GetStgFrameWidth/2 - (GetStgFrameWidth/2+100)*cos(angSand);
+		let yC = GetStgFrameHeight/2 - (GetStgFrameWidth/2+100)*sin(angSand);
 		if(cB == 0)
 		{
 			SE_PlayLen(Shot2,40);
@@ -299,25 +395,25 @@ task Sandstorm(bit)
 			{
 				let sprd = 20*sin(cc*3.21321);
 				let dis = -(GetStgFrameHeight/2+100) + (GetStgFrameHeight+200)/(am-1)*i + 100*sin(wvAng);
-				let x = xC + dis * cos(ang+90);
-				let y = yC + dis * sin(ang+90);
-				let shot = ShotA1(x+rand(1,-1)*sprd, y+rand(1,-1)*sprd, rand(2.5,3)*0.7, ang, 104, 104, 0, 2, BLEND_ALPHA, false);
+				let x = xC + dis * cos(angSand+90);
+				let y = yC + dis * sin(angSand+90);
+				let shot = ShotA1(x+rand(1,-1)*sprd, y+rand(1,-1)*sprd, rand(2.5,3)*0.7, angSand, 104, 104, 0, 2, BLEND_ALPHA, false);
 				DelayedAutoDelete(shot,120);
 			}
-			if(cB > 7 && isPhase1Over)
+			if(cB > 7 && isPhase2Started)
 			{
 				ascent(i in 0..am)
 				{
 					let sprd = 20*sin(cc*3.21321);
 				let dis = -(GetStgFrameHeight/2+100) + (GetStgFrameHeight+200)/(am-1)*i + 100*sin(wvAng);
-				let x = xC + dis * cos(ang+90);
-				let y = yC + dis * sin(ang+90);
-					let shot = ShotA1(x+rand(1,-1)*sprd, y+rand(1,-1)*sprd, rand(1,2)*1, ang, 88, 88, 0, 2, BLEND_ALPHA, false);
+				let x = xC + dis * cos(angSand+90);
+				let y = yC + dis * sin(angSand+90);
+					let shot = ShotA1(x+rand(1,-1)*sprd, y+rand(1,-1)*sprd, rand(1,2)*1.6, angSand, 88, 88, 0, 2, BLEND_ALPHA, false);
 					DelayedAutoDelete(shot,180);
 				}
 			}
 		}
-		if(cB2 == 0 && isPhase2Over)
+		if(cB2 == 0 && isPhase3Started)
 		{
 			SE_PlayLen(Shot1,40);
 			cB2 = (20+round(11*sin(cc*2))) * 2;
@@ -325,9 +421,9 @@ task Sandstorm(bit)
 			{
 				let sprd = 20*sin(cc*3.21321);
 				let dis = -(GetStgFrameHeight/2+100) + (GetStgFrameHeight+200)/(am-1)*i + 100*sin(wvAng);
-				let x = xC + dis * cos(ang+90);
-				let y = yC + dis * sin(ang+90);
-				let shot = ShotA1(x+rand(1,-1)*sprd, y+rand(1,-1)*sprd, rand(2.5,3)*2, ang, 56, 56, 0, 2, BLEND_ALPHA, false);
+				let x = xC + dis * cos(angSand+90);
+				let y = yC + dis * sin(angSand+90);
+				let shot = ShotA1(x+rand(1,-1)*sprd, y+rand(1,-1)*sprd, rand(2.5,3)*2, angSand, 56, 56, 0, 2, BLEND_ALPHA, false);
 				DelayedAutoDelete(shot,60);
 			}
 		}
@@ -347,14 +443,14 @@ task Sandstorm(bit)
 		SE_PlayLen(boon0,80);
 		ascent(i in 0..180)
 		{
-			ang = 90 + 90*bit - 45/179*i*bit;
+			angSand = 90 + 90*sandBit - 45/179*i*sandBit;
 			yield;
 		}
 		while(!Obj_IsDeleted(objEnemy) && !isPhase3Started){yield;}
 		SE_PlayLen(boon0,80);
 		ascent(i in 0..180)
 		{
-			ang = 90 + 45*bit - 45/179*i*bit;
+			angSand = 90 + 45*sandBit - 45/179*i*sandBit;
 			yield;
 		}
 	}
@@ -484,6 +580,7 @@ task Slasher(x,y,x2,y2,tim, d1, d2)
 		Obj_Delete(obj);
 	}
 }
+
 task LaserGrowFade(obj,dis,alpha)
 {
 	let t = 20;
@@ -495,6 +592,86 @@ task LaserGrowFade(obj,dis,alpha)
 	}
 	Obj_Delete(obj);
 }
+
+task FireWall(ang, bit, idd)
+{
+	let x = ObjMove_GetX(objEnemy);
+	let y = ObjMove_GetY(objEnemy);
+	let DIS = 400;
+	let t = 70;
+	let randO = round(t/2 + rand(1,4)*[1,-1][idd%2]-5);
+	let paddedDelay = 30;
+	let cosAng = cos(ang+90*bit);
+	let sinAng = sin(ang+90*bit);
+	let cosAng2 = cos(ang);
+	let sinAng2 = sin(ang);
+	ascent(i in 0..t)
+	{
+		SE_PlayLen(Shot1,60);
+		let dis = DIS - (DIS*2) / (t-1)*i;
+		let x2 = x + dis*cosAng + 30*cosAng2 * sin(i*20 + idd*55);
+		let y2 = y + dis*sinAng + 30*sinAng2 * sin(i*20 + idd*55);
+		let type = 0;
+		let widthh = 3;
+		if(i>randO-widthh && i < randO+widthh)
+		{
+			type = 1;
+		}
+		
+		let obj = CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0, ang, [425, 428][type], 0);
+		
+		
+		MoverFire(obj, x2, y2, 180-i, ang,type);
+		yield;
+	}
+	wait(180-t + 40 + paddedDelay + idd*40);
+	SE_PlayLen(charge1,50);
+	task MoverFire(obj, x2, y2, t, ang, type)
+	{
+		ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+		ObjMove_SetDestAtFrameWeight(obj, x2, y2, 40);
+		ObjShot_SetAutoDelete(obj, false);
+		ObjShot_SetSpellResist(obj, true);
+		ObjShot_SetIntersectionEnable(obj, false);
+		ObjRender_SetScale(obj, 1.5);
+		ObjShot_SetIntersectionScaleXY(obj, 1.5, 1.5);
+		ascent(i in 0..40)
+		{
+			ObjRender_SetAlpha(obj, 255/39*i);
+			yield;
+		}
+		wait(t + paddedDelay + idd*40);
+		if(!Obj_IsDeleted(obj))
+		{
+			SE_PlayLen(chime1,60);
+			if(type==0)
+			{
+				let xB = ObjMove_GetX(obj);
+				let yB = ObjMove_GetY(obj);
+				let obj2 = CreateShotA2(xB, yB, 0, ang+180, 4/180, 4, 425, 0);
+				ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+				ObjRender_SetScale(obj2, 1.5);
+				ObjShot_SetIntersectionScaleXY(obj2, 1.5, 1.5);
+				ObjRender_SetColor(obj2,255,165,0);
+			
+				if(xB < -32 || xB > GetStgFrameWidth + 32 || yB < -32)
+				{
+					ObjShot_SetAutoDelete(obj2, false);
+					WaitAutoDelete(obj2);
+				}
+			}
+			ObjShot_SetDeleteFrameA5(obj, 0, 1.5);
+		}
+	}
+	task WaitAutoDelete(obj)
+	{
+		wait(60*2);
+		ObjShot_SetAutoDelete(obj, true);
+	}
+}
+
+
+
 task timer
 {
     while(TIME>60*10)

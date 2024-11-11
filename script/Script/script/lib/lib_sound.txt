@@ -172,7 +172,7 @@ const MSpark = GetCurrentScriptDirectory~"./../../se2/se_nep00.wav";
 //======================================================
 const charge0 = GetCurrentScriptDirectory~"./../../se2/se_ch00.wav";
 const charge1 = GetCurrentScriptDirectory~"./../../se2/se_ch02.wav";
-const charge2 = GetCurrentScriptDirectory~"./../../se2/se_power0.wav";
+const charge2 = GetCurrentScriptDirectory~"./../../se2/se_power.wav";
 const charge3 = GetCurrentScriptDirectory~"./../../se2/charge.wav";
 const charge4 = GetCurrentScriptDirectory~"./../../se2/power0.wav";
 const charge5 = GetCurrentScriptDirectory~"./../../se2/Charge2.wav";
