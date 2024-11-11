@@ -748,9 +748,11 @@ task Trailing(ang)
 }
 task timer
 {
-    loop(TIME-10)
+	let timerT = TIME;
+    loop(timerT-10)
     {
         wait(60);
+		TIME--;
     }
     loop(5)
     {
