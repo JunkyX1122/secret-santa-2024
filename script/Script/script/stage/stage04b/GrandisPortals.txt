@@ -12,7 +12,6 @@ const PORTAL_COLOR_R = 6;
 const PORTAL_COLOR_G = 7;
 const PORTAL_COLOR_B = 8;
 const PORTAL_FUNCTIONAL = 9;
-const PORTAL_PLAYERCHECK = 10;
 let isManagingPortals = true;
 
 let xArray = [];
@@ -75,6 +74,7 @@ task ClearPortalTargets()
 	ClearRenderTargetA1( "textureMask" );
 }
 
+let BaseBulletBlendType = BLEND_ALPHA;
 task CreateRegularBulletTarget()
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -84,6 +84,7 @@ task CreateRegularBulletTarget()
 	ObjSprite2D_SetDestRect(obj,0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+	
 	//ObjRender_SetAlpha(obj,120);
 	
 	let objMaskBack = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -106,10 +107,16 @@ task CreateRegularBulletTarget()
 	
 	while(isManagingPortals)
 	{
+		ObjRender_SetBlendType(obj,BaseBulletBlendType);
 		yield;
 	}
 	Obj_Delete(obj);
 	Obj_Delete(objMaskBack);
+}
+
+function SetBaseBlendType(blendID)
+{
+	BaseBulletBlendType = blendID;
 }
 
 task SetInPortal(obj)
@@ -228,17 +235,19 @@ task ManageAllPortals()
 						
 						if(Obj_GetValueD(obj,"portalConcern",false)==true)
 						{
-							
+							let shotLeniency = Obj_GetValueD(obj, "Leniency", 1);
 							let shotX = ObjMove_GetX(obj) + ObjMove_GetSpeedX(obj);
 							let shotY = ObjMove_GetY(obj) + ObjMove_GetSpeedY(obj);
 							let shotPos = Rotate2D(shotX, shotY, -portalAngle, portalX, portalY); // Rotate bullets around portal until in line with flat portal
 							
 							// If bullet is within the portal bounding box:
-							if(shotPos[0] > portalX - PORTAL_WIDTH * portalXScale  &&  shotPos[0] < portalX + PORTAL_WIDTH * portalXScale &&
-							   shotPos[1] > portalY - PORTAL_HEIGHT  * portalYScale && shotPos[1] < portalY + PORTAL_HEIGHT * portalYScale)
+							if( shotPos[0] > portalX - PORTAL_WIDTH * portalXScale * shotLeniency && 
+							    shotPos[0] < portalX + PORTAL_WIDTH * portalXScale * shotLeniency &&
+							    shotPos[1] > portalY - PORTAL_HEIGHT * portalYScale * shotLeniency && 
+							    shotPos[1] < portalY + PORTAL_HEIGHT * portalYScale * shotLeniency )
 							{
-								let dis = absolute((portalX - shotPos[0])) / (PORTAL_WIDTH * portalXScale);
-								let sinY = PORTAL_HEIGHT*sin(90-90*dis) * portalYScale;
+								let dis = absolute((portalX - shotPos[0])) / (PORTAL_WIDTH * portalXScale * shotLeniency );
+								let sinY = PORTAL_HEIGHT*sin(90-90*dis) * portalYScale * shotLeniency ;
 								if(shotPos[1] < portalY + sinY && shotPos[1] > portalY - sinY)
 								{
 									ObjShot_SetIntersectionEnable(obj,Obj_GetValueD(obj,"inPortal",false));
@@ -445,6 +454,7 @@ function CreatePortal(x,y,ang,xScale, yScale)
 			isEnabled = ObjPortal_IsEnabled(id);
 			x = ObjPortal_GetX(id);
 			y = ObjPortal_GetY(id);
+			ang = ObjPortal_GetAngle(id);
 			let portalWidth = ObjPortal_GetScaleX(id);
 			let portalHeight = ObjPortal_GetScaleY(id);
 			ascent(i in 0..32)
