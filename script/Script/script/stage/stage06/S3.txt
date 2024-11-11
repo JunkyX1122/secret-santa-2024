@@ -470,8 +470,11 @@ task CreateMaw(x,y,ang,teethNum,rowID,handleType,openTime,waitBite,bit)
 			shootBullets = true;
 		}
 		biteBool = true;
-		SE_PlayLen(charge1,60);
-		SE_PlayLen(chime1,60);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge1,60);
+			SE_PlayLen(chime1,60);
+		}
 		wait(biteDelay);
 		biteDelayBool = true;
 		Bite();
@@ -510,10 +513,13 @@ task CreateMaw(x,y,ang,teethNum,rowID,handleType,openTime,waitBite,bit)
 		ObjRender_SetColor(objD,255,255,255);
 		descent(i in 0..closeTime)
 		{
-			ObjRender_SetAlpha(objD,alpha/(closeTime)*i);
-			ObjRender_SetScale(objD,0.2+0.01*sin(sclAng));
-			sclAng+=1;
-			yield;
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				ObjRender_SetAlpha(objD,alpha/(closeTime)*i);
+				ObjRender_SetScale(objD,0.2+0.01*sin(sclAng));
+				sclAng+=1;
+				yield;
+			}
 		}
 		Obj_Delete(objD);
 	}
@@ -626,8 +632,11 @@ task CreateMaw(x,y,ang,teethNum,rowID,handleType,openTime,waitBite,bit)
 				ObjMove_SetDestAtFrameWeight(obj, x2, y2, closeTime);
 				ObjShot_SetDeleteFrameA6(obj,closeTime+30,1.5);
 			}
-			SE_PlayLen(slash,60);
-			wait(closeTime);
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(slash,60);
+				wait(closeTime);
+			}
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
 				ScreenShake(60,2);
