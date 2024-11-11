@@ -113,9 +113,10 @@ task DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 		
 		
         let s_value = s-1;
-        Obj_SetRenderPriorityI(obj,Obj_GetRenderPriorityI(shot)+1);
+        
         while(c<delay-1 &&  !Obj_IsDeleted(shot))
         {
+			Obj_SetRenderPriorityI(obj,Obj_GetRenderPriorityI(shot)+1);
 			/*
             ObjRender_SetScaleXYZ(obj,xwid/xwidc*s,ywid/ywidc*s,0);
 			if((cloud>=417&&cloud<=424)||(cloud>=443&&cloud<=450))

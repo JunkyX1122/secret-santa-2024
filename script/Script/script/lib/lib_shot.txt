@@ -278,12 +278,12 @@ ShotData{ id=239 rect=(449,160,480,188) render=ADD angular_velocity = 20 delay_c
 // Dots (EoSD Style)
 ShotData{ id=240 rect=(1,245,11,255) render=ALPHA angular_velocity = 0 delay_color= (128,128,128) } //Gray
 ShotData{ id=241 rect=(12,245,22,255) render=ALPHA angular_velocity = 0 delay_color= (255,64,64) } //Red
-ShotData{ id=242 rect=(23,245,33,255) render=ALPHA angular_velocity = 0 delay_color= (255,128,64) } //Orange
-ShotData{ id=243 rect=(34,245,44,255) render=ALPHA angular_velocity = 0 delay_color= (255,64,255) } //Purple
-ShotData{ id=244 rect=(45,245,55,255) render=ALPHA angular_velocity = 0 delay_color= (64,64,255) } //Blue
-ShotData{ id=245 rect=(56,245,66,255) render=ALPHA angular_velocity = 0 delay_color= (64,255,255) } //Aqua
-ShotData{ id=246 rect=(67,245,77,255) render=ALPHA angular_velocity = 0 delay_color= (64,255,64) } //Green
-ShotData{ id=247 rect=(78,245,88,255) render=ALPHA angular_velocity = 0 delay_color= (255,255,64) } //Yellow
+ShotData{ id=242 rect=(23,245,33,255) render=ALPHA angular_velocity = 0 delay_color= (255,128,64) } //Purple
+ShotData{ id=243 rect=(34,245,44,255) render=ALPHA angular_velocity = 0 delay_color= (255,64,255) } //Blue
+ShotData{ id=244 rect=(45,245,55,255) render=ALPHA angular_velocity = 0 delay_color= (64,64,255) } //Aque
+ShotData{ id=245 rect=(56,245,66,255) render=ALPHA angular_velocity = 0 delay_color= (64,255,255) } //Green
+ShotData{ id=246 rect=(67,245,77,255) render=ALPHA angular_velocity = 0 delay_color= (64,255,64) } //Yellow
+ShotData{ id=247 rect=(78,245,88,255) render=ALPHA angular_velocity = 0 delay_color= (255,255,64) } //Orange
 
 // Slightly Larger Dots
 ShotData{ id=248 rect=(90,241,106,255) render=ADD angular_velocity = 0 delay_color= (128,128,128) } //Gray
