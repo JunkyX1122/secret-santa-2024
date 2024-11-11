@@ -310,8 +310,8 @@ task PortalSlash(x,y,ang,d, xScl, yScl)
 				CreateLine(x,y,ang, PORTAL_HEIGHT*yScl,20);
 				CreateLine(x,y,ang,-PORTAL_HEIGHT*yScl,20);
 				
-				CreateLine(x,y,ang+90, PORTAL_HEIGHT*yScl,20);
-				CreateLine(x,y,ang+90,-PORTAL_HEIGHT*yScl,20);
+				//CreateLine(x,y,ang+90, PORTAL_HEIGHT*yScl,20);
+				//CreateLine(x,y,ang+90,-PORTAL_HEIGHT*yScl,20);
 			}
 			yield;
 		}
