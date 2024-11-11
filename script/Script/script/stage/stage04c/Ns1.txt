@@ -255,13 +255,16 @@ task Fire
 			yield;
 		}
 		wait(60*2);
-		SE_PlayLen(charge2,60);
-		ascent(i in 0..60*3)
+		if(!isPhase2Over)
 		{
-			angSand = 90 + 45*sandBit - 90/(60*3-1)*i*sandBit;
-			yield;
+			SE_PlayLen(charge2,60);
+			ascent(i in 0..60*3)
+			{
+				angSand = 90 + 45*sandBit - 90/(60*3-1)*i*sandBit;
+				yield;
+			}
+			bit*=-1;
 		}
-		bit*=-1;
 		sandBit = bit;
 		yield;
 		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
@@ -353,6 +356,7 @@ task HandleFutureSight()
 
 let angSand = 90;
 let sandBit = 1;
+let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SMOKE, [0,0,512,512], BLEND_ALPHA, 0.28);
 task Sandstorm(bit)
 {
 
@@ -367,6 +371,7 @@ task Sandstorm(bit)
 	let cBR = 0;
 	let cB2R = 0;
 	AngManage();
+	WindManage();
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		if(captureSnapshot)
@@ -429,7 +434,7 @@ task Sandstorm(bit)
 		}
 		
 		cB--;
-		if(isPhase2Over)
+		if(isPhase3Started)
 		{
 			cB2--;
 		}
@@ -440,18 +445,88 @@ task Sandstorm(bit)
 	task AngManage()
 	{
 		while(!Obj_IsDeleted(objEnemy) && !isPhase2Started){yield;}
-		SE_PlayLen(boon0,80);
+		SE_PlayLen(charge2,80);
 		ascent(i in 0..180)
 		{
 			angSand = 90 + 90*sandBit - 45/179*i*sandBit;
 			yield;
 		}
 		while(!Obj_IsDeleted(objEnemy) && !isPhase3Started){yield;}
-		SE_PlayLen(boon0,80);
+		SE_PlayLen(charge2,80);
 		ascent(i in 0..180)
 		{
 			angSand = 90 + 45*sandBit - 45/179*i*sandBit;
 			yield;
+		}
+	}
+	
+	task WindManage()
+	{
+		let alphaScale = 0;
+		let objBlack = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(objBlack, 29);
+		ObjPrim_SetTexture(objBlack, IMG_GATOWIND);
+		let scl = 5;
+		ObjSprite2D_SetSourceRect(objBlack, 0, 0, 1024*scl, 1024*scl);
+		ObjSprite2D_SetDestRect(objBlack, 0, 0, 1024*1.5, 1024*1.5);
+		ObjSprite2D_SetDestCenter(objBlack);
+		ObjRender_SetPosition(objBlack, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+		ObjRender_SetColor(objBlack, 255, 165, 0);
+		
+		ObjRender_SetScaleY(objBlack, 1-2*round(rand(0,1)));
+		let cc = 0;
+		let cc2 = 0;
+		while(!Obj_IsDeleted(objEnemy))
+		{
+			let yP = 100;
+			alphaScale = alphaScale * 0.95 + 1 * 0.05;
+			ObjRender_SetAlpha(objBlack, 48*alphaScale);
+			ObjRender_SetAngleZ(objBlack, angSand);
+			ObjSprite2D_SetSourceRect(objBlack, cc, yP, 1024+cc, 1024 + yP);
+			if(cc2%100==0)
+			{
+				loop(3)
+				{
+					WindCloud(rand(1.25,3.25));
+				}
+			}
+			
+			cc-=1.5;
+			cc2++;
+			yield;
+		}
+		
+		task WindCloud(spd)
+		{
+			let randAng = rand(30,-30);
+			let xC = GetStgFrameWidth/2 - (GetStgFrameWidth/2+200)*cos(angSand+randAng);
+			let yC = GetStgFrameHeight/2 - (GetStgFrameWidth/2+200)*sin(angSand+randAng);
+			let alpha = rand(32,64)*1.1;
+			let scaleX = rand(1,1.1)*(1-2*round(rand(0,1)));
+			let scaleY = rand(1,1.1)*(1-2*round(rand(0,1)));
+			let color = [255,165,0];
+			let ang = rand(0,360);
+			let previousAng = angSand;
+			let cosAng = cos(angSand);
+			let sinAng = sin(angSand);
+			while(Get_Distance(xC, yC, GetStgFrameWidth/2, GetStgFrameHeight/2) < (GetStgFrameWidth/2+250) && !Obj_IsDeleted(objEnemy))
+			{
+				ObjParticleList_SetAlpha(objCloudParticle,alpha*alphaScale);
+				ObjParticleList_SetScale(objCloudParticle,scaleX,scaleY,0);
+				ObjParticleList_SetPosition(objCloudParticle,xC,yC,0);
+				ObjParticleList_SetAngleZ(objCloudParticle,ang);
+				ObjParticleList_SetColor(objCloudParticle,color[0],color[1],color[2]);
+				ObjParticleList_AddInstance(objCloudParticle);
+				if(previousAng!=angSand)
+				{
+					cosAng = cos(angSand);
+					sinAng = sin(angSand);
+					previousAng = angSand;
+				}
+				xC+=spd*cosAng;
+				yC+=spd*sinAng;
+				yield;
+			}
 		}
 	}
 }
