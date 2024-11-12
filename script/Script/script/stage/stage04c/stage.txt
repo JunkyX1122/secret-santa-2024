@@ -105,24 +105,26 @@ task Dialog
 {
 }
 let Boss;
+let Boss2;
 task LoadBoss()
 {
 	Boss=ObjEnemyBossScene_Create();
-	//ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
-	//ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
-	//ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
-	//ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
-	//ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"Ns3.txt");
-	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
-	ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
-	//ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
+	Boss2=ObjEnemyBossScene_Create();
+	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
+	
+	ObjEnemyBossScene_Add(Boss2,0,GetCurrentScriptDirectory~"S1.txt");
+	ObjEnemyBossScene_Add(Boss2,1,GetCurrentScriptDirectory~"S2.txt");
+	ObjEnemyBossScene_Add(Boss2,2,GetCurrentScriptDirectory~"S3.txt");
+	ObjEnemyBossScene_Add(Boss2,3,GetCurrentScriptDirectory~"S4.txt");
+	
 	ObjEnemyBossScene_LoadInThread(Boss);
+	ObjEnemyBossScene_LoadInThread(Boss2);
 }
 task StartStage
 {	
 	//ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
-	SetCommonData("MaxNumberOfPhases",5);
+	SetCommonData("MaxNumberOfPhases",0);
 	loop(120)
 	{
 		yield;
@@ -138,6 +140,13 @@ task StartStage
 	{
 		ObjEnemyBossScene_Regist(Boss);	
 		while(!Obj_IsDeleted(Boss))
+		{
+			yield;
+		}
+		wait(300);
+		SetCommonData("MaxNumberOfPhases",3);
+		ObjEnemyBossScene_Regist(Boss2);	
+		while(!Obj_IsDeleted(Boss2))
 		{
 			yield;
 		}
