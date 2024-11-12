@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S3"]
+#Title["-Channel-"]
 #Text["S3"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -40,7 +40,7 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 59);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -48,14 +48,7 @@ let finalSpellBool = false;
 	
 	end;
 
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("-Channel-","", LENEN, 0,0,0);
 	
-	ScreenShake(60,4);
-
-	SE_PlayLen(compositespellcard,75);
-	SE_PlayLen(BossSpell,75);
 	
 }
 
@@ -74,14 +67,14 @@ let finalSpellBool = false;
 		SetCommonData("BossX", ObjMove_GetX(objEnemy));
 		SetCommonData("BossY", ObjMove_GetY(objEnemy));
 	}
-	if(count < 95)	
+	if(count < 60)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		SetCommonData("SpellCardBG1",false);
 	}
-    if(count == 95)
+    if(count == 60)
     {
-		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		
 		Fire;
 		
         //count = 1111;
@@ -98,14 +91,127 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+task SpellDeclair()
+{
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("-Channel-","", LENEN, 0,0,0);
+	ScreenShake(60,4);
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	SE_PlayLen(ufo,75);
+}
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	NecroPassive(bit);
+	
+	wait(60*3);
+	ObjEnemy_SetDamageRate(objEnemy, (0.06/3)/1.5, (0.06/3)/3);
+	SpellDeclair();
+	CurvePassive(bit);
 	
 }
 
+task NecroPassive(bit)
+{
+	let ang = -90;
+	let cc = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(shot1,60);
+		let spnAm = 0.3*sin(cc*8);
+		ascent(i in 0..10)
+		{
+			NecroShot(ang+360/10*i, spnAm*bit);
+		}
+		ang+=14.34523*bit;
+		cc++;
+		wait(10);
+	}
+}
+
+task NecroShot(ang, am)
+{
+	let dis = GetStgFrameWidth/2+200;
+	let x = ObjMove_GetX(objEnemy) + dis * cos(ang);
+	let y = ObjMove_GetY(objEnemy) + dis * sin(ang);
+	
+	let obj = CreateShotA2(x, y, 1, ang+180, 1/120, 2, 60, 0);
+	ObjShot_SetAutoDelete(obj,false);
+	ObjShot_SetDeleteFrameA5(obj,60*5,2);
+	let xC = ObjMove_GetX(objEnemy);
+	let yC = ObjMove_GetY(objEnemy);
+	while(!Obj_IsDeleted(obj))
+	{
+		let xy = Rotate2D(ObjMove_GetX(obj), ObjMove_GetY(obj), am, xC, yC);
+		ObjMove_SetPosition(obj, xy[0], xy[1]);
+		ObjMove_SetAngle(obj, ObjMove_GetAngle(obj) + am);
+		yield;
+	}
+	
+}
+
+task CurvePassive(bit)
+{
+	let ang = -90;
+	let bitIni = bit;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(LaserDelShort, 50);
+		let am = 23;
+		ascent(i in 0..am)
+		{
+			CurveLaserFire(ang+360/am*i, bitIni);
+		}
+		bitIni*=-1;
+		ang += (180/am + 3.1231)*bit;
+		wait(100);
+	}
+}
+
+task CurveLaserFire(ang, bit)
+{
+	let dis = GetStgFrameWidth/2+200;
+	let x = ObjMove_GetX(objEnemy) + dis * cos(ang);
+	let y = ObjMove_GetY(objEnemy) + dis * sin(ang);
+	let ang2 = ang+180-45*bit;
+	let obj2 = CreateCurveLaserA1(x, y, 4, ang2, 100, 15, 401, 0) ;
+	ObjLaser_SetInvalidLength(obj2, 0.6, 0.6);
+	ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+	Obj_SetRenderPriority(obj2, 0.51);
+	let obj3 = CreateCurveLaserA1(x, y, 4, ang2, 100, 25, 376, 0) ;
+	ObjShot_SetIntersectionEnable(obj3, false);
+	
+	ObjLaser_SetItemDistance(obj2, 1000);
+	ObjLaser_SetItemDistance(obj3, 1000);
+	ObjShot_SetAutoDelete(obj2, false);
+	ObjShot_SetAutoDelete(obj3, false);
+	
+	let lasers = [obj2, obj3];
+	let t = 135;
+	let iniR = 1.1;
+	ascent(i in 0..2)
+	{
+		ObjMove_SetMaxSpeed(lasers[i], 0);
+		ObjMove_SetAcceleration(lasers[i], -6/(t*1.4));
+		ObjMove_SetSpeed(lasers[i], 6);
+		ascent(o in 0..t)
+		{
+			let spnAm = (iniR-iniR/(t-1)*o)*bit;
+			ObjMove_AddPatternA2(lasers[i], o, NO_CHANGE, NO_CHANGE, NO_CHANGE, NO_CHANGE, spnAm);
+		}
+	}
+	wait(t*1.4 + 100);
+	ascent(i in 0..2)
+	{
+		if(!Obj_IsDeleted(lasers[i]))
+		{
+			Obj_Delete(lasers[i]);
+		}
+	}
+
+}
 task timer
 {
     loop(TIME-10)

@@ -490,10 +490,10 @@ ShotData{ id=375 render=ADD angular_velocity = 0 delay_color= (64,64,255)
 //Red
 ShotData{ id=376 render=ADD angular_velocity = 0 delay_color= (255,64,64)
 	AnimationData{
-		animation_data=(4,344,396,385,437)
-		animation_data=(4,385,396,425,437)
-		animation_data=(4,425,396,467,437)
-		animation_data=(4,467,396,508,437)
+		animation_data=(4,345,396,385,437)
+		animation_data=(4,386,396,425,437)
+		animation_data=(4,427,396,467,437)
+		animation_data=(4,468,396,508,437)
 	}
 	collision = 8;
 }
