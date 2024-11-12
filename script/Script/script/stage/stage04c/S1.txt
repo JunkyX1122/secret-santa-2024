@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
+#Title["&quot;Corrupted Blood Plague&quot;"]
 #Text["S1"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
