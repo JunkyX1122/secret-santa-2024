@@ -293,7 +293,10 @@ task Fire
 	while(!isPhase3Over && !Obj_IsDeleted(objEnemy))
 	{
 		wait(60*4);
-		HandleFutureSight();
+		if(!isPhase3Over)
+		{
+			HandleFutureSight();
+		}
 		wait(60*10);
 		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
 		FutureSightDamageRate = 0.07;
@@ -426,7 +429,7 @@ task ShootAtPlayerHistory()
 	let concc = 8;
 	ascent(i in 0..length(playerRecording))
 	{
-		if(!Obj_IsDeleted(objEnemy))
+		if(!Obj_IsDeleted(objEnemy) && !isPhase3Over)
 		{
 			SE_PlayLen(shot1,60);
 			SE_PlayLen(chime1,60);
@@ -455,6 +458,7 @@ let angSand = 90;
 let sandBit = 1;
 let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SMOKE, [0,0,512,512], BLEND_ALPHA, 0.28);
 let WIND_TRANSITION = 180;
+let alphaScaleSandstorm = 0;
 task Sandstorm(bit)
 {
 
@@ -470,7 +474,7 @@ task Sandstorm(bit)
 	let cB2R = 0;
 	AngManage();
 	WindManage();
-	while(!Obj_IsDeleted(objEnemy))
+	while(!Obj_IsDeleted(objEnemy) && !isPhase3Over)
 	{
 		if(captureSnapshotSandStorm)
 		{
@@ -560,7 +564,7 @@ task Sandstorm(bit)
 	
 	task WindManage()
 	{
-		let alphaScale = 0;
+		
 		let objBlack = ObjPrim_Create(OBJ_SPRITE_2D);
 		Obj_SetRenderPriorityI(objBlack, 29);
 		ObjPrim_SetTexture(objBlack, IMG_GATOWIND);
@@ -577,8 +581,8 @@ task Sandstorm(bit)
 		while(!Obj_IsDeleted(objEnemy))
 		{
 			let yP = 100;
-			alphaScale = alphaScale * 0.95 + 1 * 0.05;
-			ObjRender_SetAlpha(objBlack, 48*alphaScale);
+			alphaScaleSandstorm = alphaScaleSandstorm * 0.95 + 1 * 0.05;
+			ObjRender_SetAlpha(objBlack, 48*alphaScaleSandstorm);
 			ObjRender_SetAngleZ(objBlack, angSand);
 			ObjSprite2D_SetSourceRect(objBlack, cc, yP, 1024+cc, 1024 + yP);
 			if(cc2%100==0)
@@ -616,7 +620,7 @@ task Sandstorm(bit)
 			let sinAng = sin(angSand);
 			while(Get_Distance(xC, yC, GetStgFrameWidth/2, GetStgFrameHeight/2) < (GetStgFrameWidth/2+250) && !Obj_IsDeleted(objEnemy))
 			{
-				ObjParticleList_SetAlpha(objCloudParticle,alpha*alphaScale);
+				ObjParticleList_SetAlpha(objCloudParticle,alpha*alphaScaleSandstorm);
 				ObjParticleList_SetScale(objCloudParticle,scaleX,scaleY,0);
 				ObjParticleList_SetPosition(objCloudParticle,xC,yC,0);
 				ObjParticleList_SetAngleZ(objCloudParticle,ang);
@@ -912,6 +916,7 @@ task ScarfFire(bit)
 		yield;
 	}
 }
+
 task ShotManager(obj, startingPoint, startingAng, bit)
 {
 	let alpha = 0;
@@ -939,6 +944,7 @@ task ShotManager(obj, startingPoint, startingAng, bit)
 	}
 	
 }
+
 task timer
 {
     while(TIME>60*10)
@@ -973,6 +979,13 @@ task end
 	Obj_SetValue(objEnemy,"cast",0);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
     SetAutoDeleteObject(true);
+	ShrinkCircle();
+	ascent(i in 0..60)
+	{
+		alphaScaleSandstorm = 1 - 1/59*i;
+		yield;
+	}
+	
 	Obj_Delete(objEnemy);
 
 	loop(60)

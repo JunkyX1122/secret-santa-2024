@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
-#Text["S1"]
+#Title["S2"]
+#Text["S2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("&quot;Corrupted Blood Plague&quot;","", LENEN, 0,0,0);
+	ObjCutin_SetSpellcardS4("&quot;Putrescence&quot;","", LENEN, 0,0,0);
 	
 	ScreenShake(60,4);
 
