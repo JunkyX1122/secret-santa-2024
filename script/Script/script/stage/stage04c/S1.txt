@@ -224,7 +224,7 @@ task BloodBomb(x,y,bit)
 	SE_PlayLen(LaserDelLong, 80);
 	let xI = ObjMove_GetX(objEnemy);
 	let yI = ObjMove_GetY(objEnemy);
-	let obj = BloodShot(xI, yI, 0, 90, 2, 50, [255,128,128], true);
+	let obj = BloodShot(xI, yI, 0, 90, 2, 50, [255,0,0], true);
 	Hermit(obj, xI, yI, x, y, 90, 90, 120, 140, bit);
 	wait(150);
 	if(!Obj_IsDeleted(objEnemy) && !Obj_IsDeleted(obj))
@@ -294,7 +294,17 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 	let obj = CreateShotA1(x, y, speed, ang, 293, 0);
 	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
 	ObjRender_SetColor(obj, col[0], col[1], col[2]);
-	Obj_SetRenderPriority(obj, 0.52);
+	Obj_SetRenderPriority(obj, 0.54);
+	
+	if(!drip)
+	{
+		ObjRender_SetColor(obj, 255,255,255);
+		ObjShot_SetGraphic(obj, 296);
+		Obj_SetRenderPriority(obj, 0.52);
+		ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
+	}
+
+	
 	ObjShot_SetSpellResist(obj, true);
 	ObjShot_SetAutoDelete(obj, false);
 	BloodRender(obj);
@@ -305,7 +315,14 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 	{
 		let obj2 = CreateShotA1(x, y, 0, 90, 296, 0);
 		ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
-		Obj_SetRenderPriority(obj2, 0.51);
+		Obj_SetRenderPriority(obj2, 0.53);
+		if(!drip)
+		{
+			ObjRender_SetColor(obj2, 255,0,0);
+			ObjShot_SetGraphic(obj2, 293);
+			Obj_SetRenderPriority(obj2, 0.51);
+			ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+		}
 		ObjShot_SetSpellResist(obj2, true);
 		ObjShot_SetIntersectionEnable(obj2, false);
 		ObjShot_SetAutoDelete(obj2, false);
@@ -322,7 +339,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 			
 			if(drip)
 			{
-				if(cc%20==0)
+				if(cc%5==0)
 				{
 					BloodDrip(ObjMove_GetX(obj), ObjMove_GetY(obj), sclInterp);
 				}
@@ -346,13 +363,13 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 		}
 		task BloodDrip(x, y, scl)
 		{
-			let objD = CreateShotA1(x, y, speed, ang, 293, 0);
+			let objD = CreateShotA1(x, y, speed, ang, 296, 0);
 			ObjRender_SetBlendType(objD, BLEND_ADD_ARGB);
 			ObjRender_SetColor(objD, 255, 0, 0);
 			Obj_SetRenderPriority(objD, 0.51);
 			ObjShot_SetIntersectionEnable(objD, false);
 			
-			let objD2 = CreateShotA1(x, y, 0, 90, 296, 0);
+			let objD2 = CreateShotA1(x, y, 0, 90, 293, 0);
 			ObjRender_SetBlendType(objD2, BLEND_SUBTRACT);
 			Obj_SetRenderPriority(objD2, 0.50);
 			ObjShot_SetSpellResist(objD2, true);

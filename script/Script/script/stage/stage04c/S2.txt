@@ -48,14 +48,7 @@ let finalSpellBool = false;
 	
 	end;
 
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("&quot;Putrescence&quot;","", LENEN, 0,0,0);
 	
-	ScreenShake(60,4);
-
-	SE_PlayLen(compositespellcard,75);
-	SE_PlayLen(BossSpell,75);
 	
 }
 
@@ -77,13 +70,13 @@ let finalSpellBool = false;
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		SetCommonData("SpellCardBG1",true);
+		SetCommonData("SpellCardBG1",false);
 	}
     if(count == 95)
     {
 		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
 		Fire;
-		
+		SpellDeclair();
         //count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
@@ -101,6 +94,17 @@ let finalSpellBool = false;
 let initGSpeed = 8;
 let gSpeed = initGSpeed;
 let phase = 0;
+
+task SpellDeclair()
+{
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("&quot;Putrescence&quot;","", LENEN, 0,0,0);
+	ScreenShake(60,4);
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	SetCommonData("SpellCardBG1",true);
+}
 task Fire
 {
 	
