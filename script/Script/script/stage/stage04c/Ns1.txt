@@ -168,28 +168,42 @@ task Fire
 		wait(6);
 		ascent(i in 0..10)
 		{
-			GatoSlasher(x + GetStgFrameWidth/10*(i)*bit, [0, GetStgFrameHeight][i%2],x + GetStgFrameWidth/10*(i+1)*bit,[GetStgFrameHeight, 0][i%2], 0);
-			wait(6);
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				GatoSlasher(x + GetStgFrameWidth/10*(i)*bit, [0, GetStgFrameHeight][i%2],x + GetStgFrameWidth/10*(i+1)*bit,[GetStgFrameHeight, 0][i%2], 0);
+				wait(6);
+			}
 		}
 		let x2 = GetStgFrameWidth/2 - (GetStgFrameWidth/2-100)*bit;
 		let y2 = 100;
-		
-		GatoSlasher(x + GetStgFrameWidth*bit, 0 ,x2, y2, 0);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			GatoSlasher(x + GetStgFrameWidth*bit, 0 ,x2, y2, 0);
+		}
 		wait(6);
 		wait(60*3);
-		SE_PlayLen(charge0,60);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(charge0,60);
+		}
 		ascent(i in 0..13)
 		{
-			let ang = -90 + 111.121*bit * (i+1);
-			let dis = 300;
-			let x3 = GetStgFrameWidth/2 + dis*cos(ang);
-			let y3 = GetStgFrameHeight/2 + dis*sin(ang);
-			GatoSlasher(x2, y2, x3, y3, bit);
-			x2 = x3;
-			y2 = y3;
-			wait(6);
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let ang = -90 + 111.121*bit * (i+1);
+				let dis = 300;
+				let x3 = GetStgFrameWidth/2 + dis*cos(ang);
+				let y3 = GetStgFrameHeight/2 + dis*sin(ang);
+				GatoSlasher(x2, y2, x3, y3, bit);
+				x2 = x3;
+				y2 = y3;
+				wait(6);
+			}
 		}
-		GatoSlasher(x2, y2, GetStgFrameWidth/2, 125, bit);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			GatoSlasher(x2, y2, GetStgFrameWidth/2, 125, bit);
+		}
 		wait(6);
 		ascent(i in 0..60*5)
 		{
@@ -201,8 +215,8 @@ task Fire
 	ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
 	isPhase2Started = true;
 	bit = bitRestart;
-	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 60, LERP_SMOOTHER);
-	wait(60);
+	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 120, LERP_SMOOTHER);
+	wait(120);
 	while(!isPhase2Over && !Obj_IsDeleted(objEnemy))
 	{
 		
@@ -214,7 +228,7 @@ task Fire
 		SE_PlayLen(charge0,60);
 		ascent(i in 0..60*3)
 		{
-			if(i%15==0)
+			if(i%15==0 && !Obj_IsDeleted(objEnemy))
 			{
 				FireWall(ang, bit, idd);
 				idd++;
@@ -237,7 +251,7 @@ task Fire
 		wait(60);
 		ascent(i in 0..(60*10))
 		{
-			if(i % 20 == 0)
+			if(i % 20 == 0 && !Obj_IsDeleted(objEnemy))
 			{
 				SE_PlayLen(shot1,60);
 				let randStrt = rand(1,-1)*3;
@@ -255,7 +269,7 @@ task Fire
 			yield;
 		}
 		wait(60*2);
-		if(!isPhase2Over)
+		if(!isPhase2Over && !Obj_IsDeleted(objEnemy))
 		{
 			SE_PlayLen(charge2,60);
 			ascent(i in 0..60*3)
@@ -273,15 +287,30 @@ task Fire
 	ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
 	isPhase3Started = true;
 	bit = bitRestart;
+	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2-60, 120, LERP_SMOOTHER);
+	wait(WIND_TRANSITION);
+	ScarfFire(bit);
+	while(!isPhase3Over && !Obj_IsDeleted(objEnemy))
+	{
+		wait(60*4);
+		HandleFutureSight();
+		wait(60*10);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+		yield;
+	}
 }
 
 
 
 
-let captureSnapshot = false;
-let useSnapshot = false;
+let captureSnapshotSandStorm = false;
+let captureSnapshotScarf = false;
+let useSnapshotSandStorm = false;
+let useSnapshotScarf = false;
 let isFutureSeeing = false;
 let hasRewoundTime = false;
+let playerRecording = [];
+let PLAYER_RECORDQUALITY = 10;
 task HandleFutureSight()
 {
 	isFutureSeeing = true;
@@ -298,16 +327,20 @@ task HandleFutureSight()
 		{
 			let buID = barray[i];
 			ObjShot_SetAutoDelete(buID,false);
+			ObjShot_SetSpellResist(buID,true);
 			Obj_SetValue(buID, "bX", ObjMove_GetX(buID));
 			Obj_SetValue(buID, "bY", ObjMove_GetY(buID));
-
+			Obj_SetValue(buID, "bAng", ObjMove_GetAngle(buID));
+			Obj_SetValue(buID, "bSpd", ObjMove_GetSpeed(buID));
+			Obj_SetValue(buID, "savedManagerHistory", Obj_GetValueD(buID, "managerHistory", 60*4));
+	
 		}
 	}
-	captureSnapshot = true;
-	
+	captureSnapshotSandStorm = true;
+	captureSnapshotScarf = true;
 
 	let objBlack = ObjPrim_Create(OBJ_SPRITE_2D);
-	Obj_SetRenderPriorityI(objBlack, 80);
+	Obj_SetRenderPriorityI(objBlack, 79);
 	ObjPrim_SetTexture(objBlack, IMG_PIXEL);
 	ObjSprite2D_SetSourceRect(objBlack, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestRect(objBlack, 0, 0, 1024, 1024);
@@ -317,21 +350,26 @@ task HandleFutureSight()
 	ObjRender_SetColor(objBlack,255,255,0);
 	ObjRender_SetAlpha(objBlack,128);
 	ObjRender_SetBlendType(objBlack,BLEND_SUBTRACT);
-	
+	playerRecording = [];
 	ascent(i in 0..60*3)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
+			if(i%PLAYER_RECORDQUALITY==0)
+			{
+				playerRecording ~= [[GetPlayerX, GetPlayerY]];
+			}
 			yield;
 		}
 	}
-	Obj_Delete(objBlack);
+	
 	
 	if(!Obj_IsDeleted(objEnemy))
 	{
 		ObjMove_SetPosition(GetPlayerObjectID, playerX, playerY);
 
-		useSnapshot = true;
+		useSnapshotSandStorm = true;
+		useSnapshotScarf = true;
 		SE_PlayLen(boon1,60);
 		barray = GetShotIdInCircleA2(GetStgFrameWidth/2, GetStgFrameHeight/2 ,GetScreenWidth*2, TARGET_ENEMY);
 		blength = length(barray);
@@ -340,23 +378,79 @@ task HandleFutureSight()
 			ascent (i in 0..blength)
 			{
 				let buID = barray[i];
-				let x = Obj_GetValue(buID, "bX", -999);
-				let y = Obj_GetValue(buID, "bY", -999);
+				let x = Obj_GetValueD(buID, "bX", -999);
+				let y = Obj_GetValueD(buID, "bY", -999);
+				let a = Obj_GetValueD(buID, "bAng", -999);
 				ObjMove_SetPosition(buID, x, y);
+				ObjMove_SetAngle(buID, a);
+				ObjMove_SetSpeed(buID, Obj_GetValueD(buID, "bSpd", -999));
 				DelayedAutoDelete(buID,120);
+				let h = Obj_GetValueD(buID, "savedManagerHistory", -999);
+				ObjShot_SetSpellResist(buID,false);
+				if(h>=0)
+				{
+					let b = Obj_GetValueD(buID, "startingBit", 1);
+					ShotManager(buID, h, Obj_GetValueD(buID, "startingAng", 0), b);
+				}
 			}
 		}
 		hasRewoundTime = true;
 	}
 	isFutureSeeing = false;
-	wait(60*3);
+	ObjRender_SetColor(objBlack,255,255,255);
+	ObjRender_SetAlpha(objBlack,128);
+	ObjRender_SetBlendType(objBlack,BLEND_ADD_ARGB);
+	ShootAtPlayerHistory();
+	ascent(i in 0..60)
+	{
+		ObjRender_SetAlpha(objBlack,128-128/60*i);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			StartSlow(TARGET_ALL,20+round(40/60*i));
+			yield;
+		}
+		StopSlow(TARGET_ALL);
+	}
+	Obj_Delete(objBlack);
+	wait(60*2);
 	hasRewoundTime = false;
 	
 }	
 
+task ShootAtPlayerHistory()
+{
+	let concc = 8;
+	ascent(i in 0..length(playerRecording))
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(shot1,60);
+			SE_PlayLen(chime1,60);
+			let pX = playerRecording[i][0];
+			let pY = playerRecording[i][1];
+			let ang = Get_PointAngle(pX, pY, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy));
+			ascent(o in 0..2)
+			{
+				ascent(p in 0..2)
+				{
+					ascent(q in 0..concc)
+					{
+						let spd = 3+1/(concc-1)*q*[1,-1][p];
+						let ang2 = ang + 10*[1,-1][o] - 10/(concc-1)*q*[1,-1][o];
+						let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang2, 146, 146, 5, 2, BLEND_ADD_ARGB, false);
+						ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+					}
+				}
+			}
+			wait(PLAYER_RECORDQUALITY);
+		}
+	}
+}
+
 let angSand = 90;
 let sandBit = 1;
 let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SMOKE, [0,0,512,512], BLEND_ALPHA, 0.28);
+let WIND_TRANSITION = 180;
 task Sandstorm(bit)
 {
 
@@ -374,19 +468,19 @@ task Sandstorm(bit)
 	WindManage();
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		if(captureSnapshot)
+		if(captureSnapshotSandStorm)
 		{
 			ccR = cc;
 			cBR = cB;
 			cB2R = cB2;
-			captureSnapshot = false;
+			captureSnapshotSandStorm = false;
 		}
-		if(useSnapshot)
+		if(useSnapshotSandStorm)
 		{
 			cc = ccR;
 			cB = cBR;
 			cB2 = cB2R;
-			useSnapshot = false;
+			useSnapshotSandStorm = false;
 		}
 		
 		let wvAng = cc/1.21321;
@@ -446,16 +540,16 @@ task Sandstorm(bit)
 	{
 		while(!Obj_IsDeleted(objEnemy) && !isPhase2Started){yield;}
 		SE_PlayLen(charge2,80);
-		ascent(i in 0..180)
+		ascent(i in 0..WIND_TRANSITION)
 		{
-			angSand = 90 + 90*sandBit - 45/179*i*sandBit;
+			angSand = 90 + 90*sandBit - 45/(WIND_TRANSITION-1)*i*sandBit;
 			yield;
 		}
 		while(!Obj_IsDeleted(objEnemy) && !isPhase3Started){yield;}
 		SE_PlayLen(charge2,80);
-		ascent(i in 0..180)
+		ascent(i in 0..WIND_TRANSITION)
 		{
-			angSand = 90 + 45*sandBit - 45/179*i*sandBit;
+			angSand = 90 + 45*sandBit - 45/(WIND_TRANSITION-1)*i*sandBit;
 			yield;
 		}
 	}
@@ -493,7 +587,14 @@ task Sandstorm(bit)
 			
 			cc-=1.5;
 			cc2++;
-			yield;
+			if(isFutureSeeing)
+			{
+				while(isFutureSeeing){yield;}
+			}
+			else
+			{
+				yield;
+			}
 		}
 		
 		task WindCloud(spd)
@@ -525,7 +626,14 @@ task Sandstorm(bit)
 				}
 				xC+=spd*cosAng;
 				yC+=spd*sinAng;
-				yield;
+				if(isFutureSeeing)
+				{
+					while(isFutureSeeing){yield;}
+				}
+				else
+				{
+					yield;
+				}
 			}
 		}
 	}
@@ -593,7 +701,10 @@ task GatoSlasher(x,y,x2,y2, bit)
 
 task Slasher(x,y,x2,y2,tim, d1, d2)
 {
-	SE_PlayLen(chime1,60);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(chime1,60);
+	}
 	let dis = Get_Distance(x, y, x2, y2);
 	let ang = Get_PointAngle(x2,y2,x,y);
 	let t = d1;
@@ -682,25 +793,31 @@ task FireWall(ang, bit, idd)
 	let sinAng2 = sin(ang);
 	ascent(i in 0..t)
 	{
-		SE_PlayLen(Shot1,60);
-		let dis = DIS - (DIS*2) / (t-1)*i;
-		let x2 = x + dis*cosAng + 30*cosAng2 * sin(i*20 + idd*55);
-		let y2 = y + dis*sinAng + 30*sinAng2 * sin(i*20 + idd*55);
-		let type = 0;
-		let widthh = 3;
-		if(i>randO-widthh && i < randO+widthh)
+		if(!Obj_IsDeleted(objEnemy))
 		{
-			type = 1;
+			SE_PlayLen(Shot1,60);
+			let dis = DIS - (DIS*2) / (t-1)*i;
+			let x2 = x + dis*cosAng + 30*cosAng2 * sin(i*20 + idd*55);
+			let y2 = y + dis*sinAng + 30*sinAng2 * sin(i*20 + idd*55);
+			let type = 0;
+			let widthh = 3;
+			if(i>randO-widthh && i < randO+widthh)
+			{
+				type = 1;
+			}
+			
+			let obj = CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0, ang, [425, 428][type], 0);
+			
+			
+			MoverFire(obj, x2, y2, 180-i, ang,type);
+			yield;
 		}
-		
-		let obj = CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0, ang, [425, 428][type], 0);
-		
-		
-		MoverFire(obj, x2, y2, 180-i, ang,type);
-		yield;
 	}
 	wait(180-t + 40 + paddedDelay + idd*40);
-	SE_PlayLen(charge1,50);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge1,50);
+	}
 	task MoverFire(obj, x2, y2, t, ang, type)
 	{
 		ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
@@ -745,8 +862,79 @@ task FireWall(ang, bit, idd)
 	}
 }
 
+task ScarfFire(bit)
+{
+	let cc = 0;
+	let ccR = cc;
+	while(!isPhase3Over && !Obj_IsDeleted(objEnemy))
+	{
+		if(captureSnapshotScarf)
+		{
+			ccR = cc;
+			captureSnapshotScarf = false;
+		}
+		if(useSnapshotScarf)
+		{
+			cc = ccR;
+			useSnapshotScarf = false;
+		}
+		if(cc%4==0 && cc%(4*10)<(4*5))
+		{
+			let ang = cc*0.7*bit + 90*bit;
+			let DIS = 60;
+			ascent(i in 0..4)
+			{
+				let ang2 = ang + 360/4*i*bit;
+				let x = ObjMove_GetX(objEnemy) + DIS*cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + DIS*sin(ang2);
+				let obj = ShotA2(x, y, 1, ang2 - 90*bit, 1/60, 3, 287, 287, 0, 0, BLEND_ADD_ARGB, false);
+		
+				ShotManager(obj, 0, ObjMove_GetAngle(obj), bit);
+			}
+			ascent(o in 0..2)
+			{
+				ascent(i in 0..4)
+				{
+					let ang2 = ang + 360/4*i*bit;
+					let x = ObjMove_GetX(objEnemy) + DIS*cos(ang2) + 20 * cos(ang2+90+180*o+90);
+					let y = ObjMove_GetY(objEnemy) + DIS*sin(ang2) + 20 * sin(ang2+90+180*o+90);
+					let obj = ShotA2(x, y, 1, ang2 - 90*bit, 1/60, 3, 71, 71, 0, 0, BLEND_ADD_ARGB, false);
+					
+					ShotManager(obj, 0, ObjMove_GetAngle(obj), bit);
+				}
+			}
+		}
+		cc++;
+		yield;
+	}
+}
+task ShotManager(obj, startingPoint, startingAng, bit)
+{
+	let alpha = 0;
 
-
+	if(startingPoint==0)
+	{
+		Obj_SetValue(obj, "managerHistory", 0);
+		Obj_SetValue(obj, "startingAng", ObjMove_GetAngle(obj));
+		Obj_SetValue(obj, "startingBit", bit);
+		
+	}
+	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	ObjShot_SetAutoDelete(obj,true);
+	ascent(i in startingPoint..60*4)
+	{
+		if(!Obj_IsDeleted(obj))
+		{
+			Obj_SetValue(obj, "managerHistory", i);
+			let ang2 = startingAng - 0.75*bit*i;
+			alpha = 255/30*i;
+			ObjMove_SetAngle(obj, ang2);
+			ObjRender_SetAlpha(obj, alpha);
+			yield;
+		}
+	}
+	
+}
 task timer
 {
     while(TIME>60*10)
