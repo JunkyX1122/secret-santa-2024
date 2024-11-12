@@ -17,7 +17,7 @@ let MusicFade = false;
 {
 	LoadBoss();
 	InitialiseIndiv();
-	SetPlayerLife(1);
+	SetPlayerLife(999);
 	SetForbidPlayerSpell(true);
 	
 	EndStage;
@@ -108,12 +108,13 @@ let Boss;
 task LoadBoss()
 {
 	Boss=ObjEnemyBossScene_Create();
-	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
+	//ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
 	//ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
 	//ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
 	//ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
 	//ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"Ns3.txt");
-	//ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
+	ObjEnemyBossScene_Add(Boss,2,GetCurrentScriptDirectory~"S3.txt");
+	ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
 	//ObjEnemyBossScene_Add(Boss,3,GetCurrentScriptDirectory~"S4.txt");
 	ObjEnemyBossScene_LoadInThread(Boss);
 }
@@ -140,7 +141,7 @@ task StartStage
 		{
 			yield;
 		}
-		wait(120);
+		wait(300);
 		descent(i in 0..90)
 		{
 			vol = 85/90*i;

@@ -100,7 +100,7 @@ const TextImg_ImgArray =  [];
 const IMG_ENEMY_DEL0= GetCurrentScriptDirectory() ~ "./../../img/effect/del_eff_00.png";
 const IMG_ENEMY_DEL1= GetCurrentScriptDirectory() ~ "./../../img/effect/spellChargeA0000.png";
 
-const IMG_BULconst_DEL= GetCurrentScriptDirectory() ~ "./../../img/effect/shot_del_eff.png";
+const IMG_BULLET_DEL= GetCurrentScriptDirectory() ~ "./../../img/effect/shot_del_eff.png";
 const IMG_ITEM = GetCurrentScriptDirectory()~"./../../img/stgsystem/img_item.png";
 const IMG_BOSSPOS = GetCurrentScriptDirectory()~"./../../img/effect/enemy_board.png";
 const IMG_LIGHT = GetCurrentScriptDirectory()~"./../../img/effect/light.png";
@@ -119,8 +119,8 @@ const IMG_SUN3 = GetCurrentScriptDirectory()~"./../../img/effect/Sun3.png";
 const IMG_SUN4 = GetCurrentScriptDirectory()~"./../../img/effect/Sun4.png";
 const IMG_MASTER_SPARK = GetCurrentScriptDirectory()~"./../../img/bulconst/pl01_th14_bomba.png";
 
-const IMG_PAGODA1 = GetCurrentScriptDirectory ~ "./../../img/bulconst/PagodaLaser.png";
-const IMG_PAGODA2 = GetCurrentScriptDirectory ~ "./../../img/bulconst/PagodaLaser_Fire.png";
+const IMG_PAGODA1 = GetCurrentScriptDirectory ~ "./../../img/bullet/PagodaLaser.png";
+const IMG_PAGODA2 = GetCurrentScriptDirectory ~ "./../../img/bullet/PagodaLaser_Fire.png";
 
 const IMG_BOTTOMWARNING = GetCurrentScriptDirectory()~"./../../img/effect/bottomWarning.png";
 
@@ -147,13 +147,17 @@ const IMG_SWITCHAURA = GetCurrentScriptDirectory()~"./../../img/effect/possfire.
 
 const IMG_SLASH = GetCurrentScriptDirectory()~"./../../img/effect/Slash.png";
 const IMG_FIRERING = GetCurrentScriptDirectory()~"./../../img/effect/FireRing.png";
+const IMG_NOISE = GetCurrentScriptDirectory()~"./../../img/effect/noise.png";
+const IMG_AURA_LOOP = GetCurrentScriptDirectory()~"./../../img/effect/aura_loop_mono0000.png";
+const IMG_WIND = GetCurrentScriptDirectory()~"./../../img/effect/wind_01.png";
+const IMG_THROW = GetCurrentScriptDirectory()~"./../../img/effect/throw.png";
 
 
-const Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULconst_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,
+const Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,
 IMG_WARINING,IMG_AURA,IMG_LEFTEYE,IMG_FADERING,IMG_SUN1,IMG_SUN2,IMG_SUN3,IMG_SUN4,IMG_MASTER_SPARK,IMG_PAGODA1,IMG_PAGODA2,IMG_BOTTOMWARNING,
 IMG_GUARDRING,IMG_FLASHEFF,IMG_CHARGEEFF,IMG_STAR,IMG_GRADIENT,IMG_MAGICCIRCLE,IMG_FDFCHARGE,IMG_FDFBURST,IMG_FDFLINES,
 IMG_SAURA,IMG_SAURA2,IMG_SWITCHAURA,IMG_FADEBALL,
-IMG_SLASH,IMG_FIRERING];
+IMG_SLASH,IMG_FIRERING, IMG_NOISE, IMG_AURA_LOOP,IMG_WIND, IMG_THROW];
 
 //---------------------------------------
 //---------------CARDS EF----------------

@@ -1,0 +1,171 @@
+
+sampler sampler0_ : register(s0);
+
+texture texture_0;
+sampler Samp0 = sampler_state
+{
+	Texture		= <texture_0>;
+	MipFilter	= LINEAR;	//　縮小間フィルタ（？）
+	MinFilter	= LINEAR;	//　縮小フィルタ
+	MagFilter	= LINEAR;	//　拡大フィルタ
+	AddressU	= 1;		//　地続きのマッピングU
+	AddressV	= 1;		//　地続きのマッピングV
+};
+texture texture_1;
+sampler Samp1 = sampler_state
+{
+	Texture		= <texture_1>;
+	MipFilter	= LINEAR;	//　縮小間フィルタ（？）
+	MinFilter	= LINEAR;	//　縮小フィルタ
+	MagFilter	= LINEAR;	//　拡大フィルタ
+	AddressU	= 1;		//　地続きのマッピングU
+	AddressV	= 1;		//　地続きのマッピングV
+};
+
+const float SCREEN_WIDTH = 1024;
+const float SCREEN_HEIGHT = 1024;
+const float PI = 3.14;
+float time;
+float scroll_x;
+float scroll_y;
+
+float scroll_x2;
+float scroll_y2;
+float rotation;
+
+float spinAmount;
+
+texture textureMask_;
+sampler samplerMask_ = sampler_state{
+	Texture = <textureMask_>;
+};
+
+
+struct PS_INPUT
+{
+	float4 diffuse : COLOR0; 
+	float2 texCoord : TEXCOORD0;
+	float2 vPos : VPOS; 
+};
+
+
+struct PS_OUTPUT
+{
+    float4 color : COLOR0; 
+};
+float2x2 rotationMatrix(float angle)
+{
+	angle *= PI / 180.0;
+    float sine = sin(angle), cosine = cos(angle);
+    return float2x2( cosine, -sine, 
+                 sine,    cosine );
+}
+
+
+PS_OUTPUT PsFire( PS_INPUT In ) : COLOR0
+{
+	PS_OUTPUT Out;
+
+	float time_scale_x = scroll_x;
+	float time_scale_y = scroll_y;
+	
+	float time_scale_x2 = scroll_x2;
+	float time_scale_y2 = scroll_y2;
+	
+	float timer = time / SCREEN_WIDTH;
+	float2 coord = float2(timer * time_scale_x ,timer* time_scale_y);
+	float2 coord2 = float2(timer * time_scale_x2 ,timer* time_scale_y2);
+	
+	float2 originalPos = In.texCoord;
+	float2 centerPoint = float2(0.5,0.5);
+	float sampleTexDist = distance(centerPoint, originalPos);
+	
+	float spn = spinAmount;
+	float angle = atan2(centerPoint.y - originalPos.y,centerPoint.x - originalPos.x) + sampleTexDist * spn;
+	
+	float repeatSpin = 1;
+	float2 sampleNew = float2(angle / (2*PI) * repeatSpin, sampleTexDist*3) + coord;
+	
+	float repeatSpin2 = 4;
+	float2 sampleNew2 = float2(angle / (2*PI) * repeatSpin2, sampleTexDist) + coord2;
+	
+	
+	float4 noise_0 = tex2D(Samp0,sampleNew);
+	noise_0 *= In.diffuse;
+	
+	float4 noise_1 = tex2D(Samp1,sampleNew2);
+	noise_1 *= In.diffuse;
+	
+	float4 colorCombine = float4(1,1,1,1);
+	float startDist = 0.1;
+	float fadeDist = 0.2;
+	
+	float startFadeDist = 0.3;
+	float endFadeDist = 0.5;
+
+	if(sampleTexDist < startDist)
+	{
+		colorCombine.a = 0.0;
+	}
+	else if(sampleTexDist < fadeDist)
+	{
+		colorCombine.a = 1/(fadeDist-startDist) * (sampleTexDist - startDist);
+	}
+	else if(sampleTexDist >= startFadeDist && sampleTexDist < endFadeDist)
+	{
+		colorCombine.a = 1-1/(endFadeDist-startFadeDist) * (sampleTexDist - startFadeDist);
+	}
+	
+	else if(sampleTexDist > 0.5)
+	{
+		colorCombine.a = 0;
+	}
+	
+	float4 mask = noise_0 * colorCombine;
+	mask.a = mask.a*2;
+	mask.a = mask.a * mask.r * noise_1;
+	//mask.rgb = float3(1,0,0);
+	Out.color = mask;
+
+	return Out;
+}
+
+
+technique TecFire
+{
+	pass Pass0
+	{
+		PixelShader = compile ps_3_0 PsFire();
+	}
+	
+}
+/*
+float4 tex0 = tex2D(sampler0_,In.texCoord);
+	tex0 *= In.diffuse;
+
+	
+	fragColor = float4(0, 0, 0, 1);
+	float2 delta = float2(0, 0);
+
+	if(isVertical == 1)
+	{
+		delta = dFdy(IN.texCoord);
+	}
+	else
+	{
+		delta = dFdx(IN.texCoord);
+	}
+	float z = 0;
+    int ranger = bloomRange;
+	float startCurve = 8.0f;
+	for(int i = 0; i < ranger; i++)
+	{
+		float2 offset = delta * (z - (ranger-1)/2);
+		float4 tmp = texture2D(sceneTex, IN.texCoord.xy + offset);
+		
+		float curve = 1.0/(pow(2.0, abs( -startCurve + (startCurve*2)/(ranger-1) * z ) ));
+		fragColor += tmp * curve * bloomIntensity;
+		z+=1.0;
+	}
+	
+	*/

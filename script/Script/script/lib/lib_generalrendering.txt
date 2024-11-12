@@ -123,8 +123,9 @@ task ChargeExplode(x,y,effecttype,graphictype,scale,leftrighttim,color,alphascal
 }
 
 function PagodaLaser(x,y,xmov,ymov,scale,angle,prerotation,postrotation,maxwidth,color,delay,del,soundV) {
-	let objHitbox = CreateStraightLaserA1(x,y,angle,1000,maxwidth*(5.7/4),del+45,1,delay);
+	let objHitbox = CreateStraightLaserA1(x,y,angle,1000,maxwidth*(5.7/4),del+9999,1,delay);
 	ObjLaser_SetInvalidLength(objHitbox,0,0);
+	ObjLaser_SetItemDistance(objHitbox, 100);
 	let allPresent = true;
 	//ObjLaser_SetGrazeInvalidFrame(objHitbox,5);
 	PagodaBeam;
@@ -233,7 +234,7 @@ function PagodaLaser(x,y,xmov,ymov,scale,angle,prerotation,postrotation,maxwidth
 			newY+=ymov;
 			ObjMove_SetX(objHitbox,newX);
 			ObjMove_SetY(objHitbox,newY);
-		
+			ObjLaser_SetIntersectionWidth(objHitbox, width);
 			ObjRender_SetScaleXYZ(objLaser1,2*(lengthh/500),width/25*extendw,1);
 			ObjRender_SetPosition(objLaser1,ObjMove_GetX(objHitbox),ObjMove_GetY(objHitbox),0);
 			ObjRender_SetAngleZ(objLaser1,ObjStLaser_GetAngle(objHitbox));
@@ -326,8 +327,8 @@ function PagodaLaser(x,y,xmov,ymov,scale,angle,prerotation,postrotation,maxwidth
 			ObjMove_SetX(objHitbox,newX);
 			ObjMove_SetY(objHitbox,newY);
 		
-			ObjShot_SetIntersectionEnable(objHitbox,false);
-		
+			//ObjShot_SetIntersectionEnable(objHitbox,false);
+			ObjLaser_SetIntersectionWidth(objHitbox, width);
 			ObjRender_SetScaleXYZ(objLaser1,2,width/25*extendw,1);
 			ObjRender_SetPosition(objLaser1,ObjMove_GetX(objHitbox),ObjMove_GetY(objHitbox),0);
 			ObjRender_SetAngleZ(objLaser1,ObjStLaser_GetAngle(objHitbox));
@@ -360,7 +361,7 @@ function PagodaLaser(x,y,xmov,ymov,scale,angle,prerotation,postrotation,maxwidth
 			fadetime+=10/30;
 
 			
-			width-=(maxwidth+2)/30;
+			width-=(maxwidth)/30;
 			fire_count+=0.5;
 			detail_count+=12;
 			if(!Obj_IsDeleted(objHitbox))
@@ -375,10 +376,7 @@ function PagodaLaser(x,y,xmov,ymov,scale,angle,prerotation,postrotation,maxwidth
 		{
 			yield;
 		}
-		Obj_Delete(objF1);
-		Obj_Delete(objF2);
-		Obj_Delete(objF3);
-		Obj_Delete(objF4);
+
 	}
 	
 	

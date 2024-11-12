@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S4"]
+#Title["&quot;Abyssal Will&quot;"]
 #Text["S4"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -40,23 +40,16 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 90);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
 	magiccircle(objEnemy,1);
-	
+	SE_PlayLen(warning, 100);
+	SE_PlayLen(charge0, 100);
+	SE_PlayLen(LaserDelLong, 100);
 	end;
-
-	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("&quot;Abyssal Will&quot;","", LENEN, 0,0,0);
-	
-	ScreenShake(60,4);
-
-	SE_PlayLen(compositespellcard,75);
-	SE_PlayLen(BossSpell,75);
-	
+	SlowStart();
 }
 
 
@@ -77,12 +70,12 @@ let finalSpellBool = false;
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		SetCommonData("SpellCardBG1",true);
+		SetCommonData("SpellCardBG1",false);
 	}
     if(count == 95)
     {
-		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
-		Fire;
+		
+		
 		
         //count = 1111;
     }
@@ -98,14 +91,660 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+task SpellDeclair()
+{
+	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
+	ObjCutin_LaunchS3("", "Normal");
+	ObjCutin_SetSpellcardS4("&quot;Abyssal Will&quot;","", LENEN, 0,0,0);
+	ScreenShake(180,8);
+	SE_PlayLen(compositespellcard,75);
+	SE_PlayLen(BossSpell,75);
+	SE_PlayLen(Burst1,75);
+	SetCommonData("SpellCardBG1",true);
+}
+let STAR_X;
+let STAR_Y;
+let forceShake = true; 
+task SlowStart()
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	Obj_SetRenderPriorityI(obj, 79);
+
+	ObjSprite2D_SetSourceRect(obj,0, 0, GetScreenWidth*2, GetStgFrameHeight+50);
+	ObjSprite2D_SetDestRect(obj,0, 0, GetScreenWidth*2, GetStgFrameHeight+50);
+	ObjSprite2D_SetDestCenter(obj);
+
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+	ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
+	let t = 120;
+	let alph = 128;
+	ascent(i in 0..t)
+	{
+		ObjRender_SetAlpha(obj,alph/t*i);
+		StartSlow(TARGET_ALL,60-40/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+	StopSlow(TARGET_ALL);
+	Fire;
+
+}
 task Fire
 {
-	
+	ObjEnemy_SetDamageRate(objEnemy, (0.065/3)/1.5, (0.065/3)/3);
+	SpellDeclair();
+	STAR_X = GetStgFrameWidth/2;
+	STAR_Y = 100;
+	let bit = 1-2*round(rand(0,1));
+	Flash();
+	BlackHole(STAR_X, STAR_Y, bit);
+	CreateBox(STAR_X, STAR_Y, bit, -0.5*bit, 3*bit, -3*bit, 10*2, 4, IMG_AURA_LOOP, IMG_NOISE, BLEND_SUBTRACT);
+	//CreateBox(GetStgFrameWidth/2, 100, bit,  0.0,     0, 	  0,	 10*5, 0, IMG_WIND,      IMG_PIXEL, BLEND_ADD_ARGB);
+	PagodaFire(bit);
+	OrbFire(bit);
+	BloodFire(bit);
+	Nuke(bit);
 }
 
+task PagodaFire(bit)
+{
+	let ang = -90;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ascent(i in 0..7)
+		{
+			let ang2 = ang + 360/7*i;
+			PagodaLaser(STAR_X,STAR_Y,0,0,0.5,ang2,0,0,20,[255,64,128],40,20,20);
+		}
+		ang+=30.2131*bit;
+		wait(40);
+	}
+}
+
+task OrbFire(bit)
+{
+	let ang = -90;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(Shot1,50);
+		let x = STAR_X;
+		let y = STAR_Y;
+		let spd = 8;
+		let ang2 = ang;
+		let obj = CreateShotA1(x, y, 0, ang2, 400, 0);
+		ObjRender_SetScale(obj, 1.2);
+		ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+		ObjShot_SetSpellResist(obj, true);
+		
+		let obj2 = CreateShotA1(x, y, 0, ang2, 401, 0);
+		ObjRender_SetScale(obj2, 1.1);
+		ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+		Obj_SetRenderPriority(obj2, 0.51);
+		ObjShot_SetSpellResist(obj2, true);
+		ObjShot_SetIntersectionEnable(obj2, false);
+		let objs = [obj,obj2];
+		ascent(o in 0..2)
+		{
+			ObjMove_AddPatternA2(objs[o], 0, 0, NO_CHANGE, spd/180, spd, 0.3*bit);
+		}
+		ang+=(360/7+14.123)*bit;
+		wait(3);
+		
+	
+	}
+}
+
+task BloodFire(bit)
+{
+	let ang = -90+45*bit;
+	let ang2 = -90+45*bit;
+	let cc = 0;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		
+		let x = STAR_X;
+		let y = STAR_Y;
+		
+		if(cc%4==0)
+		{
+			SE_PlayLen(Shot2,50);
+			ascent(i in 0..2)
+			{
+				ascent(p in 0..2)
+				{
+					let totalScl = 1;
+					let spd = 4;
+					let angS = ang+360/2*i;
+					let obj = CreateShotA1(x, y, 0, angS, 293, 0);
+					ObjRender_SetScale(obj, 1.3*totalScl);
+					ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+					ObjShot_SetSpellResist(obj, true);
+					ObjRender_SetColor(obj, 255, 64, 64);
+					ObjShot_SetIntersectionEnable(obj, false);
+					
+					let obj2 = CreateShotA1(x, y, 0, angS, 296, 0);
+					ObjRender_SetScale(obj2, 1*totalScl);
+					ObjShot_SetIntersectionScaleXY(obj2, 1*totalScl);
+					ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+					Obj_SetRenderPriority(obj2, 0.51);
+					ObjShot_SetSpellResist(obj2, true);
+					
+					let objs = [obj,obj2];
+					ascent(o in 0..2)
+					{
+						ObjMove_AddPatternA2(objs[o], 0, 0, NO_CHANGE, spd/180, spd, -0.2*bit);
+					}
+				}
+			}
+		}
+		if(cc%3==0)
+		{
+			SE_PlayLen(Shot1,50);
+			ascent(i in 0..2)
+			{
+				
+				let totalScl = 0.5;
+				let spd = 3.5;
+				let angS = ang2+360/2*i;
+				let obj = CreateShotA1(x, y, 0, angS, 293, 0);
+				ObjRender_SetScale(obj, 1.3*totalScl);
+				ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+				ObjShot_SetSpellResist(obj, true);
+				ObjRender_SetColor(obj, 255, 64, 64);
+				ObjShot_SetIntersectionEnable(obj, false);
+				
+				let obj2 = CreateShotA1(x, y, 0, angS, 296, 0);
+				ObjRender_SetScale(obj2, 1*totalScl);
+				ObjShot_SetIntersectionScaleXY(obj2, 1*totalScl);
+				ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+				Obj_SetRenderPriority(obj2, 0.51);
+				ObjShot_SetSpellResist(obj2, true);
+				
+				let objs = [obj,obj2];
+				ascent(o in 0..2)
+				{
+					ObjMove_AddPatternA2(objs[o], 0, 0, NO_CHANGE, spd/180, spd, 0.2*bit);
+				}
+				
+			}
+		}
+		if(cc%12==0)
+		{
+			SE_PlayLen(Shot1,50);
+			ascent(i in 0..4)
+			{
+				
+				let totalScl = 0.75;
+				let spd = 3.5;
+				let angS = ang+360/4*i;
+				let obj = CreateShotA1(x, y, 0, angS, 338, 0);
+				ObjRender_SetScale(obj, 1.3*totalScl);
+				ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+				ObjShot_SetSpellResist(obj, true);
+				ObjRender_SetColor(obj, 255, 165, 64);
+				ObjShot_SetIntersectionEnable(obj, false);
+				
+				let obj2 = CreateShotA1(x, y, 0, angS, 336, 0);
+				ObjRender_SetScale(obj2, 1*totalScl);
+				ObjShot_SetIntersectionScaleXY(obj2, 0.7*totalScl);
+				ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+				Obj_SetRenderPriority(obj2, 0.51);
+				ObjShot_SetSpellResist(obj2, true);
+				
+				let objs = [obj,obj2];
+				ascent(o in 0..2)
+				{
+					ObjMove_AddPatternA2(objs[o], 0  , 0, NO_CHANGE, spd/100, spd, -0.7*bit);
+					ObjMove_AddPatternA2(objs[o], 200, NO_CHANGE, NO_CHANGE, -spd/100, 1, 0*bit);
+				}
+				
+			}
+		}
+		ang-=(14.123)/3*bit;
+		ang2+=(14.123)/3*bit;
+		cc++;
+		yield;
+		
+	
+	}
+}
+
+
+let nukeScale = 3;
+
+task Nuke(bit)
+{
+	let nukeObjs = [];
+	
+	let objNuke = CreateShotA1(GetStgFrameWidth/2,100,0,90,402,0);
+	ObjShot_SetSpellResist(objNuke,true);
+	ObjShot_SetAutoDelete(objNuke,false);
+	ObjRender_SetAlpha(objNuke,0);
+	ObjRender_SetBlendType(objNuke,BLEND_ADD_ARGB);
+
+	let IMGS = [IMG_SUN3, IMG_SUN3, IMG_SUN3, IMG_SUN2];
+	let COLS = [[0,0,0],[255,128,128], [255,128,128],[255,128,128]];
+	ascent(i in 0..4)
+	{
+		let objF = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(objF,[51,52,52,52][i]+10);
+		ObjPrim_SetTexture(objF,IMGS[i]);
+		ObjSprite2D_SetSourceRect(objF,0,0,512,512);
+		ObjSprite2D_SetDestRect(objF,0,0,512,512);
+		ObjSprite2D_SetDestCenter(objF);
+		ObjRender_SetBlendType(objF,[BLEND_SUBTRACT,BLEND_ADD_ARGB, BLEND_ADD_ARGB,BLEND_ADD_ARGB][i]);
+		ObjRender_SetColor(objF,COLS[i][0],COLS[i][1],COLS[i][2]);
+		nukeObjs ~= [objF];
+	}
+
+	while(GLOBALALPHA > 0)
+	{
+		
+		let s = nukeScale * GLOBALALPHA;
+		ObjRender_SetScale(objNuke,s);
+		ObjShot_SetIntersectionScaleXY(objNuke,s,s);
+		ObjMove_SetPosition(objNuke, STAR_X, STAR_Y);
+		ascent(i in 0..length(nukeObjs))
+		{
+			ObjRender_SetAlpha(nukeObjs[i],255);
+			ObjRender_SetPosition(nukeObjs[i], STAR_X, STAR_Y, 0);
+			//
+			ObjRender_SetScale(nukeObjs[i], s*0.18 * [1,0.6,0.5,0.4][i]);
+			ObjRender_SetAngleZ(nukeObjs[i], ObjRender_GetAngleZ(nukeObjs[i]) + 0.3 * [1,-1,1,0][i] * bit);
+		}
+		yield;
+	}
+	Obj_Delete(objNuke);
+	ascent(i in 0..length(nukeObjs))
+	{
+		Obj_Delete(nukeObjs[i]);
+	}
+}
+
+
+task Flash()
+{
+
+
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	Obj_SetRenderPriorityI(obj, 79);
+
+	ObjSprite2D_SetSourceRect(obj,0, 0, GetScreenWidth*2, GetStgFrameHeight+50);
+	ObjSprite2D_SetDestRect(obj,0, 0, GetScreenWidth*2, GetStgFrameHeight+50);
+	ObjSprite2D_SetDestCenter(obj);
+
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	let t = 120;
+	let alph = 128;
+	ascent(i in 0..t)
+	{
+
+		ObjRender_SetAlpha(obj,alph-alph/t*i);
+		yield;
+		
+	}
+
+	Obj_Delete(obj);
+
+}
+task CreateBox(x, y, bit, spinn, sideScroll, twist, ySpd1, ySpd2, img1, img2, blendType)
+{
+	
+	let dir = GetCurrentScriptDirectory();
+	let path = IMG_SAURA;
+
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D); //2Dスプライトオブジェクト生成
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj, 29); //描画優先度を設定
+	ObjPrim_SetTexture(obj, path); //テクスチャを設定
+	
+	ObjPrim_SetVertexPosition(obj, 0, -512, -512, 0);
+	ObjPrim_SetVertexPosition(obj, 1, 512, -512, 0); 
+	ObjPrim_SetVertexPosition(obj, 2, 512, 512, 0);
+	ObjPrim_SetVertexPosition(obj, 3, -512, 512, 0);
+	
+	ObjPrim_SetVertexUVT(obj, 0, 0, 0);
+	ObjPrim_SetVertexUVT(obj, 1, 256, 0);
+	ObjPrim_SetVertexUVT(obj, 2, 256, 256);
+	ObjPrim_SetVertexUVT(obj, 3, 0, 256);
+	
+
+	ObjShader_SetShaderF(obj, GetCurrentScriptDirectory()~"hlslring.txt");
+	ObjRender_SetScaleXYZ(obj,0.5,0.5,0);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	//ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	ObjRender_SetBlendType(obj,blendType);
+	ObjRender_SetColor(obj, 225, 255, 225);
+	let timer = 0;
+	
+	ObjShader_SetTexture(obj, "texture_0", img1);
+	ObjShader_SetTexture(obj, "texture_1", img2);
+	ObjShader_SetTechnique(obj, "TecFire");
+	while(GLOBALALPHA > 0)
+	{
+		ObjRender_SetAlpha(obj, 255*GLOBALALPHA);
+		ObjShader_SetFloat(obj, "time", timer);
+		//ObjShader_SetFloat(obj, "rotation", timer);
+		ObjShader_SetFloat(obj, "scroll_x", sideScroll);
+		ObjShader_SetFloat(obj, "scroll_y", -ySpd1);
+		ObjShader_SetFloat(obj, "scroll_y2", -ySpd2);
+		ObjShader_SetFloat(obj, "spinAmount", twist);
+
+		
+		let ang = ObjRender_GetAngleZ(obj);
+		
+		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetAngleZ(obj,ang+spinn);
+		timer++;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+let GLOBALALPHA = 1;
+task BlackHole(x,y, bit)
+{
+	
+	
+	IniCirc([255,255,0],0.1*4,29,1,0);
+	IniCirc([0,255,0],0.12*4,29,1,0);
+	//SE_PlayLen(BHC,100);
+	wait(5);
+	//SE_PlayLen(BH,100);
+	IniCirc([255,255,0],0.1/4,27,1,0);
+	IniCirc([0,255,0],0.12/4,27,1,0);
+	let ccc =0;
+	let ang2 = rand(0,360);
+	let angt = 0;
+	let shake = 7;
+	let angS = 0;
+	let PITCH = 0;
+	let spntot = -2;
+	while(GLOBALALPHA > 0)
+	{
+		let ang = rand(0,360);
+		ascent(i in 0..6)
+		{
+			BlackCloud(ang+360/6*i);
+		}
+		ang = rand(0,360);
+		ascent(i in 0..9)
+		{
+			PurpleCloud(ang+360/9*i);
+		}
+		if(ccc%2==0)
+		{
+			let bt = round(rand(1,5));
+			loop(bt)
+			{
+				//Starz(ang2+rand(10,-10),rand(4,4.5)/5,1);
+				ang2+=360/8;
+			}
+			bt = round(rand(1,5));
+			ang2+=180/8*bit;
+			loop(bt)
+			{
+				//Starz(ang2+rand(10,-10),0,0.4);
+				ang2+=360/8;
+			}
+			ang2+=180/8;
+			//ang2=rand(7,9);
+		}
+		if(ccc%2==0)
+		{
+			PulseIn;
+		}
+		if(ccc%3==0)
+		{
+			IniCirc([255,255,0],0.1*2,28,0.1,1);
+			IniCirc([0,255,0],0.12*2,28,0.1,1);
+		}
+		ccc++;
+		
+		loop(4)
+		{
+			loop(3)
+			{
+				SunParticle(x,y);
+			}
+			angt+=90/(15*3*4)*bit;
+			angS+=2/(15*3*4)*bit;
+			yield;
+		}
+	}
+	GLOBALALPHA = 0;
+	task IniCirc(col,sclad,rn,as,type)
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(obj,rn-1);
+		ObjPrim_SetTexture(obj,IMG_FADERING);
+		ObjSprite2D_SetSourceRect(obj,0,0,128,128);
+		ObjSprite2D_SetDestRect(obj,0,0,128,128);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetBlendType(obj,BLEND_SUBTRACT);
+		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetColor(obj,col[0],col[1],col[2]);
+		let scl = 0;
+		let alp = 255;
+		loop(120)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjRender_SetAlpha(obj,alp*as*GLOBALALPHA);
+				ObjRender_SetScaleXYZ(obj,scl,scl,0);
+				scl+=sclad;
+				if(type==0)
+				{
+					alp-=255/120;
+					yield;
+				}
+				
+			}
+		}
+		if(type==1)
+		{
+			loop(120)
+			{
+				if(GLOBALALPHA>0)
+				{
+					ObjRender_SetAlpha(obj,alp*as*GLOBALALPHA);
+					ObjRender_SetScaleXYZ(obj,scl,scl,0);
+					scl-=sclad;
+					alp-=255/120;
+					yield;
+				}
+			}
+		}
+		Obj_Delete(obj);
+	}
+	task BlackCloud(ang)
+	{
+		let dis = 200;
+		let amt = 0;
+		let alpha = 0;
+		let randAd = rand(4,7)/3*bit;
+		let scl = 2;
+		let randRot = rand(0,360);
+		loop(30)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjParticleList_SetAlpha(objBlackCloud,alpha*GLOBALALPHA);
+				ObjParticleList_SetScale(objBlackCloud,scl,scl,0);
+				ObjParticleList_SetPosition(objBlackCloud,x+dis*cos(ang),y+dis*sin(ang),0);
+				ObjParticleList_SetAngleZ(objBlackCloud,randRot);
+				ObjParticleList_SetColor(objBlackCloud,255,255,255);
+				ObjParticleList_AddInstance(objBlackCloud);
+	
+				ang+=randAd;
+				dis-=150/30*amt;
+				amt+=2/30;
+				alpha+=255/30;
+				if(scl>0.6)
+				{
+					scl-=0.6/15;
+				}
+				yield;
+			}
+		}
+		loop(40)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjParticleList_SetAlpha(objBlackCloud,alpha*GLOBALALPHA);
+				ObjParticleList_SetScale(objBlackCloud,scl,scl,0);
+				ObjParticleList_SetPosition(objBlackCloud,x+dis*cos(ang),y+dis*sin(ang),0);
+				ObjParticleList_SetAngleZ(objBlackCloud,randRot);
+				ObjParticleList_SetColor(objBlackCloud,255,255,255);
+				ObjParticleList_AddInstance(objBlackCloud);
+				ang+=randAd;
+				dis-=50/40*amt;
+				amt-=2/40;
+				yield;
+			}
+		}
+		loop(5)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjParticleList_SetAlpha(objBlackCloud,alpha*GLOBALALPHA);
+				ObjParticleList_SetScale(objBlackCloud,scl,scl,0);
+				ObjParticleList_SetPosition(objBlackCloud,x+dis*cos(ang),y+dis*sin(ang),0);
+				ObjParticleList_SetAngleZ(objBlackCloud,randRot);
+				ObjParticleList_SetColor(objBlackCloud,255,255,255);
+				ObjParticleList_AddInstance(objBlackCloud);
+				alpha-=255/5;
+				yield;
+			}
+		}
+		//Obj_Delete(obj);
+	}
+	task PurpleCloud(ang)
+	{
+		let randCol = [rand(200,255),rand(0,64),rand(160,255)*0.2];
+		let randRot = [rand(20,-20),rand(20,-20),rand(0,360)];
+		let dis = 0;
+		let amt = 0;
+		let alpha = 0;
+		let randAd = rand(4,7)/3*bit;
+		let scl = 0.2;
+		loop(30)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjParticleList_SetAlpha(objPurpleCloud,alpha*GLOBALALPHA);
+				ObjParticleList_SetScale(objPurpleCloud,scl,scl,0);
+				ObjParticleList_SetPosition(objPurpleCloud,x+dis*cos(ang),y+dis*sin(ang),0);
+				ObjParticleList_SetAngleX(objPurpleCloud,randRot[0]);
+				ObjParticleList_SetAngleY(objPurpleCloud,randRot[1]);
+				ObjParticleList_SetAngleZ(objPurpleCloud,randRot[2]);
+				ObjParticleList_SetColor(objPurpleCloud,randCol[0],randCol[1],randCol[2]);
+				ObjParticleList_AddInstance(objPurpleCloud);
+				
+	
+				ang+=randAd;
+				dis-=120/30*amt;
+				amt+=2/30;
+				alpha+=255/30;
+				if(scl<0.8)
+				{
+					scl+=0.6/15;
+				}
+				yield;
+			}
+		}
+		loop(40)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjParticleList_SetAlpha(objPurpleCloud,alpha*GLOBALALPHA);
+				ObjParticleList_SetScale(objPurpleCloud,scl,scl,0);
+				ObjParticleList_SetPosition(objPurpleCloud,x+dis*cos(ang),y+dis*sin(ang),0);
+				ObjParticleList_SetAngleX(objPurpleCloud,randRot[0]);
+				ObjParticleList_SetAngleY(objPurpleCloud,randRot[1]);
+				ObjParticleList_SetAngleZ(objPurpleCloud,randRot[2]);
+				ObjParticleList_SetColor(objPurpleCloud,randCol[0],randCol[1],randCol[2]);
+				ObjParticleList_AddInstance(objPurpleCloud);
+				
+				ang+=randAd;
+				dis-=50/40*amt;
+				amt+=2/40;
+				alpha-=255/40;
+				
+				yield;
+			}
+		}
+	}
+	task PulseIn
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(obj,26);
+		ObjPrim_SetTexture(obj,IMG_SAURA2);
+		ObjSprite2D_SetSourceRect(obj,0,0,256,256);
+		ObjSprite2D_SetDestRect(obj,0,0,256,256);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetBlendType(obj,BLEND_SUBTRACT);
+		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetAngleZ(obj,rand(0,360));
+		let scl = 0;
+		let alp = 255;
+		let rn = rand(1,3);
+		loop(120)
+		{
+			if(GLOBALALPHA>0)
+			{
+				ObjRender_SetAngleZ(obj,ObjRender_GetAngleZ(obj)+rn);
+				ObjRender_SetAlpha(obj,alp/3*GLOBALALPHA);
+				ObjRender_SetScaleXYZ(obj,scl,scl,0);
+				scl+=0.1/4;
+				alp-=255/120;
+				yield;
+			}
+		}
+		Obj_Delete(obj);
+	}
+}
+
+
+task SunParticle(x,y)
+{
+	let ang = rand(0,360);
+	let xScl = 1-2*round(rand(0,1)) * rand(0.75,1) * 3;
+	let yScl = rand(0.1,0.3) * 3;
+	let angP = rand(-1,1)*0.5;
+
+	let spd = rand(40,60)*1;
+	let xSpd = spd*cos(ang);
+	let ySpd = spd*sin(ang);
+	let t = 20;
+	let sclSun = 1;
+	ascent(i in 0..t)
+	{
+		if(GLOBALALPHA>0)
+		{
+			let colScl = 1-1/t*i;
+			let col = [255, 255*colScl, 128*colScl];
+			let sc = 1-1*sin(90/t*i);
+			let alpha = 128/t*i*GLOBALALPHA;
+			ObjParticleList_SetAlpha(objSunParticles,alpha);
+			ObjParticleList_SetScale(objSunParticles,sc*xScl * sclSun,sc * yScl * sclSun,0);
+			ObjParticleList_SetPosition(objSunParticles,x,y,0);
+			ObjParticleList_SetAngleZ(objSunParticles,ang);
+			ObjParticleList_SetColor(objSunParticles,col[0],col[1],col[2]);
+			ObjParticleList_AddInstance(objSunParticles);
+			let spdScl = 1 - 0.75/t*i;
+			x+=xSpd*spdScl;
+			y+=ySpd*spdScl;
+			yield;
+		}
+	}
+}
+let objBlackCloud = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SMOKE, [0,0,512,512], BLEND_SUBTRACT, 0.27);
+let objPurpleCloud = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SMOKE, [0,0,512,512], BLEND_ADD_ARGB, 0.28);
+let objSunParticles = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_THROW, [0,0,256,32], BLEND_ADD_ARGB, 0.29);
 task timer
 {
     loop(TIME-10)
@@ -138,13 +777,78 @@ task end
 		yield;
 	}
 
-	SE_PlayLen(BossDead,50);
+	ascent(o in 0..50)
+	{
+		SE_PlayLen(BossDead,80);
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,10,10);
+		loop(3)
+		{
+			ObjEnemy_SetLife(objEnemy, 0);
+			let shake = 4;
+			Set2DCameraFocusX(Get2DCameraX + rand(-shake, shake));
+			Set2DCameraFocusY(Get2DCameraY + rand(-shake, shake));
+			yield;
+			Reset2DCamera;
+		}
+	}
+	forceShake = false;
+	ascent(o in 0..2)
+	{
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,25,100);
+	
+		ascent(i in 0..3)
+		{
+			let bit = 1-2*round(rand(0,1));
+			let apa = rand(0,128);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+		}
+		ScreenShake(30,9); 
+		SE_PlayLen(BossEnd,80);
+		StartSlow(TARGET_ALL,20);
+		loop(45/6)
+		{
+
+			wait(6);
+		}
+	}
+	loop(1)
+	{
+		ExplodeFeathers(round(rand(0,4)),ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,25,100);
+	
+		ascent(i in 0..3)
+		{
+			let bit = 1-2*round(rand(0,1));
+			let apa = rand(0,128);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+		}
+	}
+	ScreenShake(190,12); 
+	StopSlow(TARGET_ALL);
+	SE_PlayLen(BossEnd,80);
+	SE_PlayLen(BossSpell,100);
+	//FlasherZ(150);
+	SE_PlayLen(BossDead,80);
+	SE_PlayLen(Burst1,80);
+	SE_PlayLen(Burst2,80);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
 	SetCommonData("SpellCardBG1",false);
-	wait(140);
-	
+	let t = 60*4;
+	ascent(i in 0..t)
+	{
+		GLOBALALPHA = 1 - 1/t*i;
+		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
+		yield;
+	}
+	GLOBALALPHA = 0;
+	wait(60);
+	Obj_Delete(objBlackCloud);
+	Obj_Delete(objPurpleCloud);
+	Obj_Delete(objSunParticles);
+	yield;
 	CloseScript(GetOwnScriptID());
 	return;
 	
