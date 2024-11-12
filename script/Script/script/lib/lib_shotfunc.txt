@@ -389,6 +389,7 @@ task ObjShot_SetDeleteFrameA5(obj,deley,size,col,stay)
 		Obj_DeleteBullet(obj);
 	}
 }
+
 task ObjShot_SetDeleteFrameA6(obj,deley,size)
 {
 	wait(deley);

@@ -76,7 +76,8 @@ const IMG_SCYLLASTAFF = GetCurrentScriptDirectory()~"./../../img/enemy/staff.png
 const IMG_GRANDISPORTAL = GetCurrentScriptDirectory() ~ "./../../img/enemy/grandisPortal.png";
 const IMG_GRANDISPORTALCRACK = GetCurrentScriptDirectory() ~ "./../../img/enemy/grandisCrack.png";
 const IMG_GATOWIND = GetCurrentScriptDirectory()  ~ "./../../img/enemy/vortexLoop0000.png";
-const BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND];
+const IMG_GATOSWORD = GetCurrentScriptDirectory()  ~ "./../../img/enemy/gatosword.png";
+const BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD];
 
 //---------------------------------------
 //--------------FACE IMAGES--------------
