@@ -96,7 +96,7 @@ task SpellDeclair()
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
 	ObjCutin_SetSpellcardS4("&quot;Abyssal Will&quot;","", LENEN, 0,0,0);
-	ScreenShake(180,8);
+	ScreenShake(60*4,8);
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
 	SE_PlayLen(Burst1,75);
@@ -141,10 +141,14 @@ task Fire
 	BlackHole(STAR_X, STAR_Y, bit);
 	CreateBox(STAR_X, STAR_Y, bit, -0.5*bit, 3*bit, -3*bit, 10*2, 4, IMG_AURA_LOOP, IMG_NOISE, BLEND_SUBTRACT);
 	//CreateBox(GetStgFrameWidth/2, 100, bit,  0.0,     0, 	  0,	 10*5, 0, IMG_WIND,      IMG_PIXEL, BLEND_ADD_ARGB);
-	PagodaFire(bit);
-	OrbFire(bit);
-	BloodFire(bit);
+
 	Nuke(bit);
+	wait(120);
+	PagodaFire(bit);
+	wait(60);
+	BloodFire(bit);
+	wait(60);
+	OrbFire(bit);
 }
 
 task PagodaFire(bit)
