@@ -296,10 +296,12 @@ task Fire
 		HandleFutureSight();
 		wait(60*10);
 		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+		FutureSightDamageRate = 0.07;
 		yield;
 	}
 }
 
+let FutureSightDamageRate = 0.05;
 
 
 
@@ -321,6 +323,7 @@ task HandleFutureSight()
 	let blength = length(barray);
 	
 	SE_PlayLen(chime1,60);
+	ObjEnemy_SetDamageRate(objEnemy, 0, 0);
 	if(blength>0)
 	{
 		ascent (i in 0..blength)
@@ -366,6 +369,7 @@ task HandleFutureSight()
 	
 	if(!Obj_IsDeleted(objEnemy))
 	{
+		ObjEnemy_SetDamageRate(objEnemy, (FutureSightDamageRate)/1.5, (FutureSightDamageRate)/3);
 		ObjMove_SetPosition(GetPlayerObjectID, playerX, playerY);
 
 		useSnapshotSandStorm = true;
