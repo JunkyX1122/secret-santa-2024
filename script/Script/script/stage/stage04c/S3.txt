@@ -110,7 +110,7 @@ task Fire
 	ObjEnemy_SetDamageRate(objEnemy, (0.06/3)/1.5, (0.06/3)/3);
 	SpellDeclair();
 	CurvePassive(bit);
-	
+	SideFire(bit);
 }
 
 task NecroPassive(bit)
@@ -150,6 +150,33 @@ task NecroShot(ang, am)
 		yield;
 	}
 	
+}
+
+task SideFire(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		ascent(i in 0..2)
+		{
+			let spd = rand(1,2);
+			let innerBit = [1,-1][i];
+			let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2 + rand(10,-100)) * innerBit;
+			let y = GetStgFrameHeight + 30;
+			
+			let obj = CreateShotA1(x, y, spd, -90, 400, 0);
+			ObjRender_SetScale(obj, 1.5);
+			ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+			ObjShot_SetSpellResist(obj, true);
+			
+			let obj2 = CreateShotA1(x, y, spd, -90, 401, 0);
+			ObjRender_SetScale(obj2, 1.1);
+			ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+			Obj_SetRenderPriority(obj2, 0.51);
+			ObjShot_SetSpellResist(obj2, true);
+			ObjShot_SetIntersectionEnable(obj2, false);
+		}
+		wait(10);
+	}
 }
 
 task CurvePassive(bit)
