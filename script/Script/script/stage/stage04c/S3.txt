@@ -158,7 +158,7 @@ task SideFire(bit)
 	{
 		ascent(i in 0..2)
 		{
-			let spd = rand(1,2);
+			let spd = rand(1,2)*2;
 			let innerBit = [1,-1][i];
 			let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2 + rand(10,-100)) * innerBit;
 			let y = GetStgFrameHeight + 30;
@@ -175,7 +175,7 @@ task SideFire(bit)
 			ObjShot_SetSpellResist(obj2, true);
 			ObjShot_SetIntersectionEnable(obj2, false);
 		}
-		wait(10);
+		wait(4);
 	}
 }
 
