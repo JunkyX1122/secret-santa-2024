@@ -40,7 +40,7 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 20);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -74,12 +74,12 @@ let finalSpellBool = false;
 		SetCommonData("BossX", ObjMove_GetX(objEnemy));
 		SetCommonData("BossY", ObjMove_GetY(objEnemy));
 	}
-	if(count < 95)	
+	if(count < 30)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		SetCommonData("SpellCardBG1",true);
 	}
-    if(count == 95)
+    if(count == 30)
     {
 		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
 		Fire;
@@ -98,14 +98,303 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+let resetPassive = false;
 task Fire
 {
-	
+	//BloodShot(GetStgFrameWidth/2, GetStgFrameHeight/2, 0, 90);
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		PassiveFire(bit);
+		PopulationPassive(bit);
+		wait(70*3);
+		ascent(i in 0..1)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let ang = GetAngleToPlayer(objEnemy);
+				let rad = 180;
+				BloodBomb(ObjMove_GetX(objEnemy) + rad * cos(ang),ObjMove_GetY(objEnemy) + rad * sin(ang),bit);
+				wait(20);
+			}
+		}
+		wait(60*11);
+		resetPassive = true;
+		yield;
+		resetPassive = false;
+		bit*=-1;
+	}
 }
 
+task PassiveFire(bit)
+{
+	let cc = 0;
+	let waiter = 15;
+	let tot = 6;
+	while(!Obj_IsDeleted(objEnemy) && !resetPassive)
+	{
+		if(cc%waiter==0)
+		{
+			SE_PlayLen(Shot1,60);
+			let ang = cc/waiter*3.92321 *bit;
+			let scl = 0.75+0.4*sin(cc*4.12312);
+			
+			ascent(i in 0..tot)
+			{
+				let ang2 = ang+360/tot*i*bit;
+				let x = ObjMove_GetX(objEnemy) + 80 * cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + 80 * sin(ang2);
+
+				let obj = BloodShot(x, y, 1, ang2-90*bit, scl, 10, [255,32,32], false);
+				ObjMove_SetAngularVelocityA2(obj, 0, -0.5 * bit, 180);
+			}
+			
+			
+		}
+		if(cc%3==0 && cc%30<10)
+		{
+			SE_PlayLen(Shot1,60);
+			let ang = -cc/waiter*3.92321 *bit;
+			ascent(i in 0..tot)
+			{
+				let ang2 = ang+360/tot*i*bit;
+				let x = ObjMove_GetX(objEnemy) + 60 * cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + 60 * sin(ang2);
+
+				let obj = ShotA1(x, y, 1.25, ang2+90*bit, 167, 167, 10, 2, BLEND_ALPHA,true);
+				ObjMove_SetAngularVelocityA2(obj, 10, 0.5 * bit, 180);
+			}
+		}
+		cc++;
+		yield;
+	}
+}
+
+task PopulationPassive(bit)
+{
+	SE_PlayLen(charge0, 60);
+	SE_PlayLen(boon1, 60);
+	ascent(i in 0..10)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(30,-30), 150+rand(10,-10), 60);
+			Population(GetStgFrameWidth/2 + GetStgFrameWidth/2 * bit , 0, bit);
+			bit*=-1;
+			wait(70);
+		}
+	}
+}
+
+task Population(xS, yS, bit)
+{
+	
+	let ang = 90+90*bit + rand(10,-10);
+	ascent(i in 0..10)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let dis = 50+50*i;
+			let amount = 14 + i*2;
+			SE_PlayLen(shot1,60);
+			SE_PlayLen(chime1,60);
+			ascent(o in 0..amount)
+			{
+				let ang2 = ang + 360/amount*o * bit;
+				let x = xS + dis*cos(ang2);
+				let y = yS + dis*sin(ang2);
+				if(Get_Distance(x, y, GetPlayerX, GetPlayerY) > 50)
+				{
+					let obj = ShotA2(x, y, 0, ang2, 1/120, 1, 456, 418, 10, 2, BLEND_ALPHA, false);
+					ObjRender_SetColor(obj, 255,64,64);
+				}
+			}
+			ang-=5.314*bit;
+			wait(10);
+		}
+	}
+}
+
+task BloodBomb(x,y,bit)
+{
+	SE_PlayLen(spawnfm3,60);
+	SE_PlayLen(charge1,60);
+	SE_PlayLen(LaserDelLong, 80);
+	let xI = ObjMove_GetX(objEnemy);
+	let yI = ObjMove_GetY(objEnemy);
+	let obj = BloodShot(xI, yI, 0, 90, 2, 50, [255,128,128], true);
+	Hermit(obj, xI, yI, x, y, 90, 90, 120, 140, bit);
+	wait(150);
+	if(!Obj_IsDeleted(objEnemy) && !Obj_IsDeleted(obj))
+	{
+		Infect(x, y, 75);
+		ObjShot_SetDeleteFrameA5(obj, 0, 3);
+	}
+}
+
+task Infect(x, y, rad)
+{
+	let barray = GetShotIdInCircleA2(x, y ,rad, TARGET_ENEMY);
+	let blength = length(barray);
+	SE_PlayLen(poof, 60);
+	if(blength>0)
+	{
+		ascent (i in 0..blength)
+		{
+			let buID = barray[i];
+			ObjShot_SetAutoDelete(buID,false);
+			ObjShot_SetSpellResist(buID,true);
+			if(ObjShot_GetImageID(buID)==456)
+			{
+				ObjShot_SetGraphic(buID, 457);
+				BulletInfect(buID);
+			}
+		}
+	}
+}
+
+task BulletInfect(obj)
+{
+	ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+180);
+	let t = round(rand(65,75)-10);
+	ascent(i in 0..t)
+	{
+		let col = 255 - 255/t*i;
+		ObjRender_SetColor(obj, 255, col, col);
+		yield;
+		
+	}
+	if(!Obj_IsDeleted(obj) && !Obj_IsDeleted(objEnemy))
+	{
+		let x = ObjMove_GetX(obj);
+		let y = ObjMove_GetY(obj);
+		let a = GetAngleToPlayer(obj);
+		Infect(x, y, 50);
+		let am = 1;
+		let spd = 4;
+		ascent(i in 0..am)
+		{
+			let shot = ShotA1(x, y, spd, a + 360/am*i, 140, 140, 10, 2, BLEND_ADD_ARGB, false);
+			Obj_SetRenderPriority(shot, 0.51);
+			ObjRender_SetBlendType(shot, BLEND_ADD_ARGB);
+			
+			let shot2 = ShotA1(x, y, spd, a + 360/am*i, 146, 146, 10, 2, BLEND_SUBTRACT, false);
+			Obj_SetRenderPriority(shot2, 0.50);
+			ObjRender_SetBlendType(shot2, BLEND_SUBTRACT);
+			ObjRender_SetScale(shot2, 1.5);
+		}
+		ObjShot_SetDeleteFrameA6(obj, 0, 1);
+	}
+}
+
+function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
+{
+	let obj = CreateShotA1(x, y, speed, ang, 293, 0);
+	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	ObjRender_SetColor(obj, col[0], col[1], col[2]);
+	Obj_SetRenderPriority(obj, 0.52);
+	ObjShot_SetSpellResist(obj, true);
+	ObjShot_SetAutoDelete(obj, false);
+	BloodRender(obj);
+	
+	return obj;
+	
+	task BloodRender(obj)
+	{
+		let obj2 = CreateShotA1(x, y, 0, 90, 296, 0);
+		ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+		Obj_SetRenderPriority(obj2, 0.51);
+		ObjShot_SetSpellResist(obj2, true);
+		ObjShot_SetIntersectionEnable(obj2, false);
+		ObjShot_SetAutoDelete(obj2, false);
+		let scl = 0;
+	
+		let sclInterp = 0;
+		let cc = 0;
+		Grower(obj, obj2);
+		while(!Obj_IsDeleted(obj))
+		{
+			
+			ObjMove_SetPosition(obj2, ObjMove_GetX(obj), ObjMove_GetY(obj));
+			ObjMove_SetAngle(obj2, ObjMove_GetAngle(obj));
+			
+			if(drip)
+			{
+				if(cc%20==0)
+				{
+					BloodDrip(ObjMove_GetX(obj), ObjMove_GetY(obj), sclInterp);
+				}
+			}
+			cc++;
+			yield;
+		}
+		Obj_Delete(obj2);
+		
+		task Grower(obj, obj2)
+		{
+			ascent(i in 0..growT)
+			{
+				scl+=1/growT;
+				sclInterp = Interpolate_Overshoot(0, sclMax, sclMax *2, scl);
+				ObjRender_SetScale(obj ,sclInterp);
+				ObjRender_SetScale(obj2,sclInterp * 1.4);
+				ObjShot_SetIntersectionScaleXY(obj, sclInterp);
+				yield;
+			}
+		}
+		task BloodDrip(x, y, scl)
+		{
+			let objD = CreateShotA1(x, y, speed, ang, 293, 0);
+			ObjRender_SetBlendType(objD, BLEND_ADD_ARGB);
+			ObjRender_SetColor(objD, 255, 0, 0);
+			Obj_SetRenderPriority(objD, 0.51);
+			ObjShot_SetIntersectionEnable(objD, false);
+			
+			let objD2 = CreateShotA1(x, y, 0, 90, 296, 0);
+			ObjRender_SetBlendType(objD2, BLEND_SUBTRACT);
+			Obj_SetRenderPriority(objD2, 0.50);
+			ObjShot_SetSpellResist(objD2, true);
+			ObjShot_SetIntersectionEnable(objD2, false);
+			
+			let sclI = scl*0.75;
+			let t = 70;
+			ascent(i in 0..t)
+			{
+				scl = Interpolate_Accelerate(sclI, 0, 1/t*i);
+				ObjRender_SetScale(objD ,scl);
+				ObjRender_SetScale(objD2,scl * 1.4);
+				ObjMove_SetPosition(objD, x, y);
+				ObjMove_SetPosition(objD2, x, y);
+				y+=2/t*i;
+				yield;
+			}
+			Obj_Delete(objD);
+			Obj_Delete(objD2);
+		}
+	}
+}
+
+task Hermit(obj, x, y, x2, y2, angle, angle2, radius, time, bit){
+	let vx=(x2-x)/time;
+	let vy=(y2-y)/time;
+	let r=0;
+	let a=0;
+	let t = 5;
+	loop(time)
+	{
+		ascent(i in 0..t)
+		{
+			angle+=2/t * bit; 
+			angle2+=2/t * bit;
+			x+=vx/t; 
+			y+=vy/t;
+			a+=(360/time)/t;
+			r=radius-radius*cos(a);
+			ObjMove_SetPosition(obj, x+r*cos(angle), y+r*sin(angle2));
+		}
+		yield;
+	}
+}
 task timer
 {
     loop(TIME-10)
