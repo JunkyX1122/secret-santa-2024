@@ -88,19 +88,19 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	LoadingBool = true;
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();
-	let pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+	let pathMainScript;
 	alternative(SELECT_ID)
 	case(STAGE_1a)
 	{
-		pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+		pathMainScript = dirCurrent ~ "./stage/stage01a/stage.txt";
 	}
 	case(STAGE_1b)
 	{
-		pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+		pathMainScript = dirCurrent ~ "./stage/stage01b/stage.txt";
 	}
 	case(STAGE_1c)
 	{
-		pathMainScript = dirCurrent ~ "./stage/stage01/stage.txt";
+		pathMainScript = dirCurrent ~ "./stage/stage01c/stage.txt";
 	}
 	case(STAGE_2)
 	{

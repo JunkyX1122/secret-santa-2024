@@ -1,0 +1,178 @@
+#TouhouDanmakufu[Stage]
+#ScriptVersion[1]
+#Title["Stage1c"]
+#Text["Stage1c"]
+#Background["./stage0Tbg.txt"]
+#System["./../../lib/system/System.txt"]
+#include "./../../lib/lib_stageall.txt"
+#include "./../Initiate.txt"
+
+let music1 = ObjSound_Create;
+let startMusic = false;
+let musicPath = GetCurrentScriptDirectory~"";
+let vol = 100;
+
+let MusicFade = false;
+@Initialize
+{
+	LoadBoss();
+	InitialiseIndiv();
+	SetPlayerLife(7);
+	SetForbidPlayerSpell(true);
+	
+	EndStage;
+
+	
+	StartStage;
+}
+task MusicChange
+{
+	music1 = ObjSound_Create;
+	musicPath = GetCurrentScriptDirectory~"./../../../bgm/th19_20.wav";
+	LoadSound(musicPath);
+	ObjSound_Load(music1,musicPath);
+	ObjSound_SetSoundDivision(music1, SOUND_BGM);
+	ObjSound_SetResumeEnable(music1, true);
+	ObjSound_SetLoopEnable(music1, true);	
+	ObjSound_SetLoopSampleCount(music1, 61952, 11212800);	
+	ObjSound_Play(music1);
+	startMusic=true;
+	vol = 85;
+}
+task StartMusic
+{
+	
+	musicPath = GetCurrentScriptDirectory~"./../../../bgm/th19_20.ogg";
+	ObjSound_Load(music1,musicPath);
+	ObjSound_SetSoundDivision(music1, SOUND_BGM);
+	ObjSound_SetResumeEnable(music1, true);
+	ObjSound_SetLoopEnable(music1, true);	
+	
+	startMusic=true;
+	ObjSound_Play(music1);
+	SetCommonData("MusicVolume",1);
+}
+@MainLoop
+{
+	let smooth1 = GetCommonData("Smoother",0);
+	let smooth2 = 1-smooth1;
+	
+	/*
+	if(GetCommonData("WideScreen",false)==false) 
+	{
+		x1 = x1 * smooth1 + (GetScreenWidth/2-208) * smooth2;
+		x2 = x2 * smooth1 + (GetScreenWidth/2+208) * smooth2;
+	}
+	else
+	{
+		x1 = x1 * smooth1 + (107) * smooth2;
+		x2 = x2 * smooth1 + (GetScreenWidth-107) * smooth2;
+	}
+	*/
+	x1 = (107);
+	x2 = (GetScreenWidth-107);
+	SetStgFrame(x1,0,x2,480,10,80);
+	SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
+	if(GetPlayerY<150){CollectAllItems;}
+	ObjSound_SetVolumeRate(music1,vol*GetCommonData("MusicVolume",0));
+	yield;
+}
+@Event
+{
+	if(GetEventType==EV_PAUSE_ENTER)
+	{
+		if(startMusic==true)
+		{
+			ObjSound_Stop(music1);
+		}
+	}
+	if(GetEventType==EV_PAUSE_LEAVE)
+	{
+		if(startMusic==true)
+		{
+			ObjSound_Play(music1);
+		}
+	}	
+
+}
+@Finalize
+{
+	Obj_Delete(music1);
+}
+
+
+task Dialog
+{
+}
+let Boss;
+task LoadBoss()
+{
+	Boss=ObjEnemyBossScene_Create();
+	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
+	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
+
+	ObjEnemyBossScene_LoadInThread(Boss);
+}
+task StartStage
+{	
+	//ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
+	wait(1);
+	SetCommonData("MaxNumberOfPhases",1);
+	loop(120)
+	{
+		yield;
+	}
+	//StartMusic;
+	//MusicChange;
+	SetCommonData("LifeBombAlpha",255);
+	SetForbidPlayerSpell(false);
+	//ObjSound_Seek(music1,135);
+	/*
+	*/
+	loop(1)
+	{
+		ObjEnemyBossScene_Regist(Boss);	
+		while(!Obj_IsDeleted(Boss))
+		{
+			yield;
+		}
+		wait(120);
+		descent(i in 0..90)
+		{
+			vol = 85/90*i;
+			yield;
+		}
+		Obj_Delete(music1);
+		CloseStgScene;
+	}
+}
+task EndStage
+{
+	loop
+	{
+		if(GetPlayerState()==STATE_END)
+		{
+			Obj_Delete(music1);
+			loop(160){yield;}
+			CloseStgScene();
+		}
+		yield;
+	}
+}
+task VolIncrease
+{
+	SetCommonData("MusicVolume",0);
+	wait(30);
+	ascent(i in 0..120)
+	{
+		SetCommonData("MusicVolume",1/120*i);
+		yield;
+	}
+	SetCommonData("MusicVolume",1);
+}
+
+
+
+

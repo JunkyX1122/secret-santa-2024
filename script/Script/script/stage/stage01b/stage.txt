@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Stage]
 #ScriptVersion[1]
-#Title["Stage1"]
-#Text["Stage1"]
+#Title["Stage1b"]
+#Text["Stage1b"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -110,6 +110,8 @@ task LoadBoss()
 	Boss=ObjEnemyBossScene_Create();
 	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"Ns1.txt");
 	ObjEnemyBossScene_Add(Boss,0,GetCurrentScriptDirectory~"S1.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"Ns2.txt");
+	ObjEnemyBossScene_Add(Boss,1,GetCurrentScriptDirectory~"S2.txt");
 
 	ObjEnemyBossScene_LoadInThread(Boss);
 }
@@ -117,7 +119,7 @@ task StartStage
 {	
 	//ObjMove_SetPosition(GetPlayerObjectID,GetStgFrameWidth/2,416);
 	wait(1);
-	SetCommonData("MaxNumberOfPhases",5);
+	SetCommonData("MaxNumberOfPhases",1);
 	loop(120)
 	{
 		yield;

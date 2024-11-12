@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Ns1"]
-#Text["Ns1"]
+#Title["Ns2"]
+#Text["Ns2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
@@ -37,7 +37,7 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,140 );
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	renderYuuma(objEnemy);
 
 	end;
@@ -88,15 +88,7 @@ let TIME = 60*60;
 
 task Fire
 {
-	loop
-	{
-		ShotA1(100,100,2,90,76,418,20,2,BLEND_ALPHA,true);
-		ShotA1(200,100,2,90,76,418,20,2,BLEND_ALPHA,false);
-		
-		ShotA2(300,100,2,90,2/60,4,76,418,20,2,BLEND_ALPHA,true);
-		ShotA2(400,100,2,90,2/60,4,76,418,20,2,BLEND_ALPHA,false);
-		wait(60);
-	}
+
 }
 
 task timer
