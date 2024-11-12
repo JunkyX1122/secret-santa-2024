@@ -73,7 +73,7 @@ let HEALTH_MAX = 225/3;
 	}
     if(count == 95)
     {
-		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+		
 		Fire;
 		
         //count = 1111;
@@ -95,6 +95,7 @@ let spellActive = false;
 task InitiateSpell()
 {
 	wait(60*3);
+	ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
 	magiccircle(objEnemy,1);
 	SizeCircle();
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
