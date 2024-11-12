@@ -107,6 +107,8 @@ task Fire
 	{
 		PassiveFire(bit);
 		PopulationPassive(bit);
+		ScreenShake(130, 4);
+		SE_PlayLen(drum, 70);
 		wait(70*3);
 		ascent(i in 0..1)
 		{
