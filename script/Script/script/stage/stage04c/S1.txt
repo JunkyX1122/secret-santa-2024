@@ -149,6 +149,7 @@ task PassiveFire(bit)
 
 				let obj = BloodShot(x, y, 1, ang2-90*bit, scl, 10, [255,32,32], false);
 				ObjMove_SetAngularVelocityA2(obj, 0, -0.5 * bit, 180);
+				ObjShot_SetAutoDelete(obj, true);
 			}
 			
 			
@@ -244,7 +245,7 @@ task Infect(x, y, rad)
 		ascent (i in 0..blength)
 		{
 			let buID = barray[i];
-			ObjShot_SetAutoDelete(buID,false);
+			//ObjShot_SetAutoDelete(buID,false);
 			ObjShot_SetSpellResist(buID,true);
 			if(ObjShot_GetImageID(buID)==456)
 			{
