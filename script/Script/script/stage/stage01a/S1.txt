@@ -268,6 +268,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 		let sclInterp = 0;
 		let cc = 0;
 		Grower(obj, obj2);
+		let randStarter = round(rand(0,19));
 		while(!Obj_IsDeleted(obj))
 		{
 			
@@ -276,7 +277,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 			
 			if(drip)
 			{
-				if(cc%20==0)
+				if((cc+randStarter)%20==0)
 				{
 					BloodDrip(ObjMove_GetX(obj), ObjMove_GetY(obj), sclInterp);
 				}

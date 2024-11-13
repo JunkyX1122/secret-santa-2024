@@ -88,9 +88,306 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	yield;
+	let bit = 1-2*round(rand(0,1));
+	let totalAnkh = 4;
+	AmuletFire(bit);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(charge1,60);
+		ascent(i in 0..totalAnkh)
+		{
+			CreateAnkh(GetStgFrameWidth/(totalAnkh-1)*i, 140, 90, bit);
+		}
+		
+		wait(60*4);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge1,60);
+			ascent(i in 0..5)
+			{
+				CreateAnkh(GetStgFrameWidth/(totalAnkh-1)*i + (GetStgFrameWidth/(totalAnkh-1))/2, 140, 90, bit);
+			}
+			
+			bit*=-1;
+		}
+		wait(60*4);
+	}
 }
 
+task AmuletFire(bit)
+{
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		AmuletSide(bit);
+		wait(50);
+		bit*=-1;
+		yield;
+	}
+	task AmuletSide(bit)
+	{
+		let tot = 20;
+		let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+rand(0,30))*bit;
+		ascent(i in 0..tot)
+		{
+			SE_PlayLen(Shot1,60);
+			let x2 = x - (GetStgFrameWidth + 60)/ (tot-1) * i *bit;
+			let obj = ShotA1(x2, 0, 1.5, 90, 167, 167, 20, 2, BLEND_ALPHA, false);
+			wait(2);
+		}
+	}
+}
+
+task CreateAnkh(x, y, ang, bit)
+{
+	let ttt = 4;
+	let ang2 = rand(0,360);
+	ascent(i in 0..ttt)
+	{
+		let speed = 10;
+		let obj = BloodShot(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), speed, ang2+360/ttt*i, 1.5, 20, [255,255,0], true);
+		ObjMove_AddPatternA2(obj, 0,   speed, NO_CHANGE, -(speed-2)/60, rand(1,4), 0);
+		Homing(obj, x, y, rand(8,10), 0, -1);
+		ObjShot_SetDeleteFrameA5(obj, 140, 2, [255,255,0], 120);
+	}
+	
+	wait(140);
+	let sclTotal = 0.7;
+	let mxSpd = 1;
+	let accel = mxSpd/120;
+	let moveDelay = 120;
+	let waiter = 2;
+	CreateLoop();
+	CreateArms( 90, 70*sclTotal,  5);
+	CreateArms(-90, 70*sclTotal,  5);
+	CreateArms(180, 140*sclTotal, 8);
+	
+	wait(moveDelay);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(boon1,60);
+	}
+	
+	task CreateLoop()
+	{
+		let loopWidth = 70;
+		let loopHeight = 130 * sclTotal;
+		let tot = 20;
+		let scl = 1 * sclTotal;
+		ascent(i in 0..tot)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				let angX = ang - loopWidth * bit + (loopWidth*2)/(tot-1)*i *bit + 180;
+				let disY = loopHeight * sin(180/(tot-1)*i);
+				let x2 = x + disY * cos(angX);
+				let y2 = y + disY * sin(angX);
+				let obj = ShotA1(x2, y2, 0, ang, 405, 405, 0, 2, BLEND_ADD_ARGB, false);
+				Grower(obj, scl, 20);
+				ObjMove_AddPatternA2(obj, moveDelay-i*waiter, NO_CHANGE, NO_CHANGE, accel, mxSpd, 0);
+				wait(waiter);
+			}
+		}
+	}
+	task CreateArms(angPm, armLength, tot)
+	{
+		ascent(i in 0..tot)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				let angX = ang + angPm + 180;
+				let disY = armLength/(tot-1)*i;
+				let x2 = x + disY * cos(angX);
+				let y2 = y + disY * sin(angX);
+				let scl = 1+1/(tot-1)*i;
+				let obj = ShotA1(x2, y2, 0, ang, 405, 405, 0, 2, BLEND_ADD_ARGB, false);
+				Grower(obj, scl * sclTotal * 0.7, 20);
+				ObjMove_AddPatternA2(obj, moveDelay-i*waiter, NO_CHANGE, NO_CHANGE, accel, mxSpd, 0);
+				wait(waiter);
+			}
+		}
+	}
+	
+	task Grower(obj, s, t)
+	{
+		SE_PlayLen(shot1, 60);
+		ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+		ObjShot_SetIntersectionEnable(obj, false);
+		ObjShot_SetSpellResist(obj, true);
+		ascent(i in 0..t)
+		{
+			if(!Obj_IsDeleted(obj)) 
+			{
+				let sinScale = sin(90/(t-1)*i);
+				let scl = s*2 - s*sinScale;
+				ObjRender_SetAlpha(obj, 255 * sinScale);
+				ObjRender_SetScale(obj, scl);
+				yield;
+			}
+		}
+		if(!Obj_IsDeleted(obj)) 
+		{
+			ObjShot_SetIntersectionEnable(obj, true);
+			ObjRender_SetScale(obj, s);
+			s*=0.9;
+			ObjShot_SetIntersectionScaleXY(obj, s, s);
+		}
+		
+	}
+}
+
+task Homing(obj, x, y, maxTraverse, delay, stayer)
+{
+	
+	wait(delay);
+	
+	//ObjMove_SetAngle(obj, GetAngleToPlayer(obj));
+	
+	let ang = ObjMove_GetAngle(obj);
+	let countdown = stayer;
+	let homeForever = false;
+	if(stayer <= 0)
+	{
+		homeForever = true;
+		countdown = 1000;
+	}
+	while(!Obj_IsDeleted(obj) && countdown > 0)
+	{
+		let dir=-90;
+
+			dir = atan2( y - ObjMove_GetY(obj), x - ObjMove_GetX(obj));
+							
+			// difference between 'dir' and 'angle'
+			if(!Obj_IsDeleted(obj))
+			{
+				let diff = dir - ang;
+				while(diff >= 180) { diff -= 360; }    // adjust the range
+				while(diff < -180) { diff += 360; }
+
+				let diffAbs = (|diff|);
+				if(diffAbs < maxTraverse) {
+					// if the difference is small,
+					// the bullet turns to the player's character
+					ang = dir;
+				} else {
+					// otherwise, the bullet turns 'maxTraverse' degrees
+					ang += maxTraverse * diff / diffAbs;
+				}
+			}
+			ObjMove_SetAngle(obj,ang);
+			if(!homeForever)
+			{
+				countdown--;
+			}
+			yield;
+	}
+}
+
+function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
+{
+	let obj = CreateShotA1(x, y, speed, ang, 293, 0);
+	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	ObjRender_SetColor(obj, col[0], col[1], col[2]);
+	Obj_SetRenderPriority(obj, 0.49);
+	
+	if(!drip)
+	{
+		ObjRender_SetColor(obj, 255,255,255);
+		ObjShot_SetGraphic(obj, 296);
+		Obj_SetRenderPriority(obj, 0.52);
+		ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
+	}
+
+	
+	ObjShot_SetSpellResist(obj, true);
+	ObjShot_SetAutoDelete(obj, false);
+	BloodRender(obj);
+	
+	return obj;
+	
+	task BloodRender(obj)
+	{
+		let obj2 = CreateShotA1(x, y, 0, 90, 296, 0);
+		ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+		Obj_SetRenderPriority(obj2, 0.48);
+		if(!drip)
+		{
+			ObjRender_SetColor(obj2, 255,0,0);
+			ObjShot_SetGraphic(obj2, 293);
+			Obj_SetRenderPriority(obj2, 0.51);
+			ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+		}
+		ObjShot_SetSpellResist(obj2, true);
+		ObjShot_SetIntersectionEnable(obj2, false);
+		ObjShot_SetAutoDelete(obj2, false);
+		let scl = 0;
+	
+		let sclInterp = 0;
+		let cc = 0;
+		Grower(obj, obj2);
+		let randStarter = round(rand(0,19));
+		while(!Obj_IsDeleted(obj))
+		{
+			
+			ObjMove_SetPosition(obj2, ObjMove_GetX(obj), ObjMove_GetY(obj));
+			ObjMove_SetAngle(obj2, ObjMove_GetAngle(obj));
+			
+			if(drip)
+			{
+				if((cc+randStarter)%20==0)
+				{
+					BloodDrip(ObjMove_GetX(obj), ObjMove_GetY(obj), sclInterp);
+				}
+			}
+			cc++;
+			yield;
+		}
+		Obj_Delete(obj2);
+		
+		task Grower(obj, obj2)
+		{
+			ascent(i in 0..growT)
+			{
+				scl+=1/growT;
+				sclInterp = Interpolate_Overshoot(0, sclMax, sclMax *2, scl);
+				ObjRender_SetScale(obj ,sclInterp);
+				ObjRender_SetScale(obj2,sclInterp * 1.4);
+				ObjShot_SetIntersectionScaleXY(obj, sclInterp);
+				yield;
+			}
+		}
+		task BloodDrip(x, y, scl)
+		{
+			let objD = CreateShotA1(x, y, speed, 90, 293, 0);
+			ObjRender_SetBlendType(objD, BLEND_ADD_ARGB);
+			ObjRender_SetColor(objD, 255, 0, 0);
+			Obj_SetRenderPriority(objD, 0.49);
+			ObjShot_SetIntersectionEnable(objD, false);
+			
+			let objD2 = CreateShotA1(x, y, 0, 90, 296, 0);
+			ObjRender_SetBlendType(objD2, BLEND_SUBTRACT);
+			Obj_SetRenderPriority(objD2, 0.48);
+			ObjShot_SetSpellResist(objD2, true);
+			ObjShot_SetIntersectionEnable(objD2, false);
+			
+			let sclI = scl*0.75;
+			let t = 45;
+			ascent(i in 0..t)
+			{
+				scl = Interpolate_Accelerate(sclI, 0, 1/t*i);
+				ObjRender_SetScale(objD ,scl);
+				ObjRender_SetScale(objD2,scl * 1.4);
+				ObjMove_SetPosition(objD, x, y);
+				ObjMove_SetPosition(objD2, x, y);
+				y+=2/t*i;
+				yield;
+			}
+			Obj_Delete(objD);
+			Obj_Delete(objD2);
+		}
+	}
+}
 task timer
 {
     while(TIME>60*10)
