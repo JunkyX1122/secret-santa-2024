@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Dark Blade &quot;Death Dagger&quot;","", LENEN, 128,0,0);
 	
 	ScreenShake(60,4);
 
@@ -98,14 +98,49 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+
 task Fire
 {
+	let bit = 1-2*round(rand(0,1));
+	
+	SE_PlayLen(charge1,60);
+	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 - 200*bit, 100, 60, LERP_SMOOTH);
+	wait(60);
+	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 + 200*bit, 250, 60, LERP_SMOOTH);
+	ascent(i in 0..60)
+	{
+		if(i%3==0)
+		{
+			GrandisKnives(-90 + 90*bit + 180/59*i*bit,bit);
+		}
+		yield;
+	}
 	
 }
 
+task GrandisKnives(ang,bit)
+{
+	let t = 80;
+	let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),3,ang,-3/t,0,459,418,20,2,BLEND_ALPHA,false);
+	wait(20);
+	
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjRender_SetAngleZ(obj,(360*3)*(cos(90-90/(t-1)*i*bit)) + GetAngleToPlayer(obj) - ang);
+			yield;
+		}
+	}
+	if(!Obj_IsDeleted(objEnemy) && !Obj_IsDeleted(obj))
+	{
+		SE_PlayLen(chime1,60);
+		ObjRender_SetAngleZ(obj,0);
+		//ObjMove_SetAngle(obj,GetAngleToPlayer(obj));
+		ObjMove_SetMaxSpeed(obj,10);
+		ObjMove_SetAcceleration(obj,10/120);
+	}
+}
 task timer
 {
     loop(TIME-10)
