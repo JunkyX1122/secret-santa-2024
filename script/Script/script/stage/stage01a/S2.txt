@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S2"]
+#Title["-Ruin-"]
 #Text["S2"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -40,7 +40,7 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderYuuma(objEnemy);
@@ -103,8 +103,320 @@ let gSpeed = initGSpeed;
 let phase = 0;
 task Fire
 {
-	
+	let bit = 1-2*round(rand(0,1));
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		BeamFire(bit);
+		bit*=-1;
+		wait(60*9);
+		ObjEnemy_SetDamageRate(objEnemy, (0.08/3)/1.5, (0.08/3)/3);
+	}
 }
+
+task BeamFire(bit)
+{
+	SE_PlayLen(charge0,60);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2 + rand(50, 200)*bit, rand(90,110), 80);
+	let ang = rand(0,360);
+	ascent(i in 0..100)
+	{
+		if(!Obj_IsDeleted(objEnemy) && i%10==0)
+		{
+			SE_PlayLen(shot1,60);
+			SE_PlayLen(chime1,60);
+			ascent(o in 0..20)
+			{
+				let ang2 = ang + 360/20*o*bit;
+				let x = ObjMove_GetX(objEnemy) + 60 * cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + 60 * sin(ang2);
+				let spd = 2;
+				let obj = ShotA2(x, y, 0, ang2, spd/60, spd, 337, 337, 10, 2, BLEND_ADD_ARGB,false);
+				ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+			}
+			ang+=10.12321*bit;
+			
+		}
+		yield;
+	}
+	let purpleFireAm = 6;
+	let spreadOut = 80;
+	let fireAng = GetAngleToPlayer(objEnemy);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		WarningLaser(ObjMove_GetX(objEnemy) , ObjMove_GetY(objEnemy), fireAng,70);
+		SE_PlayLen(charge1,60);
+	}
+	wait(70);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		Occ(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), fireAng, 60*5, bit);
+	}
+	let ovalAng = fireAng+90;
+	ascent(i in 0..60*6)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let dis = 150*sin(min(90/(60*0.5-1)*i, 90));
+			if(i%4==0)
+			{
+				SE_PlayLen(shot1,60);
+				ascent(o in 0..6)
+				{
+					let ang2 = ang+360/6*o;
+					
+					let xx = dis	*cos(ang2);
+					let yy = dis/4	*sin(ang2);
+					let x=(xx)*cos(ovalAng) - (yy)*sin(ovalAng);
+					let y=(xx)*sin(ovalAng) + (yy)*cos(ovalAng);
+		
+					let ang3 = fireAng + spreadOut*sin(ang2*2);
+					let obj = ShotA1(ObjMove_GetX(objEnemy) + x, ObjMove_GetY(objEnemy) + y, 3, ang3, 429, 429, 20, 2, BLEND_ADD_ARGB, false);
+					ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+				}
+			}
+			if(i%4==0)
+			{
+				SE_PlayLen(shot1,60);
+				ascent(o in 0..6)
+				{
+					let ang2 = ang+360/6*o;
+					
+					let xx = dis	*cos(ang2);
+					let yy = dis/4	*sin(ang2);
+					let x=(xx)*cos(ovalAng) - (yy)*sin(ovalAng);
+					let y=(xx)*sin(ovalAng) + (yy)*cos(ovalAng);
+		
+					let ang3 = fireAng + 180;
+					let obj = ShotA1(ObjMove_GetX(objEnemy) + x, ObjMove_GetY(objEnemy) + y, 3, ang3, 402, 402, 20, 2, BLEND_ADD_ARGB, false);
+					ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+				}
+			}
+			if(i%2==0)
+			{
+				SE_PlayLen(Shot1,60);
+				ascent(o in 0..purpleFireAm)
+				{
+					let ang2 = ang+360/purpleFireAm*o;
+					let xx = dis	*cos(ang2) * 0.5 * 0.8;
+					let yy = dis/3	*sin(ang2) * 0.5;
+					let x=(xx)*cos(ovalAng) - (yy)*sin(ovalAng);
+					let y=(xx)*sin(ovalAng) + (yy)*cos(ovalAng);
+		
+					let ang3 = fireAng;
+					ascent(p in 0..2)
+					{
+						let rnder = [BLEND_ADD_ARGB, BLEND_SUBTRACT][p];
+						let idd = [426, 429][p];
+						let obj = ShotA1(ObjMove_GetX(objEnemy) + x, ObjMove_GetY(objEnemy) + y, 12, ang3, 429, 429, 20, 2, rnder, false);
+						ObjRender_SetBlendType(obj, rnder);
+						Obj_SetRenderPriority(obj, [0.49, 0.5][p]);
+						ObjRender_SetScale(obj, [1.25,1][p]);
+					}
+				}
+			}
+			ang+=3.12321*bit;
+			yield;
+		}
+	}
+}
+
+task WarningLaser(x,y,ang,t)
+{
+	
+	let slashWidth = 35;
+	let dis = 800;
+	ascent(i in 0..t)
+	{
+		let sideDis = 50*sin(360/(t-1)*i);
+		ascent(o in 0..2)
+		{
+			if(i>0||o==0&&!Obj_IsDeleted(objEnemy))
+			{
+				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,402,9000);
+				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+				ObjShot_SetAutoDelete(laser,false);
+				ObjStLaser_SetSource(laser,false);
+				LaserGrowFade(laser,dis,255-255/t*i);
+			}
+		}
+		yield;
+	}
+}
+
+task LaserGrowFade(obj,dis,alpha)
+{
+	ObjLaser_SetItemDistance(obj, 1000);
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		ObjLaser_SetLength(obj,dis/t*i);
+		ObjRender_SetAlpha(obj,alpha-alpha/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,BLENDER,scaleX,scaleY,soundbool)
+{
+	
+	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	//Bounce(obj);
+	ObjRender_SetAlpha(obj,128);
+	ObjRender_SetBlendType(obj,BLENDER);
+	ObjShot_SetIntersectionEnable(obj,false);
+	ObjShot_SetSpellResist(obj,true);
+	ObjShot_SetAutoDelete(obj,false);
+	if(BLENDER == BLEND_SUBTRACT)
+	{
+		Obj_SetRenderPriority(obj, 0.51);
+	}
+	//318
+	let scaleYIn = 0;
+	let xmove2 = xmove;
+	let ymove2 = ymove;
+	let totaldeley = growdeley+deley;
+	let circSize = 23;
+	let rendX = 1-2*round(rand(0,1));
+	scaleX*=rendX;
+	ascent(i in 0..growdeley)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			ObjRender_SetScaleXYZ(obj,i/growdeley*(scaleX/5),i/growdeley*scaleY,1);
+			scaleYIn+=scaleY/growdeley;
+			//xmove-=xmove2/totaldeley;
+			//ymove-=ymove2/totaldeley;
+			yield;
+		}
+	}
+	ObjRender_SetScaleXYZ(obj,(scaleX/5),scaleY,1);
+	loop(deley)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			//xmove-=xmove2/totaldeley;
+			//ymove-=ymove2/totaldeley;
+			yield;
+		}
+	}
+		let scaleXIn = scaleX/5;
+		scaleX/=5;
+	
+	loop(4)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			HitboxSingle(obj,circSize*scaleY,circSize*scaleX);
+			ObjRender_SetScaleX(obj,scaleX);
+			scaleX+=(scaleXIn*4)/4;
+			yield;
+		}
+	}
+	loop(stay)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			ObjRender_SetScaleX(obj,scaleX);
+			HitboxSingle(obj,circSize*scaleY,circSize*scaleX);
+			yield;
+		}
+	}
+	loop(20)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjMove_SetPosition(obj,ObjMove_GetX(obj)+xmove,ObjMove_GetY(obj)+ymove);
+			HitboxSingle(obj,circSize*scaleY,circSize*scaleX);
+			ObjRender_SetScaleX(obj,scaleX);
+			scaleX-=(scaleXIn*5)/20;
+			yield;
+		}
+	}
+	Obj_Delete(obj);
+}
+
+task Occ(x,y, angleT, stay, bit)
+{
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(MSpark, 60);
+	}
+	let t = 10;
+	let outerWidth = 2.5;
+	let innerWidth = 2;
+	let stayer = 30;
+	let cosAng = cos(angleT);
+	let sinAng = sin(angleT);
+	let offsetScale = 6;
+	let yScl = 5;
+	let speedScl = 0.7;
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//SE_PlayLen(LaserFireShort,30);
+			let width = 1*sin(90/(t-1)*i);
+			let speed = rand(20,25)*speedScl;
+			loop(1)
+			{
+				
+				let xP = (8.5*offsetScale)*cosAng;
+				let yP = (8.5*offsetScale)*sinAng;
+				let spdX = speed*cosAng;
+				let spdY = speed*sinAng;
+				S_Laser2(x+xP,y+yP,(angleT),spdX,spdY,2,0,stayer,402,BLEND_ADD_ARGB,outerWidth*width,yScl,false);
+				S_Laser2(x+xP,y+yP,(angleT),spdX,spdY,2,0,stayer,403,BLEND_SUBTRACT,innerWidth*width,yScl,false);
+			}
+		}
+		wait(1);
+	}
+	loop(stay)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//SE_PlayLen(LaserFireShort,30);
+			let width = 1;
+			let speed = rand(20,25)*speedScl;
+			loop(1)
+			{
+	
+				let xP = (8.5*offsetScale)*cosAng;
+				let yP = (8.5*offsetScale)*sinAng;
+				let spdX = speed*cosAng;
+				let spdY = speed*sinAng;
+				S_Laser2(x+xP,y+yP,(angleT),spdX,spdY,2,0,stayer,402,BLEND_ADD_ARGB,outerWidth*width,yScl,false);
+				S_Laser2(x+xP,y+yP,(angleT),spdX,spdY,2,0,stayer,403,BLEND_SUBTRACT,innerWidth*width,yScl,false);
+			}
+		}
+		wait(1);
+	}
+	t = 80;
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			//SE_PlayLen(LaserFireShort,30);
+			let width = 1*sin(90-90/(t-1)*i);
+			let speed = rand(20,25)*speedScl;
+			loop(1)
+			{
+	
+				let xP = (8.5*offsetScale)*cosAng;
+				let yP = (8.5*offsetScale)*sinAng;
+				let spdX = speed*cosAng;
+				let spdY = speed*sinAng;
+				S_Laser2(x+xP,y+yP,(angleT),spdX,spdY,2,0,stayer,402,BLEND_ADD_ARGB,outerWidth*width,yScl,false);
+				S_Laser2(x+xP,y+yP,(angleT),spdX,spdY,2,0,stayer,403,BLEND_SUBTRACT,innerWidth*width,yScl,false);
+			}
+		}
+		wait(1);
+	}
+}
+
 
 task timer
 {
