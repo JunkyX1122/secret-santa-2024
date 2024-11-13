@@ -12,7 +12,7 @@ let objEnemy;
 let count = 0;
 let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 65;
+let TIME = 85;
 let finalSpellBool = false;
 
 
@@ -22,7 +22,7 @@ let finalSpellBool = false;
   SetScriptResult(225/3);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(65);
+  SetScriptResult(85);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
