@@ -792,14 +792,14 @@ ShotData
 } // Red Human
 
 // Youmu Knives
-ShotData{ id=458 rect=(64,992,96,1023) render=ALPHA delay_color= (255,255,255) } // Gray
-ShotData{ id=459 rect=(96,992,128,1023) render=ALPHA delay_color= (255,64,64) } // Red
-ShotData{ id=460 rect=(128,992,160,1023) render=ALPHA delay_color= (255,64,255) } // Purple
-ShotData{ id=461 rect=(160,992,192,1023) render=ALPHA  delay_color= (64,64,255) } // Blue
-ShotData{ id=462 rect=(192,992,224,1023) render=ALPHA delay_color= (64,255,255) } // Aqua
-ShotData{ id=463 rect=(224,992,256,1023) render=ALPHA delay_color= (64,255,64) } // Green
-ShotData{ id=464 rect=(256,992,288,1023) render=ALPHA delay_color= (255,255,64) } // Yellow
-ShotData{ id=465 rect=(288,992,320,1023) render=ALPHA delay_color= (255,255,255) } // White
+ShotData{ id=458 rect=(64,992,96,1023) render=ALPHA   collision=2 delay_color= (255,255,255) } // Gray
+ShotData{ id=459 rect=(96,992,128,1023) render=ALPHA  collision=2 delay_color= (255,64,64) } // Red
+ShotData{ id=460 rect=(128,992,160,1023) render=ALPHA collision=2 delay_color= (255,64,255) } // Purple
+ShotData{ id=461 rect=(160,992,192,1023) render=ALPHA collision=2 delay_color= (64,64,255) } // Blue
+ShotData{ id=462 rect=(192,992,224,1023) render=ALPHA collision=2 delay_color= (64,255,255) } // Aqua
+ShotData{ id=463 rect=(224,992,256,1023) render=ALPHA collision=2 delay_color= (64,255,64) } // Green
+ShotData{ id=464 rect=(256,992,288,1023) render=ALPHA collision=2 delay_color= (255,255,64) } // Yellow
+ShotData{ id=465 rect=(288,992,320,1023) render=ALPHA collision=2 delay_color= (255,255,255) } // White
 
 
 

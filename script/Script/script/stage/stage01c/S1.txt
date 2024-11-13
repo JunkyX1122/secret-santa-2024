@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
+#Title["Dark Blade &quot;Death Dagger&quot;"]
 #Text["S1"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -102,43 +102,132 @@ let finalSpellBool = false;
 task Fire
 {
 	let bit = 1-2*round(rand(0,1));
-	
-	SE_PlayLen(charge1,60);
-	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 - 200*bit, 100, 60, LERP_SMOOTH);
-	wait(60);
-	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 + 200*bit, 250, 60, LERP_SMOOTH);
-	ascent(i in 0..60)
+	while(!Obj_IsDeleted(objEnemy))
 	{
-		if(i%3==0)
+		let tot = 20;
+		SE_PlayLen(charge0,60);
+		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 - 200*bit + rand(20,-20), 100 + rand(20,-20), 60, LERP_SMOOTH);
+		wait(60);
+		if(!Obj_IsDeleted(objEnemy)) 
 		{
-			GrandisKnives(-90 + 90*bit + 180/59*i*bit,bit);
+			SE_PlayLen(charge1,60);
+			ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 + 200*bit + rand(20,-20), 250 + rand(20,-20), 60, LERP_SMOOTH);
 		}
-		yield;
+		ascent(i in 0..tot)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				SE_PlayLen(shot1,60);
+				GrandisKnives(-90 - 90*bit + 180/(tot-1)*i*bit,90 + 20*bit - 40/(tot-1)*i*bit, bit,false);
+				wait(3);
+			}
+		}
+		let ang = -90;
+		wait(30);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge1,60);
+			ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2+rand(10,50)*bit, 200, 60, LERP_SMOOTH);
+		}
+		ascent(i in 0..tot)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				SE_PlayLen(shot1,60);
+				GrandisKnives(ang - 360/(tot-1)*i*bit ,ang - 360/(tot-1)*i*bit, bit,false);
+				wait(3);
+			}
+		}
+		ang = 90;
+		wait(30);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge1,60);
+		}
+		tot = 22;
+		ascent(i in 0..tot)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				SE_PlayLen(shot1,60);
+				GrandisKnives(ang +90*bit + 180/(tot-1)*i*bit ,ang +90*bit - (360+180)/(tot-1)*i*bit, bit,false);
+				if(i%4==0)
+				{
+					GrandisKnives(ang +90*bit - 180/(tot-1)*i*bit ,ang +90*bit - (360+180)/(tot-1)*i*bit, bit,true);
+				}
+				wait(3);
+			}
+		}
+		wait(240);
+		bit*=-1;
+		ObjEnemy_SetDamageRate(objEnemy, (0.085/3)/1.5, (0.085/3)/3);
 	}
-	
 }
 
-task GrandisKnives(ang,bit)
+task GrandisKnives(ang,ang2,bit,aimPlayer)
 {
 	let t = 80;
 	let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),3,ang,-3/t,0,459,418,20,2,BLEND_ALPHA,false);
+	ObjShot_SetAutoDelete(obj, false);
+	ObjShot_SetSpellResist(obj, true);
 	wait(20);
-	
-	ascent(i in 0..t)
+	if(!Obj_IsDeleted(obj))
 	{
-		if(!Obj_IsDeleted(objEnemy))
+		let laser = CreateStraightLaserA1(ObjMove_GetX(obj), ObjMove_GetY(obj),ang2,810*2,7,0,aimPlayer ? 3 : 1,9000);
+		ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+		ObjShot_SetAutoDelete(laser,false);
+		ObjStLaser_SetSource(laser,false);
+		ObjRender_SetAlpha(laser,128);
+		ascent(i in 0..t)
 		{
-			ObjRender_SetAngleZ(obj,(360*3)*(cos(90-90/(t-1)*i*bit)) + GetAngleToPlayer(obj) - ang);
-			yield;
+			if(!Obj_IsDeleted(objEnemy)&&!Obj_IsDeleted(obj))
+			{
+				ObjMove_SetPosition(laser, ObjMove_GetX(obj), ObjMove_GetY(obj));
+				if(aimPlayer)
+				{
+					ang2 = GetAngleToPlayer(obj);
+				}
+				ObjStLaser_SetAngle(laser,ang2);
+				ObjRender_SetAngleZ(obj,(360*3)*(cos(90-90/(t-1)*i*bit)) + ang2 - ang);
+				ObjRender_SetAlpha(laser,128/(t-1)*i);
+				yield;
+			}
 		}
-	}
-	if(!Obj_IsDeleted(objEnemy) && !Obj_IsDeleted(obj))
-	{
-		SE_PlayLen(chime1,60);
-		ObjRender_SetAngleZ(obj,0);
-		//ObjMove_SetAngle(obj,GetAngleToPlayer(obj));
-		ObjMove_SetMaxSpeed(obj,10);
-		ObjMove_SetAcceleration(obj,10/120);
+		
+		if(!Obj_IsDeleted(objEnemy) && !Obj_IsDeleted(obj))
+		{
+			SE_PlayLen(chime1,60);
+			let x = ObjMove_GetX(obj);
+			let y = ObjMove_GetY(obj);
+			ObjShot_SetDeleteFrameA6(obj, 0, 2);
+			let alph = 128;
+			let tot2 = 3;
+			let sprd = 40;
+			ascent(i in 0..5)
+			{
+				let obj = ShotA1(x,y,1,ang2-sprd*bit + (sprd*2)/(tot2-1)*i*bit,459,418,20,2,BLEND_ALPHA,false);
+			}
+			ascent(i in 0..20)
+			{
+				if(!Obj_IsDeleted(objEnemy)) 
+				{
+					let spdScl = aimPlayer ? 0.6 : 1;
+					SE_PlayLen(Shot1,60);
+					let shot = ShotA1(x, y, (8-3/19*i)*spdScl, ang2, 465, 417, 5, 2, BLEND_ALPHA, false);
+					loop(3)
+					{
+						ObjRender_SetAlpha(laser,alph);
+						alph-=128/(20*3);
+						yield;
+					}
+				}
+			}
+		}
+		if(!Obj_IsDeleted(laser))
+		{
+			Obj_Delete(laser);
+		}
+	
 	}
 }
 task timer
