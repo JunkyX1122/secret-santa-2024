@@ -37,7 +37,7 @@ let TIME = 80*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
+	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	renderYuuma(objEnemy);
 
 	end;
@@ -71,7 +71,7 @@ let TIME = 80*60;
 		Fire;	
 		magiccircle(objEnemy,1);
 		SizeCircle();
-		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+		ObjEnemy_SetDamageRate(objEnemy, (0.08)/1.5, (0.08)/3);
         count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
@@ -88,9 +88,88 @@ let TIME = 80*60;
 
 task Fire
 {
-
+	let bit = 1-2*round(rand(0,1));
+	SlashPassive(bit);
+	KnifePassive(bit);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		LaserSweep(bit);
+		wait(90);
+		bit*=-1;
+	}
 }
-task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl)
+
+task SlashPassive(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		PortalSlash(GetPlayerX,GetPlayerY,rand(1,15)*bit,120, 1);
+		wait(160);
+		bit*=-1;
+	}
+}
+
+task KnifePassive(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(shot1,60);
+		SE_PlayLen(chime1,60);
+		let ang = rand(0,360);
+		ascent(o in 0..2)
+		{
+			ascent(i in 0..30)
+			{
+				let ang2 = ang+360/30*i*bit + 180/30*o*bit;
+				let spd = 4-o;
+				let finalSpd = 1.5;
+				let obj = ShotA2(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang2, -(spd-finalSpd)/60, finalSpd, 326, 419, 10, 2, BLEND_ALPHA, true);
+			}
+		}
+		wait(160/2);
+		bit*=-1;
+	}
+}
+
+task LaserSweep(bit)
+{
+	ascent(i in 0..40)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let x = ObjMove_GetX(objEnemy) + 50*bit;
+			let ang = 90-180*bit + 190*bit*sin(90/39*i);
+			let y = ObjMove_GetY(objEnemy);
+			Laser(x,y,0,ang);
+			wait(3);
+		}
+	}
+}
+task Laser(x,y,del,angle)
+{
+	wait(del);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(laser0,40);
+	
+	//let obj1 = CreateLooseLaserA1(ObjMove_GetX(famz)+20*cos(angleT),ObjMove_GetY(famz)+20*sin(angleT), 4, angleT, 160, 30, 422, 10);
+		let obj2 = CreateLooseLaserA1(x,y, 10, angle, 200, 9, 309, 10);
+		ObjLaser_SetInvalidLength(obj2, 0, 0.3);
+		let obj3 = CreateShotA1(x,y, 10, angle, 436, 12);
+		
+		ObjMove_SetMaxSpeed(obj2,4);
+		ObjMove_SetMaxSpeed(obj3,4);
+		ObjMove_SetAcceleration(obj2,-0.4);
+		ObjMove_SetAcceleration(obj3,-0.4);
+		ObjRender_SetBlendType(obj3,BLEND_ADD_ARGB);
+		//ObjRender_SetAlpha(obj1,196);
+		//ObjShot_SetIntersectionEnable(obj1, false);
+		ObjShot_SetIntersectionEnable(obj3, false);
+		LaserSource(ObjMove_GetX(obj3),ObjMove_GetY(obj3),444,10,1,10,50);
+	}
+}
+const PORTAL_HEIGHT = 50;
+task PortalSlash(x,y,ang,d, yScl)
 {
 	if(!Obj_IsDeleted(objEnemy))
 	{
@@ -100,16 +179,23 @@ task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			if(i%5==0)
+			if(i%10==0)
 			{
-				CreateLine(x,y,ang, PORTAL_HEIGHT*yScl,20);
-				CreateLine(x,y,ang,-PORTAL_HEIGHT*yScl,20);
+				CreateLine(x,y,ang, PORTAL_HEIGHT*yScl,60);
+				CreateLine(x,y,ang,-PORTAL_HEIGHT*yScl,60);
 			}
 			yield;
 		}
 	}
-	PortalSlashHitbox(x, y, ang, PORTAL_HEIGHT*yScl, 10);
-	PortalSlashEffect(x, y, ang, PORTAL_HEIGHT*yScl, 60);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		PortalSlashHitbox(x, y, ang, PORTAL_HEIGHT*yScl, 10);
+		PortalSlashEffect(x, y, ang, PORTAL_HEIGHT*yScl, 60);
+		ScreenShake(60,3);
+		SE_PlayLen(drum,70);
+		SE_PlayLen(slash,70);
+	}
+	
 }
 
 task PortalSlashHitbox(x, y, ang, width, t)
@@ -167,7 +253,7 @@ task PortalSlashEffect(x, y, ang, width, t)
 			ObjRender_SetAlpha(objs[1],64-64/t*i);
 			ObjRender_SetScaleY(objs[1],2 - 1/t*i);
 			
-			ObjRender_SetAlpha(objs[2],32-32/t*i);
+			ObjRender_SetAlpha(objs[2],0);
 			
 			yield;
 		}
@@ -196,7 +282,7 @@ task CreateLine(x,y,ang,d,t)
 			let scl = sin(90/(t-1)*i);
 			let dis = d*scl * 1.5;
 			let ang2 = ang + 90;
-			ObjRender_SetAlpha(objLine,255-255*scl);
+			ObjRender_SetAlpha(objLine,165-165*scl);
 			ObjRender_SetPosition(objLine, x + dis * cos(ang2), y + dis * sin(ang2), 0);
 			yield;
 		}
