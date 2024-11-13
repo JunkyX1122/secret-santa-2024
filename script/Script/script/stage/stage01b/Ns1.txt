@@ -129,16 +129,17 @@ task Fire
 		{
 			ascent(o in 0..3)
 			{
-				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.15*o,5,  0);
+				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.8/2*o ,7,  0);
 			}
 			SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 2,12, 1);
 		}
-		wait(100);
+		wait(80);
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			SE_PlayLen(chime1,60);
 		}
 		wait(50);
+		ObjEnemy_SetDamageRate(objEnemy, (0.075)/1.5, (0.075)/3);
 		bit*=-1;
 	}
 }
@@ -146,8 +147,8 @@ task Fire
 task SpikeFire(ang, bit, spdScl, am, type)
 {
 
-	let sprd = 35;
-	ascent(i in 0..am)
+	let sprd = 38;
+	ascent(i in 0..am-2)
 	{
 		ascent(o in 0..2)
 		{
@@ -155,9 +156,13 @@ task SpikeFire(ang, bit, spdScl, am, type)
 			let y = ObjMove_GetY(objEnemy) + 30 * sin(ang);
 			let ang2 = ang + sprd/(am-1)*i*[1,-1][o]*bit;
 			let spd = Interpolate_Decelerate(7, 3, 1/(am-1)*i) * 0.4 * spdScl;
-			let obj = ShotA2(x,y,spd,ang2,-spd/70,0,52,422,5,2,BLEND_ALPHA,false);
-			
-			ObjMove_AddPatternA2(obj,100,0,[NO_CHANGE,ang][type],2/120,2,0);
+			let obj = ShotA2(x,y,spd,ang2,-spd/70,0,[52,56][type],[422,423][type],5,2,BLEND_ALPHA,false);
+			if(type==0)
+			{
+				ObjRender_SetScaleX(obj,0.8);
+				ObjRender_SetScaleY(obj,1.5);
+			}
+			ObjMove_AddPatternA2(obj,80,0,[NO_CHANGE,ang][type],2/120,2,0);
 		}
 		
 	}
