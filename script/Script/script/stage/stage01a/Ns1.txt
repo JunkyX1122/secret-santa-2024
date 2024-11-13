@@ -101,7 +101,7 @@ task Fire
 			let ang = -cc*3.92321 *bit;
 			ascent(o in 0..2)
 			{
-				let tot = [90, 40][o];
+				let tot = [99, 40][o];
 				let spd = [4,7][o];
 				ascent(i in 0..tot)
 				{
@@ -110,12 +110,17 @@ task Fire
 					let y = ObjMove_GetY(objEnemy) + 20 * sin(ang2);
 
 					let obj = ShotA2(x, y, spd, ang2, -spd/60, 0, 167, 167, 10, 2, BLEND_ALPHA,true);
-					ObjMove_AddPatternA2(obj, 110, 			 0, NO_CHANGE, 2/60, 2, [0.5*bitIni,0][o]);
+					ObjMove_AddPatternA2(obj, 110, 			 0, NO_CHANGE, 2/60, 2, [2*bit*[1,0,-1][bitIni%3],0][o]);
 					ObjMove_AddPatternA2(obj, 110+30, NO_CHANGE, NO_CHANGE, 2/60, 2, 0);
-					bitIni*=-1;
+					bitIni++;
 				}
 			}
 			OrbRing(cc,bit);
+		}
+		if(cc%200==110)
+		{
+			SE_PlayLen(charge1,60);
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50), 150+rand(10,-10), 60);
 		}
 		cc++;
 		yield;
@@ -124,18 +129,28 @@ task Fire
 
 task OrbRing(cc,bit)
 {
-	let ang = -90;
+	let ang = -90+rand(45,-45);
 	let tot = 10;
 	ascent(i in 0..tot)
 	{
 		let ang2 = ang + 360/tot*i*bit;
 		let x = ObjMove_GetX(objEnemy);
 		let y = ObjMove_GetY(objEnemy);
-		let speed = 5;
-		let obj = BloodShot(x, y, speed, ang2, 2, 30, [255,64,64], true);
-		ObjMove_AddPatternA2(obj, 0,   speed, NO_CHANGE, -speed/90, 0, 0);
-		ObjMove_AddPatternA2(obj, 100, 0,     NO_CHANGE,  3/50,     3, 0);
-		Homing(obj, 1, 100, 120);
+		let speed = 7;
+		let obj = BloodShot(x, y, speed, ang2, 1.5, 60, [255,64,64], true);
+		ObjMove_AddPatternA2(obj, 0,   speed, NO_CHANGE, -speed/60, 0, 0);
+		ObjMove_AddPatternA2(obj, 110, 0,     NO_CHANGE,  2/50,     2, 0);
+		Homing(obj, 2, 110, 50);
+	}
+	
+	ascent(i in 0..tot)
+	{
+		let ang2 = ang + 360/tot*i*bit + 180/tot*bit;
+		let x = ObjMove_GetX(objEnemy) + 130 * cos(ang2);
+		let y = ObjMove_GetY(objEnemy) + 130 * sin(ang2);
+		let speed = 3;
+		let obj = BloodShot(x, y, 0, ang2, 1.75, 20, [255,64,64], false);
+		ObjMove_AddPatternA2(obj, 110,   0, NO_CHANGE, speed/180, speed, 0);
 	}
 }
 
@@ -250,7 +265,7 @@ task Homing(obj, maxTraverse, delay, stayer)
 	
 	wait(delay);
 	
-	ObjMove_SetAngle(obj, GetAngleToPlayer(obj));
+	//ObjMove_SetAngle(obj, GetAngleToPlayer(obj));
 	
 	let ang = ObjMove_GetAngle(obj);
 	let countdown = stayer;
