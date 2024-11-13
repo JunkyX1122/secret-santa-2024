@@ -104,8 +104,8 @@ task LaserPassive(bit)
 		Laser(ObjMove_GetX(objEnemy) + 150, ObjMove_GetY(objEnemy), 0,ang1);
 		Laser(ObjMove_GetX(objEnemy) - 150, ObjMove_GetY(objEnemy), 0,ang2);
 		
-		ang1+=adda;
-		ang2-=adda;
+		ang1-=adda;
+		ang2+=adda;
 		wait(4);
 	}
 }
@@ -114,17 +114,42 @@ task KnifeBurst(bit)
 {
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		let tot = 20;
+		let tot = 12;
 		let ang = GetAngleToPlayer(objEnemy);
+		let minSpd = 1;
+		let adderSpd = 7;
+		SE_PlayLen(charge1,60);
 		ascent(i in 0..20)
 		{
-			let spd = 2+10/19*i;
-			ascent(o in 0..tot)
+			if(!Obj_IsDeleted(objEnemy)) 
 			{
-				let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 
+				let angP = 360/tot*round(rand(0,20));
+				SE_PlayLen(shot1,60);
+				let spd = minSpd+adderSpd/19*i;
+				ascent(o in 0..tot)
+				{
+					let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang+360/tot*o*bit+angP, 326, 419, 5, 2, BLEND_ALPHA, true);
+				}
+				wait(2);
 			}
 		}
-		yield;
+		ascent(i in 0..20)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				let angP = 360/tot*round(rand(0,20)) + 180/tot*bit;
+				SE_PlayLen(shot1,60);
+				let spd = minSpd+adderSpd/19*i;
+				ascent(o in 0..tot)
+				{
+					let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang+360/tot*o*bit+angP, 325, 418, 5, 2, BLEND_ALPHA, true);
+				}
+				wait(2);
+			}
+		}
+		wait(80);
+		bit*=-1;
+		ObjEnemy_SetDamageRate(objEnemy, (0.065)/1.5, (0.065)/3);
 	}
 }
 
