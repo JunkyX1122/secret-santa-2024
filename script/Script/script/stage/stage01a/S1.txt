@@ -74,12 +74,12 @@ let finalSpellBool = false;
 		SetCommonData("BossX", ObjMove_GetX(objEnemy));
 		SetCommonData("BossY", ObjMove_GetY(objEnemy));
 	}
-	if(count < 95)	
+	if(count < 60)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		SetCommonData("SpellCardBG1",true);
 	}
-    if(count == 95)
+    if(count == 60)
     {
 		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
 		Fire;
@@ -104,7 +104,23 @@ task Fire
 	let bit = 1-2*round(rand(0,1));
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		ShinyOrb(GetStgFrameWidth/2 + 150*bit, 200, bit);
+		let ang = rand(0,360);
+		let tot = 20;
+		ascent(o in 0..2)
+		{
+			ascent(i in 0..tot)
+			{
+				let ang2 = ang + 360/tot*i*bit + 180/tot*bit*o;
+				let x = ObjMove_GetX(objEnemy) + 50 * cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + 50 * sin(ang2);
+				let speed = [3,1.5][o];
+				let obj = BloodShot(x, y, 0, ang2, 1.25, 20, [255,255,64], true);
+				ObjMove_AddPatternA2(obj, 0,   0, NO_CHANGE, speed/180, speed, 0);
+			}
+		}
+		ShinyOrb(GetStgFrameWidth/2 + 200*bit, 75, bit);
+		wait(60*6);
+		ObjEnemy_SetDamageRate(objEnemy, (0.065/3)/1.5, (0.075/3)/3);
 		bit*=-1;
 	}
 }
