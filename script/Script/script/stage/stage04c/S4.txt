@@ -141,7 +141,7 @@ task Fire
 	BlackHole(STAR_X, STAR_Y, bit);
 	CreateBox(STAR_X, STAR_Y, bit, -0.5*bit, 3*bit, -3*bit, 10*2, 4, IMG_AURA_LOOP, IMG_NOISE, BLEND_SUBTRACT);
 	//CreateBox(GetStgFrameWidth/2, 100, bit,  0.0,     0, 	  0,	 10*5, 0, IMG_WIND,      IMG_PIXEL, BLEND_ADD_ARGB);
-
+	SE_PlayLen(Burst3,60);
 	Nuke(bit);
 	wait(120);
 	PagodaFire(bit);
@@ -156,10 +156,11 @@ task PagodaFire(bit)
 	let ang = -90;
 	while(!Obj_IsDeleted(objEnemy))
 	{
+		SE_PlayLen(LaserDelShort,40);
 		ascent(i in 0..7)
 		{
 			let ang2 = ang + 360/7*i;
-			PagodaLaser(STAR_X,STAR_Y,0,0,0.5,ang2,0,0,20,[255,64,128],40,20,20);
+			PagodaLaser(STAR_X,STAR_Y,0,0,0.5,ang2,0,0,20,[255,64,128],40,20,40);
 		}
 		ang+=30.2131*bit;
 		wait(40);
@@ -171,7 +172,7 @@ task OrbFire(bit)
 	let ang = -90;
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		SE_PlayLen(Shot1,50);
+		SE_PlayLen(Shot1,60);
 		let x = STAR_X;
 		let y = STAR_Y;
 		let spd = 8;
@@ -212,7 +213,7 @@ task BloodFire(bit)
 		
 		if(cc%4==0)
 		{
-			SE_PlayLen(Shot2,50);
+			SE_PlayLen(Shot2,60);
 			ascent(i in 0..2)
 			{
 				ascent(p in 0..2)
@@ -244,7 +245,7 @@ task BloodFire(bit)
 		}
 		if(cc%3==0)
 		{
-			SE_PlayLen(Shot1,50);
+			SE_PlayLen(Shot1,60);
 			ascent(i in 0..2)
 			{
 				
@@ -275,7 +276,7 @@ task BloodFire(bit)
 		}
 		if(cc%12==0)
 		{
-			SE_PlayLen(Shot1,50);
+			SE_PlayLen(shot1,60);
 			ascent(i in 0..4)
 			{
 				

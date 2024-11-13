@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("-Ruin-","", LENEN, 0,0,0);
 	
 	ScreenShake(60,4);
 
@@ -159,8 +159,8 @@ task end
 		{
 			let bit = 1-2*round(rand(0,1));
 			let apa = rand(0,128);
-			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
 		}
 		ScreenShake(30,9); 
 		SE_PlayLen(BossEnd,80);
@@ -179,8 +179,8 @@ task end
 		{
 			let bit = 1-2*round(rand(0,1));
 			let apa = rand(0,128);
-			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
-			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[apa,apa,255],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,0,4+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
+			ChargeExplode(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,1,1+i,bit,[255,apa,apa],1,BLEND_ADD_ARGB,5,90,79);
 		}
 	}
 	ScreenShake(190,12); 
