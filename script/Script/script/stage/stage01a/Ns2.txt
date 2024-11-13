@@ -95,14 +95,16 @@ task Fire
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(charge1,60);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50, 175)*bit, 150+rand(10,-10), 120);
 		ascent(i in 0..totalAnkh)
 		{
 			CreateAnkh(GetStgFrameWidth/(totalAnkh-1)*i, 140, 90, bit);
 		}
 		
-		wait(60*4);
+		wait(60*3.4);
 		if(!Obj_IsDeleted(objEnemy)) 
 		{
+			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50, 175)*bit, 150+rand(10,-10), 120);
 			SE_PlayLen(charge1,60);
 			ascent(i in 0..5)
 			{
@@ -111,7 +113,8 @@ task Fire
 			
 			bit*=-1;
 		}
-		wait(60*4);
+		wait(60*3.4);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
 	}
 }
 
@@ -131,10 +134,13 @@ task AmuletFire(bit)
 		let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+rand(0,30))*bit;
 		ascent(i in 0..tot)
 		{
-			SE_PlayLen(Shot1,60);
-			let x2 = x - (GetStgFrameWidth + 60)/ (tot-1) * i *bit;
-			let obj = ShotA1(x2, 0, 1.5, 90, 167, 167, 20, 2, BLEND_ALPHA, false);
-			wait(2);
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				SE_PlayLen(Shot1,60);
+				let x2 = x - (GetStgFrameWidth + 60)/ (tot-1) * i *bit;
+				let obj = ShotA1(x2, 0, 1.5, 90, 167, 167, 20, 2, BLEND_ALPHA, false);
+				wait(2);
+			}
 		}
 	}
 }
@@ -149,7 +155,7 @@ task CreateAnkh(x, y, ang, bit)
 		let obj = BloodShot(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), speed, ang2+360/ttt*i, 1.5, 20, [255,255,0], true);
 		ObjMove_AddPatternA2(obj, 0,   speed, NO_CHANGE, -(speed-2)/60, rand(1,4), 0);
 		Homing(obj, x, y, rand(8,10), 0, -1);
-		ObjShot_SetDeleteFrameA5(obj, 140, 2, [255,255,0], 120);
+		ObjShot_SetDeleteFrameA5(obj, 140, 2, [255,255,0], 30);
 	}
 	
 	wait(140);
