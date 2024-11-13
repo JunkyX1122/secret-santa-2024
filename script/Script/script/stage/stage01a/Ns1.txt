@@ -272,6 +272,7 @@ task Homing(obj, maxTraverse, delay, stayer)
 	let homeForever = false;
 	if(stayer <= 0)
 	{
+		countdown = 1000;
 		homeForever = true;
 	}
 	while(!Obj_IsDeleted(obj) && countdown > 0)
@@ -305,6 +306,7 @@ task Homing(obj, maxTraverse, delay, stayer)
 			yield;
 	}
 }
+
 task timer
 {
     while(TIME>60*10)
