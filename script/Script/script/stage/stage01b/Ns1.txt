@@ -88,9 +88,80 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	let bit = 1-2*round(rand(0,1));
+	
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(shot1,60);
+		let ang = GetAngleToPlayer(objEnemy);
+		ascent(i in 0..8)
+		{
+			
+			if(i%2==1)
+			{
+				let sprdAm = 34;
+				ascent(o in 0..sprdAm)
+				{
+					let ang2 = ang - 110*bit + 220/(sprdAm-1)*o*bit + 180;
+					let dis = 10 + 10*i;
+					let spd = 1+0.5*i;
+					let spd2 = (1+0.75*i)/2;
+					let x = ObjMove_GetX(objEnemy) + dis*cos(ang2);
+					let y = ObjMove_GetY(objEnemy) + dis*sin(ang2);
+					
+					
+					let obj = ShotA2(x,y,spd,ang2,-spd/40,1,57,423,10,2,BLEND_ALPHA,false);
+					ObjRender_SetColor(obj,255,255,200);
+					if(o==1||o==sprdAm-2||i==3)
+					{
+						ObjRender_SetColor(obj,225,128,128);
+					}
+					if(o==0||o==sprdAm-1||i==1)
+					{
+						ObjRender_SetColor(obj,128,255,128);
+					}
+		
+				}
+			}
+		}
+	
+		ascent(i in 0..5)
+		{
+			ascent(o in 0..3)
+			{
+				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.15*o,5,  0);
+			}
+			SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 2,12, 1);
+		}
+		wait(100);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(chime1,60);
+		}
+		wait(50);
+		bit*=-1;
+	}
 }
 
+task SpikeFire(ang, bit, spdScl, am, type)
+{
+
+	let sprd = 35;
+	ascent(i in 0..am)
+	{
+		ascent(o in 0..2)
+		{
+			let x = ObjMove_GetX(objEnemy) + 30 * cos(ang);
+			let y = ObjMove_GetY(objEnemy) + 30 * sin(ang);
+			let ang2 = ang + sprd/(am-1)*i*[1,-1][o]*bit;
+			let spd = Interpolate_Decelerate(7, 3, 1/(am-1)*i) * 0.4 * spdScl;
+			let obj = ShotA2(x,y,spd,ang2,-spd/70,0,52,422,5,2,BLEND_ALPHA,false);
+			
+			ObjMove_AddPatternA2(obj,100,0,[NO_CHANGE,ang][type],2/120,2,0);
+		}
+		
+	}
+}
 task timer
 {
     while(TIME>60*10)

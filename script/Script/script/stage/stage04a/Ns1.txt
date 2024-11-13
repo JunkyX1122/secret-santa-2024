@@ -164,7 +164,10 @@ task Fire
 		}
 		
 		wait(100);
-		SE_PlayLen(chime1,60);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(chime1,60);
+		}
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50), 150+rand(20,0), 60);
 		wait(160);
 		bit*=-1;
