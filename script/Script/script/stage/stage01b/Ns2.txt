@@ -88,9 +88,97 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	let bit = 1-2*round(rand(0,1));
+	
+	let cc = 0;
+	ShellFire(bit);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(Shot1,60);
+		let ang = GetAngleToPlayer(objEnemy) + 360/8*cc*bit;
+		ascent(o in 0..3)
+		{
+			SpikeFire(ang, bit, 1.5 - 0.8/2*o ,7-o,  0);
+		}
+		SpikeFire(ang, bit, 2,14, 1);
+		
+		cc++;
+		wait(15);
+	}
 }
 
+task ShellFire(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(shot1,60);
+		SE_PlayLen(chime1,60);
+		let ang = GetAngleToPlayer(objEnemy) + 180;
+		ascent(i in 0..8)
+		{
+			
+			if(i%2==1)
+			{
+				let sprdAm = 29;
+				ascent(o in 0..sprdAm)
+				{
+					let ang2 = ang - 110*bit + 220/(sprdAm-1)*o*bit + 180;
+					let dis = 10 + 10*i;
+					let spd = 1+0.5*i;
+					let spd2 = (1+0.75*i)/2;
+					let x = ObjMove_GetX(objEnemy) + dis*cos(ang2);
+					let y = ObjMove_GetY(objEnemy) + dis*sin(ang2);
+					
+					
+					let obj = ShotA2(x,y,spd,ang2,-spd/40,1,57,423,10,2,BLEND_ALPHA,false);
+					ObjRender_SetColor(obj,255,255,200);
+					if(o==1||o==sprdAm-2||i==3)
+					{
+						ObjRender_SetColor(obj,225,128,128);
+					}
+					if(o==0||o==sprdAm-1||i==1)
+					{
+						ObjRender_SetColor(obj,128,255,128);
+					}
+		
+				}
+			}
+		}
+		bit*=-1;
+		wait(140);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+		
+	}
+}
+
+task SpikeFire(ang, bit, spdScl, am, type)
+{
+
+	let sprd = 35;
+	ascent(i in 0..am-2)
+	{
+		ascent(o in 0..2)
+		{
+			let x = ObjMove_GetX(objEnemy) + 30 * cos(ang);
+			let y = ObjMove_GetY(objEnemy) + 30 * sin(ang);
+			let ang2 = ang + sprd/(am-1)*i*[1,-1][o]*bit;
+			let spd = Interpolate_Decelerate(7, 3, 1/(am-1)*i) * 0.4 * spdScl;
+			let obj = ShotA2(x,y,spd,ang2,-spd/70,0,[52,56][type],422,10,2,BLEND_ALPHA,false);
+			if(type==0)
+			{
+				ObjRender_SetScaleX(obj,0.8);
+				ObjRender_SetScaleY(obj,1.5);
+			}
+			ObjMove_AddPatternA2(obj,80,0,[ang,ang][type],3/60,3,0);
+			Obj_SetRenderPriority(obj, 0.51);
+		}
+	}
+	wait(80);
+	if(!Obj_IsDeleted(objEnemy))
+	{
+		//SE_PlayLen(chime1,60);
+	}
+}
 task timer
 {
     while(TIME>60*10)
