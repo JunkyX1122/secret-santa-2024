@@ -71,7 +71,7 @@ let TIME = 60*60;
 		Fire;	
 		magiccircle(objEnemy,1);
 		SizeCircle();
-		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+		ObjEnemy_SetDamageRate(objEnemy, (0.08)/1.5, (0.08)/3);
         count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)

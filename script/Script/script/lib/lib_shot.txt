@@ -593,7 +593,7 @@ ShotData{ id=401 rect=(1,453,64,517) render=ADD angular_velocity = 0 collision =
 ShotData{ id=402 rect=(64,453,128,517) render=ADD angular_velocity = 0 collision = (13,-0.25,0) delay_color= (64,255,64) } // Green
 ShotData{ id=403 rect=(1,517,62,583) render=ADD angular_velocity = 0 collision = 13 delay_color= (192,64,192) } // Purple
 ShotData{ id=404 rect=(64,517,128,581) render=ADD angular_velocity = 0 collision = 13 delay_color= (64,64,255) } // Blue
-ShotData{ id=405 rect=(1,581,64,645) render=ADD angular_velocity = 0 collision = 13 delay_color= (255,255,64) } // Yellow
+ShotData{ id=405 rect=(0,582,64,645) render=ADD angular_velocity = 0 collision = (13,0,0) delay_color= (255,255,64) } // Yellow
 ShotData{ id=406 rect=(64,581,128,645) render=ADD angular_velocity = 0 collision = 13 delay_color= (255,255,255) } // White
 ShotData{ id=407 rect=(1,645,64,709) render=ADD angular_velocity = 0 collision = 13 delay_color= (255,128,64) } // Orange
 ShotData{ id=408 rect=(64,645,128,709) render=ADD angular_velocity = 0 collision = 13 delay_color= (255,64,255) } // Magenta
