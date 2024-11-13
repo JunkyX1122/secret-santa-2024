@@ -312,6 +312,7 @@ task LaserGrow(obj,t,d,rw,w)
 	Obj_Delete(obj);
 	
 }
+
 task AuraSphere(ang,bit)
 {
 	let obj = CreateShotA1(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),0,ang,404,0);
