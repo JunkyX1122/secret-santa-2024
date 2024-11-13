@@ -40,10 +40,11 @@ task TTitleScene
 	
 	//タイトルシーン終了フラグ
 	wait(120);
+	activeTeam = PLAYERTEAM_B;
 	StartStageProgression();
 	ClosePackage();
 }
-
+let activeTeam = 0;
 const STAGE_1a = 0;
 const STAGE_1b = 1;
 const STAGE_1c = 2;
@@ -54,20 +55,54 @@ const STAGE_4b = 6;
 const STAGE_4c = 7;
 const STAGE_5  = 8;
 const STAGE_6  = 9;
+const PLAYERTEAM_A = 0;
+const PLAYERTEAM_B = 1;
+const PLAYERTEAM_C = 2;
 
 function StartStageProgression()
 {
 	carryOn = true;
 	SetCommonData("hasThingsInitialised",false);
 	let WAITER = 0;
-	TStageScene("",STAGE_2,WAITER);
+	if(carryOn==true)
+	{
+		alternative(activeTeam)
+		case(PLAYERTEAM_A)
+		{
+			TStageScene("",STAGE_1a,WAITER);
+		}
+		case(PLAYERTEAM_B)
+		{
+			TStageScene("",STAGE_1b,WAITER);
+		}
+		case(PLAYERTEAM_C)
+		{
+			TStageScene("",STAGE_1c,WAITER);
+		}
+	}
+	if(carryOn==true)
+	{
+		TStageScene("",STAGE_2,WAITER);
+	}
 	if(carryOn==true)
 	{
 		TStageScene("",STAGE_3,WAITER);
 	}
 	if(carryOn==true)
 	{
-		TStageScene("",STAGE_4a,WAITER);
+		alternative(activeTeam)
+		case(PLAYERTEAM_A)
+		{
+			TStageScene("",STAGE_4a,WAITER);
+		}
+		case(PLAYERTEAM_B)
+		{
+			TStageScene("",STAGE_4b,WAITER);
+		}
+		case(PLAYERTEAM_C)
+		{
+			TStageScene("",STAGE_4c,WAITER);
+		}
 	}
 	if(carryOn==true)
 	{
@@ -170,7 +205,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 			alternative(resPause)
 			case(RESULT_RETRY)
 			{
-				TTransition();
+				//TTransition();
 				TerminateStageScene();
 				carryOn = false;
 				StartStageProgression();
@@ -180,23 +215,15 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 			case(RESULT_END)
 			{
 
-				TTransition();
+				//TTransition();
 				TerminateStageScene();
 				carryOn = false;
 				TTitleScene;
 			}
 		}
-
-		if(!IsReplay() && GetKeyState(KEY_BACK) == KEY_PUSH)
-		{
-		
-			TerminateStageScene();
-			TStageScene(1,SELECT_ID,1);
-			return;
-		}
 		if(stgSceneState == STAGE_STATE_FINISHED)
 		{
-			//RenderToTextureA1(tex_rd, 0, 100, true);
+		
 		}
 		if(stgSceneState != STAGE_STATE_FINISHED)
 		{
@@ -349,7 +376,6 @@ task TReplaySaveScene()
 //----------------------------------------------------
 function RenderSceneToTransitionTexture()
 {
-
 	let textureName = GetTransitionRenderTargetName();
 	RenderToTextureA1(textureName, 0, 100, true);
 }
@@ -372,21 +398,18 @@ function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace)
 	ObjText_SetMaxWidth(objText,GetScreenWidth-40);
 	return objText;
 }
-task TTransition
+function TTransition(t)
 {
 	let textureName = GetTransitionRenderTargetName();
-
 	let objImage = ObjPrim_Create(OBJ_SPRITE_2D);
 	Obj_SetRenderPriorityI(objImage, 100); 
 	ObjPrim_SetTexture(objImage, textureName); 
-	ObjSprite2D_SetSourceRect(objImage, 0, 0, 640, 480);
-	ObjSprite2D_SetDestRect(objImage, 0, 0, 640, 480);
+	ObjSprite2D_SetSourceRect(objImage, 0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestRect(objImage, 0, 0, GetScreenWidth, GetScreenHeight);
 
 	let alpha = 255;
-	while(alpha > 0)
+	loop(t)
 	{
-		ObjRender_SetAlpha(objImage, alpha);
-		alpha -= 32;
 		yield;
 	}
 	Obj_Delete(objImage);

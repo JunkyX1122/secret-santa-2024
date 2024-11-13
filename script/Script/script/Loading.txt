@@ -52,7 +52,7 @@ task LoadThings
 		LoadTexture(TitleScreen_ImgArray[i]);
 		yield;
 	}
-	
+	/*
 	ascent(i in 0..length(CharacterImg_ImgArray))
 	{
 		ascent(o in 0..length(CharacterImg_ImgArray[i]))
@@ -61,7 +61,7 @@ task LoadThings
 		}
 		yield;
 	}
-	
+	*/
 	//-----------------Load Sound-----------------
 	ascent(i in 0..length(LoadAllSoundsArray))
 	{

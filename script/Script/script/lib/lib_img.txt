@@ -83,7 +83,12 @@ const BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,
 //--------------FACE IMAGES--------------
 //---------------------------------------
 
-const CharacterImg_ImgArray = [];
+
+const Team1PortraitImg_ImgArray = [];
+const Team2PortraitImg_ImgArray = [];
+const Team3PortraitImg_ImgArray = [];
+
+const BossPortraitImg_ImgArray = [];
 
 //---------------------------------------
 //--------------TEXT IMAGES--------------
