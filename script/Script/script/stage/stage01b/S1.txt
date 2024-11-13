@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["S1"]
+#Title["Grass Art &quot;Chesnaught's Aegis&quot;"]
 #Text["S1"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -50,7 +50,7 @@ let finalSpellBool = false;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
-	ObjCutin_SetSpellcardS4("Valley of Greed &quot;Rising Grudge&quot;","", LENEN, 255,0,0);
+	ObjCutin_SetSpellcardS4("Grass Art &quot;Chesnaught's Aegis&quot;","", LENEN, 128,255,128);
 	
 	ScreenShake(60,4);
 
@@ -98,14 +98,135 @@ let finalSpellBool = false;
 @Finalize
 {
 }
-let initGSpeed = 8;
-let gSpeed = initGSpeed;
-let phase = 0;
+
 task Fire
 {
-	
+	let bit = 1-2*round(rand(0,1));		
+	PassiveFire(bit);
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		SE_PlayLen(drum,70);
+		ScreenShake(120,4);
+		
+		ascent(i in 0..4)
+		{
+			ascent(o in 0..2)
+			{
+				let innerBit = [1,-1][o];
+				let x = GetStgFrameWidth/2 + (150 + (GetStgFrameWidth/2-150)/3*i)*innerBit*bit;
+				let y = GetStgFrameHeight;
+				let ang = Get_PointAngle(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), x, y);
+				CreateVine(x, y, ang + 5*i*innerBit*bit, bit);
+				
+				SpikeFire(x, y, ang, bit, 1, 7, 0);
+			}
+		}
+		wait(100);
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(100,-100), 150+rand(-10,20), 60);
+		wait(70);
+		if(!Obj_IsDeleted(objEnemy)) 
+		{
+			SE_PlayLen(charge0,60);
+		}
+		wait(130);
+		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
+		bit*=-1;
+	}
 }
 
+task PassiveFire(bit)
+{
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		let ang = rand(0,360);
+		SE_PlayLen(shot1,60);
+		let mspd = 2.5;
+		ascent(i in 0..30)
+		{
+			let ang2 = ang+360/30*i*bit;
+			if(ang2%360<=180)
+			{
+				let x = ObjMove_GetX(objEnemy) + 60*cos(ang2);
+				let y = ObjMove_GetY(objEnemy) + 60*sin(ang2);
+				let obj = ShotA2(x,y,0,ang2,mspd/222,mspd,337,337,20,3,BLEND_ALPHA,false);
+				Obj_SetRenderPriority(obj, 0.49);
+			}
+		}
+		bit*=-1;
+		wait(96);
+	}
+}
+
+task SpikeFire(x,y,ang, bit, spdScl, am, type)
+{
+
+	let sprd = 90;
+	ascent(i in 0..am)
+	{
+		ascent(o in 0..2)
+		{
+			let ang2 = ang + sprd/(am-1)*i*[1,-1][o]*bit;
+			let spd = (8 - 5 * sin(135/(am-1)*i)) * 0.4 * spdScl;
+			let obj = ShotA2(x,y,spd,ang2,-spd/70,0,52,422,5,2,BLEND_ALPHA,false);
+			if(type==0)
+			{
+				ObjRender_SetScaleX(obj,0.8);
+				ObjRender_SetScaleY(obj,1.5);
+			}
+			ObjMove_AddPatternA2(obj,80,0,[NO_CHANGE,ang][type],1/120,1,0);
+		}
+		
+	}
+}
+task CreateVine(x,y,ang,bit)
+{
+	let spd = 12;
+	let cc = 0;
+	let angChange = round(rand(5,10));
+	let randThorn = round(rand(0,0));
+	while(x>-16 && x<GetStgFrameWidth+16 && y>-16 && y<GetStgFrameHeight+16 && !Obj_IsDeleted(objEnemy))
+	{
+		if(cc%8==randThorn)
+		{
+			ascent(i in 0..2)
+			{
+				SE_PlayLen(shot1,60);
+				let obj = ShotA2(x,y,3,ang+90*bit-180*bit*i,-3/10,0,56,56,20,2,BLEND_ALPHA,false);
+				ObjMove_AddPatternA2(obj,20+60,0,NO_CHANGE,2/180,2,0);
+			}
+			angChange--;
+		}
+		if(cc%1==0)
+		{
+			SE_PlayLen(Shot1,60);
+			let obj = ShotA1(x,y,0,rand(0,360),84,422,20,2,BLEND_ALPHA,false);
+			ObjShot_SetDeleteFrameA6(obj,100,1);
+			WaitVineSound();
+			angChange--;
+		}
+		if(angChange<=0)
+		{
+			angChange = round(rand(1,10));
+			let am = 4;
+			let randam = rand(-1,1)*am;
+			ang+=randam;
+		}
+		
+		x+=spd*cos(ang);
+		y+=spd*sin(ang);
+		cc++;
+		yield;
+	}
+	
+	task WaitVineSound()
+	{
+		wait(100);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(shot1,60);
+		}
+	}
+}
 task timer
 {
     loop(TIME-10)
