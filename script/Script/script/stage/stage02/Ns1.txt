@@ -193,12 +193,31 @@ task ScyllaFire(bit)
 		bit*=-1;
 		wait(60);
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 200, 40);
+		let disTo = Get_Distance(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), GetStgFrameWidth/2, 200);
+		let angTo = Get_PointAngle(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), GetStgFrameWidth/2, 200);
+		
+		let angFinal = -90;
+		
+		loop(1)
+		let diff = (angTo - 180) - angTo;
+		while(diff >= 180) { diff -= 360; }    // adjust the range
+		while(diff < -180) { diff += 360; }
+
+		let diffAbs = (|diff|);
+		
+		
+		let centrePivot = [GetStgFrameWidth/2 + disTo/2 * cos(angTo), 200  + disTo/2 * sin(angTo)];
 		let t = 40;
 		let spread = 7;
+		
+		
 		ascent(i in 0..t)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
+				let newAng = (angTo+180) - diffAbs*bit + diffAbs*bit * Interpolate_Decelerate(0, 1, 1/(t-1)*i); 
+		
+				ObjMove_SetPosition(objEnemy, centrePivot[0] + disTo/2 * cos(newAng), centrePivot[1] + disTo/2 * sin(newAng));
 				if(i%2==0)
 				{
 					SE_PlayLen(shot1,60);
@@ -206,7 +225,6 @@ task ScyllaFire(bit)
 					let spd = 0.5+9/(t-1)*i;
 					ascent(o in 0..spread)
 					{
-						
 						let ang = GetAngleToPlayer(objEnemy) - dis*bit + (dis*2*bit)/(spread-1)*o;
 						let objS = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd,ang,130,130,10,3,BLEND_ALPHA,false);
 					}

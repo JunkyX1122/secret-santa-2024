@@ -241,7 +241,7 @@ task LaserSweep(xs,ys,bit,starter)
 				ObjMove_SetPosition(sourcess[obj],x,y);
 				ObjRender_SetBlendType(sourcess[obj],BLEND_ADD_ARGB);
 				ObjRender_SetScale(sourcess[obj],1*sin(180/(t-1)*i));
-				if((i+starter)%3==0 && obj == 1 && absolute(mAng2%360-270) < 90)
+				if((i+starter)%3==0 && obj == 1 && (absolute((mAng2%360)-270) < 110 || mAng2%360 < 20))
 				{
 					SE_PlayLen(Shot1,40);
 					let xs = 4*cos(mAng2);

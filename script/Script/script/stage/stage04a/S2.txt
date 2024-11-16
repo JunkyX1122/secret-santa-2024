@@ -129,7 +129,7 @@ task Fire
 			if(!Obj_IsDeleted(objEnemy))
 			{
 				ChainCrackSky(x,y,xs,yp,bit,true);
-				x+=150*bit;
+				x+=170*bit;
 				y+=ys;
 				wait(WAITER);
 			}

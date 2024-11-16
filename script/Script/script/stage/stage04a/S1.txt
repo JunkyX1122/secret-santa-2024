@@ -337,7 +337,7 @@ task CreateVine(x,y,ang,bit,r1,r2)
 				let a = ObjMove_GetAngle(obj);
 				let spdX = 1*cos(a);
 				let spdy = 1*sin(a);
-				ObjMove_AddPatternB2(obj, TREE_STAY, spdX, spdy, 0, 0.02, 0, 10);
+				ObjMove_AddPatternB2(obj, TREE_STAY, spdX, spdy, 0, 0.015, 0, 10);
 			}
 		}
 		if(cc%1==0)

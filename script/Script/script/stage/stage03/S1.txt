@@ -132,9 +132,10 @@ task Fire
 		{
 			let dis = 150;
 			SE_PlayLen(Shot1,60);
-			ascent(i in 0..8)
+			let tot = 9;
+			ascent(i in 0..tot)
 			{
-				let ang = 90+(cc/5)*4.92342*bit + 360/8*i;
+				let ang = 90+(cc/5)*4.92342*bit + 360/tot*i;
 				ascent(p in 0..3)
 				{
 					let spd = 3+(1)*sin(cc*4.123);

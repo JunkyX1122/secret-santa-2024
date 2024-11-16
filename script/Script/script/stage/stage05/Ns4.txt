@@ -102,7 +102,7 @@ task StraightShurikanFire(bit)
 		let ang = 90+180;
 		let x = ObjMove_GetX(objEnemy);
 		let y = ObjMove_GetY(objEnemy);
-		let am = 12;
+		let am = 11;
 		ascent(i in 0..am)
 		{
 			if(!Obj_IsDeleted(objEnemy))
@@ -130,7 +130,7 @@ task StraightShurikanFire(bit)
 					if(o==0||(i>0&&i<am-1))
 					{
 						let ang2 = ang+180/(am-1)*i*[1,-1][o]*bit;
-						CreateShuriken(x,y,10,ang2,3,0.3,6*bit,bit);
+						CreateShuriken(x,y,7,ang2,3,0.3,6*bit,bit);
 					}
 				}
 				wait(2);
@@ -201,7 +201,7 @@ task WallFire(bit)
 		}
 		idd++;
 		ang+=(180/4+12.2131)*bit;
-		wait(30);
+		wait(50);
 	}
 }
 task CreateShurikenSmall(x,y,speed,ang,angVel,spinAmount,bit)

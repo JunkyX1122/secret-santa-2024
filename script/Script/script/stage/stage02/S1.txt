@@ -222,14 +222,16 @@ task StaffHandle(bit)
 		}
 		if(onHit)
 		{
-			ascent(o in 0..20)
+			let tot = 14;
+			ascent(o in 0..tot)
 			{
 				let objS = ShotA2(staffXY[0]+125*cos(ang), staffXY[1]+125*sin(ang),4,ang-90*bit,-3/60,1,152,152,5,3,BLEND_ALPHA,false);
-				ang+=360/20;
+				ang+=360/tot;
 			}
+			let tot2 = tot/2;
 			ascent(o in 0..10)
 			{
-				let ang2 = ang + 180/20*bit + 360/10*o*bit;
+				let ang2 = ang + 180/tot*bit + 360/tot2*o*bit;
 				let objS = ShotA2(staffXY[0]+125*cos(ang2), staffXY[1]+125*sin(ang2),4,ang2-90*bit,-3/60,0.75,104,104,5,3,BLEND_ALPHA,false);
 			}
 			

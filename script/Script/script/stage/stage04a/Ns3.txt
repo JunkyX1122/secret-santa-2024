@@ -122,8 +122,24 @@ task DaisukeFire(bit)
 	{
 		
 		SE_PlayLen(charge1,60);
-		ObjMove_SetDestAtFrameWeight(objEnemy2, GetPlayerX, GetPlayerY - 85, 50);
-		wait(60);
+		let pX = GetPlayerX;
+		let pY = GetPlayerY - 85;
+		
+		ascent(i in 0..60+30)
+		{
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				if(i%3==0)
+				{
+					CreateLine(pX,pY,100,60);
+				}
+				if(i==30)
+				{
+					ObjMove_SetDestAtFrameWeight(objEnemy2, pX, pY, 50);
+				}
+				yield;
+			}
+		}
 		if(!Obj_IsDeleted(objEnemy)) 
 		{
 			SE_PlayLen(Bone,60);
@@ -198,6 +214,37 @@ task DaisukeFire(bit)
 	}
 }
 
+
+task CreateLine(x,y,d,t)
+{
+	let objLine = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
+	ObjPrim_SetVertexCount(objLine, 33);
+	Obj_SetRenderPriorityI(objLine,38);
+	
+	ObjRender_SetAngleZ(objLine,rand(0,360));
+	ObjRender_SetPosition(objLine, x, y, 0);
+	ObjRender_SetColor(objLine, 255, 128, 128);
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			let scl = sin(90/(t-1)*i);
+			let dis = d*scl * 1.5;
+			
+			ascent(o in 0..33)
+			{
+				let ang2 = 360/32*o;
+				ObjPrim_SetVertexPosition(objLine , o, dis*cos(ang2), dis*sin(ang2),0);
+			}
+			ObjRender_SetAlpha(objLine,200-200*scl);
+			
+			yield;
+		}
+	}
+	Obj_Delete(objLine);
+}
+
 task SullenFire(bit)
 {
 	if(!Obj_IsDeleted(objEnemy))
@@ -238,7 +285,7 @@ task TrinityKnot(sourceX,sourceY,angS,bit)
 				let x = sourceX+dis*cos(ang);
 				let y = sourceY+dis*sin(ang);
 				let shot = ShotA1(x,y,0,ang+90*bit,89,89,10,2,BLEND_ADD_ARGB,false);
-				ObjMove_AddPatternA2(shot,DELAY_KNOT-i,0,NO_CHANGE,3/100,3,0);
+				ObjMove_AddPatternA2(shot,DELAY_KNOT-i,0,NO_CHANGE,2/100,2,0);
 			}
 		}
 		//ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);

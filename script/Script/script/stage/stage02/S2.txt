@@ -125,9 +125,34 @@ task Fire
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		let ang = GetAngleToPlayer(objEnemy)+180/sprd*bit;
+		let aang = ang;
 		SE_PlayLen(charge0,60);
 		let x = ObjMove_GetX(objEnemy);
 		WarningLaser(x,GetStgFrameHeight,-90, 60*2+80,401);
+		ascent(i in 0..30)
+		{
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				let dis = GetStgFrameWidth+50;
+				if(i%3==0)
+				{
+					SE_PlayLen(shot1,60);
+					ascent(i in 0..sprd)
+					{
+						let ang2 = aang + 360/sprd*i*bit;
+						let objS = CreateShotA1(ObjMove_GetX(objEnemy)+dis*cos(ang2),ObjMove_GetY(objEnemy)+dis*sin(ang2),0,ang2,65,0);
+						ObjShot_SetAutoDelete(objS,false);
+						ObjMove_SetDestAtFrameWeight(objS, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 120);
+						ObjShot_SetDeleteFrameA6(objS,round(rand(60,100)),0.5);
+						ObjShot_SetIntersectionEnable(objS, false);
+						ObjRender_SetAlpha(objS, 64);
+					}
+			
+				}
+				aang+=1.123/3*bit * 0.5;
+				yield;
+			}
+		}
 		
 		ascent(i in 0..60*2)
 		{
@@ -145,6 +170,7 @@ task Fire
 						ObjMove_SetDestAtFrameWeight(objS, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 120);
 						ObjShot_SetDeleteFrameA6(objS,round(rand(60,100)),0.5);
 					}
+			
 				}
 				ang+=1.123/3*bit * 0.5;
 				yield;

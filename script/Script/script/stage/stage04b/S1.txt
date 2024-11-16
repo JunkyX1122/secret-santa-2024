@@ -322,7 +322,7 @@ task PortalSlash(x,y,ang,d,t,warn,closT, xScl, yScl)
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			let scl = Interpolate_Accelerate(1, 0.75, 1/closT*i);
-			ObjRender_SetAlpha(objC, Interpolate_Linear(255, 0, 1/closT*i));
+			ObjRender_SetAlpha(objC, Interpolate_Linear(255, 0, 1/closT*i*2));
 			//ObjRender_SetScaleXYZ(objC, xScl*0.7 * xR, yScl*0.7 * yR * scl, 0);
 			yield;
 		}

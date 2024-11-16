@@ -124,14 +124,14 @@ task Fire
 				}
 			}
 		}
-	
+		let tot = 6;
 		ascent(i in 0..5)
 		{
-			ascent(o in 0..3)
+			ascent(o in 0..tot)
 			{
-				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.8/2*o ,7,  0);
+				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.8/(tot-1)*o ,7,  0, 3-1.4/(tot-1)*o);
 			}
-			SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 2,12, 1);
+			SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 2,12, 1, 3);
 		}
 		wait(80);
 		if(!Obj_IsDeleted(objEnemy))
@@ -144,7 +144,7 @@ task Fire
 	}
 }
 
-task SpikeFire(ang, bit, spdScl, am, type)
+task SpikeFire(ang, bit, spdScl, am, type, mspd2)
 {
 
 	let sprd = 38;
@@ -162,7 +162,7 @@ task SpikeFire(ang, bit, spdScl, am, type)
 				ObjRender_SetScaleX(obj,0.8);
 				ObjRender_SetScaleY(obj,1.5);
 			}
-			ObjMove_AddPatternA2(obj,80,0,[NO_CHANGE,ang][type],2/120,2,0);
+			ObjMove_AddPatternA2(obj,80,0,[NO_CHANGE,ang][type],mspd2/120,mspd2,0);
 		}
 		
 	}

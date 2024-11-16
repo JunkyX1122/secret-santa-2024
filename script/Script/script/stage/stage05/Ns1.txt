@@ -187,6 +187,14 @@ task ShurikenFire(bit)
 			wait(60*2);
 		}
 		let spd = 6;
+		let a = GetAngleToPlayer(objEnemy);
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			SE_PlayLen(slash,60);
+			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,a,10,1,6*bit,bit);
+		}
+		wait(3);
+		
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(10,100)*bit, rand(110,130), 60*4);
@@ -202,7 +210,7 @@ task ShurikenFire(bit)
 			}
 		}
 		spd = 7;
-		let a = GetAngleToPlayer(objEnemy);
+		a = GetAngleToPlayer(objEnemy);
 		ascent(p in 0..10)
 		{
 			if(!Obj_IsDeleted(objEnemy))
@@ -213,12 +221,6 @@ task ShurikenFire(bit)
 				wait(3);
 			}
 		}
-		if(!Obj_IsDeleted(objEnemy))
-		{
-			SE_PlayLen(slash,60);
-			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,a,10,1,6*bit,bit);
-		}
-		wait(3);
 		ascent(p in 0..10*3+1)
 		{
 			if(!Obj_IsDeleted(objEnemy))

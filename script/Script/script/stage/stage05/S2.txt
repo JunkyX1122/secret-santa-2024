@@ -299,7 +299,7 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit,type)
 		alternative(type)
 		case(TYPE_BIG)
 		{
-			if(cc%3==0)
+			if(cc%4==0)
 			{
 				SE_PlayLen(Shot1,60);
 				ascent(i in 0..length(tips))
@@ -385,7 +385,7 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit,type)
 					ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
 					ang+=360/4;
 				}
-				ang-=33.234*bit;
+				ang-=50.234*bit;
 				
 				shid++;
 			}

@@ -102,7 +102,7 @@ task Fire
 	let bit = 1-2*round(rand(0,1));
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		loop(2)
+		ascent(i in 0..2)
 		{
 			let ang = -90-20*bit;
 			let x = ObjMove_GetX(objEnemy2)-175*bit;
@@ -119,7 +119,7 @@ task Fire
 			{
 				Slasher(x+dis*cos(ang),y+dis*sin(ang),x+dis*cos(ang+180),y+dis*sin(ang+180),10,0,false);
 			}
-			wait(20);
+			wait([20, 0][i]);
 			bit*=-1;
 		}
 		//StartSlow(TARGET_ALL,20);

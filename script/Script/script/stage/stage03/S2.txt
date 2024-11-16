@@ -121,7 +121,7 @@ task Fire
 			if(cc%12==0)
 			{
 				
-				CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm),427,bit,3,cc2, 0);
+				CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm),0.1, 427,bit,3,cc2, 0);
 				cc2++;
 				waveCC++;
 				if(waveCC > 360)
@@ -134,19 +134,19 @@ task Fire
 				if(cc%36==0)
 				{
 			
-					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 2,335,bit,16,cc2, 6);
+					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 2,0.1, 335,bit,16,cc2, 6);
 				}
 				
 				if(cc%84==0)
 				{
 
-					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 3,295,bit,32,cc2, 6);
+					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 3,0.1, 295,bit,32,cc2, 6);
 				}
 				
 				if(cc%93==0)
 				{
 			
-					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 4,64,bit,12,cc2, 0);
+					CreateWave(baseWaveHeight+1+waveVariation*sin(cc*spnAm) + 1,0.06, 64,bit,12,cc2, 0);
 				}
 			}
 			cc++;
@@ -160,7 +160,7 @@ task Fire
 		}
 	}
 }
-task CreateWave(height, id, bit, timeBetween,cc2, ySpeedLim)
+task CreateWave(height, grav, id, bit, timeBetween,cc2, ySpeedLim)
 {
 	let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2 + 32) * bit;
 	let sideSpeed = 4;
@@ -173,7 +173,7 @@ task CreateWave(height, id, bit, timeBetween,cc2, ySpeedLim)
 		let ys = -height;
 		if(cc%timeBetween==0)
 		{
-			let objS = ShotB2(x,GetStgFrameHeight+30,xs,ys,0,0.1,0,10,id,420,0,3,BLEND_ADD_ARGB,false);
+			let objS = ShotB2(x,GetStgFrameHeight+30,xs,ys,0,grav,0,10,id,420,0,3,BLEND_ADD_ARGB,false);
 			ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
 			ObjShot_SetSpellResist(objS,true);
 			BulletHandle(objS,max(0,personalWaveCounter));

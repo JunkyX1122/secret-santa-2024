@@ -261,6 +261,7 @@ task FirePassive()
 					{
 						let ang2 = ang-gapp*bit+(gapp*1.25)/(tot-1)*o*bit;
 						let objShot = ShotA2(ObjRender_GetX(shields[i]), ObjRender_GetY(shields[i]),10,ang2,-4/120,2,shtID,delID,10,2,BLEND_ADD_ARGB,false);
+						ObjRender_SetBlendType(objShot, BLEND_ADD_ARGB);
 					}
 					bit*=-1;
 				}

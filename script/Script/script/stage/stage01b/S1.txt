@@ -149,11 +149,24 @@ task PassiveFire(bit)
 				let x = ObjMove_GetX(objEnemy) + 60*cos(ang2);
 				let y = ObjMove_GetY(objEnemy) + 60*sin(ang2);
 				let obj = ShotA2(x,y,0,ang2,mspd/222,mspd,337,337,20,3,BLEND_ALPHA,false);
+				GrowDelay(obj);
 				Obj_SetRenderPriority(obj, 0.49);
 			}
 		}
 		bit*=-1;
 		wait(96);
+	}
+}
+
+task GrowDelay(obj)
+{
+	wait(20);
+	ascent(i in 0..30)
+	{
+		let scl = 1+0.5/29*i;
+		ObjShot_SetIntersectionScaleXY(obj , scl);
+		ObjRender_SetScale(obj, scl);
+		yield;
 	}
 }
 

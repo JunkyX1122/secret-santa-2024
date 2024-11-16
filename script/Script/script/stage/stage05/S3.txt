@@ -85,7 +85,7 @@ let isBossTangible = true;
     {
 		//ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
 		Fire;
-		
+		ShrinkCircle();
         //count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
@@ -297,7 +297,7 @@ task Slash(x,y,angleT,waiter)
 		}
 	}
 	wait(waiter);
-	let tot  = 30;
+	let tot  = 27;
 	let spd = 3;
 	if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0)
 	{

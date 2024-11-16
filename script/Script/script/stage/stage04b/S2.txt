@@ -141,7 +141,7 @@ task Fire
 					ascent(o in 0..4)
 					{
 						let ang = tazueAng+360/4*o;
-						let obj = ShotA1(tazueX, tazueY,2,ang,65,65,5,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(tazueX, tazueY,2,ang,66,66,5,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
 				}
@@ -174,6 +174,7 @@ task Fire
 		tazueRadius = 20;
 		tazueRotateSpeed = 3;
 		let spd = 0;
+		nukeWarning = true;
 		while(nukeY<GetStgFrameHeight&&!Obj_IsDeleted(objEnemy))
 		{
 			nukeScale = nukeScale * 0.97 + (0.1) * 0.03;
@@ -182,6 +183,7 @@ task Fire
 			yield;
 		}
 		nukeY = GetStgFrameHeight;
+		nukeWarning = false;
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			SE_PlayLen(Burst2,80);
@@ -298,7 +300,9 @@ let nukeX = 0;
 let nukeY = 0;
 let nukeScale = 0;
 let nukeActive = true;
+let nukeWarning = false;
 
+//IMG_ENEMY_DEL1
 task ResetNuke()
 {
 	nukeX = GetStgFrameWidth/2;
@@ -330,7 +334,19 @@ task Nuke(bit)
 		ObjRender_SetColor(objF,COLS[i][0],COLS[i][1],COLS[i][2]);
 		nukeObjs ~= [objF];
 	}
-
+	
+	let objWarning =  ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objWarning,53);
+	ObjPrim_SetTexture(objWarning,IMG_MAGICWARNING);
+	ObjSprite2D_SetSourceRect(objWarning,0,0,256,256);
+	ObjSprite2D_SetDestRect(objWarning,0,0,256,256);
+	ObjSprite2D_SetDestCenter(objWarning);
+	ObjRender_SetBlendType(objWarning,BLEND_ADD_ARGB);
+	ObjRender_SetAngleZ(objWarning, rand(0,360));
+	ObjRender_SetColor(objWarning, 128,255,255);
+	let warningAlpha = 0;
+	let timmm = 0;
+	let warningScl = 1;
 	while(!Obj_IsDeleted(objEnemy)&&nukeActive)
 	{
 		
@@ -346,6 +362,16 @@ task Nuke(bit)
 			ObjRender_SetScale(nukeObjs[i], s*0.18 * [1,0.6,0.5,0.4][i]);
 			ObjRender_SetAngleZ(nukeObjs[i], ObjRender_GetAngleZ(nukeObjs[i]) + 0.3 * [1,-1,1,0][i] * bit);
 		}
+		let targetScl = nukeWarning ? 1  : 0;
+		let targetAlpha = nukeWarning ? 128 : 0;
+		warningAlpha = warningAlpha * 0.9 + (targetAlpha) * 0.1;
+		warningScl =   warningScl *   0.9   + (targetScl) * 0.1;
+		
+		ObjRender_SetPosition(objWarning, nukeX, nukeY, 0);
+		ObjRender_SetScale(objWarning, (3.95 + 0.05 * sin(timmm*8.123)) * 0.5 * warningScl);
+		ObjRender_SetAlpha(objWarning, warningAlpha);
+		ObjRender_SetAngleZ(objWarning, ObjRender_GetAngleZ(objWarning) + 0.5*bit);
+		timmm++;
 		let barray = GetShotIdInCircleA2(nukeX, nukeY,14*nukeScale, TARGET_ENEMY);
 		let blength = length(barray);
 		if(blength>0)
@@ -353,16 +379,17 @@ task Nuke(bit)
 			ascent (i in 0..blength)
 			{
 				let buID = barray[i];
-				if(ObjShot_GetImageID(buID)==297)
+				if(ObjShot_GetImageID(buID)==296)
 				{
 					SE_PlayLen(BulletDeleteSound,30);
-					ObjShot_SetDeleteFrameA5(buID,0,2);
+					ObjShot_SetDeleteFrameA5(buID,0,1);
 				}
 			}
 		}
 		yield;
 	}
 	Obj_Delete(objNuke);
+	Obj_Delete(objWarning);
 	ascent(i in 0..length(nukeObjs))
 	{
 		Obj_Delete(nukeObjs[i]);

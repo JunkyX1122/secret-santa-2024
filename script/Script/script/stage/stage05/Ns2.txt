@@ -101,13 +101,13 @@ task Fire
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
-				CreateShurikenLine(GetStgFrameWidth/2+rand(20,-20),100-100/6*i,bit,90-90*bit,2-1.125/6*i);
+				CreateShurikenLine(GetStgFrameWidth/2+rand(20,-20),100-100/6*i,bit,90-90*bit,2-1/6*i);
 				bit*=-1;
 				wait(10);
 			}
 		}
 	
-		wait(50*4.5);
+		wait(50*3);
 		globalAng = -90+rand(20,-20);
 		globalBit*=-1;
 		if(!Obj_IsDeleted(objEnemy))
@@ -149,7 +149,7 @@ task CreateShurikenLine(x,y,bit,ang,maxSpd)
 	ascent(i in 0..t)
 	{
 		let dis = -(GetStgFrameWidth/2+100) * (-1+2/(t-1)*i);
-		if((i+ini)%2==0&&(i+ini)%20<12)
+		if((i+ini)%2==0&&(i+ini)%20<10)
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{

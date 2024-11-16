@@ -283,6 +283,13 @@ task Hider(objTarget)
 	Obj_Delete(obj1);
 }
 
+task DelayedAlpha(obj)
+{
+	ObjRender_SetAlpha(obj, 128);
+	wait(60);
+	ObjRender_SetAlpha(obj, 255);
+}
+
 task ManageBladeGyros(bit)
 {
 	let spacing = 6;
@@ -302,6 +309,7 @@ task ManageBladeGyros(bit)
 				let spd = 0.85;
 				ObjMove_AddPatternA2(obj, 60, 8, -90+0.001*bit, -(8-spd)/30, spd, 0);
 				ObjMove_SetDestAtFrameWeight(obj, x,GetStgFrameHeight+31, 59);
+				DelayedAlpha(obj);
 			}
 			else
 			{
@@ -309,6 +317,7 @@ task ManageBladeGyros(bit)
 				ObjMove_AddPatternA2(obj, 60, 0, 90, 2/60, 2, 0);
 				ObjMove_SetDestAtFrameWeight(obj, x,GetStgFrameHeight+31, 59);
 				ObjMove_SetPosition(objEnemy2, x, GetStgFrameHeight+100);
+				DelayedAlpha(obj);
 			}
 		}
 		wait(60*1.5);

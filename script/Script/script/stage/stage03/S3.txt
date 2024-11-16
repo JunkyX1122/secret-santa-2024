@@ -248,7 +248,7 @@ task RotateAroundOrbPos(ang,bit)
 			}
 			if(i > timeToExplode/4 * 0 && i < timeToExplode/4 * 2)
 			{
-				if(i%4==0)
+				if(i%5==0)
 				{
 					SE_PlayLen(shot1,60);
 					ascent(o in 0..3)

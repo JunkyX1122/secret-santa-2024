@@ -297,7 +297,7 @@ task Fire
 		{
 			HandleFutureSight();
 		}
-		wait(60*10);
+		wait(60*7);
 		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
 		FutureSightDamageRate = 0.07;
 		yield;
@@ -888,6 +888,7 @@ task ScarfFire(bit)
 		}
 		if(cc%4==0 && cc%(4*10)<(4*5))
 		{
+			SE_PlayLen(shot1,60);
 			let ang = cc*0.7*bit + 90*bit;
 			let DIS = 60;
 			ascent(i in 0..4)

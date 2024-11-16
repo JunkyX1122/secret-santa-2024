@@ -267,7 +267,7 @@ task NukeShot(zuzu,angB,bit)
 			}
 			ascent(o in 0..3)
 			{
-				let sprd = 14;
+				let sprd = 12;
 				ascent(i in 0..sprd)
 				{
 					let fObj = ShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 1.65-0.12*o, random+i*360/sprd*bit, 104, 104, 15, 2, BLEND_ADD_ARGB, true);
