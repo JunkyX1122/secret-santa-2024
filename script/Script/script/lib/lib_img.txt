@@ -16,6 +16,12 @@ const IMG_YUUMA_BG1 = GetCurrentScriptDirectory() ~ "./../../img/background/card
 const IMG_YUUMA_BG2 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg1.png";
 const IMG_YUUMA_BG3 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg2.png";
 
+const IMG_STAGE_01A_SKY = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/sky.png";
+const IMG_STAGE_01A_CLOUDS = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/cloud_overlay.png";
+const IMG_STAGE_01A_SPELL_00 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/spellbg_00.png";
+const IMG_STAGE_01A_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/spellbg_01.png"; // https://www.shutterstock.com/search/ancient-egypt-pattern
+const IMG_STAGE_01A_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/spellbg_02.png"; // https://creazilla.com/media/clipart/70170/ankh
+
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
 ------------------------------------------EVERYTHING PAST HERE GETS LOADED AT THE LOADING SCREEN. EVERYTHING BEFORE GETS LOADED BEFORE THE STAGE REQUIRED
