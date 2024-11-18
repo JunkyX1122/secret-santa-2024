@@ -47,12 +47,12 @@ let objEnemy2 = CreateFamiliar;
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
-	renderNitoriDS(objEnemy);
+	renderBossUnanimated(objEnemy, IMG_BOSS_KEIRAN, 10);
 	magiccircle(objEnemy,1);
 		
 	ObjMove_SetPosition(objEnemy2, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
 	//ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
-	renderYuuma(objEnemy2);
+	renderBossUnanimated(objEnemy2, IMG_BOSS_SCYLLA, 30);
 	//renderYuuma(objEnemy3);
 	HitCirc(objEnemy2);
 	//HitCirc(objEnemy3);
