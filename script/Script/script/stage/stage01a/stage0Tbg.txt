@@ -8,7 +8,7 @@ let adder = 0;
 @Initialize
 {
 	TCallBg;
-	//ResetBG;
+	ResetBG;
 
 
 }
@@ -26,14 +26,145 @@ task TCallBg
 	//BlackHole(GetScreenWidth/2,GetScreenHeight/2-125);
 	//StarField();
 	SpellBG;
-	FlatColor;
+	SkyBG;
+	ascent(let pos in 0..4)
+	{
+		ascent(i in 0..SCROLL_AMOUNT)
+		{
+			TNormalBackground(pos,i,120,2);
+		}
+	}
+	ascent(let pos in 0..1)
+	{
+	
+		TNormalBackground2(pos,2);
+		
+	}
 }
 let BGIMG1 = GetCurrentScriptDirectory~"./../../../img/background/BG1/01.png";
-task FlatColor
+task SkyBG
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj, 18); //描画優先度を設定
+	ObjPrim_SetTexture(obj, GetCurrentScriptDirectory~"sky.png"); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetScaleY(obj, 0.7);
+	ObjRender_SetAlpha(obj,255);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/4,0);
+	
+	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj2, 18); //描画優先度を設定
+	ObjPrim_SetTexture(obj2, GetCurrentScriptDirectory~"dd1.png"); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj2, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj2);
+	ObjRender_SetAlpha(obj2,255);
+	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,-50,0);
+	
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj3, 20); //描画優先度を設定
+	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj3);
+	ObjRender_SetAlpha(obj3,32);
+	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetColor(obj3,0,0,0);
+	//ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
+	let cc = 0;
+	while(true)
+	{
+		ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
+		cc+=0.5;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task ResetBG
+{
+	SetCameraFocusX(2200);
+	SetCameraFocusY(300);
+	SetCameraFocusZ(0);
+	SetCameraAzimuthAngle(0);
+	SetCameraElevationAngle(0);
+	SetCameraRadius(800);
+
+	SetCameraPerspectiveClip(10,7000);
+	SetFogParam(5000, 7000, 152, 205, 239);
+}
+let SCROLL_AMOUNT = 5;
+let IMG_SAND = GetCurrentScriptDirectory~ "./sand.png";
+let BASE_SCALE = 2;
+let DISTANCE_OFFSET = -3000;
+let MESH_ICEMOUNTAIN = current ~ "./Default_Background_IceMountain.mqo";
+task TNormalBackground(pos1,pos2,yp,id)
+{
+	let pz = (pos2) * 1000*BASE_SCALE + DISTANCE_OFFSET * BASE_SCALE;
+	let px = (pos1-1) * 1000*BASE_SCALE + (-500*BASE_SCALE);
+	let path = MESH_ICEMOUNTAIN;
+	let obj = ObjMesh_Create();
+	ObjMesh_Load(obj, path);
+	Obj_SetRenderPriorityI(obj, 19);
+	ObjRender_SetY(obj,yp);
+
+	ObjRender_SetScaleXYZ(obj,BASE_SCALE,1,BASE_SCALE);
+	ObjRender_SetLightingEnable(obj, true, false);
+	
+	let c = 0;
+
+	while(GetCommonData("Transition",0)<id)
+	{
+		ObjRender_SetLightingDirection(obj, -1, -2, 1);
+
+		ObjRender_SetX(obj, pz);
+		ObjRender_SetZ(obj, px-0);
+		pz+=-1;
+		if(pz < DISTANCE_OFFSET* BASE_SCALE)
+		{
+			pz += 1000 * BASE_SCALE * SCROLL_AMOUNT;
+		}
+		c++;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task TNormalBackground2(pos1,id)
+{
+	let bgMountainScale = 5;
+	let pz = (1) * 1000*BASE_SCALE + DISTANCE_OFFSET * BASE_SCALE;
+	let px = (pos1) * 1000*BASE_SCALE  * bgMountainScale + (-500*BASE_SCALE);
+	let path = MESH_ICEMOUNTAIN;
+	let obj = ObjMesh_Create();
+	ObjMesh_Load(obj, path);
+	Obj_SetRenderPriorityI(obj, 19);
+	ObjRender_SetY(obj,100);
+
+	ObjRender_SetScaleXYZ(obj,BASE_SCALE,9,BASE_SCALE * bgMountainScale);
+	ObjRender_SetLightingEnable(obj, true, false);
+	
+	let c = 0;
+
+	while(GetCommonData("Transition",0)<id)
+	{
+		ObjRender_SetLightingDirection(obj, -1, -2, 1);
+
+		ObjRender_SetX(obj, pz);
+		ObjRender_SetZ(obj, px-0);
+
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task SpellFlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
 	Obj_SetRenderPriorityI(obj, 24); //描画優先度を設定
-	ObjPrim_SetTexture(obj, GetCurrentScriptDirectory~"./../../../img/background/BG1/pixel.png"); //テクスチャを設定
+	ObjPrim_SetTexture(obj, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestCenter(obj);
@@ -64,6 +195,7 @@ task FlatColor
 
 task SpellBG
 {
+	SpellFlatColor();
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj, 22); 
 	ObjPrim_SetTexture(obj, IMG_YUUMA_BG1); 
