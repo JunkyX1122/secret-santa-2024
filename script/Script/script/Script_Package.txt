@@ -44,7 +44,7 @@ task TTitleScene
 	StartStageProgression();
 	ClosePackage();
 }
-let activeTeam = 0;
+let activeTeam = 1;
 const STAGE_1a = 0;
 const STAGE_1b = 1;
 const STAGE_1c = 2;

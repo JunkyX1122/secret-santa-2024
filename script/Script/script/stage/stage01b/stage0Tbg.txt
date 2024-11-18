@@ -28,7 +28,9 @@ task TCallBg
 	}
 	TreeGenerator(1);
 	TreeGenerator(-1);
+	SkyBG;
 }
+let CLIP_DISTANCE = 5000;
 task ResetBG
 {
 	SetCameraFocusX(-600);
@@ -38,10 +40,47 @@ task ResetBG
 	SetCameraElevationAngle(0);
 	SetCameraRadius(200);
 
-	SetCameraPerspectiveClip(0,7000);
-	SetFogParam(5000, 7000, 0,0,0);
+	SetCameraPerspectiveClip(0,CLIP_DISTANCE);
+	SetFogParam(CLIP_DISTANCE-2000, CLIP_DISTANCE, 162,165,172);
 }
-let WORLD_SCROLL_SPEED = 1;
+let WORLD_SCROLL_SPEED = 5;
+
+
+task SkyBG
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj, 17); //描画優先度を設定
+	ObjPrim_SetTexture(obj, IMG_STAGE_01B_SKY); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 1024);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestCenter(obj);
+
+	ObjRender_SetAlpha(obj,255);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,40,0);
+	ObjRender_SetScaleXYZ(obj,1, 1, 0);
+
+	
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj3, 19); //描画優先度を設定
+	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj3);
+	ObjRender_SetAlpha(obj3,64);
+	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetColor(obj3,32,32,0);
+	//ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
+	let cc = 0;
+	while(true)
+	{
+		//ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
+		cc+=0.5;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
 task TNormalBackground(x)
 { // floor
 	let c = 0;
@@ -70,7 +109,7 @@ task TNormalBackground(x)
 }
 let totalz = 0;
 
-let MAX_TREES = 30;
+let MAX_TREES = 80;
 task TreeGenerator(side)
 {
 	let positionArray = [];
@@ -80,8 +119,8 @@ task TreeGenerator(side)
 	}
 	ascent(i in 0..MAX_TREES + 1)
 	{
-		let xPos = -7000 + (7000/(MAX_TREES-1))*i;
-		let zPos = rand(150, 2000) * side;
+		let xPos = -CLIP_DISTANCE*1.2 + ((CLIP_DISTANCE*1.2)/(MAX_TREES-1))*i;
+		let zPos = rand(150, 3000) * side;
 		let totalScl = rand(1,1.7)*2;
 		let randDir = 1-2*round(rand(0,1));
 		positionArray[i] = [xPos, zPos,totalScl,randDir];
@@ -114,6 +153,7 @@ task TreeGenerator(side)
 		//ObjSprite3D_SetBillboard(bg, true );
 		//let amountcount = 1;
 		let rollingID = startID;
+		let rrr = 1/1000;
 		while(true)
 		{	
 			let x = positionArray[startID][0];
@@ -126,12 +166,14 @@ task TreeGenerator(side)
 				ObjRender_SetPosition(bg,x, (128 - 5) * totalScl ,z);
 				ObjRender_SetScale(bg, totalScl);
 				ObjRender_SetAngleY(bg, 90*totalRot);
+				
+				let alphaRate = rrr * max(0,x - -CLIP_DISTANCE);
+				ObjRender_SetAlpha(bg, 255*(alphaRate));
 				x+=WORLD_SCROLL_SPEED;
 				yield;
 			}
 			rollingID--;
-			yield;
-			
+	
 		}
 	}
 }

@@ -24,6 +24,7 @@ const IMG_STAGE_01A_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/backgr
 
 const IMG_STAGE_01B_SNOW = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/snow.png"; // https://creazilla.com/media/clipart/70170/ankh
 const IMG_STAGE_01B_TREE = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/tree.png"; // https://creazilla.com/media/clipart/70170/ankh
+const IMG_STAGE_01B_SKY = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/sky.png"; // https://creazilla.com/media/clipart/70170/ankh
 
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
