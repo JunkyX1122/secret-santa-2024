@@ -43,7 +43,7 @@ let HEALTH_MAX = 225/3;
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
-	renderYuuma(objEnemy);
+	renderBossUnanimated(objEnemy, IMG_BOSS_HIROYUKI, 30);
 	
 	
 	end;
