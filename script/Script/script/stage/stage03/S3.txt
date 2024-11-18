@@ -43,7 +43,7 @@ let finalSpellBool = false;
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
-	renderYuuma(objEnemy);
+	renderBossUnanimated(objEnemy, IMG_BOSS_KAIRYU, 7);
 	magiccircle(objEnemy,1);
 	
 	end;
@@ -186,19 +186,22 @@ task WarningLaser(x,y,ang)
 	let dis = 800;
 	ascent(i in 0..t)
 	{
-		let sideDis = 100*sin((360)/(t-1)*i);
-		ascent(o in 0..2)
+		if(!Obj_IsDeleted(objEnemy))
 		{
-			if(i>0||o==0)
+			let sideDis = 100*sin((360)/(t-1)*i);
+			ascent(o in 0..2)
 			{
-				let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,405,9000);
-				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
-				ObjShot_SetAutoDelete(laser,false);
-				ObjStLaser_SetSource(laser,false);
-				LaserGrowFade(laser,dis,128-128/t*i);
+				if(i>0||o==0)
+				{
+					let laser = CreateStraightLaserA1(x+sideDis*cos(ang+90-180*o),y+sideDis*sin(ang+90-180*o),ang,810*2,slashWidth,0,405,9000);
+					ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
+					ObjShot_SetAutoDelete(laser,false);
+					ObjStLaser_SetSource(laser,false);
+					LaserGrowFade(laser,dis,128-128/t*i);
+				}
 			}
+			yield;
 		}
-		yield;
 	}
 }
 

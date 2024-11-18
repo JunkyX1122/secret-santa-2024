@@ -38,7 +38,7 @@ let TIME = 60*60;
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2,180, 40);
-	renderYuuma(objEnemy);
+	renderBossUnanimated(objEnemy, IMG_BOSS_KAIRYU, 7);
 
 	end;
 	SetCommonData("SpellCardBG1",false);
