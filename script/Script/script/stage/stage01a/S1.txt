@@ -82,7 +82,7 @@ let finalSpellBool = false;
     if(count == 60)
     {
 		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
-		//Fire;
+		Fire;
 		
         //count = 1111;
     }
