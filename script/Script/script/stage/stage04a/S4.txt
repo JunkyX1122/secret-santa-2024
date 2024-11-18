@@ -50,15 +50,17 @@ let finalSpellBool = false;
 
 
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
-	renderYuuma(objEnemy2);
+	renderBossUnanimated(objEnemy2, IMG_BOSS_DAISUKE, 7);
 	HitCirc(objEnemy2);
 	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 150, 60);
-
+	
 	ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
 	
 	HitCirc(objEnemy3);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 75, 60);
-	renderNitoriDS(objEnemy3);
+	renderBossUnanimated(objEnemy3, IMG_BOSS_SULLEN, 15);
+	Obj_SetRenderPriority(objEnemy3, 0.38);
+	
 	end;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
