@@ -50,12 +50,12 @@ let finalSpellBool = false;
 
 
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
-	renderYuuma(objEnemy2);
+	renderBossUnanimated(objEnemy2, IMG_BOSS_GRANDIS, 20);
 	HitCirc(objEnemy2);
 	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+100, 100, 60);
 
 	ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
-	renderNitoriDS(objEnemy3);
+	renderBossUnanimated(objEnemy3, IMG_BOSS_VIIVI, 30);
 	//HitCirc(objEnemy3);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2-100, 100, 60);
 	

@@ -43,7 +43,7 @@ let finalSpellBool = false;
 	ObjMove_SetPosition(objEnemy,GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	renderNitoriDS(objEnemy);
+	renderBossUnanimated(objEnemy, IMG_BOSS_VIIVI, 30);
 	magiccircle(objEnemy,1);
 	
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);

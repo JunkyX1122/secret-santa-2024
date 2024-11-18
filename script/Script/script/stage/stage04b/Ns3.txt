@@ -41,13 +41,13 @@ let TIME = 60*60;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
 	ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2, 50, 60, LERP_SMOOTHER);
-	renderNitoriDS(objEnemy);
+	renderBossUnanimated(objEnemy, IMG_BOSS_VIIVI, 30);
 	
 	
 
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth+100,-100);
 	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, 150, 60);
-	renderYuuma(objEnemy2);
+	renderBossUnanimated(objEnemy2, IMG_BOSS_GRANDIS, 20);
 	HitCirc(objEnemy2);
 	end;
 	SetCommonData("SpellCardBG1",false);
