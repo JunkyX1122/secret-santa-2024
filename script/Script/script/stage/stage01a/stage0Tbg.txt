@@ -9,8 +9,7 @@ let adder = 0;
 {
 	TCallBg;
 	ResetBG;
-
-
+	SetAutoDeleteObject(true);
 }
 
 @MainLoop

@@ -8,9 +8,8 @@ let adder = 0;
 @Initialize
 {
 	TCallBg;
-	//ResetBG;
-
-
+	ResetBG;
+	SetAutoDeleteObject(true);
 }
 
 @MainLoop
@@ -22,6 +21,18 @@ let counter = 0;
 task TCallBg
 {
 	SpellBG;
+}
+task ResetBG
+{
+	SetCameraFocusX(-600);
+	SetCameraFocusY(100);
+	SetCameraFocusZ(0);
+	SetCameraAzimuthAngle(0);
+	SetCameraElevationAngle(0);
+	SetCameraRadius(200);
+
+	SetCameraPerspectiveClip(0,7000);
+	SetFogParam(5000, 7000, 0,0,0);
 }
 task SpellBGFlatColor
 {

@@ -12,14 +12,14 @@ let objEnemy2;
 let count = 0;
    let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
-let TIME = 60*60;
+let TIME = 60*999;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
   SetScriptResult(215);
         }
  case(EV_REQUEST_TIMER){
-  SetScriptResult(60);
+  SetScriptResult(999);
  }
  case(EV_REQUEST_SPELL_SCORE){
   SetScriptResult(1000000);
@@ -38,7 +38,7 @@ let TIME = 60*60;
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,140 );
-	renderBossUnanimated(objEnemy, IMG_BOSS_DAISUKE, 7);
+	//renderBossUnanimated(objEnemy, IMG_BOSS_DAISUKE, 7);
 
 	end;
 	SetCommonData("SpellCardBG1",false);
@@ -68,7 +68,7 @@ let TIME = 60*60;
     if(count == 95)
     {
 		//move;
-		Fire;	
+		//Fire;	
 		magiccircle(objEnemy,1);
 		SizeCircle();
 		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
