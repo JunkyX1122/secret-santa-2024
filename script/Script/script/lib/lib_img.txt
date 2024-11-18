@@ -77,7 +77,29 @@ const IMG_GRANDISPORTAL = GetCurrentScriptDirectory() ~ "./../../img/enemy/grand
 const IMG_GRANDISPORTALCRACK = GetCurrentScriptDirectory() ~ "./../../img/enemy/grandisCrack.png";
 const IMG_GATOWIND = GetCurrentScriptDirectory()  ~ "./../../img/enemy/vortexLoop0000.png";
 const IMG_GATOSWORD = GetCurrentScriptDirectory()  ~ "./../../img/enemy/gatosword.png";
-const BossSprite_ImgArray = [IMG_GHOSTORIN,IMG_FAMILIAR,IMG_BOSS1PLACE,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD];
+
+const IMG_BOSS_ANUBIS   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01a.png";
+const IMG_BOSS_DAISUKE  =	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01b.png";
+const IMG_BOSS_GRANDIS  = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01c.png";
+const IMG_BOSS_SCYLLA   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_02a.png";
+const IMG_BOSS_KEIRAN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_02b.png";
+const IMG_BOSS_KAIRYU   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_03.png";
+const IMG_BOSS_SULLEN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_04a.png";
+const IMG_BOSS_VIIVI    = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_04b.png";
+const IMG_BOSS_GATO     = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_04c1.png";
+const IMG_BOSS_ANUGATO  = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_04c2.png";
+const IMG_BOSS_HIROYUKI = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_05.png";
+const IMG_BOSS_REDRIN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_06.png";
+
+
+const BossSprite_ImgArray = [IMG_FAMILIAR,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD,
+IMG_BOSS_ANUBIS, IMG_BOSS_DAISUKE, IMG_BOSS_GRANDIS,
+IMG_BOSS_SCYLLA, IMG_BOSS_KEIRAN,
+IMG_BOSS_KAIRYU,
+IMG_BOSS_SULLEN, IMG_BOSS_VIIVI, IMG_BOSS_GATO, IMG_BOSS_ANUGATO, 
+IMG_BOSS_HIROYUKI,
+IMG_BOSS_REDRIN
+];
 
 //---------------------------------------
 //--------------FACE IMAGES--------------
