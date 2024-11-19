@@ -169,7 +169,7 @@ task Fire
 			SE_PlayLen(chime1,60);
 		}
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+rand(50,-50), 150+rand(20,0), 60);
-		wait(160);
+		wait(140);
 		bit*=-1;
 	}
 }//44

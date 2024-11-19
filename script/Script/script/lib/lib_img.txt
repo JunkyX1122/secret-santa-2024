@@ -46,6 +46,11 @@ const IMG_STAGE_03_SPELL_00 = GetCurrentScriptDirectory() ~ "./../../img/backgro
 const IMG_STAGE_03_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/spellbg_01.png";
 const IMG_STAGE_03_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/spellbg_02.png";
 
+const IMG_STAGE_04_FIELD   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/field.png";
+const IMG_STAGE_04_FOGBACK = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/fogback.png";
+const IMG_STAGE_04_TRAIL   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/trail.png";
+const IMG_STAGE_04_TREE   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/tree.png";
+
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
 ------------------------------------------EVERYTHING PAST HERE GETS LOADED AT THE LOADING SCREEN. EVERYTHING BEFORE GETS LOADED BEFORE THE STAGE REQUIRED
