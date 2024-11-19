@@ -21,7 +21,39 @@ let counter = 0;
 task TCallBg
 {
 	SpellBG;
+	MansionBG;
 }
+
+task MansionBG
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj, 18); //描画優先度を設定
+	ObjPrim_SetTexture(obj, IMG_STAGE_01C_SKY); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj, 0, 0,2048, 1024);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 2048, 1024);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+	ObjRender_SetScale(obj, 0.6);
+	ObjRender_SetColor(obj,130,130,160);
+	let alpha1 = 0;
+	let x = GetStgFrameWidth/2;
+	let y = GetStgFrameHeight/2;
+	while(true)
+	{
+		let distx = Get_Distance(GetPlayerX, 0, GetStgFrameWidth/2,0);
+		let disty = Get_Distance(0, GetPlayerY, 0,GetStgFrameHeight/2);
+		let bitx = 1;
+		let bity = 1;
+		if(GetPlayerX<GetStgFrameWidth/2){bitx=-1;}
+		if(GetPlayerY<GetStgFrameHeight/2){bity=-1;}
+		ObjRender_SetPosition(obj,x,y,0);
+		x = x*0.99+(GetStgFrameWidth/2+distx/13*bitx)*0.01;
+		y = y*0.99+(GetStgFrameHeight/2+disty/13*bity)*0.01;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
 task ResetBG
 {
 	SetCameraFocusX(-600);
