@@ -65,7 +65,6 @@ let objEnemy3 = CreateFamiliar;
 	end;
 
 	
-	
 	//SetIntersectionVisualization(true);
 }
 
@@ -134,6 +133,7 @@ task Fire
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
 	ObjCutin_SetSpellcardS4("Sneak Attack &quot;Stealth Strike&quot;","", LENEN, 165,165,165);
+	SetCommonData("Stage2DualSpellPhase",2);
 	ScreenShake(60,4);
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
@@ -549,6 +549,7 @@ task end
 		yield;
 	}
 	wait(100);
+	SetCommonData("Stage2DualSpellPhase",0);
 	
 	CloseScript(GetOwnScriptID());
 	return;

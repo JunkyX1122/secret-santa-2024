@@ -69,6 +69,7 @@ let objEnemy2 = CreateFamiliar;
 
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
+	SetCommonData("Stage2DualSpellPhase",1);
 	//SetIntersectionVisualization(true);
 }
 
