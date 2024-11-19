@@ -204,7 +204,7 @@ task SpellBGFlatColor
 				alpha1 -= 1/40;
 			}
 		}
-		ObjRender_SetAlpha(obj,128*alpha1);
+		ObjRender_SetAlpha(obj,165*alpha1);
 		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		yield;
 	}
@@ -213,109 +213,44 @@ task SpellBGFlatColor
 
 task SpellBG
 {
-	SpellBGFlatColor;
+	SpellBGFlatColor();
 	
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj, 22); 
-	ObjPrim_SetTexture(obj, IMG_YUUMA_BG1); 
-	ObjSprite2D_SetSourceRect(obj, 0, 0,512, 512);
-	ObjSprite2D_SetDestRect(obj, 0, 0, 512, 512);
+	ObjPrim_SetTexture(obj, IMG_STAGE_01B_SPELL_00); 
+	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScaleXYZ(obj,1.5,1.5,0);
-	ObjRender_SetAngleZ(obj,-90);
-	//ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
-	
+	ObjRender_SetScale(obj, 1);
+
+
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj2, 22); 
-	ObjPrim_SetTexture(obj2, IMG_YUUMA_BG1); 
-	ObjSprite2D_SetSourceRect(obj2, 0, 0,512, 512);
-	ObjSprite2D_SetDestRect(obj2, 0, 0, 512, 512);
+	ObjPrim_SetTexture(obj2, IMG_STAGE_01B_SPELL_01); 
+	ObjSprite2D_SetSourceRect(obj2, 0, 0,1024, 1024);
+	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj2);
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScaleXYZ(obj2,-1.5,1.5,0);
-	ObjRender_SetAngleZ(obj2,-90);
-	//ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+	ObjRender_SetScale(obj2, 2);
+	ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
 	
-	let vertexCount = 512;
-	let obj3 = ObjPrim_Create(OBJ_PRIMITIVE_2D); 
-	ObjPrim_SetPrimitiveType(obj3,PRIMITIVE_TRIANGLESTRIP);
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj3, 23); 
-	ObjPrim_SetVertexCount(obj3,vertexCount);
-	ObjPrim_SetTexture(obj3, IMG_YUUMA_BG2); 
-	ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
+	ObjPrim_SetTexture(obj3, IMG_STAGE_01B_SPELL_02); 
+	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 1024);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	
-	let objRings = [];
-	ascent(i in 0..3)
-	{
-		let objR = ObjPrim_Create(OBJ_SPRITE_2D); 
-		objRings ~= [objR];
-		Obj_SetRenderPriorityI(objRings[i], 24); 
-		ObjPrim_SetTexture(objRings[i], IMG_YUUMA_BG3); 
-		ObjSprite2D_SetSourceRect(objRings[i], 0, 0,1024, 1024);
-		ObjSprite2D_SetDestRect(objRings[i], 0, 0, 1024, 1024);
-		ObjSprite2D_SetDestCenter(objRings[i]);
-		ObjRender_SetPosition(objRings[i],GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetBlendType(objRings[i],BLEND_SUBTRACT);
-		
-	}
-	ObjRender_SetScale(objRings[0],1);
-	ObjRender_SetScale(objRings[1],0.72);
-	ObjRender_SetScale(objRings[2],0.5185);
-	
-	ascent(i in 0..vertexCount/2)
-	{
-		let index = i*2;
-		let angle = 360/((vertexCount/2)-1)*i+90;
-		let dis = 550;
-		ObjPrim_SetVertexPosition(obj3,index,0,0,0);
-		ObjPrim_SetVertexPosition(obj3,index+1,dis*cos(angle),dis*sin(angle),0);
-		ObjPrim_SetVertexUVT(obj3, index, 1024/(vertexCount/2)*i, 0);
-		ObjPrim_SetVertexUVT(obj3, index+1, 1024/(vertexCount/2)*i, 512);
-		ObjPrim_SetVertexAlpha(obj3,index,0);
-		ObjPrim_SetVertexColor(obj3,index,0,0,0);
-		
-	}
-	
+	ObjRender_SetScale(obj3, 1);
+	ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
 	let alpha1 = 0;
-	let c1 = 0;
-	let c2 = 0;
-	let c3 = 0;
-	let tm1 = rand(0.5,1);
-	let tm2 = rand(0.5,1);
-	let tv1 = tm1;
-	let tv2 = tm2;
-	
+	let c = 0;
+	let scrollSpd_bg01 = 0.25;
+	let scrlSpd1 = 0.25;
+	let scrlSpd2 = -0.5;
 	while(true)
 	{
-		if(c3%180 == 0)
-		{
-			tv1 = rand(0.5,2)/2;
-			tv2 = rand(0.5,2)/2;
-		}
-		tm1 = tm1 * 0.999 + tv1 * 0.001;
-		tm2 = tm2 * 0.999 + tv2 * 0.001;
-		
-		ObjRender_SetAlpha(obj,(128+128*sin(c3/3))*alpha1);
-		ObjRender_SetAlpha(obj2,(128+128*sin(c3/3+180))*alpha1);
-		ObjRender_SetAlpha(obj3,255*alpha1);
-		
-		ascent(i in 0..3)
-		{
-			ObjRender_SetAlpha(objRings[i],(64-32/2*i)*alpha1);
-			ObjRender_SetAngleZ(objRings[i],c3*(1-2*(i%2))*0.025);
-		}
-		
-	
-		ObjSprite2D_SetSourceRect(obj, 0, 0+c1,512, 512+c1);
-		ObjSprite2D_SetSourceRect(obj2, 0, 0-c2,512, 512-c2);
-		ascent(i in 0..vertexCount/2)
-		{
-			let index = i*2;
-			ObjPrim_SetVertexUVT(obj3, index, 1024/(vertexCount/2)*i, c3*0.5);
-			ObjPrim_SetVertexUVT(obj3, index+1, 1024/(vertexCount/2)*i, 512+c3*0.5);
-		}
 		if(GetCommonData("SpellCardBG1",false)==true)
 		{
 			if(alpha1 < 1)
@@ -325,22 +260,19 @@ task SpellBG
 		} 
 		else
 		{
-		if(alpha1>0)
+			if(alpha1>0)
 			{
 				alpha1 -= 1/40;
 			}
 		}
 		
-		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ascent(i in 0..3)
-		{
-			ObjRender_SetPosition(objRings[i],GetStgFrameWidth/2,GetStgFrameHeight/2,0);		
-		}
-		c1+=tm1;
-		c2+=tm2;
-		c3++;
+		ObjRender_SetAlpha(obj, 255*alpha1);
+		ObjRender_SetAlpha(obj2, 32*alpha1);
+		ObjRender_SetAlpha(obj3, 128*alpha1);
+		
+		ObjSprite2D_SetSourceRect(obj2, 0, c*scrlSpd1,1024, 1024+c*scrlSpd1);
+		ObjSprite2D_SetSourceRect(obj3, 0, c*scrlSpd2,1024, 1024+c*scrlSpd2);
+		c++;
 		yield;
 	}
 
