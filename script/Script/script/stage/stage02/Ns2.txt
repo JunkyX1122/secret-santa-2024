@@ -115,7 +115,7 @@ task Fire
 
 task KeiranFire(bit)
 {
-	let colArray = [[255,255,255],[255,165,0]];
+	let colArray = [[255,255,255],[255,165,0],[255,255,255]];
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(25,-25), 150+rand(25,-25), 50);
@@ -251,13 +251,15 @@ task KeiranFire(bit)
 			ascent(i in 0..sprd)
 			{
 				let ang2 = ang+360/sprd*i;
-				ascent(o in 0..2)
+				ascent(o in 0..3)
 				{
-					let objS = ShotA2(x,y,5,ang2,-5/20,0,425,425,0,3,BLEND_ADD_ARGB,false);
-					ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
+					let idd = [425,425,430][o];
+					let objS = ShotA2(x,y,5,ang2,-5/20,0,idd,idd,0,3,BLEND_ADD_ARGB,false);
+					ObjRender_SetBlendType(objS,[BLEND_ADD_ARGB,BLEND_ADD_ARGB,BLEND_SUBTRACT][o]);
 					ObjMove_AddPatternA2(objS, 60, 0, NO_CHANGE, 2/180, 2, 0);
-					ObjRender_SetScale(objS,1+0.4*o);
+					ObjRender_SetScale(objS,[1,1.4,1.2][o]);
 					ObjRender_SetAlpha(objS,200);
+					Obj_SetRenderPriority(objS, [0.5,0.5,0.49][o]);
 					ObjRender_SetColor(objS,colArray[o][0],colArray[o][1],colArray[o][2]);
 				}
 			}

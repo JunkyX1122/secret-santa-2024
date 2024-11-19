@@ -46,6 +46,7 @@ let TIME = 60*60;
 
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
 	renderBossUnanimated(objEnemy2, IMG_BOSS_KEIRAN, 10);
+	Obj_SetRenderPriority(objEnemy2, 0.29);
 	HitCirc(objEnemy2);
 
 	end;

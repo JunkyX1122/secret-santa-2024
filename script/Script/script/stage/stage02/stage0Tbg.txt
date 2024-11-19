@@ -21,19 +21,138 @@ let counter = 0;
 task TCallBg
 {
 	SpellBG;
+	ascent(let pos in 2..5)
+	{
+		ascent(i in 0..SCROLL_AMOUNT)
+		{
+			TNormalBackground(pos,i,0,2);
+		}
+	}
+	
+	descent(i in 0..9)
+	{
+		Scrolling(1024*0.6 * (1+i));
+	}
+	SkyBG();
 }
+let SCROLL_AMOUNT = 5;
+let BASE_SCALE = 2;
+let DISTANCE_OFFSET = -3000;
+let MAX_CLIP = 5000;
 task ResetBG
 {
 	SetCameraFocusX(-600);
 	SetCameraFocusY(100);
 	SetCameraFocusZ(0);
+	SetCameraYaw(90);
 	SetCameraAzimuthAngle(0);
 	SetCameraElevationAngle(0);
 	SetCameraRadius(200);
 
-	SetCameraPerspectiveClip(0,7000);
-	SetFogParam(5000, 7000, 0,0,0);
+	SetCameraPerspectiveClip(0,MAX_CLIP);
+	SetFogParam(MAX_CLIP-2000, MAX_CLIP, 161,175,204);
 }
+task SkyBG
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj, 17); //描画優先度を設定
+	ObjPrim_SetTexture(obj, IMG_STAGE_02_SKY); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj);
+
+	ObjRender_SetAlpha(obj,255);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,270,0);
+	ObjRender_SetScaleXYZ(obj,1.4, 1.4, 0);
+	//ObjRender_SetColor(obj, 162,165,172);
+
+	
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj3, 19); //描画優先度を設定
+	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj3);
+	ObjRender_SetAlpha(obj3,64);
+	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetColor(obj3,0,0,64);
+	
+	//ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
+	let cc = 0;
+	while(true)
+	{
+		//ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
+		cc+=0.5;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+let WORLD_SCROLL_SPEED = 2;
+task Scrolling(z)
+{ // floor
+	let c = rand(0,2048);
+	let repeatingX = 3;
+	let repeatingZ = 1;
+	let treeScale = 2;
+	let obj=ObjPrim_Create(OBJ_SPRITE_3D);
+	Obj_SetRenderPriorityI(obj,18);
+	ObjPrim_SetTexture(obj,IMG_STAGE_02_TREE);
+	ObjRender_SetZWrite(obj,true);
+	ObjRender_SetZTest(obj,true);
+	
+	ObjSprite3D_SetSourceRect(obj,0,0,1024*repeatingX,256);
+	ObjSprite3D_SetSourceDestRect(obj,0,0,1024*repeatingX,256);
+	ObjRender_SetBlendType(obj,BLEND_ALPHA);
+	ObjRender_SetPosition(obj, 0, 128*treeScale*0.9, z);
+	ObjRender_SetScaleXYZ(obj, treeScale, -treeScale, treeScale);
+	//ObjRender_SetAngleX(obj, 90);
+	while(!Obj_IsDeleted(obj))
+	{		
+
+		ObjSprite3D_SetSourceRect(obj,c,0,1024*repeatingX+c,256);
+		c+=WORLD_SCROLL_SPEED/treeScale;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
+let MESH_ICEMOUNTAIN = current ~ "./Default_Background_IceMountain.mqo";
+task TNormalBackground(pos1,pos2,yp,id)
+{
+	let pz = (pos2) * 1000*BASE_SCALE + DISTANCE_OFFSET * BASE_SCALE;
+	let px = (pos1-1) * 1000*BASE_SCALE + (-500*BASE_SCALE);
+	let path = MESH_ICEMOUNTAIN;
+	let obj = ObjMesh_Create();
+	ObjMesh_Load(obj, path);
+	Obj_SetRenderPriorityI(obj, 18);
+	ObjRender_SetY(obj,yp);
+	ObjRender_SetZWrite(obj,true);
+	ObjRender_SetZTest(obj,true);
+
+	ObjRender_SetScaleXYZ(obj,BASE_SCALE,0.75,BASE_SCALE);
+	ObjRender_SetLightingEnable(obj, true, false);
+	
+	let c = 0;
+
+	while(GetCommonData("Transition",0)<id)
+	{
+		ObjRender_SetLightingDirection(obj, 0, -2, 0);
+
+		ObjRender_SetX(obj, pz);
+		ObjRender_SetZ(obj, px-0);
+		pz+=-WORLD_SCROLL_SPEED;
+		if(pz < DISTANCE_OFFSET* BASE_SCALE)
+		{
+			pz += 1000 * BASE_SCALE * SCROLL_AMOUNT;
+		}
+		c++;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
 task SpellBGFlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
