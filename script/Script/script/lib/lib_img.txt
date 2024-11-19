@@ -41,6 +41,8 @@ const IMG_STAGE_02_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/backgro
 const IMG_STAGE_02_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_02/spellbg_02.png";
 const IMG_STAGE_02_SPELL_03 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_02/spellbg_03.png";
 
+const IMG_STAGE_03_TREE = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/tree.png";
+
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
 ------------------------------------------EVERYTHING PAST HERE GETS LOADED AT THE LOADING SCREEN. EVERYTHING BEFORE GETS LOADED BEFORE THE STAGE REQUIRED

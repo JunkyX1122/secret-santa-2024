@@ -14,26 +14,193 @@ let adder = 0;
 
 @MainLoop
 {
-
+	//SetCameraYaw(120-counter);
+	counter++;
 	yield;
 }
 let counter = 0;
 task TCallBg
 {
+	SkyBG;
 	SpellBG;
+	let randC = [];
+	ascent(i in 0..4)
+	{
+		randC ~= [rand(0,1024)];
+	}
+	ascent(o in 0..4)
+	{
+		descent(i in 0..4)
+		{
+			Scrolling(o, 1024*0.6 * (3+i), randC[i]+1024*o);
+		}
+	}
+
+	ascent(let pos in 0..SCROLL_AMOUNT)
+	{
+		ScrollingMesh(0,pos,0,MESH_RAVINE, 4, 512);
+		ScrollingMesh(-1008*2,pos,0,MESH_LAND, 2, 1000);
+		ScrollingMesh( 1008*2,pos,0,MESH_LAND, 2, 1000);
+		
+		ScrollingMesh(-1006*4,pos,0,MESH_LAND, 2, 1000);
+		ScrollingMesh( 1006*4,pos,0,MESH_LAND, 2, 1000);
+	}
+	
+	
+	//TNormalBackground(0);
+
+	
 }
+let WORLD_SCROLL_SPEED = 2;
+let SCROLL_AMOUNT = 10;
+let BASE_SCALE = 4;
+let MAX_CLIP = 7000;
+let DISTANCE_OFFSET = -MAX_CLIP;
 task ResetBG
 {
-	SetCameraFocusX(-600);
-	SetCameraFocusY(100);
-	SetCameraFocusZ(0);
+	SetCameraFocusX(-7000);
+	SetCameraFocusY(300);
+	SetCameraFocusZ(-600);
 	SetCameraAzimuthAngle(0);
 	SetCameraElevationAngle(0);
+	SetCameraYaw(-16+180);
 	SetCameraRadius(200);
-
-	SetCameraPerspectiveClip(0,7000);
-	SetFogParam(5000, 7000, 0,0,0);
+	SetCameraElevationAngle(1);
+	SetCameraPerspectiveClip(0,MAX_CLIP);
+	SetCameraPerspectiveClip(0,MAX_CLIP);
+	SetFogParam(MAX_CLIP-3000, MAX_CLIP, 161,175,204);
 }
+task SkyBG
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj, 17); //描画優先度を設定
+	ObjPrim_SetTexture(obj, IMG_STAGE_02_SKY); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj);
+
+	ObjRender_SetAlpha(obj,255);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2+90,290,0);
+	ObjRender_SetScaleXYZ(obj,1.4, 1.4, 0);
+	//ObjRender_SetColor(obj, 162,165,172);
+
+	
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	Obj_SetRenderPriorityI(obj3, 19); //描画優先度を設定
+	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
+	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj3);
+	ObjRender_SetAlpha(obj3,64);
+	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetColor(obj3,0,0,64);
+	
+	//ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
+	let cc = 0;
+	while(true)
+	{
+		//ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
+		cc+=0.5;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
+task Scrolling(x,z,c)
+{ // floor
+
+	let repeatingX = 1;
+	let repeatingZ = 1;
+	let treeScale = 3;
+	let obj=ObjPrim_Create(OBJ_SPRITE_3D);
+	Obj_SetRenderPriorityI(obj,18);
+	ObjPrim_SetTexture(obj,IMG_STAGE_03_TREE);
+	ObjRender_SetZWrite(obj,true);
+	ObjRender_SetZTest(obj,true);
+	
+	ObjSprite3D_SetSourceRect(obj,0,0,1024*repeatingX,256);
+	ObjSprite3D_SetSourceDestRect(obj,0,0,1024*repeatingX,256);
+	ObjRender_SetBlendType(obj,BLEND_ALPHA);
+	ObjRender_SetPosition(obj, -7000 + 1024*x*treeScale, 128*treeScale, z);
+	ObjRender_SetScaleXYZ(obj, treeScale, -treeScale, treeScale);
+	//ObjRender_SetAngleX(obj, 90);
+	while(!Obj_IsDeleted(obj))
+	{		
+
+		ObjSprite3D_SetSourceRect(obj,c,0,1024*repeatingX+c,256);
+		c+=WORLD_SCROLL_SPEED/treeScale;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task TNormalBackground(z)
+{ // floor
+	let x = -1024*2;
+	
+	let c = 0;
+	let repeatingX = 14;
+	let repeatingZ = 2;
+	let obj=ObjPrim_Create(OBJ_SPRITE_3D);
+	Obj_SetRenderPriorityI(obj,18);
+	ObjPrim_SetTexture(obj,IMG_STAGE_01B_SNOW);
+	ObjRender_SetZWrite(obj,true);
+	ObjRender_SetZTest(obj,true);
+	
+	ObjSprite3D_SetSourceRect(obj,0,0,1024*repeatingX,1024*repeatingZ);
+	ObjSprite3D_SetSourceDestRect(obj,0,0,1024*repeatingX,1024*repeatingZ);
+	ObjRender_SetBlendType(obj,BLEND_ALPHA);
+	ObjRender_SetPosition(obj, x, -256, z);
+
+	ObjRender_SetAngleX(obj, 90);
+	while(!Obj_IsDeleted(obj))
+	{		
+
+		ObjSprite3D_SetSourceRect(obj,c,0,1024*repeatingX+c,1024*repeatingZ);
+		c+=WORLD_SCROLL_SPEED;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+let MESH_RAVINE = current ~ "./07_00.mqo";
+let MESH_LAND = current ~ "./Default_Background_IceMountain.mqo";
+task ScrollingMesh(pos1, pos2,yp,id, ss, totalLngth)
+{
+	let pz = (DISTANCE_OFFSET) + (pos2) * totalLngth*ss;
+	let px = pos1;
+	let path = id;
+	let obj = ObjMesh_Create();
+	ObjMesh_Load(obj, path);
+	Obj_SetRenderPriorityI(obj, 18);
+	ObjRender_SetY(obj,yp);
+	ObjRender_SetZWrite(obj,true);
+	ObjRender_SetZTest(obj,true);
+	ObjRender_SetAngleY(obj, 90);
+	ObjRender_SetScaleXYZ(obj,ss,id == MESH_LAND ? ss * 0.75: ss,ss);
+	ObjRender_SetLightingEnable(obj, true, true);
+	ObjRender_SetLightingDiffuseColor(obj, 0,0,0);
+	let c = 0;
+
+	while(true)
+	{
+		//ObjRender_SetLightingDirection(obj, 1, 1, 0);
+
+		ObjRender_SetX(obj, pz);
+		ObjRender_SetZ(obj, px-0);
+		pz+=-WORLD_SCROLL_SPEED;
+		if(pz < DISTANCE_OFFSET)
+		{
+			pz += totalLngth * ss * SCROLL_AMOUNT;
+		}
+		c++;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
 task SpellBGFlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
