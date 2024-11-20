@@ -64,11 +64,11 @@ task Normal {
 		yield;
 	}
 }
-task SpellBGFlatColor
+task SpellFlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
 	Obj_SetRenderPriorityI(obj, 24); //描画優先度を設定
-	ObjPrim_SetTexture(obj, GetCurrentScriptDirectory~"./../../../img/background/BG1/pixel.png"); //テクスチャを設定
+	ObjPrim_SetTexture(obj, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestCenter(obj);
@@ -90,7 +90,7 @@ task SpellBGFlatColor
 				alpha1 -= 1/40;
 			}
 		}
-		ObjRender_SetAlpha(obj,128*alpha1);
+		ObjRender_SetAlpha(obj,64*alpha1);
 		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		yield;
 	}
@@ -99,109 +99,77 @@ task SpellBGFlatColor
 
 task SpellBG
 {
-	SpellBGFlatColor;
+	SpellFlatColor();
 	
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj, 22); 
-	ObjPrim_SetTexture(obj, IMG_YUUMA_BG1); 
-	ObjSprite2D_SetSourceRect(obj, 0, 0,512, 512);
-	ObjSprite2D_SetDestRect(obj, 0, 0, 512, 512);
+	ObjPrim_SetTexture(obj, IMG_STAGE_05_SPELL_00); 
+	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScaleXYZ(obj,1.5,1.5,0);
-	ObjRender_SetAngleZ(obj,-90);
-	//ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	ObjRender_SetScale(obj, 1);
 	
+	let bit = 1;
+	
+	CreateBox(
+		GetStgFrameWidth/2, 
+		GetStgFrameHeight/2, 
+		bit, 
+		-0.1, 
+		-0.5, 
+		1, 
+		0.6, 
+		-0.6, 
+		IMG_STAGE_05_SPELL_01, 
+		IMG_STAGE_05_SPELL_02, 
+		BLEND_ADD_ARGB);
+		
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
-	Obj_SetRenderPriorityI(obj2, 22); 
-	ObjPrim_SetTexture(obj2, IMG_YUUMA_BG1); 
-	ObjSprite2D_SetSourceRect(obj2, 0, 0,512, 512);
-	ObjSprite2D_SetDestRect(obj2, 0, 0, 512, 512);
+	Obj_SetRenderPriorityI(obj2, 23); 
+	ObjPrim_SetTexture(obj2, IMG_STAGE_05_SPELL_03); 
+	ObjSprite2D_SetSourceRect(obj2, 0, 0,1024, 1024);
+	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj2);
-	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScaleXYZ(obj2,-1.5,1.5,0);
-	ObjRender_SetAngleZ(obj2,-90);
-	//ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+	ObjRender_SetPosition(obj2,GetStgFrameWidth/2+30,GetStgFrameHeight/2,0);
+	ObjRender_SetScale(obj2, 0.6);
+	ObjRender_SetColor(obj2, 0,0,0);
 	
-	let vertexCount = 512;
-	let obj3 = ObjPrim_Create(OBJ_PRIMITIVE_2D); 
-	ObjPrim_SetPrimitiveType(obj3,PRIMITIVE_TRIANGLESTRIP);
-	Obj_SetRenderPriorityI(obj3, 23); 
-	ObjPrim_SetVertexCount(obj3,vertexCount);
-	ObjPrim_SetTexture(obj3, IMG_YUUMA_BG2); 
-	ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
+	Obj_SetRenderPriorityI(obj3, 22); 
+	ObjPrim_SetTexture(obj3, IMG_STAGE_05_SPELL_04); 
+	ObjSprite2D_SetSourceRect(obj3, 0, 0,512, 512);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 512, 512);
+	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetScale(obj3, 0.8);
+	ObjRender_SetColor(obj3, 0,0,0);
 	
-	let objRings = [];
-	ascent(i in 0..3)
-	{
-		let objR = ObjPrim_Create(OBJ_SPRITE_2D); 
-		objRings ~= [objR];
-		Obj_SetRenderPriorityI(objRings[i], 24); 
-		ObjPrim_SetTexture(objRings[i], IMG_YUUMA_BG3); 
-		ObjSprite2D_SetSourceRect(objRings[i], 0, 0,1024, 1024);
-		ObjSprite2D_SetDestRect(objRings[i], 0, 0, 1024, 1024);
-		ObjSprite2D_SetDestCenter(objRings[i]);
-		ObjRender_SetPosition(objRings[i],GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetBlendType(objRings[i],BLEND_SUBTRACT);
+	let obj4 = ObjPrim_Create(OBJ_SPRITE_2D); 
+	Obj_SetRenderPriorityI(obj4, 22); 
+	ObjPrim_SetTexture(obj4, IMG_STAGE_05_SPELL_04); 
+	ObjSprite2D_SetSourceRect(obj4, 0, 0,512, 512);
+	ObjSprite2D_SetDestRect(obj4, 0, 0, 512, 512);
+	ObjSprite2D_SetDestCenter(obj4);
+	ObjRender_SetPosition(obj4,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetScaleXYZ(obj4, 1.2, -1.2, 0);
+	ObjRender_SetColor(obj4, 0,0,0);
 		
-	}
-	ObjRender_SetScale(objRings[0],1);
-	ObjRender_SetScale(objRings[1],0.72);
-	ObjRender_SetScale(objRings[2],0.5185);
-	
-	ascent(i in 0..vertexCount/2)
-	{
-		let index = i*2;
-		let angle = 360/((vertexCount/2)-1)*i+90;
-		let dis = 550;
-		ObjPrim_SetVertexPosition(obj3,index,0,0,0);
-		ObjPrim_SetVertexPosition(obj3,index+1,dis*cos(angle),dis*sin(angle),0);
-		ObjPrim_SetVertexUVT(obj3, index, 1024/(vertexCount/2)*i, 0);
-		ObjPrim_SetVertexUVT(obj3, index+1, 1024/(vertexCount/2)*i, 512);
-		ObjPrim_SetVertexAlpha(obj3,index,0);
-		ObjPrim_SetVertexColor(obj3,index,0,0,0);
 		
-	}
+	let obj5 = ObjPrim_Create(OBJ_SPRITE_2D); 
+	Obj_SetRenderPriorityI(obj5, 22); 
+	ObjPrim_SetTexture(obj5, IMG_STAGE_05_SPELL_05); 
+	ObjSprite2D_SetSourceRect(obj5, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj5, 0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(obj5);
+	ObjRender_SetPosition(obj5,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetScale(obj5, 1);
 	
 	let alpha1 = 0;
-	let c1 = 0;
-	let c2 = 0;
-	let c3 = 0;
-	let tm1 = rand(0.5,1);
-	let tm2 = rand(0.5,1);
-	let tv1 = tm1;
-	let tv2 = tm2;
-	
+	let c = 0;
+	let scrollSpd_bg01 = 0.25;
 	while(true)
 	{
-		if(c3%180 == 0)
-		{
-			tv1 = rand(0.5,2)/2;
-			tv2 = rand(0.5,2)/2;
-		}
-		tm1 = tm1 * 0.999 + tv1 * 0.001;
-		tm2 = tm2 * 0.999 + tv2 * 0.001;
-		
-		ObjRender_SetAlpha(obj,(128+128*sin(c3/3))*alpha1);
-		ObjRender_SetAlpha(obj2,(128+128*sin(c3/3+180))*alpha1);
-		ObjRender_SetAlpha(obj3,255*alpha1);
-		
-		ascent(i in 0..3)
-		{
-			ObjRender_SetAlpha(objRings[i],(64-32/2*i)*alpha1);
-			ObjRender_SetAngleZ(objRings[i],c3*(1-2*(i%2))*0.025);
-		}
-		
-	
-		ObjSprite2D_SetSourceRect(obj, 0, 0+c1,512, 512+c1);
-		ObjSprite2D_SetSourceRect(obj2, 0, 0-c2,512, 512-c2);
-		ascent(i in 0..vertexCount/2)
-		{
-			let index = i*2;
-			ObjPrim_SetVertexUVT(obj3, index, 1024/(vertexCount/2)*i, c3*0.5);
-			ObjPrim_SetVertexUVT(obj3, index+1, 1024/(vertexCount/2)*i, 512+c3*0.5);
-		}
 		if(GetCommonData("SpellCardBG1",false)==true)
 		{
 			if(alpha1 < 1)
@@ -211,24 +179,96 @@ task SpellBG
 		} 
 		else
 		{
-		if(alpha1>0)
+			if(alpha1>0)
 			{
 				alpha1 -= 1/40;
 			}
 		}
 		
-		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ascent(i in 0..3)
-		{
-			ObjRender_SetPosition(objRings[i],GetStgFrameWidth/2,GetStgFrameHeight/2,0);		
-		}
-		c1+=tm1;
-		c2+=tm2;
-		c3++;
+		ObjRender_SetAlpha(obj, 255*alpha1);
+		ObjRender_SetAlpha(obj2, 255*alpha1);
+		
+		ObjRender_SetAlpha(obj3, 128*alpha1);
+		ObjRender_SetAngleZ(obj3, c*0.25);
+		
+		ObjRender_SetAlpha(obj4, 96*alpha1);
+		ObjRender_SetAngleZ(obj4, c*-0.25);
+		
+		
+		ObjRender_SetAlpha(obj5, 128*alpha1);
+		ObjSprite2D_SetSourceRect(obj5, 0, 0+c*0.5,1024, 512+c*0.5);
+		c++;
 		yield;
 	}
 
+}
+task CreateBox(x, y, bit, spinn, sideScroll, twist, ySpd1, ySpd2, img1, img2, blendType)
+{
 	
+	let dir = GetCurrentScriptDirectory();
+	let path = IMG_SAURA;
+
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D); //2Dスプライトオブジェクト生成
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj, 22); //描画優先度を設定
+	ObjPrim_SetTexture(obj, path); //テクスチャを設定
+	
+	ObjPrim_SetVertexPosition(obj, 0, -512, -512, 0);
+	ObjPrim_SetVertexPosition(obj, 1, 512, -512, 0); 
+	ObjPrim_SetVertexPosition(obj, 2, 512, 512, 0);
+	ObjPrim_SetVertexPosition(obj, 3, -512, 512, 0);
+	
+	ObjPrim_SetVertexUVT(obj, 0, 0, 0);
+	ObjPrim_SetVertexUVT(obj, 1, 256, 0);
+	ObjPrim_SetVertexUVT(obj, 2, 256, 256);
+	ObjPrim_SetVertexUVT(obj, 3, 0, 256);
+	
+
+	ObjShader_SetShaderF(obj, GetCurrentScriptDirectory()~"hlslring.txt");
+	//ObjRender_SetScaleXYZ(obj,0.5,0.5,0);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	//ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	ObjRender_SetBlendType(obj,blendType);
+	//ObjRender_SetColor(obj, 225, 255, 225);
+	let timer = 0;
+	
+	ObjShader_SetTexture(obj, "texture_0", img1);
+	ObjShader_SetTexture(obj, "texture_1", img2);
+	ObjShader_SetTechnique(obj, "TecFire");
+	let alpha1 = 0;
+	while(true)
+	{
+		if(GetCommonData("SpellCardBG1",false)==true)
+		{
+			if(alpha1 < 1)
+			{ 
+				alpha1 += 1/10;
+			}
+		} 
+		else
+		{
+			if(alpha1>0)
+			{
+				alpha1 -= 1/40;
+			}
+		}
+		
+		ObjRender_SetAlpha(obj, 255*alpha1);
+		ObjShader_SetFloat(obj, "time", timer);
+		//ObjShader_SetFloat(obj, "rotation", timer);
+		ObjShader_SetFloat(obj, "scroll_x", sideScroll);
+		ObjShader_SetFloat(obj, "scroll_y", -ySpd1);
+		ObjShader_SetFloat(obj, "scroll_y2", -ySpd2);
+		ObjShader_SetFloat(obj, "spinAmount", twist);
+
+		
+		let ang = ObjRender_GetAngleZ(obj);
+		
+		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetAngleZ(obj,ang+spinn);
+		timer++;
+		yield;
+	}
+
 }

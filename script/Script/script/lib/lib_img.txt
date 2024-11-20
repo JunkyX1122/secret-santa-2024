@@ -64,6 +64,12 @@ const IMG_STAGE_04C_SPELL_00   = GetCurrentScriptDirectory() ~ "./../../img/back
 
 const IMG_STAGE_05_WATER   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/Stgbg.png";
 const IMG_STAGE_05_SKY     = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/StgSkyCloudy.png";
+const IMG_STAGE_05_SPELL_00   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_00.png";
+const IMG_STAGE_05_SPELL_01   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_01.png";
+const IMG_STAGE_05_SPELL_02   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_02.png";
+const IMG_STAGE_05_SPELL_03   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_03.png";
+const IMG_STAGE_05_SPELL_04   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_04.png";
+const IMG_STAGE_05_SPELL_05   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_05.png";
 
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
