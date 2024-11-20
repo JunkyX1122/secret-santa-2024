@@ -16,23 +16,36 @@ const IMG_YUUMA_BG1 = GetCurrentScriptDirectory() ~ "./../../img/background/card
 const IMG_YUUMA_BG2 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg1.png";
 const IMG_YUUMA_BG3 = GetCurrentScriptDirectory() ~ "./../../img/background/cardbg2.png";
 
-const IMG_STAGE_01A_SKY = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/sky.png";
-const IMG_STAGE_01A_CLOUDS = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/cloud_overlay.png";
+const IMG_STAGE_01A_SKY      = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/sky.png";
+const IMG_STAGE_01A_CLOUDS   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/cloud_overlay.png";
 const IMG_STAGE_01A_SPELL_00 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/spellbg_00.png";
 const IMG_STAGE_01A_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/spellbg_01.png";
 const IMG_STAGE_01A_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01a/spellbg_02.png"; 
 
-const IMG_STAGE_01B_SNOW = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/snow.png";
-const IMG_STAGE_01B_TREE = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/tree.png";
-const IMG_STAGE_01B_SKY = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/sky.png";
+const Stage1aBackground_ImgArray = [
+		IMG_STAGE_01A_SKY, IMG_STAGE_01A_CLOUDS,
+		IMG_STAGE_01A_SPELL_00, IMG_STAGE_01A_SPELL_01, IMG_STAGE_01A_SPELL_02];
+
+const IMG_STAGE_01B_SNOW     = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/snow.png";
+const IMG_STAGE_01B_TREE     = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/tree.png";
+const IMG_STAGE_01B_SKY      = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/sky.png";
 const IMG_STAGE_01B_SPELL_00 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/spellbg_00.png"; 
 const IMG_STAGE_01B_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/spellbg_01.png";
 const IMG_STAGE_01B_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01b/spellbg_02.png";
+
+const Stage1bBackground_ImgArray = [
+		IMG_STAGE_01B_SNOW, IMG_STAGE_01B_TREE, IMG_STAGE_01B_SKY,
+		IMG_STAGE_01B_SPELL_00, IMG_STAGE_01B_SPELL_01, IMG_STAGE_01B_SPELL_02];
 
 const IMG_STAGE_01C_SKY = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01c/mansion.png";
 const IMG_STAGE_01C_SPELL_00 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01c/spellbg_00.png";
 const IMG_STAGE_01C_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01c/spellbg_01.png";
 const IMG_STAGE_01C_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_01c/spellbg_02.png";
+
+const Stage1cBackground_ImgArray = [
+		IMG_STAGE_01C_SKY,
+		IMG_STAGE_01C_SPELL_00, IMG_STAGE_01C_SPELL_01, IMG_STAGE_01C_SPELL_02
+		];
 
 const IMG_STAGE_02_TREE = GetCurrentScriptDirectory() ~ "./../../img/background/stage_02/tree.png";
 const IMG_STAGE_02_SKY = GetCurrentScriptDirectory() ~ "./../../img/background/stage_02/sky.png";
@@ -41,26 +54,51 @@ const IMG_STAGE_02_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/backgro
 const IMG_STAGE_02_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_02/spellbg_02.png";
 const IMG_STAGE_02_SPELL_03 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_02/spellbg_03.png";
 
+const Stage2Background_ImgArray = [
+		IMG_STAGE_02_TREE, IMG_STAGE_02_SKY,
+		IMG_STAGE_02_SPELL_00, IMG_STAGE_02_SPELL_01, IMG_STAGE_02_SPELL_02, IMG_STAGE_02_SPELL_03
+		];
+
 const IMG_STAGE_03_TREE = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/tree.png";
 const IMG_STAGE_03_SPELL_00 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/spellbg_00.png";
 const IMG_STAGE_03_SPELL_01 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/spellbg_01.png";
 const IMG_STAGE_03_SPELL_02 = GetCurrentScriptDirectory() ~ "./../../img/background/stage_03/spellbg_02.png";
 
+const Stage3Background_ImgArray = [
+		IMG_STAGE_03_TREE, 
+		IMG_STAGE_03_SPELL_00, IMG_STAGE_03_SPELL_01, IMG_STAGE_03_SPELL_02
+		];
+
 const IMG_STAGE_04_FIELD   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/field.png";
 const IMG_STAGE_04_FOGBACK = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/fogback.png";
 const IMG_STAGE_04_TRAIL   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/trail.png";
-const IMG_STAGE_04_TREE   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/tree.png";
+const IMG_STAGE_04_TREE    = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04/tree.png";
+
+const Stage4Background_ImgArray = [
+		IMG_STAGE_04_FIELD, IMG_STAGE_04_FOGBACK, IMG_STAGE_04_TRAIL, IMG_STAGE_04_TREE
+		];
 
 const IMG_STAGE_04A_SPELL_00   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04a/spellbg_00.png";
 const IMG_STAGE_04A_SPELL_01   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04a/spellbg_01.png";
 const IMG_STAGE_04A_SPELL_02   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04a/spellbg_02.png";
 const IMG_STAGE_04A_SPELL_03   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04a/spellbg_03.png";
 
+const Stage4aBackground_ImgArray = [
+		IMG_STAGE_04A_SPELL_00, IMG_STAGE_04A_SPELL_01, IMG_STAGE_04A_SPELL_02, IMG_STAGE_04A_SPELL_03
+		];
+
 const IMG_STAGE_04B_SPELL_00   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04b/spellbg_00.png";
 const IMG_STAGE_04B_SPELL_01   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04b/spellbg_01.png";
 const IMG_STAGE_04B_SPELL_02   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04b/spellbg_02.png";
 
+const Stage4bBackground_ImgArray = [
+		IMG_STAGE_04B_SPELL_00, IMG_STAGE_04B_SPELL_01, IMG_STAGE_04B_SPELL_02
+		];
+
 const IMG_STAGE_04C_SPELL_00   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_04c/spellbg_00.png";
+
+const Stage4cBackground_ImgArray = [
+		IMG_STAGE_04C_SPELL_00];
 
 const IMG_STAGE_05_WATER      = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/Stgbg.png";
 const IMG_STAGE_05_SKY        = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/StgSkyCloudy.png";
@@ -70,6 +108,11 @@ const IMG_STAGE_05_SPELL_02   = GetCurrentScriptDirectory() ~ "./../../img/backg
 const IMG_STAGE_05_SPELL_03   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_03.png";
 const IMG_STAGE_05_SPELL_04   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_04.png";
 const IMG_STAGE_05_SPELL_05   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_05/spellbg_05.png";
+
+const Stage5Background_ImgArray = [
+		IMG_STAGE_05_WATER, IMG_STAGE_05_SKY,
+		IMG_STAGE_05_SPELL_00, IMG_STAGE_05_SPELL_01, IMG_STAGE_05_SPELL_02, IMG_STAGE_05_SPELL_03, IMG_STAGE_05_SPELL_04, IMG_STAGE_05_SPELL_05
+		];
 
 const IMG_STAGE_06_SKY      = GetCurrentScriptDirectory() ~ "./../../img/background/stage_06/StgSkyColorless.png";
 const IMG_STAGE_06_GROUND   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_06/Stgbg.png";
@@ -81,6 +124,11 @@ const IMG_STAGE_06_SPELL_02   = GetCurrentScriptDirectory() ~ "./../../img/backg
 const IMG_STAGE_06_SPELL_03   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_06/spellbg_03.png";
 const IMG_STAGE_06_SPELL_04   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_06/spellbg_04.png";
 const IMG_STAGE_06_SPELL_05   = GetCurrentScriptDirectory() ~ "./../../img/background/stage_06/spellbg_05.png";
+
+const Stage6Background_ImgArray = [
+		IMG_STAGE_06_SKY, IMG_STAGE_06_GROUND, IMG_STAGE_06_CLOUD, IMG_STAGE_06_SNOW, 
+		IMG_STAGE_06_SPELL_00, IMG_STAGE_06_SPELL_02, IMG_STAGE_06_SPELL_03, IMG_STAGE_06_SPELL_04, IMG_STAGE_06_SPELL_05
+		];
 
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
