@@ -99,6 +99,7 @@ let finalSpellBool = false;
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		SetCommonData("SpellCardBG1",true);
+		SetCommonData("Stage4a_Phase",2);
 	}
     if(count == 95)
     {
