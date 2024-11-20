@@ -361,6 +361,7 @@ task BeamLaser(x,y,ang, w, t, alp)
 	let lasExpand = CreateStraightLaserA1(x, y, ang, 9999, w, 999, 3, 99999);
 	ObjShot_SetIntersectionEnable(lasExpand, false);
 	Obj_SetRenderPriority(lasExpand,0.28);
+	ObjLaser_SetItemDistance(lasExpand, 1000);
 
 	ascent(i in 0..t)
 	{

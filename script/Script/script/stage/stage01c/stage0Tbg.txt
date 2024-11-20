@@ -148,6 +148,9 @@ task SpellBG
 				alpha1 -= 1/40;
 			}
 		}
+		ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+		ObjRender_SetPosition(obj2, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+		ObjRender_SetPosition(obj3, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
 		ObjSprite2D_SetSourceRect(obj, 0, -pos, 1024, 1024 - pos);
 		ObjRender_SetAlpha(obj, 255*alpha1);
 

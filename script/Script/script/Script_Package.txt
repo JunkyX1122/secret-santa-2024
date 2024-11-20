@@ -40,11 +40,11 @@ task TTitleScene
 	
 	//タイトルシーン終了フラグ
 	wait(120);
-	activeTeam = PLAYERTEAM_B;
+	activeTeam = PLAYERTEAM_C;
 	StartStageProgression();
 	ClosePackage();
 }
-let activeTeam = 1;
+let activeTeam = 0;
 const STAGE_1a = 0;
 const STAGE_1b = 1;
 const STAGE_1c = 2;

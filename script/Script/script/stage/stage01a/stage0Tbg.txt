@@ -73,6 +73,9 @@ task SkyBG
 	let cc = 0;
 	while(true)
 	{
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/4,0);
+		ObjRender_SetPosition(obj2,GetStgFrameWidth/2,-50,0);
+		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
 		cc+=0.5;
 		yield;
@@ -250,11 +253,15 @@ task SpellBG
 			}
 		}
 		
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		
 		ObjRender_SetAlpha(obj, 255*alpha1);
 		ObjRender_SetAlpha(obj2, 64*alpha1);
 		ascent(i in 0..2)
 		{
 			ObjRender_SetAlpha(objAnkhs[i], 128*alpha1);
+			ObjRender_SetPosition(objAnkhs[i],[0,GetStgFrameWidth][i],GetStgFrameHeight/2,0);
 		}
 		ObjSprite2D_SetSourceRect(obj2, 0, c*scrollSpd_bg01,1024, 1024+c*scrollSpd_bg01);
 		c++;

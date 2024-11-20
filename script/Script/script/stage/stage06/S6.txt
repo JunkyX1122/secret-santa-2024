@@ -68,7 +68,6 @@ let MAX_HEALTH = 300/3;
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		SetCommonData("Stage_06Blue",true);
 	}
     if(count == 95)
     {
@@ -520,6 +519,7 @@ task ShoutText()
 	swordColor = [128,128,255];
 	
 	
+	SetCommonData("Stage_06Blue",true);
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
 	ObjCutin_LaunchS3("", "Normal");
 	ObjCutin_SetSpellcardS4("&quot;The World Engulfed in Vermillion&quot;","", LENEN, 0,0,255);

@@ -81,6 +81,8 @@ task SkyBG
 	let cc = 0;
 	while(true)
 	{
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,270,0);
+		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		//ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
 		cc+=0.5;
 		yield;
@@ -258,6 +260,9 @@ task SpellBG
 				alpha1 -= 1/40;
 			}
 		}
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	
 		alternative(GetCommonData("Stage2DualSpellPhase",0))
 		case(2)
 		{

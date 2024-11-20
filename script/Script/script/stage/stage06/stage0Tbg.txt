@@ -28,6 +28,10 @@ task ResetBG
 	SetCameraFocusX(0);
 	SetCameraFocusY(0);
 	SetCameraFocusZ(0);
+	SetCameraElevationAngle(0);
+	SetCameraYaw(0);
+	SetCameraRadius(0);
+	SetCameraElevationAngle(0);
 	
 	SetCameraRadius(300);
 	SetCameraAzimuthAngle(90);
@@ -107,8 +111,14 @@ task Background()
 	while(true)	//movement during boss
 	{
 		ObjSprite3D_SetSourceRect(obj, 0, 0+mx, 1024*2, 1024/2+mx);
+		
+		ObjRender_SetPosition(objSky, 0, -167, 0);
+		ObjRender_SetPosition(obj, 0, -30, -30);
+		ObjRender_SetPosition(objDark, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+		ObjRender_SetPosition(objDark2, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
 		ascent(i in 0..3)
 		{
+			ObjRender_SetPosition(objClouds[i], 0, -20-40*i, 0);
 			let movSpd = mc * (2-1/2*i) * 0.5;
 			ObjSprite2D_SetSourceRect(objClouds[i], 0+movSpd + randStarts[i], 0, 1024+movSpd + randStarts[i], 418);
 		}
@@ -176,9 +186,6 @@ task SnowProgram()
 		}
 	}
 }
-
-
-
 
 task SpellFlatColor
 {
@@ -292,6 +299,9 @@ task SpellBG
 				alpha1 -= 1/40;
 			}
 		}
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2-70,0);
+	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2-70,0);
 		
 		ObjRender_SetAlpha(obj, 255*alpha1);
 		ObjRender_SetAlpha(obj2, (128-128*sin(c))*alpha1);
@@ -300,6 +310,8 @@ task SpellBG
 		let scrlSpd = c*0.9;
 		ascent(i in 0..4)
 		{
+			ObjRender_SetPosition(obj4s[i],[32, GetStgFrameWidth-32][floor(i/2)],GetStgFrameHeight/2,0);
+			
 			ObjSprite2D_SetSourceRect(obj4s[i], 0, scrlSpd, 128, 1024 + scrlSpd);
 			ObjRender_SetAlpha(obj4s[i], 150*alpha1);
 		}
@@ -386,6 +398,7 @@ task CreateBox()
 		}
 		
 		ObjShader_SetFloat(obj, "globalAlpha", alpha1);
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 
 		//ObjRender_SetAngleZ(obj,ang+0.5);
 		timer++;

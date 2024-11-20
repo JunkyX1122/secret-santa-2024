@@ -32,6 +32,10 @@ task ResetBG
 	SetCameraFocusX(0);
 	SetCameraFocusY(0);
 	SetCameraFocusZ(0);
+	SetCameraElevationAngle(0);
+	SetCameraYaw(0);
+	SetCameraRadius(0);
+	SetCameraElevationAngle(0);
 	
 	SetCameraRadius(300);
 	SetCameraAzimuthAngle(90);
@@ -51,6 +55,7 @@ task Normal {
 	ObjRender_SetPosition(obj, 320, 64, 0);
 	ObjRender_SetScaleXYZ(obj, 2, 1, 0);
 	ObjSprite2D_SetDestCenter(obj);
+	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_3D);
 	Obj_SetRenderPriority(obj2, 0.20);
 	ObjPrim_SetTexture(obj2, IMG_STAGE_05_WATER);
@@ -59,6 +64,8 @@ task Normal {
 	
 	loop 
 	{
+		ObjRender_SetPosition(obj, 320, 64, 0);
+		ObjRender_SetPosition(obj2, 0, -194, 0);
 		ObjSprite3D_SetSourceDestRect(obj2, 0, c, 512, 512 + c);
 		c++;
 		yield;
@@ -185,6 +192,12 @@ task SpellBG
 			}
 		}
 		
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj2,GetStgFrameWidth/2+30,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj4,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj5,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	
 		ObjRender_SetAlpha(obj, 255*alpha1);
 		ObjRender_SetAlpha(obj2, 255*alpha1);
 		
@@ -265,7 +278,7 @@ task CreateBox(x, y, bit, spinn, sideScroll, twist, ySpd1, ySpd2, img1, img2, bl
 		
 		let ang = ObjRender_GetAngleZ(obj);
 		
-		ObjRender_SetPosition(obj,x,y,0);
+		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		ObjRender_SetAngleZ(obj,ang+spinn);
 		timer++;
 		yield;
