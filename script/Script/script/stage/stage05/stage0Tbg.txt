@@ -4,7 +4,11 @@ let bSpell = false;
 let current = GetCurrentScriptDirectory();
 let fo = 0;
 let adder = 0;
-
+let fogStart = 270;
+let fogEnd = 325;
+let fogR = 0;
+let fogG = 0;
+let fogB = 0;
 @Initialize
 {
 	TCallBg;
@@ -21,18 +25,44 @@ let counter = 0;
 task TCallBg
 {
 	SpellBG;
+	Normal();
 }
 task ResetBG
 {
-	SetCameraFocusX(-600);
-	SetCameraFocusY(100);
+	SetCameraFocusX(0);
+	SetCameraFocusY(0);
 	SetCameraFocusZ(0);
-	SetCameraAzimuthAngle(0);
-	SetCameraElevationAngle(0);
-	SetCameraRadius(200);
+	
+	SetCameraRadius(300);
+	SetCameraAzimuthAngle(90);
+	SetCameraElevationAngle(-75);
+	SetFogParam(fogStart, fogEnd, fogR, fogG, fogB);
 
-	SetCameraPerspectiveClip(0,7000);
-	SetFogParam(5000, 7000, 0,0,0);
+}
+
+task Normal {
+
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjRender_SetBlendType(obj, BLEND_ALPHA);
+	Obj_SetRenderPriority(obj, 0.21);
+	ObjPrim_SetTexture(obj, IMG_STAGE_05_SKY);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, 384, 268);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetPosition(obj, 320, 64, 0);
+	ObjRender_SetScaleXYZ(obj, 2, 1, 0);
+	ObjSprite2D_SetDestCenter(obj);
+	let obj2 = ObjPrim_Create(OBJ_SPRITE_3D);
+	Obj_SetRenderPriority(obj2, 0.20);
+	ObjPrim_SetTexture(obj2, IMG_STAGE_05_WATER);
+	ObjRender_SetPosition(obj2, 0, -194, 0);
+	let c = 0;
+	
+	loop 
+	{
+		ObjSprite3D_SetSourceDestRect(obj2, 0, c, 512, 512 + c);
+		c++;
+		yield;
+	}
 }
 task SpellBGFlatColor
 {
