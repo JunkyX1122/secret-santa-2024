@@ -72,7 +72,7 @@ let finalSpellBool = false;
 	}
     if(count == 40)
     {
-		ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
+		
 		Fire;
 		
         //count = 1111;
@@ -92,6 +92,18 @@ let finalSpellBool = false;
 let keepFiring = true;
 let tornadoNow = false;
 let firstTime = false;
+task BossFade()
+{
+	let t = 20;
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(objEnemy))
+		{
+			ObjRender_SetAlpha(objEnemy, 255-255/(t-1)*i);
+			yield;
+		}
+	}
+}
 task Fire
 {
 	
@@ -100,7 +112,6 @@ task Fire
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(charge0,80);
-		
 		tornadoNow = false;
 		keepFiring = true;
 		Arrowheads(bit);
@@ -114,10 +125,12 @@ task Fire
 			ccc++;
 			yield;
 		}
+		BossFade();
 		if(!firstTime)
 		{
+			ObjEnemy_SetDamageRate(objEnemy, (0.05/3)/1.5, (0.05/3)/3);
 			ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);
-			ScreenShake(60,4);
+			ScreenShake(120,4);
 			ObjCutin_LaunchS3("", "Normal");
 			ObjCutin_SetSpellcardS4("Blaze &quot;Vermillion Blaze&quot;","", LENEN, 255,0,0);
 			SE_PlayLen(compositespellcard,75);
@@ -135,6 +148,7 @@ task Fire
 		}
 		else if(!Obj_IsDeleted(objEnemy))
 		{
+			ScreenShake(120,4);
 			SE_PlayLen(Burst1,80);
 			SE_PlayLen(MSpark,60);
 			Tornado(bit);
@@ -147,6 +161,7 @@ task Fire
 			keepFiring = false;
 		}
 		wait(30);
+		ObjRender_SetAlpha(objEnemy, 255);
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			ascent(i in 0..3)
@@ -161,6 +176,7 @@ task Fire
 		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
 	}
 	
+	ObjRender_SetAlpha(objEnemy, 255);
 }
 task BigSwipe(ang,bit)
 {
@@ -596,7 +612,12 @@ task end
 	SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
 	SetCommonData("SpellCardBG1",false);
-	wait(140);
+	loop(140)
+	{
+		
+		ObjRender_SetAlpha(objEnemy, 255);
+		yield;
+	}
 	
 	CloseScript(GetOwnScriptID());
 	return;
