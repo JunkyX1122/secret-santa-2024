@@ -68,7 +68,7 @@ let MAX_HEALTH = 300/3;
 	if(count < 95)	
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
-		
+		SetCommonData("Stage_06Blue",true);
 	}
     if(count == 95)
     {

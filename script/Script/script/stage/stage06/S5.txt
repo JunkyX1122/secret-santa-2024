@@ -115,6 +115,7 @@ task Fire
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
 	SetCommonData("SpellCardBG1",true);
+	SetCommonData("Stage_06Blue",false);
 	wait(60);
 	
 	ManageSpearCharge(bit,BOSS_UP);

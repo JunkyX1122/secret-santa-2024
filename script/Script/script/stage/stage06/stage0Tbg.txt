@@ -21,28 +21,175 @@ let counter = 0;
 task TCallBg
 {
 	SpellBG;
+	Background();
 }
 task ResetBG
 {
-	SetCameraFocusX(-600);
-	SetCameraFocusY(100);
+	SetCameraFocusX(0);
+	SetCameraFocusY(0);
 	SetCameraFocusZ(0);
-	SetCameraAzimuthAngle(0);
-	SetCameraElevationAngle(0);
-	SetCameraRadius(200);
-
-	SetCameraPerspectiveClip(0,7000);
-	SetFogParam(5000, 7000, 0,0,0);
+	
+	SetCameraRadius(300);
+	SetCameraAzimuthAngle(90);
+	SetCameraElevationAngle(-75);
+	SetFogParam(250, 300, 150, 150, 255);
 }
-task SpellBGFlatColor
+
+task Background()
+{
+	SetFogEnable(true);
+
+	let objClouds = [];
+	let randStarts = [];
+	ascent(i in 0..3)
+	{
+		let objCloud = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCloud, IMG_STAGE_06_CLOUD);
+		ObjSprite2D_SetSourceRect(objCloud, 0, 0, 1024, 418);
+		ObjSprite2D_SetDestRect(objCloud, 0, 0, 1024, 256);
+		ObjRender_SetPosition(objCloud, 0, -20-40*i, 0);
+		Obj_SetRenderPriorityI(objCloud, 19);
+		ObjRender_SetAlpha(objCloud, 200-25*i);
+		ObjRender_SetScale(objCloud, 1+0.2*i);
+		ObjRender_SetBlendType(objCloud, BLEND_ADD_ARGB);
+		ObjRender_SetTextureFilterMag(objCloud, FILTER_ANISOTROPIC);
+		objClouds ~= [objCloud];
+		randStarts ~= [rand(0,1024)];
+	}
+	let objSky = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objSky, IMG_STAGE_06_SKY);
+	ObjSprite2D_SetSourceRect(objSky, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestRect(objSky, 0, 0, 1024, 418);
+	ObjRender_SetPosition(objSky, 0, -167, 0);
+	Obj_SetRenderPriorityI(objSky, 18);
+
+	let obj = ObjPrim_Create(OBJ_SPRITE_3D);
+	ObjPrim_SetTexture(obj, IMG_STAGE_06_GROUND);
+	ObjRender_SetPosition(obj, 0, -30, -30);
+	Obj_SetRenderPriorityI(obj, 19);
+	ObjSprite3D_SetSourceDestRect(obj, 0, 0, 256*2, 256);
+	ObjRender_SetAlpha(obj, 255);
+	ObjRender_SetColor(objSky, 150, 150, 255);
+	ObjRender_SetColor(obj, 255, 255, 255);
+	
+	let objDark = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objDark, IMG_PIXEL);
+	ObjSprite2D_SetSourceRect(objDark, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestRect(objDark, 0, 0, 1024, 1024);
+	ObjRender_SetPosition(objDark, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+	Obj_SetRenderPriorityI(objDark, 19);
+	ObjRender_SetColor(objDark, 0,0,0);
+	ObjRender_SetAlpha(objDark, 64);
+	ObjSprite2D_SetDestCenter(objDark);
+	
+	
+	let objDark2 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objDark2, IMG_PIXEL);
+	ObjSprite2D_SetSourceRect(objDark2, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestRect(objDark2, 0, 0, 1024, 1024);
+	ObjRender_SetPosition(objDark2, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+	Obj_SetRenderPriorityI(objDark2, 10);
+	ObjRender_SetColor(objDark2, 255,0,0);
+	ObjRender_SetAlpha(objDark2, 255);
+	ObjSprite2D_SetDestCenter(objDark2);
+	
+	let cBlue = 0;
+	SnowProgram();
+	let mx = 0;
+	let mc = 0;
+	let zyoom = 1;
+	let nyoom = 1;
+
+	let tintTime = 600;
+	let maxTime = tintTime;
+	let cRed = 0;
+	
+	while(true)	//movement during boss
+	{
+		ObjSprite3D_SetSourceRect(obj, 0, 0+mx, 1024*2, 1024/2+mx);
+		ascent(i in 0..3)
+		{
+			let movSpd = mc * (2-1/2*i) * 0.5;
+			ObjSprite2D_SetSourceRect(objClouds[i], 0+movSpd + randStarts[i], 0, 1024+movSpd + randStarts[i], 418);
+		}
+		mx+=zyoom;
+		mc+=nyoom;
+		yield;
+	}
+}
+
+task SnowProgram()
+{
+	let angSand = 90;
+	let alphaScaleSandstorm = 1;
+	let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_STAGE_06_SNOW, [0,0,128,128], BLEND_ALPHA, 0.19);
+
+	let scl = 5;
+
+	let cc = 0;
+	let cc2 = 0;
+	while(true)
+	{
+		let yP = 100;
+		alphaScaleSandstorm = alphaScaleSandstorm * 0.95 + 1 * 0.05;
+
+		if(cc2%10==0)
+		{
+			loop(3)
+			{
+				WindCloud(rand(1.25,3.25)/2);
+			}
+		}
+		cc-=1.5;
+		cc2++;
+		yield;
+		
+	}
+	
+	task WindCloud(spd)
+	{
+		let randAng = rand(30,-30);
+		let xC = rand(-10, GetStgFrameWidth+10);
+		let yC = -rand(20,60);
+		let alpha = rand(32,64)*1.1;
+		let scaleX = rand(0.5,1.1)*(1-2*round(rand(0,1))) * 0.5;
+		let scaleY = rand(0.5,1.1)*(1-2*round(rand(0,1))) * 0.5;
+		let color = [255,255,255];
+		let ang = rand(0,360);
+		let previousAng = angSand;
+		let cosAng = cos(angSand);
+		let sinAng = sin(angSand);
+		while(yC<GetStgFrameHeight+30)
+		{
+			ObjParticleList_SetAlpha(objCloudParticle,alpha*alphaScaleSandstorm);
+			ObjParticleList_SetScale(objCloudParticle,scaleX,scaleY,0);
+			ObjParticleList_SetPosition(objCloudParticle,xC,yC,0);
+			ObjParticleList_SetAngleZ(objCloudParticle,ang);
+			ObjParticleList_SetColor(objCloudParticle,color[0],color[1],color[2]);
+			ObjParticleList_AddInstance(objCloudParticle);
+
+			xC+=spd*cosAng;
+			yC+=spd*sinAng;
+			
+			yield;
+			
+		}
+	}
+}
+
+
+
+
+task SpellFlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj, 24); //描画優先度を設定
-	ObjPrim_SetTexture(obj, GetCurrentScriptDirectory~"./../../../img/background/BG1/pixel.png"); //テクスチャを設定
+	Obj_SetRenderPriorityI(obj, 22); //描画優先度を設定
+	ObjPrim_SetTexture(obj, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestCenter(obj);
-	ObjRender_SetColor(obj,0,0,0);
+	ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
+	//ObjRender_SetColor(obj,0,0,0);
 	let alpha1 = 0;
 	while(true)
 	{
@@ -60,7 +207,7 @@ task SpellBGFlatColor
 				alpha1 -= 1/40;
 			}
 		}
-		ObjRender_SetAlpha(obj,128*alpha1);
+		ObjRender_SetAlpha(obj,48*alpha1);
 		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 		yield;
 	}
@@ -69,109 +216,68 @@ task SpellBGFlatColor
 
 task SpellBG
 {
-	SpellBGFlatColor;
+	SpellFlatColor();
 	
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
-	Obj_SetRenderPriorityI(obj, 22); 
-	ObjPrim_SetTexture(obj, IMG_YUUMA_BG1); 
-	ObjSprite2D_SetSourceRect(obj, 0, 0,512, 512);
-	ObjSprite2D_SetDestRect(obj, 0, 0, 512, 512);
+	Obj_SetRenderPriorityI(obj, 21); 
+	ObjPrim_SetTexture(obj, IMG_STAGE_06_SPELL_00); 
+	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScaleXYZ(obj,1.5,1.5,0);
-	ObjRender_SetAngleZ(obj,-90);
-	//ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	
+	CreateBox();
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
-	Obj_SetRenderPriorityI(obj2, 22); 
-	ObjPrim_SetTexture(obj2, IMG_YUUMA_BG1); 
-	ObjSprite2D_SetSourceRect(obj2, 0, 0,512, 512);
-	ObjSprite2D_SetDestRect(obj2, 0, 0, 512, 512);
+	Obj_SetRenderPriorityI(obj2, 23); 
+	ObjPrim_SetTexture(obj2, IMG_STAGE_06_SPELL_03); 
+	ObjSprite2D_SetSourceRect(obj2, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj2);
-	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScaleXYZ(obj2,-1.5,1.5,0);
-	ObjRender_SetAngleZ(obj2,-90);
-	//ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
+	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2-70,0);
+	ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
+	ObjRender_SetAngleY(obj2, 0);
+	ObjRender_SetScale(obj2, 1.1);
+	SwitchTexture(obj2);
 	
-	let vertexCount = 512;
-	let obj3 = ObjPrim_Create(OBJ_PRIMITIVE_2D); 
-	ObjPrim_SetPrimitiveType(obj3,PRIMITIVE_TRIANGLESTRIP);
+	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj3, 23); 
-	ObjPrim_SetVertexCount(obj3,vertexCount);
-	ObjPrim_SetTexture(obj3, IMG_YUUMA_BG2); 
-	ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
-	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjPrim_SetTexture(obj3, IMG_STAGE_06_SPELL_03); 
+	ObjSprite2D_SetSourceRect(obj3, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 1024);
+	ObjSprite2D_SetDestCenter(obj3);
+	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2-70,0);
+	ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
+	ObjRender_SetAngleY(obj3, 180);
+	ObjRender_SetScale(obj3, 1.1);
+	SwitchTexture(obj3);
 	
-	let objRings = [];
-	ascent(i in 0..3)
-	{
-		let objR = ObjPrim_Create(OBJ_SPRITE_2D); 
-		objRings ~= [objR];
-		Obj_SetRenderPriorityI(objRings[i], 24); 
-		ObjPrim_SetTexture(objRings[i], IMG_YUUMA_BG3); 
-		ObjSprite2D_SetSourceRect(objRings[i], 0, 0,1024, 1024);
-		ObjSprite2D_SetDestRect(objRings[i], 0, 0, 1024, 1024);
-		ObjSprite2D_SetDestCenter(objRings[i]);
-		ObjRender_SetPosition(objRings[i],GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetBlendType(objRings[i],BLEND_SUBTRACT);
-		
-	}
-	ObjRender_SetScale(objRings[0],1);
-	ObjRender_SetScale(objRings[1],0.72);
-	ObjRender_SetScale(objRings[2],0.5185);
+	let obj4s = [];
 	
-	ascent(i in 0..vertexCount/2)
+	ascent(o in 0..2)
 	{
-		let index = i*2;
-		let angle = 360/((vertexCount/2)-1)*i+90;
-		let dis = 550;
-		ObjPrim_SetVertexPosition(obj3,index,0,0,0);
-		ObjPrim_SetVertexPosition(obj3,index+1,dis*cos(angle),dis*sin(angle),0);
-		ObjPrim_SetVertexUVT(obj3, index, 1024/(vertexCount/2)*i, 0);
-		ObjPrim_SetVertexUVT(obj3, index+1, 1024/(vertexCount/2)*i, 512);
-		ObjPrim_SetVertexAlpha(obj3,index,0);
-		ObjPrim_SetVertexColor(obj3,index,0,0,0);
-		
+		ascent(i in 0..2)
+		{
+			let obj4 = ObjPrim_Create(OBJ_SPRITE_2D); 
+			Obj_SetRenderPriorityI(obj4, 23); 
+			ObjPrim_SetTexture(obj4, IMG_STAGE_06_SPELL_04); 
+			ObjSprite2D_SetSourceRect(obj4, 0, 0, 128, 1024);
+			ObjSprite2D_SetDestRect(obj4, 0, 0, 128, 1024);
+			ObjSprite2D_SetDestCenter(obj4);
+			ObjRender_SetPosition(obj4,[32, GetStgFrameWidth-32][o],GetStgFrameHeight/2,0);
+			ObjRender_SetBlendType(obj4, BLEND_SUBTRACT);
+			ObjRender_SetAngleZ(obj4, -28*[1,-1][i]);
+			ObjRender_SetScaleX(obj4, 0.75);
+			obj4s ~= [obj4];
+		}
 	}
+	
 	
 	let alpha1 = 0;
-	let c1 = 0;
-	let c2 = 0;
-	let c3 = 0;
-	let tm1 = rand(0.5,1);
-	let tm2 = rand(0.5,1);
-	let tv1 = tm1;
-	let tv2 = tm2;
-	
+	let c = 0;
+	let scrollSpd_bg01 = 0.25;
 	while(true)
 	{
-		if(c3%180 == 0)
-		{
-			tv1 = rand(0.5,2)/2;
-			tv2 = rand(0.5,2)/2;
-		}
-		tm1 = tm1 * 0.999 + tv1 * 0.001;
-		tm2 = tm2 * 0.999 + tv2 * 0.001;
-		
-		ObjRender_SetAlpha(obj,(128+128*sin(c3/3))*alpha1);
-		ObjRender_SetAlpha(obj2,(128+128*sin(c3/3+180))*alpha1);
-		ObjRender_SetAlpha(obj3,255*alpha1);
-		
-		ascent(i in 0..3)
-		{
-			ObjRender_SetAlpha(objRings[i],(64-32/2*i)*alpha1);
-			ObjRender_SetAngleZ(objRings[i],c3*(1-2*(i%2))*0.025);
-		}
-		
-	
-		ObjSprite2D_SetSourceRect(obj, 0, 0+c1,512, 512+c1);
-		ObjSprite2D_SetSourceRect(obj2, 0, 0-c2,512, 512-c2);
-		ascent(i in 0..vertexCount/2)
-		{
-			let index = i*2;
-			ObjPrim_SetVertexUVT(obj3, index, 1024/(vertexCount/2)*i, c3*0.5);
-			ObjPrim_SetVertexUVT(obj3, index+1, 1024/(vertexCount/2)*i, 512+c3*0.5);
-		}
 		if(GetCommonData("SpellCardBG1",false)==true)
 		{
 			if(alpha1 < 1)
@@ -181,24 +287,109 @@ task SpellBG
 		} 
 		else
 		{
-		if(alpha1>0)
+			if(alpha1>0)
 			{
 				alpha1 -= 1/40;
 			}
 		}
 		
-		ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ascent(i in 0..3)
+		ObjRender_SetAlpha(obj, 255*alpha1);
+		ObjRender_SetAlpha(obj2, (128-128*sin(c))*alpha1);
+		ObjRender_SetAlpha(obj3, (128+128*sin(c))*alpha1);
+		
+		let scrlSpd = c*0.9;
+		ascent(i in 0..4)
 		{
-			ObjRender_SetPosition(objRings[i],GetStgFrameWidth/2,GetStgFrameHeight/2,0);		
+			ObjSprite2D_SetSourceRect(obj4s[i], 0, scrlSpd, 128, 1024 + scrlSpd);
+			ObjRender_SetAlpha(obj4s[i], 150*alpha1);
 		}
-		c1+=tm1;
-		c2+=tm2;
-		c3++;
+		c++;
 		yield;
 	}
 
+	
+}
+
+task SwitchTexture(obj)
+{
+	while(!Obj_IsDeleted(obj))
+	{
+		ObjPrim_SetTexture(obj, IMG_STAGE_06_SPELL_03); 
+		ObjSprite2D_SetSourceRect(obj, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj);
+		while(!GetCommonData("Stage_06Blue", false) && !Obj_IsDeleted(obj)){yield;}
+		
+		ObjPrim_SetTexture(obj, IMG_STAGE_06_SPELL_05); 
+		ObjSprite2D_SetSourceRect(obj, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj);
+		while(GetCommonData("Stage_06Blue", false) && !Obj_IsDeleted(obj)){yield;}
+	}
+}
+task CreateBox()
+{
+	
+	let dir = GetCurrentScriptDirectory();
+	let path = IMG_STAGE_06_SPELL_01;
+
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D); //2Dスプライトオブジェクト生成
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj, 22); //描画優先度を設定
+	ObjPrim_SetTexture(obj, path); //テクスチャを設定
+	
+	ObjPrim_SetVertexPosition(obj, 0, -512, -512, 0);
+	ObjPrim_SetVertexPosition(obj, 1, 512, -512, 0); 
+	ObjPrim_SetVertexPosition(obj, 2, 512, 512, 0);
+	ObjPrim_SetVertexPosition(obj, 3, -512, 512, 0);
+	
+	ObjPrim_SetVertexUVT(obj, 0, 0, 0);
+	ObjPrim_SetVertexUVT(obj, 1, 1024, 0);
+	ObjPrim_SetVertexUVT(obj, 2, 1024, 1024);
+	ObjPrim_SetVertexUVT(obj, 3, 0, 1024);
+
+	ObjShader_SetShaderF(obj, GetCurrentScriptDirectory()~"hlslfire.txt");
+	//ObjRender_SetScaleXYZ(obj,0.5,0.5,0);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	//LoadTextureEx(IMG_STAGE_06_SPELL_01, false, false);
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	
+	let timer = 0;
+	let alpha1 = 0;
+	loop
+	{
+		ObjShader_SetFloat(obj, "time", timer);
+		ObjShader_SetFloat(obj, "rotation", timer*0.0);
+		ObjShader_SetFloat(obj, "scroll_y", 1);
+		ObjShader_SetFloat(obj, "blueness", GetCommonData("Stage_06Blue", false) == true ? 1 : 0);
+		
+		ObjShader_SetTexture(obj, "texture_0", path);
+		ObjShader_SetTexture(obj, "texture_1", IMG_STAGE_06_SPELL_02);
+		ObjShader_SetTechnique(obj, "TecFire");
+		let ang = ObjRender_GetAngleZ(obj);
+		
+		
+		if(GetCommonData("SpellCardBG1",false)==true)
+		{
+			if(alpha1 < 1)
+			{ 
+				alpha1 += 1/10;
+			}
+		} 
+		else
+		{
+			if(alpha1>0)
+			{
+				alpha1 -= 1/40;
+			}
+		}
+		
+		ObjShader_SetFloat(obj, "globalAlpha", alpha1);
+
+		//ObjRender_SetAngleZ(obj,ang+0.5);
+		timer++;
+		yield;
+	}
 	
 }

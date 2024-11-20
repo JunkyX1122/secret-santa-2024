@@ -123,6 +123,7 @@ task Fire
 			SE_PlayLen(compositespellcard,75);
 			SE_PlayLen(BossSpell,75);
 			SetCommonData("SpellCardBG1",true);
+			SetCommonData("Stage_06Blue",false);
 			
 			
 			SE_PlayLen(Burst1,80);

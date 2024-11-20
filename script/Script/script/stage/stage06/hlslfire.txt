@@ -1,0 +1,210 @@
+
+sampler sampler0_ : register(s0);
+
+texture texture_0;
+sampler Samp0 = sampler_state
+{
+	Texture		= <texture_0>;
+	MipFilter	= LINEAR;	//　縮小間フィルタ（？）
+	MinFilter	= LINEAR;	//　縮小フィルタ
+	MagFilter	= LINEAR;	//　拡大フィルタ
+	AddressU	= 1;		//　地続きのマッピングU
+	AddressV	= 1;		//　地続きのマッピングV
+};
+texture texture_1;
+sampler Samp1 = sampler_state
+{
+	Texture		= <texture_1>;
+	MipFilter	= LINEAR;	//　縮小間フィルタ（？）
+	MinFilter	= LINEAR;	//　縮小フィルタ
+	MagFilter	= LINEAR;	//　拡大フィルタ
+	AddressU	= 1;		//　地続きのマッピングU
+	AddressV	= 1;		//　地続きのマッピングV
+};
+
+const float SCREEN_WIDTH = 1024;
+const float SCREEN_HEIGHT = 1024;
+const float PI = 3.14;
+float time;
+float scroll_x;
+float scroll_y;
+float rotation;
+float globalAlpha;
+float blueness;
+
+texture textureMask_;
+sampler samplerMask_ = sampler_state{
+	Texture = <textureMask_>;
+};
+
+
+struct PS_INPUT
+{
+	float4 diffuse : COLOR0; 
+	float2 texCoord : TEXCOORD0;
+	float2 vPos : VPOS; 
+};
+
+
+struct PS_OUTPUT
+{
+    float4 color : COLOR0; 
+};
+float2x2 rotationMatrix(float angle)
+{
+	angle *= PI / 180.0;
+    float sine = sin(angle), cosine = cos(angle);
+    return float2x2( cosine, -sine, 
+                 sine,    cosine );
+}
+
+
+PS_OUTPUT PsFire( PS_INPUT In ) : COLOR0
+{
+	PS_OUTPUT Out;
+
+	float time_scale_x = scroll_x;
+	float time_scale_y = scroll_y;
+	
+	float timer = time / SCREEN_WIDTH;
+	float2 coord = float2(timer * time_scale_x ,timer* time_scale_y);
+	coord = coord;
+	
+	float4 noise_0 = tex2D(Samp1,In.texCoord + coord);
+	noise_0 *= In.diffuse;
+	
+	if(noise_0.r<0.5)
+	{
+		//noise_0.r = 0;
+		//noise_0.g = 0;
+		//noise_0.b = 0;
+	}
+	else 
+	{
+		//noise_0.r = 1;
+		//noise_0.g = 1;
+		//noise_0.b = 1;
+	}
+	
+	float4 noise_1 = tex2D(Samp1,In.texCoord * 0.25 + coord);
+	noise_1 *= In.diffuse;
+	
+	
+	float2 newCoors = mul(In.texCoord - 0.5, rotationMatrix( rotation ));
+	float distanceFromCentre = distance(float2(0,0), newCoors);
+	//newCoors = mul(In.texCoord - 0.5, rotationMatrix( rotation + distanceFromCentre * 800));
+
+	
+	float4 mask = tex2D(Samp0,newCoors + 0.5);
+	mask *= In.diffuse;
+	
+	
+	float4 noise_combine = noise_0 * noise_1;
+	float4 mask_combine = (noise_combine + mask) * mask;
+	
+	
+	float4 stepInner = step(0.4, mask_combine);
+    float4 stepOpacity  = step(0.1, mask_combine);
+	
+	float colMult = 1;
+	/*
+	
+	//*/
+	//*blueness
+	float3 colorOuter = float3(1,0,0) * colMult;
+	float3 colorCenterOuter = float3(1,0.1,0) * colMult;
+	float3 colorCenterInner = float3(1,0.3,0) * colMult;
+	float3 colorInner = float3(1,0.6,0) * colMult;
+	//*/
+	
+	if(blueness==1.0)
+	{
+		colorOuter = float3(0,0,1) * colMult;
+		colorCenterOuter = float3(0,0.6,1) * colMult;
+		colorCenterInner = float3(0,0.8,1) * colMult;
+		colorInner = float3(0.7,1,1) * colMult;
+	}
+	float thresholdNone = 0.15;
+	float thresholdOuter = 0.6;
+	float thresholdInner = 0.9;
+		
+	if(distanceFromCentre > 0.5)
+	{
+		mask_combine = float4(0.0,0.0,0.0,0.0);
+	}
+	
+	if(mask_combine.r < 0.15)
+	{
+		mask_combine = float4(0.0,0.0,0.0,0.0);
+	}
+	else
+	{
+		
+		mask_combine.a = (mask_combine.r - 0.15) * 1.0;
+		float lerp_step = mask_combine.a ;
+		
+		if(lerp_step > thresholdInner)
+		{
+			float diff = 1 - thresholdInner;
+			mask_combine.rgb = lerp(colorCenterInner,colorInner,(lerp_step - thresholdInner) / diff);
+		}
+		else if(lerp_step > thresholdOuter)
+		{
+			float diff = thresholdInner - thresholdOuter;
+			mask_combine.rgb = lerp(colorCenterOuter,colorCenterInner,(lerp_step - thresholdOuter) / diff);
+		}
+		else
+		{
+			float diff = thresholdOuter - thresholdNone;
+			mask_combine.rgb = lerp(colorOuter,colorCenterOuter, (lerp_step - thresholdNone) / diff);
+		}
+		
+		
+		mask_combine.a = mask_combine.a * 0.5 * globalAlpha;
+	}
+
+	
+	Out.color = mask_combine;
+
+	return Out;
+}
+
+
+technique TecFire
+{
+	pass Pass0
+	{
+		PixelShader = compile ps_3_0 PsFire();
+	}
+	
+}
+/*
+float4 tex0 = tex2D(sampler0_,In.texCoord);
+	tex0 *= In.diffuse;
+
+	
+	fragColor = float4(0, 0, 0, 1);
+	float2 delta = float2(0, 0);
+
+	if(isVertical == 1)
+	{
+		delta = dFdy(IN.texCoord);
+	}
+	else
+	{
+		delta = dFdx(IN.texCoord);
+	}
+	float z = 0;
+    int ranger = bloomRange;
+	float startCurve = 8.0f;
+	for(int i = 0; i < ranger; i++)
+	{
+		float2 offset = delta * (z - (ranger-1)/2);
+		float4 tmp = texture2D(sceneTex, IN.texCoord.xy + offset);
+		
+		float curve = 1.0/(pow(2.0, abs( -startCurve + (startCurve*2)/(ranger-1) * z ) ));
+		fragColor += tmp * curve * bloomIntensity;
+		z+=1.0;
+	}
+	
+	*/
