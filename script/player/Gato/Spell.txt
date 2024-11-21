@@ -1,0 +1,296 @@
+task TSpell
+{
+	FLASH;
+	SE_PlayLen(SPELLTHING);
+	
+	let objManage = GetSpellManageObject();
+	Obj_Delete(objManage);
+	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
+	{
+		SpellGatoFocus;
+	}
+	else
+	{
+		SpellGatoUnfocus;
+	}
+	let amount = 3;
+	loop(30)
+	{
+		SetCommonData("StateFaceShake",amount);
+		amount-=3/30;
+		yield;
+	}
+	SetCommonData("StateFaceShake",0);
+}
+task FLASH
+{
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetTexture(obj,IMG_WHITECIRCLE_L);
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj,42);
+	ObjRender_SetAngleZ(obj,0);
+	let ALF=0;
+	ObjRender_SetAlpha(obj,ALF);
+	let scale =10;
+	ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+	ObjPrim_SetDestCenter(obj,0,0,512,512);
+	loop(20)
+	{
+		ObjRender_SetPosition(obj,GetPlayerX,GetPlayerY,0);
+		ObjRender_SetAlpha(obj,ALF);
+		ALF+=255/20;
+		yield;
+	}
+	loop(20)
+	{
+		ObjRender_SetPosition(obj,GetPlayerX,GetPlayerY,0);
+		ObjRender_SetAlpha(obj,ALF);
+		ALF-=255/20;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
+task SpellGatoUnfocus
+{
+	OnSpell = true;
+	SetPlayerSpeed(1.0,0.4);
+	SetPlayerInvincibilityFrame_Special(300);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),255);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,300);
+	SE_PlayLen(CHARGE);
+	
+	GiantBall();
+	wait(150);
+	TShake(120,3);
+	SE_PlayLen(NHIT);
+    SetPlayerSpeed(PLAYERSPEED[0], PLAYERSPEED[1]);
+	
+	wait(150);
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+}
+
+task GiantBall()
+{
+	let x = GetPlayerX;
+	let y = GetPlayerY;
+		
+	let obj2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetTexture(obj2,IMG_GIANTBALL);
+	ObjPrim_SetPrimitiveType(obj2, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj2, 4);
+	ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+	Obj_SetRenderPriorityI(obj2,40);
+	ObjRender_SetAngleZ(obj2,0);
+	ObjPrim_SetDestCenter(obj2,0,0,128,128);
+	
+	let obj = ObjSpell_Create();
+	ObjSpell_Regist(obj);
+	ObjSpell_SetEraseShot(obj,false);
+	ObjSpell_SetEraseShot(obj, true);
+	
+		
+	ascent(i in 0..150)
+	{
+		x = GetPlayerX;
+		y = GetPlayerY;
+		let s = 3 * sin(90/149*i);
+		ObjRender_SetScaleXYZ(obj2, s);
+		ObjRender_SetPosition(obj2, x, y, 0);
+		ObjRender_SetAngleZ(obj2, rand(0,360));
+		ObjSpell_SetIntersectionCircle(obj, x, y, 64*s);
+		ObjSpell_SetDamage(obj, 6*s/3);
+		CreateShine(s);
+		yield;
+	}
+	let moveAng = -90;
+	let EnemyObjectArray=GetIntersectionRegistedEnemyID;
+	let Dis=2000;
+	let nearObj=-1;
+	if(length(EnemyObjectArray)!=0)
+	{
+		ascent(i in 0..length(EnemyObjectArray))
+		{
+			let dis = ((ObjRender_GetX(EnemyObjectArray[i])-GetPlayerX)^2 + (ObjRender_GetY(EnemyObjectArray[i])-GetPlayerY)^2)^0.5;
+			if(dis<Dis)
+			{
+				nearObj=EnemyObjectArray[i];
+				Dis=dis;
+			}
+		}
+	}
+	if(nearObj!=-1)
+	{
+		moveAng=atan2(ObjRender_GetY(nearObj)-GetPlayerY,ObjRender_GetX(nearObj)-GetPlayerX);
+	}
+	let xSpd = 5 * cos(moveAng);
+	let ySpd = 5 * sin(moveAng);
+	while(x>-256 && x<GetStgFrameWidth+256 && y>-256 && y<GetStgFrameHeight+256)
+	{
+		let s = 3;
+		ObjRender_SetScaleXYZ(obj2, s);
+		ObjRender_SetPosition(obj2, x, y, 0);
+		ObjRender_SetAngleZ(obj2, rand(0,360));
+		CreateShine(s);
+		ObjSpell_SetIntersectionCircle(obj, x, y, 64*s);
+		ObjSpell_SetDamage(obj, 19);
+		x+=xSpd;
+		y+=ySpd;
+		yield;
+	}
+	Obj_Delete(obj);
+	Obj_Delete(obj2);
+	task CreateShine(s)
+	{
+		let ang = rand(0,360);
+		let col = [255,255,64];
+		ascent(i in 0..40)
+		{
+			let scl = (s*2)/40*i;
+			let alf = (255-255/40*i)*0.1;
+			ObjParticleList_SetAlpha(wooshArray,alf);
+			ObjParticleList_SetScale(wooshArray,scl,scl,0);
+			ObjParticleList_SetPosition(wooshArray,x, y,0);
+			ObjParticleList_SetColor(wooshArray,col[0],col[1],col[2]);
+			ObjParticleList_SetAngleZ(wooshArray,ang);
+			ObjParticleList_AddInstance(wooshArray);
+			yield;
+		}
+	}
+}
+
+let wooshArray;
+let wooshArray2;
+let shineArray;
+task InitialiseSpellArray
+{
+	wooshArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_WOOSH, [1,1,127,127], BLEND_ADD_ARGB, 0.28);
+	wooshArray2 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_WOOSH, [1,1,127,127], BLEND_SUBTRACT, 0.29);
+	shineArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_GIANTBALLGLOW, [0,0,256,256], BLEND_ADD_ARGB, 0.4);
+}
+task SpellGatoFocus
+{
+	OnSpell=true;
+	SetPlayerSpeed(1.0,0.4);
+	SetPlayerInvincibilityFrame_Special(375);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),255);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,300);
+
+	SE_PlayLen(SE_SPELL2);
+
+	let RANDER = 5;
+	let ang = -90;
+	ascent(o in 0..300)
+	{
+		if(GetVirtualKeyState(VK_LEFT)!=KEY_FREE)
+		{
+			ang -= 0.1;
+		}
+		if(GetVirtualKeyState(VK_RIGHT)!=KEY_FREE)
+		{
+			ang += 0.1;
+		}
+		let sss = rand(15,17)*1.75;
+		let obj = CreatePlayerShotA1(GetPlayerX+rand(RANDER,-RANDER),GetPlayerY+rand(RANDER,-RANDER),sss,ang,3.5,99999,23);
+		ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
+		ObjShot_SetEraseShot(obj,true);
+		ObjShot_SetSpellFactor(obj,true);
+		Obj_SetRenderPriorityI(obj, 51);
+		ScaleShot(obj, 1.25, sss);
+		
+		let obj2 = CreatePlayerShotA1(GetPlayerX+rand(RANDER,-RANDER),GetPlayerY+rand(RANDER,-RANDER),sss,ang,0,99999,22);
+		ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+		ObjShot_SetSpellFactor(obj2,true);
+		ScaleShot(obj2, 1.75, sss);
+		
+		Woosher(ang);
+		Set2DCameraFocusX(GetStgFrameWidth / 2 + 2*rand_degree);
+		Set2DCameraFocusY(GetStgFrameHeight / 2 + 2*rand_degree);
+		yield;
+	}
+    SetPlayerSpeed(PLAYERSPEED[0], PLAYERSPEED[1]);
+	loop(75)
+	{
+		yield;
+	}
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+	
+}
+
+task Woosher(angMove)
+{
+	let x = GetPlayerX;
+	let y = GetPlayerY;
+	let col = [255,64,255];
+	let col2 = [64,255,64];
+	let ang = angMove+90;
+	let sclB = 1-2*round(rand(0,1));
+	let spd = rand(30,40)*2;
+	let xSpd = spd*cos(angMove);
+	let ySpd = spd*sin(angMove);
+	ascent(i in 0..30)
+	{
+		let scl = 1+min(1/3*i,1);
+		let alf = 255 * min(1,1/10*i);
+		x = GetPlayerX + xSpd * i;
+		y = GetPlayerY + ySpd * i;
+		ObjParticleList_SetAlpha(wooshArray,alf);
+		ObjParticleList_SetScale(wooshArray,scl*1.1 *sclB,scl,0);
+		ObjParticleList_SetPosition(wooshArray,x, y,0);
+		ObjParticleList_SetColor(wooshArray,col[0],col[1],col[2]);
+		ObjParticleList_SetAngleZ(wooshArray,ang);
+		ObjParticleList_AddInstance(wooshArray);
+		
+		ObjParticleList_SetAlpha(wooshArray2,alf);
+		ObjParticleList_SetScale(wooshArray2,scl *sclB,scl,0);
+		ObjParticleList_SetPosition(wooshArray2,x, y,0);
+		ObjParticleList_SetColor(wooshArray2,col2[0],col2[1],col2[2]);
+		ObjParticleList_SetAngleZ(wooshArray2,ang);
+		ObjParticleList_AddInstance(wooshArray2);
+		
+		y-=spd;
+		yield;
+	}
+}
+
+task ScaleShot(obj, scl, spd)
+{
+	let bitR = 1-2*round(rand(0,1));
+	let t = 5;
+	let ang = ObjMove_GetAngle(obj);
+	
+	let x = 0;
+	let y = 0;
+	let xSpd = spd*cos(ang);
+	let ySpd = spd*sin(ang);
+	ascent(i in 0..t)
+	{
+		if(!Obj_IsDeleted(obj))
+		{
+			ObjMove_SetX(obj, GetPlayerX + x);
+			ObjMove_SetY(obj, GetPlayerY + y);
+			ObjRender_SetScaleXYZ(obj, scl/(t-1)*i*bitR, 1.5+1.5/(t-1)*i, 0);
+			
+			x+=xSpd;
+			y+=ySpd;
+			yield;
+		}
+	}
+	while(!Obj_IsDeleted(obj))
+	{
+		ObjMove_SetX(obj, GetPlayerX + x);
+		ObjMove_SetY(obj, GetPlayerY + y);
+	
+		x+=xSpd;
+		y+=ySpd;
+		yield;
+	}
+}
+
+
+
+

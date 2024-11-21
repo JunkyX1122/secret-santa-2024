@@ -56,9 +56,12 @@ task ResetBG
 {
 	SetCameraFocusXYZ(0, -60, 80);
 	SetCameraElevationAngle(0);
+	SetCameraPitch(0);
 	SetCameraYaw(0);
+	SetCameraRoll(0);
 	SetCameraRadius(0);
 	SetCameraElevationAngle(0);
+	
 	SetViewFrom(10, -90, 30+15*cos(camanglemodifier));
 
 	SetCameraPerspectiveClip(0,7000);

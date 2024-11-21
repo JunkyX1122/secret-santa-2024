@@ -42,6 +42,7 @@ let TIME = 60*60;
 
 	end;
 	SetCommonData("SpellCardBG1",false);
+	SetCommonData("GatoPlayerSprite", 1);
 	
 }
 @MainLoop

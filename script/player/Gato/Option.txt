@@ -1,0 +1,107 @@
+task OptionManage {
+    OptionMoveGato;
+    TRenderOptionGato;
+}
+
+let OptionDits = 5;
+
+task OptionMoveGato {
+	yield;
+    let HiOpX_P4 = [ -30, -16, 16, 30 ];
+    let HiOpY_P4 = [ 0, -30, -30, 0 ];
+    let LowOpX_P4 = [ -18, -6, 6, 18 ];
+    let LowOpY_P4 = [ -20, -30, -30, -20 ];
+
+    let HiOpX = [ HiOpX_P4, HiOpX_P4, HiOpX_P4, HiOpX_P4 ];
+    let HiOpY = [ HiOpY_P4, HiOpY_P4, HiOpY_P4, HiOpY_P4 ];
+    let LowOpX = [ LowOpX_P4, LowOpX_P4, LowOpX_P4, LowOpX_P4 ];
+    let LowOpY = [ LowOpY_P4, LowOpY_P4, LowOpY_P4, LowOpY_P4 ];
+
+	let YoumuTrailX = [];
+	let YoumuTrailY = [];
+	let OldOffSetX = [];
+	let OldOffSetY = [];
+
+	ascent(i in 0..4*OptionDits+OptionDits)
+	{
+		YoumuTrailX = YoumuTrailX ~ [GetPlayerX];
+		YoumuTrailY = YoumuTrailY ~ [GetPlayerY];
+	}
+
+    let LowCount = 0;
+    let D_OptionX = [ 0, 0, 0, 0 ];
+    let D_OptionY = [ 0, 0, 0, 0 ];
+	
+	let OldX = GetPlayerX;
+	let OldY = GetPlayerY;
+	
+    while (true) {
+       if(OldX!=GetPlayerX||OldY!=GetPlayerY)
+		{
+			YoumuTrailX = erase(YoumuTrailX, 0);
+			YoumuTrailY = erase(YoumuTrailY, 0);
+			YoumuTrailX = YoumuTrailX~[GetPlayerX];
+			YoumuTrailY = YoumuTrailY~[GetPlayerY];		
+		}
+		ascent(i in 0..4)
+		{
+
+			D_OptionX[i] = YoumuTrailX[length(YoumuTrailX)-(1+OptionDits*i+OptionDits)];
+			D_OptionY[i] = YoumuTrailY[length(YoumuTrailY)-(1+OptionDits*i+OptionDits)];
+			OptionX[i]=D_OptionX[i];
+			OptionY[i]=D_OptionY[i];
+		}
+		OldX = GetPlayerX;
+		OldY = GetPlayerY;
+        yield;
+    }
+}
+task TRenderOptionGato {
+    let CurrentPower;
+
+    CurrentPower = PlayerPower_Int;
+    DrawOption(0);
+    DrawOption(1);
+    DrawOption(2);
+    DrawOption(3);
+
+    task DrawOption(num)
+	{
+		let path = GetCurrentScriptDirectory() ~ "./optionimg/sakuya.png";
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		objOption=objOption~[obj];
+		ObjPrim_SetTexture(obj, path);	
+		Obj_SetRenderPriorityI(obj,43);
+		let Zangle=0;
+		ObjSprite2D_SetSourceRect(obj, 0, 0, 32, 64);
+		ObjSprite2D_SetDestCenter(obj);
+		let scale=0.6;
+		let FrameCount=0;
+
+		ObjRender_SetBlendType(obj, BLEND_ALPHA);
+		let DownCount=0;
+		let ScaleTheta=0;
+		while(true)
+		{
+			ObjRender_SetScaleXYZ(obj,scale,scale,1);
+			ObjRender_SetPosition(obj, OptionX[num],OptionY[num], 0);
+			ObjSprite2D_SetSourceRect(obj, 0+32*floor((FrameCount%32)/2), 0, 32+32*floor((FrameCount%32)/2), 64);
+			
+			ObjRender_SetAlpha(obj,255);
+			
+ 			if(GetPlayerState==STATE_DOWN)
+			{
+				ObjRender_SetAlpha(obj,0);
+				DownCount=50;
+			}
+ 			if(DownCount>0)
+			{
+				ObjRender_SetAlpha(obj,0);
+			}
+			FrameCount+=1;
+			DownCount-=1;
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+}

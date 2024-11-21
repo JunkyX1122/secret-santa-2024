@@ -1,0 +1,170 @@
+
+task TShotAll {
+    TShotGato;
+    TShot2Gato;
+}
+let lightArray;
+let shotEffect1Array;
+task TShotGato {
+    lightArray =
+        CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_LIGHT,
+                               [ 0, 0, 512, 512 ], BLEND_ADD_ARGB, 0.43);
+    shotEffect1Array = CreateParticleListRect(
+        OBJ_PARTICLE_LIST_2D, IMG_SHOT, [ 49, 97, 63, 128 ], BLEND_ALPHA, 0.43);
+		
+    let pShot = false;
+    ShotCheck;
+    let Speed = 22.5;
+    let MainDamage = 3.0;
+    let DamageRate = 1 * 2;
+	let c = 0;
+    loop {
+        while (!pShot) {
+            yield;
+        }
+        if (IsPlayerSpellActive) {
+            DamageRate = 0.5 * 2;
+        } else {
+            DamageRate = 1.0 * 2;
+        }
+        MainDamage = debugDamageRate ? 300 : 6;
+        
+		if(c%2==0)
+		{
+			MainShot(GetPlayerX() + 8, GetPlayerY(), Speed, 270 + 5, MainDamage, 20);
+			MainShot(GetPlayerX() - 8, GetPlayerY(), Speed, 270 - 5, MainDamage, 20);
+        }
+		else
+		{
+			MainShot(GetPlayerX(), GetPlayerY(), Speed, 270, MainDamage / 2, 20);
+		}
+		SE_PlayLen(SE_SHOT, 50);
+		c++;
+        loop(3) {
+            yield;
+        }
+    }
+
+    task ShotCheck {
+        loop {
+            if ((GetVirtualKeyState(VK_SHOT) == KEY_PUSH ||
+                 GetVirtualKeyState(VK_SHOT) == KEY_HOLD) &&
+                GetPlayerState == STATE_NORMAL && IsPermitPlayerShot &&
+                SELECT_PLAYER == SELECT_MARISA && !OnSpell) {
+                pShot = true;
+
+            } else {
+                pShot = false;
+            }
+            yield;
+        }
+    }
+
+    task MainShot(x, y, speed, angle, damage, id) {
+        let obj = CreatePlayerShotA1(x, y, speed, angle, damage, 1, id);
+        // ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+        let scale = 1;
+        ObjRender_SetScaleXYZ(obj, scale, scale, scale);
+        Obj_SetRenderPriorityI(obj, 40);
+    }
+}
+task TShot2Gato {  // サブ
+    let pShot = false;
+
+    ShotCheck;
+	let c = 0;
+    loop {
+        while (!pShot) {
+            yield;
+        }
+
+		ascent(i in 0..4) {
+			 if (c % 4 == i) {
+				 Homing(OptionX[i], OptionY[i], 10, -90, 2.9, 21);
+			}
+		}
+    
+        c++;
+        loop(1) { yield; }
+    }
+
+    task ShotCheck {
+        loop {
+            if ((GetVirtualKeyState(VK_SHOT) == KEY_PUSH ||
+                 GetVirtualKeyState(VK_SHOT) == KEY_HOLD) &&
+                GetPlayerState == STATE_NORMAL && IsPermitPlayerShot &&
+                SELECT_PLAYER == SELECT_MARISA && !OnSpell) {
+                pShot = true;
+
+            } else {
+                pShot = false;
+            }
+            yield;
+        }
+    }
+}
+task Homing(x, y, speed, angle, damage, id) {
+	let obj = CreatePlayerShotA1(x, y, speed, angle, damage, 1, id);
+	// ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	let scale = 1;
+	ObjRender_SetScaleXYZ(obj, scale, scale, scale);
+	Obj_SetRenderPriorityI(obj, 40);
+	let count = 0;
+	loop(60)
+	{
+		if(!Obj_IsDeleted(obj))
+		{
+			let EnemyObjectArray=GetIntersectionRegistedEnemyID;
+			let Dis=(count*5+120)^2;
+			let nearObj=-1;
+			if(length(EnemyObjectArray)!=0)
+			{
+				ascent(i in 0..length(EnemyObjectArray))
+				{
+					let dis=(ObjRender_GetY(EnemyObjectArray[i])-ObjRender_GetY(obj))^2+(ObjRender_GetX(EnemyObjectArray[i])-ObjRender_GetX(obj))^2;
+					if(dis<Dis)
+					{
+						nearObj=EnemyObjectArray[i];
+						Dis=dis;
+					}
+				}
+			}
+
+			if(nearObj!=-1)
+			{
+			let ToPlayerAngle=atan2(ObjRender_GetY(nearObj)-ObjRender_GetY(obj),ObjRender_GetX(nearObj)-ObjRender_GetX(obj));
+			let judgangle=sin(ToPlayerAngle-angle);
+
+			if(judgangle>0)
+			{
+				if(judgangle>0.05)
+				{
+				angle+=asin(judgangle)/4;
+				}
+				else
+				{
+				angle=ToPlayerAngle;
+				}
+			}
+			else
+			{
+				if(judgangle<-0.05)
+				{
+				angle+=asin(judgangle)/4;
+				}
+				else
+				{
+				angle=ToPlayerAngle;
+				}
+			}
+			ObjMove_SetAngle(obj,angle);
+			}
+			count++;
+			if(count>30){count=30;}
+			speed+=10/60;
+			ObjMove_SetSpeed(obj,speed);
+
+			yield;
+		}
+	}
+}
