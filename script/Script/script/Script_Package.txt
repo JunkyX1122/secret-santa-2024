@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Package]
 #Title["Package"]
 #Text[""]
-#Player["./../../player/Gato/A Ultimate1.txt"]
+#Player["./../../player/Gato/Player_Gato.txt"]
 #include "./lib/lib_img.txt"
 #include "./lib/lib_sound.txt"
 #include "./Loading.txt"
@@ -174,15 +174,19 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	alternative(activeTeam)
 	case(PLAYERTEAM_A)
 	{
-		pathPlayer = dirCurrent ~ "./../../player/Gato/A Ultimate1.txt";
+		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
 	}
 	case(PLAYERTEAM_B)
 	{
-		pathPlayer = dirCurrent ~ "./../../player/Gato/A Ultimate1.txt";
+		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
 	}
 	case(PLAYERTEAM_C)
 	{
-		pathPlayer = dirCurrent ~ "./../../player/Gato/A Ultimate1.txt";
+		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
+	}
+	others
+	{
+		
 	}
 
 	//--------------------------------
