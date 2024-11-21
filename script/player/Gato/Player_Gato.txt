@@ -170,7 +170,7 @@ let xPos = [];
 let yPos = [];
 task PlayerLoad {}
 @MainLoop {
-	
+	SetPlayerRebirthPosition(GetStgFrameWidth/2, 466);
 	if(GetCommonData("GatoPlayerSprite", 0) != currentPlayerSprite)
 	{
 		currentPlayerSprite = GetCommonData("GatoPlayerSprite", 0);

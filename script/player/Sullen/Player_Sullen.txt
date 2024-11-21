@@ -169,6 +169,7 @@ let xPos = [];
 let yPos = [];
 task PlayerLoad {}
 @MainLoop {
+	SetPlayerRebirthPosition(GetStgFrameWidth/2, 466);
 
     SetCommonData("PlayerX", GetPlayerX);
     SetCommonData("PlayerY", GetPlayerY);

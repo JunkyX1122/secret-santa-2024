@@ -326,13 +326,15 @@ task TExplosion {  // 被弾エフェクト
     if (GetPlayerState != STATE_NORMAL) {
         Shaker;
         SE_PlayLen(SE_PLAYERDOWN);
-        RebirthEffect(GetStgFrameWidth / 2, 466);
-
-        ExplodeEffect;
+		
+		ExplodeEffect;
         ShockWave;
-        let rx = GetPlayerX;
+		let rx = GetPlayerX;
         let ry = GetPlayerY;
         ReverseEffect(rx, ry);
+		
+        RebirthEffect(GetStgFrameWidth / 2, 466);
+        
         loop(4) { yield; }
         ReverseEffect(rx + 32, ry);
         ReverseEffect(rx - 32, ry);
@@ -427,22 +429,24 @@ task TExplosion {  // 被弾エフェクト
         Obj_Delete(obj);
     }
 
-    task RebirthEffect(X, Y) {  // 復活時の自機制御
+   task RebirthEffect(X, Y) {  // 復活時の自機制御
         //	let X=GetStgFrameWidth/2;
         //	let Y=466;//416
         RebirthFlag = true;
-
-        loop(10) { yield; }
-        loop(25) {
+		
+        loop(35) {
+			ObjRender_SetAlpha(objPlayer,0);
             ObjMove_SetPosition(objPlayer, X, Y);
             yield;
         }
         SetForbidPlayerShot(true);
         loop(5) {
+			ObjRender_SetAlpha(objPlayer,0);
             ObjMove_SetPosition(objPlayer, X, Y);
             yield;
         }
-        loop(50) {
+        ascent(i in 0..50) {
+			ObjRender_SetAlpha(objPlayer,255/49*i);
             ObjMove_SetPosition(objPlayer, X, Y);
             Y -= 1;
             yield;
