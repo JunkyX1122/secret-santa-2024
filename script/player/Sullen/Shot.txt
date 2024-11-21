@@ -1,0 +1,116 @@
+
+task TShotAll {
+    TShotSullen;
+    TShot2Sullen;
+}
+let lightArray;
+let shotEffect1Array;
+task TShotSullen {
+    lightArray =
+        CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_LIGHT,
+                               [ 0, 0, 512, 512 ], BLEND_ADD_ARGB, 0.43);
+    shotEffect1Array = CreateParticleListRect(
+        OBJ_PARTICLE_LIST_2D, IMG_SHOT, [ 49, 97, 63, 128 ], BLEND_ALPHA, 0.43);
+		
+    let pShot = false;
+    ShotCheck;
+    let Speed = 60;
+    let MainDamage = 3.0;
+    let DamageRate = 1 * 2;
+	let c = 0;
+    loop {
+        while (!pShot) {
+            yield;
+        }
+        if (IsPlayerSpellActive) {
+            DamageRate = 0.5 * 2;
+        } else {
+            DamageRate = 1.0 * 2;
+        }
+        MainDamage = debugDamageRate ? 300 : 3;
+
+		MainShot(GetPlayerX(), GetPlayerY(), Speed, 270, MainDamage * 2, 20);
+		
+		SE_PlayLen(SE_SHOT, 50);
+		c++;
+        loop(3) {
+            yield;
+        }
+    }
+
+    task ShotCheck {
+        loop {
+            if ((GetVirtualKeyState(VK_SHOT) == KEY_PUSH ||
+                 GetVirtualKeyState(VK_SHOT) == KEY_HOLD) &&
+                GetPlayerState == STATE_NORMAL && IsPermitPlayerShot &&
+                SELECT_PLAYER == SELECT_MARISA && !OnSpell) {
+                pShot = true;
+
+            } else {
+                pShot = false;
+            }
+            yield;
+        }
+    }
+
+   
+}
+
+task MainShot(x, y, speed, angle, damage, id) {
+	let obj = CreatePlayerShotA1(x, y, speed, angle, damage, 1, id);
+	// ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	let scale = 1;
+	ObjRender_SetScaleXYZ(obj, scale, scale, scale);
+	Obj_SetRenderPriorityI(obj, 40);
+}
+
+task MainShot2(x, y, speed, angle, damage, id) {
+	let obj = CreatePlayerShotA1(x, y, speed, angle, damage, 1, id);
+	// ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	let scale = 1;
+	ObjRender_SetScaleXYZ(obj, scale/2, scale, scale);
+	Obj_SetRenderPriorityI(obj, 40);
+	ObjShot_SetIntersectionScaleXY(obj, 0.7,0.7);
+	ObjRender_SetColor(obj, 255,165,64);
+}
+
+task TShot2Sullen {  
+    let pShot = false;
+
+    ShotCheck;
+	let c = 0;
+    loop {
+        while (!pShot) {
+            yield;
+        }
+		if (GetVirtualKeyState(VK_SLOWMOVE) == KEY_PUSH ||
+                GetVirtualKeyState(VK_SLOWMOVE) == KEY_HOLD) 
+		{
+			ascent(i in 0..4) {
+				 MainShot(OptionX[i], OptionY[i], 30, -90, 4.2, 21);
+			}
+		}
+		else
+		{
+			ascent(i in 0..4) {
+				 MainShot2(OptionX[i], OptionY[i], 50, 180+90*i, 8, 19);
+			}
+		}
+        loop(3) { yield; }
+    }
+
+    task ShotCheck {
+        loop {
+            if ((GetVirtualKeyState(VK_SHOT) == KEY_PUSH ||
+                 GetVirtualKeyState(VK_SHOT) == KEY_HOLD) &&
+                GetPlayerState == STATE_NORMAL && IsPermitPlayerShot &&
+                SELECT_PLAYER == SELECT_MARISA && !OnSpell) {
+                pShot = true;
+
+            } else {
+                pShot = false;
+            }
+            yield;
+        }
+    }
+}

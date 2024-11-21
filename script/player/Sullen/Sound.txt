@@ -1,0 +1,108 @@
+let SE_GRAZE=current ~ "./se/se_graze.wav";
+let SE_PLAYERDOWN=current ~ "./se/j_end.wav";
+let SE_PLAYERDOWN2=current ~ "./se/se_pldead01.wav";
+let SE_SHOT=current ~ "./se/seShot.wav";
+let SE_SPELL1=current ~ "./se/se_slash.wav";
+let SE_SPELL2=current ~ "./se/se_nep00.wav";
+let SE_SPELL3=current ~ "./se/se_tan00.wav";
+let SE_BONUS=current ~ "./se/se_bonus2.wav";
+
+let ITEMGET = current ~ "./se/se_item.wav";
+let LIFEGET = current ~ "./se/se_life.wav";
+let SPELLGET = current ~ "./se/se_spellget.wav";
+
+let CHARGE = current ~ "./se/se_ch00.wav";
+
+let NHIT = current ~ "./se/se_shot3.wav";
+
+let GROW = current ~ "./se/se_big.wav";
+let OBJECTION = current ~ "./se/objection.wav";
+let HIT=current ~ "./se/j_hit.wav";
+let BARRIERON=current ~ "./se/j_barrier_on.wav";
+
+let SPELLTHING=current ~ "./se/se_spellthing.wav";
+let KOISHISLASH=current ~ "./se/koishislash.wav";
+let BOON1=current ~ "./se/se_boon01.wav";
+let AURASHOT=current ~ "./se/1210.wav";
+let AURACHARGE=current ~ "./se/800.wav";
+task SoundLoad
+{
+	
+	LoadSound(SE_GRAZE);
+	LoadSound(SE_PLAYERDOWN);
+	LoadSound(SE_PLAYERDOWN2);
+	LoadSound(SE_SHOT);
+	LoadSound(SE_SPELL1);
+	LoadSound(SE_SPELL2);
+	LoadSound(SE_SPELL3);
+	LoadSound(SE_BONUS);
+	LoadSound(ITEMGET);
+	LoadSound(SPELLGET);	
+	LoadSound(CHARGE);
+	LoadSound(HIT);
+	LoadSound(BARRIERON);
+	LoadSound(SPELLTHING);
+	LoadSound(KOISHISLASH);
+	LoadSound(BOON1);
+	LoadSound(AURASHOT);
+	LoadSound(AURACHARGE);
+}
+
+//======================================================
+//===================Sound Loader=======================
+let seobj = ObjSound_Create;
+//======================================================
+task SE_PlayLen(let path)
+{
+	let vl = 100;
+	ObjSound_Load(seobj,path);
+	ObjSound_Play(seobj);
+	ObjSound_SetLoopEnable(seobj, false);
+	ObjSound_SetSoundDivision(seobj,SOUND_SE);
+	ObjSound_SetVolumeRate(seobj,vl*GetCommonData("SFXVolume",1));
+	ObjSound_SetPanRate(seobj,0);
+	//Obj_Delete(seobj);
+	//RemoveSound(path);
+	//return(seobj);
+}
+task SE_PlayLen(let path, let vl)
+{
+	ObjSound_Load(seobj,path);
+	ObjSound_Play(seobj);
+	ObjSound_SetLoopEnable(seobj, false);
+	ObjSound_SetSoundDivision(seobj,SOUND_SE);
+	ObjSound_SetVolumeRate(seobj,vl*GetCommonData("SFXVolume",1));
+	ObjSound_SetPanRate(seobj,0);
+	//Obj_Delete(seobj);
+	//RemoveSound(path);
+	//return(seobj);
+}
+
+task SE_PlayLenDynam(let path, let panrate)
+{
+	let vl = 100;
+	ObjSound_Load(seobj,path);
+	ObjSound_Play(seobj);
+	ObjSound_SetLoopEnable(seobj, false);
+	ObjSound_SetSoundDivision(seobj,SOUND_SE);
+	ObjSound_SetVolumeRate(seobj,vl*GetCommonData("SFXVolume",1));
+	ObjSound_SetPanRate(seobj,panrate);
+
+	//Obj_Delete(seobj);
+	//RemoveSound(path);
+	//return(seobj);
+}
+
+task SE_PlayLenDynam(let path, let vl, let panrate)
+{
+	ObjSound_Load(seobj,path);
+	ObjSound_Play(seobj);
+	ObjSound_SetLoopEnable(seobj, false);
+	ObjSound_SetSoundDivision(seobj,SOUND_SE);
+	ObjSound_SetVolumeRate(seobj,vl*GetCommonData("SFXVolume",1));
+	ObjSound_SetPanRate(seobj,panrate);
+
+	//Obj_Delete(seobj);
+	//RemoveSound(path);
+	//return(seobj);
+}

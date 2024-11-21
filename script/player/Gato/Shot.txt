@@ -80,7 +80,7 @@ task TShot2Gato {  // サブ
 
 		ascent(i in 0..4) {
 			 if (c % 4 == i) {
-				 Homing(OptionX[i], OptionY[i], 10, -90, 2.9, 21);
+				 Homing(OptionX[i], OptionY[i], 10, -90, 3.3, 21);
 			}
 		}
     

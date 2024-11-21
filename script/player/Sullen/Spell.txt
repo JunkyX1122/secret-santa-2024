@@ -1,0 +1,293 @@
+task TSpell
+{
+	FLASH;
+	SE_PlayLen(SPELLTHING);
+	
+	let objManage = GetSpellManageObject();
+	Obj_Delete(objManage);
+	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
+	{
+		SpellSullenFocus;
+	}
+	else
+	{
+		SpellSullenUnfocus;
+	}
+	let amount = 3;
+	loop(30)
+	{
+		SetCommonData("StateFaceShake",amount);
+		amount-=3/30;
+		yield;
+	}
+	SetCommonData("StateFaceShake",0);
+}
+task FLASH
+{
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetTexture(obj,IMG_WHITECIRCLE_L);
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj,42);
+	ObjRender_SetAngleZ(obj,0);
+	let ALF=0;
+	ObjRender_SetAlpha(obj,ALF);
+	let scale =10;
+	ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+	ObjPrim_SetDestCenter(obj,0,0,512,512);
+	loop(20)
+	{
+		ObjRender_SetPosition(obj,GetPlayerX,GetPlayerY,0);
+		ObjRender_SetAlpha(obj,ALF);
+		ALF+=255/20;
+		yield;
+	}
+	loop(20)
+	{
+		ObjRender_SetPosition(obj,GetPlayerX,GetPlayerY,0);
+		ObjRender_SetAlpha(obj,ALF);
+		ALF-=255/20;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
+task SpellSullenUnfocus
+{
+	OnSpell = true;
+	let t = 100;
+	SetPlayerInvincibilityFrame_Special(t);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),t);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,t);
+	
+	SE_PlayLen(KOISHISLASH);
+	
+	TShake(120,3);
+	Shield();
+	wait(t);
+
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+}
+let totalSpellsActive = 1;
+task Shield()
+{
+	yield;
+	let x = GetPlayerX;
+	let y = GetPlayerY;
+	
+	let obj1s = [];
+	let obj2s = [];
+	let currentActiveCount = totalSpellsActive;
+	totalSpellsActive++;
+	ascent(i in 0..2)
+	{
+		let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetTexture(obj,IMG_SPIKEY_00);
+		ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+		ObjPrim_SetVertexCount(obj, 4);
+		ObjRender_SetBlendType(obj, [BLEND_SUBTRACT, BLEND_ADD_ARGB][i]);
+		Obj_SetRenderPriorityI(obj,39+i);
+		ObjRender_SetAngleZ(obj,0);
+		ObjPrim_SetDestCenter(obj,0,0,128,128);
+		
+		ObjRender_SetColor(obj, 255,255,255);
+		if(i==1)
+		{
+			ObjRender_SetColor(obj, 32,255,32);
+		}
+		obj1s ~= [obj];
+		
+		let obj2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetTexture(obj2,IMG_SPIKEY_01);
+		ObjPrim_SetPrimitiveType(obj2, PRIMITIVE_TRIANGLEFAN);
+		ObjPrim_SetVertexCount(obj2, 4);
+		ObjRender_SetBlendType(obj2, [BLEND_SUBTRACT, BLEND_ADD_ARGB][i]);
+		Obj_SetRenderPriorityI(obj2,39+i);
+		ObjRender_SetAngleZ(obj2,0);
+		ObjPrim_SetDestCenter(obj2,0,0,128,128);
+		if(i==1)
+		{
+			ObjRender_SetColor(obj2, 128,255,128);
+		}
+		obj2s ~= [obj2];
+	}
+	
+	let objS = CreatePlayerShotA1(x, y, 0, 0, 3, 1000, 1);
+	ObjShot_SetSpellFactor(objS, true);
+	ObjShot_SetEraseShot(objS, true);
+	
+	let scl = 0;
+	let naturalTimer = 60*8 + 60*(currentActiveCount*2);
+	while(!Obj_IsDeleted(objS) && naturalTimer > 0 && GetPlayerState == STATE_NORMAL )
+	{
+		scl = scl * 0.9 + (1+currentActiveCount^1.2) * 0.1;
+		ObjShot_SetIntersectionScaleXY(objS, scl*3);
+		ObjMove_SetPosition(objS, GetPlayerX, GetPlayerY);
+		
+		ascent(o in 0..2)
+		{
+			let obj1 = obj1s[o];
+			let obj2 = obj2s[o];
+			ObjRender_SetScaleXYZ(obj1,scl*1.2);
+			ObjRender_SetScaleXYZ(obj2,scl);
+			ObjRender_SetPosition(obj1, GetPlayerX, GetPlayerY, 0);
+			ObjRender_SetPosition(obj2, GetPlayerX, GetPlayerY, 0);
+			
+			ObjRender_SetAngleZ(obj1, ObjRender_GetAngleZ(obj1) + 1);
+			ObjRender_SetAngleZ(obj2, ObjRender_GetAngleZ(obj2) + 2);
+		}
+		naturalTimer--;
+		yield;
+	}
+	totalSpellsActive = max(1, totalSpellsActive-1);
+	if(!Obj_IsDeleted(objS))
+	{
+		Obj_Delete(objS);
+	}
+	SE_PlayLen(BOON1);
+	let objS2 = CreatePlayerShotA1(x, y, 0, 0, 1, 99999, 1);
+	ObjShot_SetSpellFactor(objS2, true);
+	ObjShot_SetEraseShot(objS2, true);
+	
+	ascent(i in 0..60)
+	{
+		let scl2 = scl - scl/60*i;
+		ObjShot_SetIntersectionScaleXY(objS2, scl2*3);
+		ObjMove_SetPosition(objS2, GetPlayerX, GetPlayerY);
+		ascent(o in 0..2)
+		{
+			let obj1 = obj1s[o];
+			let obj2 = obj2s[o];
+			ObjRender_SetScaleXYZ(obj1,scl2*1.2);
+			ObjRender_SetScaleXYZ(obj2,scl2);
+			ObjRender_SetPosition(obj1, GetPlayerX, GetPlayerY, 0);
+			ObjRender_SetPosition(obj2, GetPlayerX, GetPlayerY, 0);
+			
+			ObjRender_SetAngleZ(obj1, ObjRender_GetAngleZ(obj1) + 1);
+			ObjRender_SetAngleZ(obj2, ObjRender_GetAngleZ(obj2) + 2);
+		}
+		yield;
+	}
+	Obj_Delete(objS2);
+	ascent(o in 0..2)
+	{
+		let obj1 = obj1s[o];
+		let obj2 = obj2s[o];
+		Obj_Delete(obj1);
+		Obj_Delete(obj2);
+	}
+
+
+}
+
+let wooshArray;
+
+task InitialiseSpellArray
+{
+	wooshArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [128,128,256,256], BLEND_ADD_ARGB, 0.5);
+
+}
+task SpellSullenFocus
+{
+	OnSpell=true;
+	let t = 300;
+	SetPlayerSpeed(PLAYERSPEED[0]/4, PLAYERSPEED[1]/4);
+	SetPlayerInvincibilityFrame_Special(t);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),t);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,t);
+
+	let RANDER = 5;
+	let ang = -90;
+	ascent(i in 0..7)
+	{
+		let ang2 = ang + 90 - 180/6*i;
+		AuraShot(120*cos(ang2), 60*sin(ang2), ang2);
+	}
+	wait(50);
+	ascent(i in 0..8)
+	{
+		let ang2 = ang + 90 - 180/6*i + (180/6)/2;
+		AuraShot(120*cos(ang2), 60*sin(ang2), ang2);
+	}
+	wait(50);
+	ascent(i in 0..10)
+	{
+		let ang2 = 360/9*i;
+		ascent(o in 0..2)
+		{
+			let bb = [1,-1][o];
+			let ang3 = -90 + ang2 * bb + (90/9) * bb;
+			AuraShot(120*cos(ang3), 120*sin(ang3), ang3);
+		}
+		wait(10);
+	}
+    SetPlayerSpeed(PLAYERSPEED[0], PLAYERSPEED[1]);
+	loop(100)
+	{
+		yield;
+	}
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+	
+}
+
+task AuraShot(xOff, yOff, ang)
+{
+	let objS = CreatePlayerShotA1(GetPlayerX, GetPlayerY, 0, ang, 0, 99999, 22);
+	ObjShot_SetSpellFactor(objS, true);
+	ObjShot_SetEraseShot(objS, true);
+	ObjRender_SetBlendType(objS, BLEND_ADD_ARGB);
+	ObjRender_SetAngleZ(objS, rand(0,360));
+	SE_PlayLen(AURACHARGE);
+	ObjShot_SetAutoDelete(objS, false);
+	
+	let x = GetPlayerX;
+	let y = GetPlayerY;
+	let spnSpd = 9.213;
+	let dampn = 0.95;
+	ascent(i in 0..60)
+	{
+		x = x * dampn + (GetPlayerX + xOff) * (1-dampn);
+		y = y * dampn + (GetPlayerY + yOff) * (1-dampn);
+		let scl = 1*sin(90/59*i);
+		ObjRender_SetScaleXYZ(objS, scl);
+		ObjShot_SetIntersectionScaleXY(objS, scl);
+		ObjMove_SetPosition(objS, x, y);
+		ObjRender_SetAngleZ(objS, ObjRender_GetAngleZ(objS)+spnSpd);
+		ObjShot_SetDamage(objS, 5*scl);
+		if(!Obj_IsDeleted(objS))
+		{
+			AuraGlow(ObjMove_GetX(objS),ObjMove_GetY(objS),scl);
+		}
+		yield;
+	}
+	ObjShot_SetAutoDelete(objS, true);
+	SE_PlayLen(AURASHOT);
+	ObjMove_SetSpeed(objS, 20);
+	ObjShot_SetDamage(objS, 40);
+	while(!Obj_IsDeleted(objS))
+	{
+		AuraGlow(ObjMove_GetX(objS),ObjMove_GetY(objS),1);
+		ObjRender_SetAngleZ(objS, ObjRender_GetAngleZ(objS)+spnSpd);
+		yield;
+	}
+}
+
+task AuraGlow(x,y,scl)
+{
+	let ang = rand(0,360);
+
+	ascent(i in 0..40)
+	{
+		let s = scl + (1)/40*i;
+		let alf = (255-255/40*i) * 0.2;
+		ObjParticleList_SetAlpha(wooshArray,alf);
+		ObjParticleList_SetScale(wooshArray,s,s,0);
+		ObjParticleList_SetPosition(wooshArray,x, y,0);
+		ObjParticleList_SetAngleZ(wooshArray,ang);
+		ObjParticleList_AddInstance(wooshArray);
+		yield;
+	}
+}

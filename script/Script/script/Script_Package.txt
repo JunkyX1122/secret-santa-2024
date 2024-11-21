@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Package]
 #Title["Package"]
 #Text[""]
-#Player["./../../player/Gato/Player_Gato.txt"]
+#Player["./../../player/Gato/Player_Gato.txt", "./../../player/Sullen/Player_Sullen.txt"]
 #include "./lib/lib_img.txt"
 #include "./lib/lib_sound.txt"
 #include "./Loading.txt"
@@ -40,7 +40,7 @@ task TTitleScene
 	
 	//タイトルシーン終了フラグ
 	wait(120);
-	activeTeam = PLAYERTEAM_A;
+	activeTeam = PLAYERTEAM_B;
 	StartStageProgression();
 	ClosePackage();
 }
@@ -178,7 +178,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	}
 	case(PLAYERTEAM_B)
 	{
-		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
+		pathPlayer = dirCurrent ~ "./../../player/Sullen/Player_Sullen.txt";
 	}
 	case(PLAYERTEAM_C)
 	{
