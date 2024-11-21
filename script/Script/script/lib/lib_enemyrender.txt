@@ -156,6 +156,9 @@ task renderBossUnanimated(obj, path, tiltAmount){
 		
 		ObjRender_SetAngleZ(obj, angMove);
 		
+		Obj_SetValue(obj, "isHittable", ObjRender_GetAlpha(obj) > 0 ? true : false);
+		
+		
 		EnemyMarker(ObjMove_GetX(obj),45);
 		yield;	
 	}
@@ -347,7 +350,18 @@ function CreateFamiliar
 {
 	let Enemy=ObjEnemy_Create(OBJ_ENEMY);
 	ObjEnemy_Regist(Enemy);
+	Targeting(Enemy);
 	return(Enemy);
+	
+	task Targeting(BaseObj)
+	{
+		while(!Obj_IsDeleted(BaseObj))
+		{
+			ObjEnemy_SetIntersectionCircleToShot(BaseObj,ObjMove_GetX(BaseObj),ObjMove_GetY(BaseObj),0);
+			//ObjEnemy_SetIntersectionCircleToPlayer(BaseObj,ObjMove_GetX(BaseObj),ObjMove_GetY(BaseObj),0);
+			yield;
+		}
+	}
 }
 function Ghost(x, y, type, killtime,scale)
 {

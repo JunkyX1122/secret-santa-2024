@@ -122,7 +122,7 @@ task Homing(x, y, speed, angle, damage, id) {
 				ascent(i in 0..length(EnemyObjectArray))
 				{
 					let dis=(ObjRender_GetY(EnemyObjectArray[i])-ObjRender_GetY(obj))^2+(ObjRender_GetX(EnemyObjectArray[i])-ObjRender_GetX(obj))^2;
-					if(dis<Dis)
+					if(dis<Dis && Obj_GetValueD(EnemyObjectArray[i], "isHittable", false) == true)
 					{
 						nearObj=EnemyObjectArray[i];
 						Dis=dis;

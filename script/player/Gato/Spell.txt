@@ -115,7 +115,7 @@ task GiantBall()
 		ascent(i in 0..length(EnemyObjectArray))
 		{
 			let dis = ((ObjRender_GetX(EnemyObjectArray[i])-GetPlayerX)^2 + (ObjRender_GetY(EnemyObjectArray[i])-GetPlayerY)^2)^0.5;
-			if(dis<Dis)
+			if(dis<Dis && Obj_GetValueD(EnemyObjectArray[i], "isHittable", false) == true)
 			{
 				nearObj=EnemyObjectArray[i];
 				Dis=dis;
