@@ -1,5 +1,9 @@
 
 let activeTeam = 0;
+const PLAYERTEAM_A = 0;
+const PLAYERTEAM_B = 1;
+const PLAYERTEAM_C = 2;
+
 const STAGE_1a = 0;
 const STAGE_1b = 1;
 const STAGE_1c = 2;
@@ -10,9 +14,7 @@ const STAGE_4b = 6;
 const STAGE_4c = 7;
 const STAGE_5  = 8;
 const STAGE_6  = 9;
-const PLAYERTEAM_A = 0;
-const PLAYERTEAM_B = 1;
-const PLAYERTEAM_C = 2;
+
 
 function SkippableWait(t)
 {
@@ -415,6 +417,12 @@ function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace,RP)
 	ObjText_SetHorizontalAlignment(objText,ALIGNMENT_LEFT);
 	ObjText_SetMaxWidth(objText,GetScreenWidth-40);
 	return objText;
+}
+
+function RenameRecenterText(obj, text, x, y)
+{
+	ObjText_SetText(obj, text);
+	ObjRender_SetPosition(obj,x-textCentreX(obj),y-textCentreY(obj),0);
 }
 function TTransition(t)
 {

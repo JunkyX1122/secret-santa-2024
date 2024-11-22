@@ -348,6 +348,16 @@ const IMG_TITLE_MAINMENU_BOSSES =  		GetCurrentScriptDirectory()~"./../../img/ti
 const IMG_TITLE_MAINMENU_SELECTBOX =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_selectBox.png";
 const IMG_TITLE_MAINMENU_SELECTARROW =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_selectArrow.png";
 
+const IMG_TITLE_CHARSELECT_BOX =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_box.png";
+const IMG_TITLE_CHARSELECT_TOPLINES =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_topLines.png";
+const IMG_TITLE_CHARSELECT_BOXLINES =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_boxLines.png";
+
+const IMG_TITLE_CHARSELECT_TEAM_A =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_teamA.png";
+const IMG_TITLE_CHARSELECT_TEAM_B =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_teamB.png";
+const IMG_TITLE_CHARSELECT_TEAM_C =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_teamC.png";
+
+const IMG_TITLE_CHARSELECT_NAMEBG =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_namebg.png";
+
 const TitleScreen_ImgArray = [IMG_SELECTIONS,IMG_TITLEBACK];
 
 

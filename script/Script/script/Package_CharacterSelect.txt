@@ -1,0 +1,230 @@
+task CharacterSelectScreen()
+{
+	hasSelected = false;
+	characterSelect_AlphaScl = 1;
+	menuState = MENUSTATE_CHARACTER_SELECT;
+	Char_BoxRender();
+	Char_BoxDetails();
+	SkippableWait(TO_CHARSELECT_TRANSITION);
+	yield;
+	ascent(i in 0..3)
+	{
+		RenderTeam(i);
+	}
+	let hasCanceled = false;
+	while(menuState==MENUSTATE_CHARACTER_SELECT && !hasSelected && !hasCanceled)
+	{
+		CharacterMenuSelectMove();
+		if(GetVirtualKeyState(VK_OK) == KEY_PUSH)
+		{
+			hasSelected = true;
+		}
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+		{
+			hasCanceled = true;
+		}
+		yield;
+	}
+	if(hasCanceled)
+	{
+		ascent(i in 0..30)
+		{
+			characterSelect_AlphaScl = 1 - 1/29*i;
+			yield;
+		}
+		Title_Display();
+	}
+	//wait(120);
+	//Title_Display();
+}
+
+let characterMenuHoldCounter = 0;
+function CharacterMenuSelectMove()
+{
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)  { 
+		MoveOption(1);
+		characterMenuHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_LEFT)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		characterMenuHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_HOLD)  {
+		characterMenuHoldCounter++;
+		if(characterMenuHoldCounter > 20)
+		{
+			if(characterMenuHoldCounter%6==0)
+			{
+				MoveOption(1);
+			}
+		}
+	}
+	if(GetVirtualKeyState(VK_LEFT) == KEY_HOLD)  {
+		characterMenuHoldCounter++;
+		if(characterMenuHoldCounter > 20)
+		{
+			if(characterMenuHoldCounter%6==0)
+			{
+				MoveOption(-1);
+			}
+		}
+	}
+	if((GetVirtualKeyState(VK_RIGHT) == KEY_FREE && GetVirtualKeyState(VK_LEFT) == KEY_FREE) || 
+	   (GetVirtualKeyState(VK_RIGHT) != KEY_FREE && GetVirtualKeyState(VK_LEFT) != KEY_FREE)) {
+		characterMenuHoldCounter = 0;
+	}
+		
+	
+	task MoveOption(am)
+	{
+		selectedTeam+=am;
+		if(selectedTeam > CHARACTERMENU_TOTALOPTIONS -1) { selectedTeam = 0; }
+		if(selectedTeam <  0) 						 { selectedTeam = CHARACTERMENU_TOTALOPTIONS - 1; }
+	}
+}
+
+let CHARACTERMENU_TOTALOPTIONS = 3;
+let TO_CHARSELECT_TRANSITION = 30;
+let characterSelect_AlphaScl = 1;
+let charSelectX = GetScreenWidth/2 - 192;
+
+let selectedTeam = PLAYERTEAM_A;
+const teamNames = ["Team Terra", "Team Paladin", "Team Granini"];
+
+task Char_BoxDetails()
+{
+	let objNBG = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objNBG, IMG_TITLE_CHARSELECT_NAMEBG);
+	Obj_SetRenderPriorityI(objNBG, BASE_RENDERI+7);
+	ObjSprite2D_SetSourceRect(objNBG,0, 0, 256, 32);
+	ObjSprite2D_SetDestRect(objNBG,0, 0, 256, 32);
+	ObjSprite2D_SetDestCenter(objNBG);
+	ObjRender_SetPosition(objNBG,charSelectX,GetScreenHeight/2-152,0);
+	let t = TO_CHARSELECT_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objNBG, 255*scl);
+		SkippableWait(1);
+	}
+	yield;
+	
+	let objText = CreateText(
+		"",
+		25,
+		[[255,255,255],
+		[255,255,255]],
+		[0,0,0],
+		charSelectX,
+		GetScreenHeight/2-152,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		
+	ObjText_SetFontBorderWidth(objText, 2);
+	ObjText_SetFontBorderType(objText, BORDER_FULL);
+	ObjText_SetSidePitch(objText, -1);
+	
+	while(menuState==MENUSTATE_CHARACTER_SELECT)
+	{
+		RenameRecenterText(objText, teamNames[selectedTeam], charSelectX,GetScreenHeight/2-156);
+		ObjRender_SetAlpha(objText, 255*characterSelect_AlphaScl);
+		ObjRender_SetAlpha(objNBG, 255*characterSelect_AlphaScl);
+		yield;
+	}
+	Obj_Delete(objNBG);
+	Obj_Delete(objText);
+}
+
+task Char_BoxRender()
+{
+	let objCSB = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objCSB, IMG_TITLE_CHARSELECT_BOX);
+	Obj_SetRenderPriorityI(objCSB, BASE_RENDERI+7);
+	ObjSprite2D_SetSourceRect(objCSB,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objCSB,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objCSB);
+	ObjRender_SetPosition(objCSB,GetScreenWidth/2+130,GetScreenHeight/2,0);
+	ObjRender_SetBlendType(objCSB, BLEND_SHADOW);
+	ObjRender_SetScaleX(objCSB, 1.4);
+	ObjRender_SetScaleY(objCSB, 0.9);
+	
+	let objCSTL = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objCSTL, IMG_TITLE_CHARSELECT_TOPLINES);
+	Obj_SetRenderPriorityI(objCSTL, BASE_RENDERI+8);
+	ObjSprite2D_SetSourceRect(objCSTL,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objCSTL,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objCSTL);
+	ObjRender_SetPosition(objCSTL,GetScreenWidth/2,GetScreenHeight/2,0);
+	
+	let objCSBL = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objCSBL, IMG_TITLE_CHARSELECT_BOXLINES);
+	Obj_SetRenderPriorityI(objCSBL, BASE_RENDERI+8);
+	ObjSprite2D_SetSourceRect(objCSBL,0, 0, 512, 512);
+	ObjSprite2D_SetDestRect(objCSBL,0, 0, 512, 512);
+	ObjSprite2D_SetDestCenter(objCSBL);
+	ObjRender_SetPosition(objCSBL,charSelectX,GetScreenHeight/2,0);
+
+	let t = TO_CHARSELECT_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetColor(objCSB, 255*scl, 255*scl, 255*scl);
+		ObjRender_SetAlpha(objCSTL, 255*scl);
+		ObjRender_SetAlpha(objCSBL, 255*scl);
+		SkippableWait(1);
+	}
+	yield;
+	while(menuState==MENUSTATE_CHARACTER_SELECT)
+	{
+		ObjRender_SetColor(objCSB, 255*characterSelect_AlphaScl, 255*characterSelect_AlphaScl, 255*characterSelect_AlphaScl);
+		ObjRender_SetAlpha(objCSTL, 255*characterSelect_AlphaScl);
+		ObjRender_SetAlpha(objCSBL, 255*characterSelect_AlphaScl);
+		yield;
+	}
+	Obj_Delete(objCSB);
+	Obj_Delete(objCSTL);
+	Obj_Delete(objCSBL);
+}
+
+let teamArray = [IMG_TITLE_CHARSELECT_TEAM_A, IMG_TITLE_CHARSELECT_TEAM_B, IMG_TITLE_CHARSELECT_TEAM_C];
+
+task RenderTeam(id)
+{
+	let objTeamPortrait = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objTeamPortrait, teamArray[id]);
+	Obj_SetRenderPriorityI(objTeamPortrait, BASE_RENDERI+5);
+	ObjSprite2D_SetSourceRect(objTeamPortrait,0, 0, 512, 512);
+	ObjSprite2D_SetDestRect(objTeamPortrait,0, 0, 512, 512);
+	ObjSprite2D_SetDestCenter(objTeamPortrait);
+	ObjRender_SetPosition(objTeamPortrait,GetScreenWidth/2+220,GetScreenHeight/2,0);
+
+	let alpha = 0;
+	while(menuState==MENUSTATE_CHARACTER_SELECT)
+	{
+		let alphaTarget = 0;
+		if(selectedTeam == id)
+		{
+			alphaTarget = 1;
+		}
+		alpha = alpha * 0.8 + alphaTarget * 0.2;
+		ObjRender_SetAlpha(objTeamPortrait, 255*alpha*characterSelect_AlphaScl);
+		yield;
+	}
+	Obj_Delete(objTeamPortrait);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
