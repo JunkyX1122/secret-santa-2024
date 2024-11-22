@@ -345,6 +345,8 @@ const IMG_TITLE_MAINMENU_BOX =  		GetCurrentScriptDirectory()~"./../../img/title
 const IMG_TITLE_MAINMENU_LINES =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_lines.png";
 const IMG_TITLE_MAINMENU_CHARACTERS =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_characters.png";
 const IMG_TITLE_MAINMENU_BOSSES =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_bosses.png";
+const IMG_TITLE_MAINMENU_SELECTBOX =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_selectBox.png";
+const IMG_TITLE_MAINMENU_SELECTARROW =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_selectArrow.png";
 
 const TitleScreen_ImgArray = [IMG_SELECTIONS,IMG_TITLEBACK];
 

@@ -397,11 +397,11 @@ function RenderSceneToTransitionTexture()
 	let textureName = GetTransitionRenderTargetName();
 	RenderToTextureA1(textureName, 0, 100, true);
 }
-function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace)
+function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace,RP)
 {
 	let objText = ObjText_Create();
 	ObjText_SetText(objText, text);
-	Obj_SetRenderPriorityI(objText,81);
+	Obj_SetRenderPriorityI(objText,RP);
 	ObjText_SetFontSize(objText, fontsize);
 	ObjText_SetFontType(objText, fontFace);
 	ObjText_SetFontBold(objText, false);
