@@ -335,16 +335,18 @@ const IMG_SELECTIONS =  		GetCurrentScriptDirectory()~"./../../img/title/img_sel
 const IMG_TITLEBACK =  		GetCurrentScriptDirectory()~"./../../img/title/img_titleback.png";
 
 
-const IMG_TITLE_00 =  		GetCurrentScriptDirectory()~"./../../img/title/title_00.png";
-const IMG_TITLE_00BLUR =  		GetCurrentScriptDirectory()~"./../../img/title/title_00blur.png";
-const IMG_TITLE_01 =  		GetCurrentScriptDirectory()~"./../../img/title/title_01.png";
-const IMG_TITLE_02 =  		GetCurrentScriptDirectory()~"./../../img/title/title_02.png";
-const IMG_TITLE_03 =  		GetCurrentScriptDirectory()~"./../../img/title/title_03.png";
-
 const IMG_TITLESHOW_01 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_01.png";
 const IMG_TITLESHOW_02 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_02.png";
 
-const TitleScreen_ImgArray = [IMG_SELECTIONS,IMG_TITLEBACK,IMG_TITLE_00,IMG_TITLE_00BLUR,IMG_TITLE_01,IMG_TITLE_02,IMG_TITLE_03];
+const IMG_TITLE_TEXT_00 =  		GetCurrentScriptDirectory()~"./../../img/title/title_text00.png";
+const IMG_TITLE_TEXT_01 =  		GetCurrentScriptDirectory()~"./../../img/title/title_text01.png";
+
+const IMG_TITLE_MAINMENU_BOX =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_box.png";
+const IMG_TITLE_MAINMENU_LINES =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_lines.png";
+const IMG_TITLE_MAINMENU_CHARACTERS =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_characters.png";
+const IMG_TITLE_MAINMENU_BOSSES =  		GetCurrentScriptDirectory()~"./../../img/title/title_mainMenu_bosses.png";
+
+const TitleScreen_ImgArray = [IMG_SELECTIONS,IMG_TITLEBACK];
 
 
 

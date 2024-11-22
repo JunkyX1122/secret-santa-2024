@@ -1,16 +1,18 @@
 #TouhouDanmakufu[Package]
 #Title["Package"]
 #Text[""]
-#Player["./../../player/Gato/Player_Gato.txt", "./../../player/Sullen/Player_Sullen.txt"]
+#Player["./../../player/Gato/Player_Gato.txt", "./../../player/Sullen/Player_Sullen.txt", "./../../player/Viivi/Player_Viivi.txt"]
 #include "./lib/lib_img.txt"
 #include "./lib/lib_sound.txt"
 #include "./Loading.txt"
+#include "./Package_Functions.txt"
 let skipIntro = false;
 @Initialize
 {
 	//SetSkipModeKey(KEY_INVALID);
-	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+	//InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
 	InstallFont(GetCurrentScriptDirectory~"reve.ttf");
+	InstallFont(GetCurrentScriptDirectory~"LFAXD.ttf");
 	
 	Loader();
 }
@@ -19,6 +21,10 @@ let skipIntro = false;
 	if(skipIntro==false&&GetVirtualKeyState(VK_OK)==KEY_PUSH)
 	{
 		skipIntro=true;
+	}
+	if(GetKeyState(KEY_1)==KEY_PUSH)
+	{
+		ClosePackage();
 	}
 	yield;
 }
@@ -29,410 +35,318 @@ let skipIntro = false;
 //----------------------------------------------------
 task Loader
 {
-	LoadThings;
-	while(mainLoadBool==false){yield;}
-	
+	//LoadThings;
+	//while(mainLoadBool==false){yield;}
+	LoadingBool = true;
+	TIntro;
 	TTitleScene;
 }
 let carryOn = true;
-task TTitleScene
+let isRenderingTitleScreen = true;
+let titleFocusX = 0;
+let titleFocusY = 0;
+let BASE_RENDER = 0.81;
+let BASE_RENDERI = BASE_RENDER*100;
+
+
+const MENUSTATE_UNACTIVE 	= 0;
+const MENUSTATE_MAIN 		= 1;
+
+let menuState = MENUSTATE_UNACTIVE;
+
+function TIntro()
 {
 	
+}
+
+task TTitleScene
+{
+	menuState = MENUSTATE_MAIN;
+	Title_Display();
 	//タイトルシーン終了フラグ
-	wait(120);
-	activeTeam = PLAYERTEAM_B;
+	while(true)
+	{
+		yield;
+	}
+	
+	activeTeam = PLAYERTEAM_C;
 	StartStageProgression();
 	ClosePackage();
 }
-let activeTeam = 0;
-const STAGE_1a = 0;
-const STAGE_1b = 1;
-const STAGE_1c = 2;
-const STAGE_2  = 3;
-const STAGE_3  = 4;
-const STAGE_4a = 5;
-const STAGE_4b = 6;
-const STAGE_4c = 7;
-const STAGE_5  = 8;
-const STAGE_6  = 9;
-const PLAYERTEAM_A = 0;
-const PLAYERTEAM_B = 1;
-const PLAYERTEAM_C = 2;
-
-function StartStageProgression()
+let mainMenu_AlphaScl = 1;
+task Title_Display()
 {
-	carryOn = true;
-	SetCommonData("hasThingsInitialised",false);
-	let WAITER = 0;
+	let objT0 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objT0, IMG_TITLE_TEXT_00);
+	Obj_SetRenderPriorityI(objT0, BASE_RENDERI+10);
+	ObjSprite2D_SetSourceRect(objT0,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objT0,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objT0);
+	ObjRender_SetPosition(objT0,GetScreenWidth/2,GetScreenHeight/2,0);
+	ObjRender_SetAlpha(objT0, 0);
 	
-	SetCommonData("GatoPlayerSprite", 1);
-	if(carryOn==true)
-	{
-		alternative(activeTeam)
-		case(PLAYERTEAM_A)
-		{
-			TStageScene("",STAGE_1a,WAITER);
-		}
-		case(PLAYERTEAM_B)
-		{
-			TStageScene("",STAGE_1b,WAITER);
-		}
-		case(PLAYERTEAM_C)
-		{
-			TStageScene("",STAGE_1c,WAITER);
-		}
-	}
+	let objT1 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objT1, IMG_TITLE_TEXT_01);
+	Obj_SetRenderPriorityI(objT1, BASE_RENDERI+10);
+	ObjSprite2D_SetSourceRect(objT1,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objT1,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objT1);
+	ObjRender_SetPosition(objT1,GetScreenWidth/2,GetScreenHeight/2,0);
+	ObjRender_SetAlpha(objT1, 0);
 	
-	SetCommonData("GatoPlayerSprite", 0);
-	if(carryOn==true)
+	
+	CloudRendering();
+	SkyRender();
+	SnowProgram();
+	
+	let t = 140;
+	ascent(i in 0..t)
 	{
-		TStageScene("",STAGE_2,WAITER);
+		ObjRender_SetAlpha(objT0, 255/(t-1)*i);
+		SkippableWait(1);
 	}
-	if(carryOn==true)
+	ascent(i in 0..t)
 	{
-		TStageScene("",STAGE_3,WAITER);
+		ObjRender_SetAlpha(objT1, 255/(t-1)*i);
+		SkippableWait(1);
 	}
-	if(carryOn==true)
-	{
-		alternative(activeTeam)
-		case(PLAYERTEAM_A)
-		{
-			TStageScene("",STAGE_4a,WAITER);
-		}
-		case(PLAYERTEAM_B)
-		{
-			TStageScene("",STAGE_4b,WAITER);
-		}
-		case(PLAYERTEAM_C)
-		{
-			TStageScene("",STAGE_4c,WAITER);
-		}
+	SkippableWait(60);
+	yield;
+
+	
+	BoxRender();
+	PortraitRender();
+	
+	t = 100;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetPosition(objT0,GetScreenWidth/2,GetScreenHeight/2-120*scl,0);
+		ObjRender_SetPosition(objT1,GetScreenWidth/2,GetScreenHeight/2-120*scl,0);
+		SkippableWait(1);
 	}
-	if(carryOn==true)
+	while(menuState==MENUSTATE_MAIN)
 	{
-		TStageScene("",STAGE_5,WAITER);
-	}
-	if(carryOn==true)
-	{
-		TStageScene("",STAGE_6,WAITER);
+		ObjRender_SetAlpha(objT0,255*mainMenu_AlphaScl);
+		ObjRender_SetAlpha(objT1,255*mainMenu_AlphaScl);
+		yield;
 	}
 }
-//----------------------------------------------------
-// ステージシーン
-//----------------------------------------------------
-
-function TStageScene(let pathReplay,SELECT_ID,waiter)
+task BoxRender()
 {
+	let objMMB = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMMB, IMG_TITLE_MAINMENU_BOX);
+	Obj_SetRenderPriorityI(objMMB, BASE_RENDERI+7);
+	ObjSprite2D_SetSourceRect(objMMB,0, 0, 512, 256);
+	ObjSprite2D_SetDestRect(objMMB,0, 0, 512, 256);
+	ObjSprite2D_SetDestCenter(objMMB);
+	ObjRender_SetPosition(objMMB,GetScreenWidth/2,GetScreenHeight/2+110,0);
+	ObjRender_SetBlendType(objMMB, BLEND_SHADOW);
+	
+	let objMMLs = [];
+	ascent(i in 0..2)
+	{
+		ascent(o in 0..2)
+		{
+			let objMML = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(objMML, IMG_TITLE_MAINMENU_LINES);
+			Obj_SetRenderPriorityI(objMML, BASE_RENDERI+7);
+			ObjSprite2D_SetDestCenter(objMML);
+			ObjRender_SetPosition(objMML,GetScreenWidth/2,GetScreenHeight/2+110 + 60*(1-2*i),0);
+			ObjSprite2D_SetSourceRect(objMML,0, 0, 0, 32);
+			ObjRender_SetScaleX(objMML, 1-2*o);
+			ObjRender_SetScaleY(objMML, 1-2*i);
+			objMMLs ~= [objMML];
+		}
+	}
+	let t = 100;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetColor(objMMB, 255*scl, 255*scl, 255*scl);
+		let scl2 =  Interpolate_Decelerate(0,1,1/(t-1)*i);
+		ascent(o in 0..4)
+		{
+			ObjSprite2D_SetSourceRect(objMMLs[o],0, 0, 256*scl2, 32);
+			ObjSprite2D_SetDestRect(objMMLs[o],0, 0, 256*scl2, 32);
+		}
+		SkippableWait(1);
+	}
+	while(menuState==MENUSTATE_MAIN)
+	{
+		ObjRender_SetColor(objMMB, 255*mainMenu_AlphaScl, 255*mainMenu_AlphaScl, 255*mainMenu_AlphaScl);
+		ascent(o in 0..4)
+		{
+			ObjRender_SetAlpha(objMMLs[o],255*mainMenu_AlphaScl);
+		}
+		yield;
+	}
+}
+task PortraitRender()
+{
+	let objMMC = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMMC, IMG_TITLE_MAINMENU_CHARACTERS);
+	Obj_SetRenderPriorityI(objMMC, BASE_RENDERI+6);
+	ObjSprite2D_SetSourceRect(objMMC,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objMMC,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objMMC);
+	
+	let objMMBoss = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMMBoss, IMG_TITLE_MAINMENU_BOSSES);
+	Obj_SetRenderPriorityI(objMMBoss, BASE_RENDERI);
+	ObjSprite2D_SetSourceRect(objMMBoss,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objMMBoss,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objMMBoss);
+	ObjRender_SetBlendType(objMMBoss,BLEND_SUBTRACT);
+	ObjRender_SetPosition(objMMBoss,GetScreenWidth/2,GetScreenHeight/2+50,0);
+	
+	let t = 100;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
 
-	LoadingBool = true;
-	let dirCurrent = GetCurrentScriptDirectory();
-	let dirModule = GetModuleDirectory();
-	let pathMainScript;
-	alternative(SELECT_ID)
-	case(STAGE_1a)
-	{
-		pathMainScript = dirCurrent ~ "./stage/stage01a/stage.txt";
+		ObjRender_SetPosition(objMMC,GetScreenWidth/2,GetScreenHeight/2+60-60*scl,0);
+		ObjRender_SetAlpha(objMMC, 255*scl);
+		ObjRender_SetAlpha(objMMBoss, 64*scl);
+		SkippableWait(1);
 	}
-	case(STAGE_1b)
+	while(menuState==MENUSTATE_MAIN)
 	{
-		pathMainScript = dirCurrent ~ "./stage/stage01b/stage.txt";
+		ObjRender_SetAlpha(objMMC, 255*mainMenu_AlphaScl);
+		ObjRender_SetAlpha(objMMBoss, 64*mainMenu_AlphaScl);
+		yield;
 	}
-	case(STAGE_1c)
+}
+
+
+task SnowProgram()
+{
+	let angSand = 90;
+	let alphaScaleSandstorm = 1;
+	let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_STAGE_06_SNOW, [0,0,128,128], BLEND_ALPHA, BASE_RENDER+0.01);
+
+	let scl = 5;
+
+	let cc = 0;
+	let cc2 = 0;
+	while(menuState!=MENUSTATE_UNACTIVE)
 	{
-		pathMainScript = dirCurrent ~ "./stage/stage01c/stage.txt";
-	}
-	case(STAGE_2)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage02/stage.txt";
-	}
-	case(STAGE_3)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage03/stage.txt";
-	}
-	case(STAGE_4a)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage04a/stage.txt";
-	}
-	case(STAGE_4b)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage04b/stage.txt";
-	}
-	case(STAGE_4c)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage04c/stage.txt";
-	}
-	case(STAGE_5)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage05/stage.txt";
-	}
-	case(STAGE_6)
-	{
-		pathMainScript = dirCurrent ~ "stage/stage06/stage.txt";
+		let yP = 100;
+		alphaScaleSandstorm = alphaScaleSandstorm * 0.95 + 1 * 0.05;
+
+		if(cc2%10==0)
+		{
+			loop(3)
+			{
+				WindCloud(rand(1.25,3.25)/2);
+			}
+		}
+		cc-=1.5;
+		cc2++;
+		yield;
+		
 	}
 	
-	let pathPlayer = dirCurrent ~ "./../../player/The Ultimate Player (Set 1)/A Ultimate1.txt";
-	alternative(activeTeam)
-	case(PLAYERTEAM_A)
+	Obj_Delete(objCloudParticle);
+	
+	task WindCloud(spd)
 	{
-		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
-	}
-	case(PLAYERTEAM_B)
-	{
-		pathPlayer = dirCurrent ~ "./../../player/Sullen/Player_Sullen.txt";
-	}
-	case(PLAYERTEAM_C)
-	{
-		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
-	}
-	others
-	{
-		
-	}
-
-	//--------------------------------
-	//画面遷移
-	//RenderSceneToTransitionTexture();
-	//TTransition();
-
-	//--------------------------------
-	//ステージ初期化
-	InitializeStageScene();
-	if(length(pathReplay) > 0)
-	{
-		//SetStageReplayFile(pathReplay);
-	}
-
-	//--------------------------------
-	//初期ステージ設定
-	let indexStage = 1; //ステージインデックス
-	loop(waiter){yield;}
-	SetStageIndex(indexStage);
-	SetStageMainScript(pathMainScript);
-	SetStagePlayerScript(pathPlayer);
-	StartStageScene();
-
-	//--------------------------------
-	//ステージ操作
-	let END_RESULT = 0;
-	let stgSceneState = GetStageSceneState();
-	while(stgSceneState != STAGE_STATE_FINISHED)
-	{
-		
-		stgSceneState = GetStageSceneState();
-		//--------------------------------
-		//一時停止チェック
-		if(GetVirtualKeyState(VK_PAUSE) == KEY_PUSH)
+		let randAng = rand(30,-30);
+		let xC = rand(-10, GetScreenWidth+10);
+		let yC = -rand(20,60);
+		let alpha = rand(32,64)*1.1;
+		let scaleX = rand(0.5,1.1)*(1-2*round(rand(0,1))) * 0.5;
+		let scaleY = rand(0.5,1.1)*(1-2*round(rand(0,1))) * 0.5;
+		let color = [255,255,255];
+		let ang = rand(0,360);
+		let previousAng = angSand;
+		let cosAng = cos(angSand);
+		let sinAng = sin(angSand);
+		while(yC<GetScreenHeight+30 && menuState!=MENUSTATE_UNACTIVE)
 		{
-			let resPause = RunPauseScene();
-			alternative(resPause)
-			case(RESULT_RETRY)
-			{
-				//TTransition();
-				TerminateStageScene();
-				carryOn = false;
-				StartStageProgression();
-				//return;
+			ObjParticleList_SetAlpha(objCloudParticle,alpha*alphaScaleSandstorm);
+			ObjParticleList_SetScale(objCloudParticle,scaleX,scaleY,0);
+			ObjParticleList_SetPosition(objCloudParticle,xC,yC,0);
+			ObjParticleList_SetAngleZ(objCloudParticle,ang);
+			ObjParticleList_SetColor(objCloudParticle,color[0],color[1],color[2]);
+			ObjParticleList_AddInstance(objCloudParticle);
+
+			xC+=spd*cosAng;
+			yC+=spd*sinAng;
 			
-			}
-			case(RESULT_END)
-			{
-
-				//TTransition();
-				TerminateStageScene();
-				carryOn = false;
-				TTitleScene;
-			}
-		}
-		if(stgSceneState == STAGE_STATE_FINISHED)
-		{
-		
-		}
-		if(stgSceneState != STAGE_STATE_FINISHED)
-		{
 			yield;
+			
 		}
-		
-	}	
-	FinalizeStageScene();
-
-	//TTransition();
+	}
 }
-
-
-//----------------------------------------------------
-
-//----------------------------------------------------
-task TEndScene()
+task SkyRender()
 {
-
-	//--------------------------------
-
-	FinalizeStageScene();
-
-	//--------------------------------
-
-	let dirModule = GetModuleDirectory();
-	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndScene.txt";
-	let idScript = LoadScript(pathScript);
-	StartScript(idScript);
-
-	while(!IsCloseScript(idScript))
+	let objSky = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objSky, IMG_STAGE_06_SKY);
+	ObjSprite2D_SetSourceRect(objSky, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestRect(objSky, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestCenter(objSky);
+	ObjRender_SetScaleY(objSky, 1.9);
+	ObjRender_SetPosition(objSky, GetScreenWidth/2, GetScreenHeight/2-150, 0);
+	Obj_SetRenderPriorityI(objSky, BASE_RENDERI);
+	ObjRender_SetColor(objSky, 190, 190, 255);
+	
+	let t = 140;
+	ascent(i in 0..t)
+	{
+		ObjRender_SetAlpha(objSky, 255/(t-1)*i);
+		SkippableWait(1);
+	}
+	while(menuState!=MENUSTATE_UNACTIVE)
 	{
 		yield;
 	}
-
-	//--------------------------------
-
-	let result = GetScriptResult(idScript);
-	alternative(result)
-	case(RESULT_END)
+	Obj_Delete(objSky);
+}
+task CloudRendering()
+{
+	let objClouds = [];
+	let randStarts = [];
+	ascent(i in 0..3)
 	{
-		LastInfo;
+		let objCloud = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCloud, IMG_STAGE_06_CLOUD);
+		ObjSprite2D_SetSourceRect(objCloud, 0, 0, 1024, 418);
+		ObjSprite2D_SetDestRect(objCloud, 0, 0, 1024, 256);
+		ObjRender_SetPosition(objCloud, 0, -20-40*i, 0);
+		Obj_SetRenderPriorityI(objCloud, BASE_RENDERI+1);
+		ObjRender_SetAlpha(objCloud, 200-25*i);
+		ObjRender_SetScaleXYZ(objCloud, 2+0.4*i);
+		ObjRender_SetBlendType(objCloud, BLEND_ADD_ARGB);
+		ObjRender_SetTextureFilterMag(objCloud, FILTER_ANISOTROPIC);
+		objClouds ~= [objCloud];
+		randStarts ~= [rand(0,1024)];
 	}
-	case(RESULT_RETRY)
+	let t = 140;
+	let mc = 0;
+	ascent(i in 0..t)
 	{
-		TStageScene("",0,1);
+		ascent(o in 0..3)
+		{
+			ObjRender_SetAlpha(objClouds[o], (200-25*o) * 1/(t-1)*i * 0.75);
+			let movSpd = mc * 0.5;
+			ObjSprite2D_SetSourceRect(objClouds[o], 0+movSpd + randStarts[o], 0, 1024+movSpd + randStarts[o], 418);
+		}
+		mc++;
+		SkippableWait(1);
 	}
-}
-function textCentreX(obj)
-{
-	return ObjText_GetTotalWidth(obj)/2;
-}
-function textCentreY(obj)
-{
-	return ObjText_GetTotalHeight(obj)/2;
-}
-task LastInfo
-{
-	ClosePackage;
-}
-//----------------------------------------------------
-
-//----------------------------------------------------
-function RunPauseScene()
-{
-	RenderSceneToTransitionTexture();
-	PauseStageScene(true);
-
-	let dirModule = GetModuleDirectory();
-	let pathScript = GetCurrentScriptDirectory ~ "lib/system/Pause.txt";
-
-	//--------------------------------
-
-	let idScript = LoadScript(pathScript);
-	StartScript(idScript);
-
-	while(!IsCloseScript(idScript))
+	while(menuState!=MENUSTATE_UNACTIVE)
 	{
+		ascent(i in 0..3)
+		{
+			let movSpd = mc * 0.5;
+			ObjSprite2D_SetSourceRect(objClouds[i], 0+movSpd + randStarts[i], 0, 1024+movSpd + randStarts[i], 418);
+		}
+		mc++;
 		yield;
 	}
-
-	PauseStageScene(false);
-
-	let res = GetScriptResult(idScript);
-	return res;
-}
-
-
-//----------------------------------------------------
-
-//----------------------------------------------------
-task TReplaySelectScene()
-{
-	let dirCurrent = GetCurrentScriptDirectory();
-	let pathScript = dirCurrent ~ "ExRumia_Package_ReplaySelectScene.txt";
-
-	//--------------------------------
-	let idScript = LoadScript(pathScript);
-	StartScript(idScript);
-
-	while(!IsCloseScript(idScript))
+	ascent(i in 0..3)
 	{
-		yield;
+		Obj_Delete(objClouds[i]);
 	}
-
-	//--------------------------------
-
-	let result = GetScriptResult(idScript);
-	if(length(result) == 0)
-	{
-
-		TTitleScene();
-	}
- 	else
- 	{
-
-		TStageScene(result,0,1);
-	}
-
-}
-
-
-//----------------------------------------------------
-
-//----------------------------------------------------
-task TReplaySaveScene()
-{
-	let dirModule = GetModuleDirectory();
-	let pathScript = dirModule ~ "script/default_system/Default_ReplaySaveScene.txt";
-
-	//--------------------------------
-
-	let idScript = LoadScript(pathScript);
-	StartScript(idScript);
-
-	while(!IsCloseScript(idScript))
-	{
-		yield;
-	}
-
-
-	//--------------------------------
-
-	TTitleScene();
-}
-
-
-//----------------------------------------------------
-
-//----------------------------------------------------
-function RenderSceneToTransitionTexture()
-{
-	let textureName = GetTransitionRenderTargetName();
-	RenderToTextureA1(textureName, 0, 100, true);
-}
-function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace)
-{
-	let objText = ObjText_Create();
-	ObjText_SetText(objText, text);
-	Obj_SetRenderPriorityI(objText,81);
-	ObjText_SetFontSize(objText, fontsize);
-	ObjText_SetFontType(objText, fontFace);
-	ObjText_SetFontBold(objText, false);
-	ObjText_SetFontColorTop(objText, color[0][0], color[0][1], color[0][2]);
-	ObjText_SetFontColorBottom(objText, color[1][0], color[1][1], color[1][2]);
-	ObjText_SetFontBorderType(objText, BORDER_SHADOW);
-	ObjText_SetFontBorderColor(objText, bordercolor[0], bordercolor[1], bordercolor[2]);
-	ObjText_SetFontBorderWidth(objText, 1);
-	ObjRender_SetAlpha(objText,255);
-	ObjRender_SetPosition(objText,xpos-textCentreX(objText),ypos-textCentreY(objText),0);
-	ObjText_SetHorizontalAlignment(objText,ALIGNMENT_LEFT);
-	ObjText_SetMaxWidth(objText,GetScreenWidth-40);
-	return objText;
-}
-function TTransition(t)
-{
-	let textureName = GetTransitionRenderTargetName();
-	let objImage = ObjPrim_Create(OBJ_SPRITE_2D);
-	Obj_SetRenderPriorityI(objImage, 100); 
-	ObjPrim_SetTexture(objImage, textureName); 
-	ObjSprite2D_SetSourceRect(objImage, 0, 0, GetScreenWidth, GetScreenHeight);
-	ObjSprite2D_SetDestRect(objImage, 0, 0, GetScreenWidth, GetScreenHeight);
-
-	let alpha = 255;
-	loop(t)
-	{
-		yield;
-	}
-	Obj_Delete(objImage);
 }
