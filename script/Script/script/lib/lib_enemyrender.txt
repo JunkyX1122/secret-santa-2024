@@ -239,6 +239,8 @@ task renderNitoriDS(obj){
 		frame=frame+whichway;
 		if(frame > 25){frame=25;}
 		if(frame < -25){frame=-25;}
+		Obj_SetValue(obj, "isHittable", ObjRender_GetAlpha(obj) > 0 ? true : false);
+		
 		yield;
 		
 	}
@@ -341,6 +343,8 @@ task renderYuuma(obj)
 		frame=frame+whichway;
 		if(frame > frameSpeed*2){frame=frameSpeed*2;}
 		if(frame < -frameSpeed*2){frame=-frameSpeed*2;}
+		Obj_SetValue(obj, "isHittable", ObjRender_GetAlpha(obj) > 0 ? true : false);
+		
 		yield;
 		
 	}

@@ -194,7 +194,7 @@ task SpellGatoFocus
 			ang += 0.1;
 		}
 		let sss = rand(15,17)*1.75;
-		let obj = CreatePlayerShotA1(GetPlayerX+rand(RANDER,-RANDER),GetPlayerY+rand(RANDER,-RANDER),sss,ang,3.5,99999,23);
+		let obj = CreatePlayerShotA1(GetPlayerX+rand(RANDER,-RANDER),GetPlayerY+rand(RANDER,-RANDER),sss,ang,4.7,99999,23);
 		ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
 		ObjShot_SetEraseShot(obj,true);
 		ObjShot_SetSpellFactor(obj,true);

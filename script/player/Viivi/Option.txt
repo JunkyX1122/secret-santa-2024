@@ -1,0 +1,215 @@
+task OptionManage {
+    OptionMoveViivi;
+    TRenderOptionViivi;
+}
+
+let OptionDits = 20;
+
+let YoumuTrailX = [];
+let YoumuTrailY = [];
+let OldOffSetX = [];
+let OldOffSetY = [];
+let MAX_SNAKEDIST = 8*1.2;
+let TOTAL_SEGMENTS = 16;
+task OptionMoveViivi {
+	yield;
+	
+	ascent(i in 0..TOTAL_SEGMENTS-4)
+	{
+		OptionX ~= [GetPlayerX];
+		OptionY ~= [GetPlayerY];
+	}
+    let LowCount = 0;
+    let D_OptionX = [];
+    let D_OptionY = [];
+
+	ascent(i in 0..length(OptionX))
+	{
+		D_OptionX ~= [GetPlayerX];
+		D_OptionY ~= [GetPlayerY + MAX_SNAKEDIST*i];
+	}
+	let targetX = GetPlayerX;
+	let targetY = GetPlayerY - 0;
+	let pTargetX = GetPlayerX;
+	let pTargetY = GetPlayerY - 0;
+	let dampn = 0.95;
+	let traverse = 3;
+    while (true) {
+		
+		if(GetVirtualKeyState(VK_SLOWMOVE) == KEY_FREE)
+		{
+			pTargetX = GetPlayerX;
+			pTargetY = GetPlayerY - 25;
+			
+			targetX = pTargetX;
+			targetY = pTargetY;
+			
+			if((GetVirtualKeyState(VK_LEFT) == KEY_FREE && GetVirtualKeyState(VK_RIGHT) == KEY_FREE) ||
+			   (GetVirtualKeyState(VK_LEFT) != KEY_FREE && GetVirtualKeyState(VK_RIGHT) != KEY_FREE))
+			{
+				if(TazueAng>-90)
+				{
+					TazueAng-=traverse;
+				}
+				if(TazueAng<-90)
+				{
+					TazueAng+=traverse;
+				}
+			}
+			else if(GetVirtualKeyState(VK_LEFT) != KEY_FREE)
+			{
+				TazueAng = max(TazueAng-traverse, -90-45);
+			}
+			else if(GetVirtualKeyState(VK_RIGHT) != KEY_FREE)
+			{
+				TazueAng = min(TazueAng+traverse, -90+45);
+			}
+		}
+		else
+		{
+			targetX = pTargetX;
+			targetY = pTargetY - 30;
+		}
+		D_OptionX[0] = D_OptionX[0] * dampn + targetX * (1-dampn);
+		D_OptionY[0] = D_OptionY[0] * dampn + targetY * (1-dampn);
+		let savedAng = -90;
+		ascent(i in 0..length(OptionX)-1)
+		{
+			let x1 = D_OptionX[i+1];
+			let y1 = D_OptionY[i+1];
+			
+			let x2 = D_OptionX[i];
+			let y2 = D_OptionY[i];
+			
+			let angTo = Get_PointAngle(x1,y1,x2,y2);
+			let disTo = Get_Distance(x1,y1,x2,y2);
+			
+			
+	
+			D_OptionX[i+1] = D_OptionX[i] + MAX_SNAKEDIST * cos(angTo);
+			D_OptionY[i+1] = D_OptionY[i] + MAX_SNAKEDIST * sin(angTo);
+			
+		}
+		ascent(i in 0..length(OptionX))
+		{
+
+
+			
+			OptionX[i]=D_OptionX[i];
+			OptionY[i]=D_OptionY[i];
+		}
+        yield;
+    }
+}
+
+function Get_Distance(x1, y1, x2, y2)
+{
+	return ((x1-x2)^2 + (y1-y2)^2)^0.5;
+}
+
+function Get_PointAngle(x1,y1,x2,y2)
+{
+	let angle=atan2(y1-y2,x1-x2);
+	return angle;
+}
+
+let TazueAng = -90;
+
+task TRenderOptionViivi {
+	yield;
+    let CurrentPower;
+
+    CurrentPower = PlayerPower_Int;
+    ascent(i in 0..length(OptionX)-1)
+	{
+		DrawOption(i);
+	}
+
+    task DrawOption(num)
+	{
+		let path;
+		let scale=1.2;
+		let widthScl = 1;
+		let rp = 42;
+		if(num==0)
+		{
+			path = GetCurrentScriptDirectory() ~"./playersprite/pl_04.png";
+			rp = rp+1;
+		}
+		else if(num==2 || num ==8)
+		{
+			path = GetCurrentScriptDirectory() ~"./playersprite/pl_04c.png";
+		}
+		else
+		{
+			path = GetCurrentScriptDirectory() ~"./playersprite/pl_04a.png";
+		}
+		if(num > 8)
+		{
+			widthScl = 1 - 1/(TOTAL_SEGMENTS - 8 + 2)*(num-8);
+		}
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		objOption=objOption~[obj];
+		ObjPrim_SetTexture(obj, path);	
+		Obj_SetRenderPriorityI(obj,rp);
+		ObjSprite2D_SetSourceRect(obj, 0, 0, 32, 64);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetTextureFilter(obj, FILTER_POINT,FILTER_POINT,FILTER_POINT);
+		ObjRender_SetBlendType(obj, BLEND_ALPHA);
+		
+		path = GetCurrentScriptDirectory() ~"./playersprite/pl_04b.png";
+		
+		
+		let obj2 = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(obj2, path);	
+		Obj_SetRenderPriorityI(obj2,rp-1);
+		ObjSprite2D_SetSourceRect(obj2, 0, 0, 32, 64);
+		ObjSprite2D_SetDestCenter(obj2);
+		ObjRender_SetTextureFilter(obj2, FILTER_POINT,FILTER_POINT,FILTER_POINT);
+		ObjRender_SetBlendType(obj2, BLEND_ALPHA);
+		
+		let FrameCount=0;
+
+		
+		let DownCount=0;
+
+		while(true)
+		{
+			let iniAng = TazueAng + 90;
+			
+			if(num>0)
+			{
+				iniAng = Get_PointAngle(OptionX[num-1], OptionY[num-1],OptionX[num], OptionY[num])-90;
+			}
+			ObjRender_SetAngleZ(obj, iniAng);
+			ObjRender_SetScaleXYZ(obj,scale*widthScl,scale,1);
+			ObjRender_SetPosition(obj, OptionX[num],OptionY[num], 0);
+			
+			ObjRender_SetAngleZ(obj2, iniAng);
+			ObjRender_SetScaleXYZ(obj2,scale*widthScl,scale,1);
+			ObjRender_SetPosition(obj2, OptionX[num],OptionY[num], 0);
+
+			ObjRender_SetAlpha(obj,255);
+			ObjRender_SetAlpha(obj2,255);
+ 			if(GetPlayerState==STATE_DOWN)
+			{
+				ObjRender_SetAlpha(obj,32);
+				ObjRender_SetAlpha(obj2,32);
+				DownCount=50;
+			}
+ 			if(DownCount>0)
+			{
+				ObjRender_SetAlpha(obj,32);
+				ObjRender_SetAlpha(obj2,32);
+			}
+			if(num==0)
+			{
+				ObjRender_SetAlpha(obj2,0);
+			}
+			FrameCount+=1;
+			DownCount-=1;
+			yield;
+		}
+		Obj_Delete(obj);
+	}
+}

@@ -1,0 +1,44 @@
+
+shot_image  = "./img/pl_shot.png"
+
+//-----------------------------------------------
+//
+//-----------------------------------------------
+
+ShotData 
+{ 
+	id = 1 //ID
+	rect = (0,0,0,0) 
+	alpha=0
+	collision = 16
+}
+
+ShotData 
+{ 
+	id = 20 //ID
+	rect = (0,0,32,64) 
+	alpha=196
+	collision = 16
+}
+ShotData 
+{ 
+	id = 21 //ID
+	rect = (32,0,64,64) 
+	alpha=196
+	collision = 16
+}
+ShotData 
+{ 
+	id = 22 //ID
+	rect = (0,144,64,208) 
+	alpha=255
+	collision = 16
+}
+ShotData 
+{ 
+	id = 23 //ID
+	rect = (0,208,32,364) 
+	alpha=255
+	collision = 16
+}
+

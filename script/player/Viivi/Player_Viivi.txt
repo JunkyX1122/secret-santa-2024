@@ -1,10 +1,10 @@
 #TouhouDanmakufu[Player]
 #ScriptVersion[3]
-#ID["ID_Gato"]
-#Title["Gato"]
-#Image["./img/p_00a.png"]
+#ID["ID_Viivi"]
+#Title["Viivi"]
+#Image["./img/p_05.png"]
 #Text[" "]
-#ReplayName["Gato"]
+#ReplayName["Viivi"]
 
 let objPlayer = GetPlayerObjectID();
 let PlayerPower = 400;
@@ -51,8 +51,8 @@ let SELECT_MARISA = 1;
 //-------------------------------------------------
 //-------------------------------------------------
 //-------------------------------------------------
-let IMG_PLAYERSPRITE1 = GetCurrentScriptDirectory() ~"./playersprite/pl_01.png";
-let IMG_PLAYERSPRITE2 = GetCurrentScriptDirectory() ~"./playersprite/pl_00.png";
+let IMG_PLAYERSPRITE1 = GetCurrentScriptDirectory() ~"./playersprite/pl_03.png";
+
 let currentPlayerSprite = 0;
 
 let IMG_PLAYER = IMG_PLAYERSPRITE1;
@@ -92,7 +92,7 @@ function CreateParticleListRect(type, path, source, blend,
     return obj;
 }
 
-let PLAYERSPEED = [6, 3];
+let PLAYERSPEED = [5, 2.25];
 
 @Initialize {
 	let initialPlayerPos = [GetCommonData("PlayerX", GetStgFrameWidth/2), GetCommonData("PlayerY", 416)];
@@ -171,11 +171,7 @@ let yPos = [];
 task PlayerLoad {}
 @MainLoop {
 	SetPlayerRebirthPosition(GetStgFrameWidth/2, 466);
-	if(GetCommonData("GatoPlayerSprite", 0) != currentPlayerSprite)
-	{
-		currentPlayerSprite = GetCommonData("GatoPlayerSprite", 0);
-		IMG_PLAYER = [IMG_PLAYERSPRITE1, IMG_PLAYERSPRITE2][currentPlayerSprite];
-	}
+
 	
     SetCommonData("PlayerX", GetPlayerX);
     SetCommonData("PlayerY", GetPlayerY);
@@ -333,9 +329,13 @@ let ysp = 0;
 		alternative(ObjShot_GetImageID(GetEventArgument(0)))
 		case(20)
 		{
-			PlayerDeletionEffect(GetEventArgument(0));
+			PlayerDeletionEffect(GetEventArgument(0),0);
 		}
 		case(21)
+		{
+			PlayerDeletionEffect(GetEventArgument(0),1);
+		}
+		case(22)
 		{
 			PlayerDeletionEffect2(GetEventArgument(0));
 		}

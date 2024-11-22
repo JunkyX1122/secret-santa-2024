@@ -1,0 +1,295 @@
+task TSpell
+{
+	FLASH;
+	SE_PlayLen(SPELLTHING);
+	
+	let objManage = GetSpellManageObject();
+	Obj_Delete(objManage);
+	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
+	{
+		SpellViiviFocus;
+	}
+	else
+	{
+		SpellViiviUnfocus;
+	}
+	let amount = 3;
+	loop(30)
+	{
+		SetCommonData("StateFaceShake",amount);
+		amount-=3/30;
+		yield;
+	}
+	SetCommonData("StateFaceShake",0);
+}
+task FLASH
+{
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetTexture(obj,IMG_WHITECIRCLE_L);
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj,42);
+	ObjRender_SetAngleZ(obj,0);
+	let ALF=0;
+	ObjRender_SetAlpha(obj,ALF);
+	let scale =10;
+	ObjRender_SetScaleXYZ(obj,scale,scale,scale);
+	ObjPrim_SetDestCenter(obj,0,0,512,512);
+	loop(20)
+	{
+		ObjRender_SetPosition(obj,GetPlayerX,GetPlayerY,0);
+		ObjRender_SetAlpha(obj,ALF);
+		ALF+=255/20;
+		yield;
+	}
+	loop(20)
+	{
+		ObjRender_SetPosition(obj,GetPlayerX,GetPlayerY,0);
+		ObjRender_SetAlpha(obj,ALF);
+		ALF-=255/20;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+task SpellViiviUnfocus
+{
+	let t = 250;
+	OnSpell = true;
+	SetPlayerInvincibilityFrame_Special(t);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),t);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,t);
+	
+	let bit = GetPlayerX < GetStgFrameWidth/2 ? 1 : -1;
+	ascent(i in 0..2)
+	{
+		SE_PlayLen(CHARGE);
+		InitiateKnifeLine(bit,i);
+		wait(4*5);
+		InitiateKnifeLine(-bit,i);
+		wait(4*10);
+	}
+	bit*=-1;
+
+	wait(t-(8)*15);
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+}
+task InitiateKnifeLine(bit, type)
+{
+	TShake(20*6,4);
+	ascent(o in 0..20)
+	{
+		let x = (GetStgFrameWidth/2 - GetStgFrameWidth/2 * bit) + GetStgFrameWidth/19*o*bit;
+		let y = GetStgFrameHeight+20;
+		let ang = -90 - 30*bit + 60/19*o*bit;
+		if(type==1)
+		{
+			ang = Get_PointAngle(GetPlayerX,GetPlayerY,x,y);
+		}
+		KnifeLine(x,y,ang);
+		wait(4);
+	}	
+}
+task KnifeLine(x,y,ang)
+{
+	ascent(i in 0..10)
+	{
+		SE_PlayLen(THROW);
+		KnifeShot(x,y,40,ang);
+		wait(4);
+	}
+}
+task KnifeShot(x,y,speed,ang)
+{
+	let obj = CreatePlayerShotA1(x,y,speed,ang,4,99999,23);
+	ObjRender_SetBlendType(obj, BLEND_ALPHA);
+	ObjShot_SetEraseShot(obj,true);
+	ObjShot_SetSpellFactor(obj,true);
+	Obj_SetRenderPriorityI(obj, 51);
+}
+
+let wooshArray;
+let wooshArray2;
+let shineArray;
+task InitialiseSpellArray
+{
+	wooshArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_WOOSH, [1,1,127,127], BLEND_ADD_ARGB, 0.28);
+	wooshArray2 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_WOOSH, [1,1,127,127], BLEND_SUBTRACT, 0.29);
+	shineArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_GIANTBALLGLOW, [0,0,256,256], BLEND_ADD_ARGB, 0.4);
+}
+
+task CutEnemy(Color,AlphaSlash,scaleplus,angle,XX,YY)
+{
+	let path = IMG_TAIRA_SLASH;
+	let objSlash = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objSlash, path);	
+	Obj_SetRenderPriorityI(objSlash,50);
+	ObjRender_SetBlendType(objSlash,BLEND_ADD_ARGB);
+	ObjSprite2D_SetSourceRect(objSlash, 0, 0, 256, 32);
+	ObjSprite2D_SetDestCenter(objSlash);
+	ObjRender_SetPosition(objSlash,XX,YY,0);
+	ObjRender_SetAlpha(objSlash,0);
+	ObjRender_SetAngleZ(objSlash,angle);
+	ObjRender_SetAlpha(objSlash,AlphaSlash);
+	ObjRender_SetColor(objSlash,Color[0],Color[1],Color[2]);
+	let scaleX = 0.3;
+	let scaleY = 0.5;
+	let DamageSlash = 0.2;
+	let DamageIni = DamageSlash;
+	let obj2 = ObjSpell_Create();
+	ObjSpell_Regist(obj2);
+	ObjSpell_SetEraseShot(obj2,true);
+	let t = 50;
+	loop(20)
+	{
+		ObjSpell_SetIntersectionLine(obj2,ObjRender_GetX(objSlash)+(256*scaleX*scaleplus)*cos(angle),ObjRender_GetY(objSlash)+(256*scaleX*scaleplus)*sin(angle),ObjRender_GetX(objSlash)-(256*scaleX*scaleplus)*cos(angle),ObjRender_GetY(objSlash)-(256*scaleX*scaleplus)*sin(angle),4*scaleY*scaleplus);
+		ObjRender_SetScaleXYZ(objSlash,scaleX*scaleplus,scaleY*scaleplus,1);
+		ObjSpell_SetDamage(obj2,DamageSlash*1.2);
+		DamageSlash-=(DamageIni)/t;
+		scaleX+=0.3;
+		scaleY-=(0.5)/t;
+		yield;
+	}
+	loop(t-20)
+	{
+		ObjSpell_SetIntersectionLine(obj2,ObjRender_GetX(objSlash)+(256*scaleX*scaleplus)*cos(angle),ObjRender_GetY(objSlash)+(256*scaleX*scaleplus)*sin(angle),ObjRender_GetX(objSlash)-(256*scaleX*scaleplus)*cos(angle),ObjRender_GetY(objSlash)-(256*scaleX*scaleplus)*sin(angle),4*scaleY*scaleplus);
+		ObjRender_SetScaleXYZ(objSlash,scaleX*scaleplus,scaleY*scaleplus,1);
+		ObjSpell_SetDamage(obj2,DamageSlash*1.2);
+		DamageSlash-=(DamageIni)/t;
+		scaleX+=0.3;
+		scaleY-=(0.5)/t;
+		yield;
+	}
+	Obj_Delete(objSlash);
+	Obj_Delete(obj2);
+}
+
+task SpellViiviFocus
+{
+	OnSpell=true;
+	let t = 250;
+	SetPlayerInvincibilityFrame_Special(t);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),t);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,t);
+
+	SE_PlayLen(SE_SPELL2);
+
+	let RANDER = 5;
+	let ang = -90;
+	let bit = GetPlayerX < GetStgFrameWidth/2 ? 1 : -1;
+	ascent(i in 0..10)
+	{
+		let EnemyObjectArray=GetIntersectionRegistedEnemyID;
+		let Dis=2000;
+		let nearObj=-1;
+		let yS = GetPlayerY;
+		if(length(EnemyObjectArray)!=0)
+		{
+			ascent(i in 0..length(EnemyObjectArray))
+			{
+				let dis = ((ObjRender_GetX(EnemyObjectArray[i])-GetPlayerX)^2 + (ObjRender_GetY(EnemyObjectArray[i])-GetPlayerY)^2)^0.5;
+				if(dis<Dis && Obj_GetValueD(EnemyObjectArray[i], "isHittable", false) == true)
+				{
+					nearObj=EnemyObjectArray[i];
+					Dis=dis;
+				}
+			}
+			if(nearObj!=-1)
+			{
+				yS = ObjMove_GetY(nearObj)+rand(60,-60);
+			}
+		}
+		GrandisDash(yS, bit, 70);
+		bit*=-1;
+		wait(10);
+	}
+	loop(t-100)
+	{
+		yield;
+	}
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+	
+}
+task GrandisDash(yS, bit, waiter)
+{
+	SE_PlayLen(CHARGE2);
+	ascent(i in 0..4)
+	{
+		let sprd = 40;
+		ascent(o in 0..2)
+		{
+			if(i>0 || o == 0)
+			{
+				Length(GetStgFrameWidth/2 + (GetStgFrameWidth/2+10)*bit, yS, 90+90*bit, 90+90*bit + (sprd*i)*bit * [1,-1][o]);
+			}
+		}
+	}
+	wait(waiter);
+	TShake(60,6);
+	SE_PlayLen(DASH);
+	let offsett = rand(75, 150);
+	let t = 10;
+	ascent(i in 0..20)
+	{
+		
+		
+		SE_PlayLen(SLASH);
+		let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+100+offsett)*bit - (GetStgFrameWidth + 200)/(t-1)*i*bit;
+		let y = yS;
+		
+		let ang = -90;
+		
+		let EnemyObjectArray=GetIntersectionRegistedEnemyID;
+		let Dis=2000;
+		let nearObj=-1;
+		if(length(EnemyObjectArray)!=0)
+		{
+			ascent(i in 0..length(EnemyObjectArray))
+			{
+				let dis = ((ObjRender_GetX(EnemyObjectArray[i])-GetPlayerX)^2 + (ObjRender_GetY(EnemyObjectArray[i])-GetPlayerY)^2)^0.5;
+				if(dis<Dis && Obj_GetValueD(EnemyObjectArray[i], "isHittable", false) == true)
+				{
+					nearObj=EnemyObjectArray[i];
+					Dis=dis;
+				}
+			}
+			if(nearObj!=-1)
+			{
+				ang = Get_PointAngle(ObjMove_GetX(nearObj), ObjMove_GetY(nearObj), x, y);
+			}
+		}
+		
+		CutEnemy([255,0,0],255,5,ang,x,y);
+		CutEnemy([255,255,255],255,2,ang,x,y);
+		yield;
+	}
+
+	task Length(x, y, ang1, ang2)
+	{
+		let objLine = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetPrimitiveType(objLine,PRIMITIVE_LINESTRIP);
+		ObjPrim_SetVertexCount(objLine, 2);
+		Obj_SetRenderPriorityI(objLine,38);
+		ObjPrim_SetVertexPosition(objLine , 0, 0, 0, 0);
+		ObjRender_SetPosition(objLine, x, y, 0);
+		
+		ascent(i in 0..waiter)
+		{
+			let dis = (999/(waiter-1)*i);
+			let ang = Interpolate_Decelerate(ang2, ang1, 1/(waiter-1)*i);
+			ObjPrim_SetVertexPosition(objLine , 1, dis, 0, 0);
+			ObjRender_SetAngleZ(objLine, ang);
+			yield;
+		
+		}
+		let t = 10;
+		ascent(i in 0..t)
+		{
+			ObjRender_SetAlpha(objLine, 128 - 128/t*i);
+			yield;
+		}
+		Obj_Delete(objLine);
+	}
+}

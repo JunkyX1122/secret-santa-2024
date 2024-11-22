@@ -1,0 +1,564 @@
+task ClimaxCircle(XX, YY, type, scaleplus, duration, delay, Xang, Yang, Zang,
+                  startalf) {
+    loop(delay) { yield; }
+    let objRing = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(objRing, IMG_CLIMAX);
+    Obj_SetRenderPriorityI(objRing, 39);
+    // ObjRender_SetAngleZ(obj,rand(0,360));
+    ObjRender_SetAlpha(objRing, 0);
+    if (type == 0) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 0, 256 * 0, 256 * 1, 256 * 1);
+    }
+    if (type == 1) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 1, 256 * 0, 256 * 2, 256 * 1);
+    }
+    if (type == 2) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 2, 256 * 0, 256 * 3, 256 * 1);
+    }
+    if (type == 3) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 3, 256 * 0, 256 * 4, 256 * 1);
+    }
+    if (type == 4) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 0, 256 * 1, 256 * 1, 256 * 2);
+    }
+    if (type == 5) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 1, 256 * 1, 256 * 2, 256 * 2);
+    }
+    if (type == 6) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 2, 256 * 1, 256 * 3, 256 * 2);
+    }
+    if (type == 7) {
+        ObjSprite2D_SetSourceRect(objRing, 256 * 3, 256 * 1, 256 * 4, 256 * 2);
+    }
+    ObjRender_SetScaleXYZ(objRing, 0, 0, 0);
+    ObjSprite2D_SetDestCenter(objRing);
+    ObjRender_SetBlendType(objRing, BLEND_ADD_ARGB);
+    let scale = 0;
+    let Alpha = startalf;
+    ObjRender_SetPosition(objRing, XX, YY, 0);
+    ObjRender_SetAngleXYZ(objRing, Xang, Yang, Zang);
+    loop(duration) {
+        ObjRender_SetAlpha(objRing, Alpha);
+        ObjRender_SetScaleXYZ(objRing, scale, scale, scale);
+        scale += scaleplus;
+
+        Alpha -= startalf / duration;
+        yield;
+    }
+    Obj_Delete(objRing);
+}
+task ClimaxCircle2(XX, YY, scaleplus, duration, delay, Xang, Yang, Zang) {
+    loop(delay) { yield; }
+    let objRing = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(objRing, IMG_WHITECIRCLE_S);
+    Obj_SetRenderPriorityI(objRing, 39);
+    // ObjRender_SetAngleZ(obj,rand(0,360));
+    ObjRender_SetAlpha(objRing, 0);
+
+    ObjSprite2D_SetSourceRect(objRing, 128 * 0, 128 * 0, 128 * 1, 128 * 1);
+
+    ObjRender_SetScaleXYZ(objRing, 0, 0, 0);
+    ObjSprite2D_SetDestCenter(objRing);
+    ObjRender_SetBlendType(objRing, BLEND_ADD_ARGB);
+    let scale = 0;
+    let Alpha = 255;
+    ObjRender_SetPosition(objRing, XX, YY, 0);
+    ObjRender_SetAngleXYZ(objRing, Xang, Yang, Zang);
+    loop(duration) {
+        ObjRender_SetAlpha(objRing, Alpha);
+        ObjRender_SetScaleXYZ(objRing, scale, scale, scale);
+        scale += scaleplus;
+
+        Alpha -= 255 / duration;
+        yield;
+    }
+    Obj_Delete(objRing);
+}
+task DARKNESS(R, G, B, BLEND, MaxAlpha, DarkScale, Duration) {
+    let scale = 0;
+    let path = IMG_BACKGROUND;
+    let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(obj, path);
+    Obj_SetRenderPriorityI(obj, 27);
+    let BIT = 0;
+    ObjSprite2D_SetSourceRect(obj, 0, 0, 640, 480);
+    ObjRender_SetBlendType(obj, BLEND);
+    ObjSprite2D_SetDestCenter(obj);
+    ObjRender_SetColor(obj, R, G, B);
+    let ALPHA = 0;
+    let amount = 0;
+    ObjSprite2D_SetSourceRect(obj, 0, 0, 128, 128);
+    ObjRender_SetScaleXYZ(obj, 100, 100, 100);
+    loop(Duration) {
+        ObjRender_SetAlpha(obj, ALPHA);
+        if (ALPHA < 128) {
+            ALPHA += DarkScale;
+        }
+        ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+        yield;
+    }
+    loop(20) {
+        ObjRender_SetAlpha(obj, ALPHA);
+        if (ALPHA > 0) {
+            ALPHA -= 10;
+        }
+        ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+        yield;
+    }
+
+    Obj_Delete(obj);
+}
+task GrazeEffect(BulletArray) {  // グレイズエフェクト
+    ascent(i in 0..length(BulletArray)) {
+        if (!Obj_IsDeleted(BulletArray[i])) {
+            Effect(BulletArray[i]);
+        }
+    }
+
+    task Effect(Bobj) {
+        let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+        ObjPrim_SetTexture(obj, IMG_WHITECIRCLE_S);
+        ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+        ObjPrim_SetVertexCount(obj, 4);
+        ObjRender_SetBlendType(obj, BLEND_ADD_RGB);
+        Obj_SetRenderPriorityI(obj, 30);
+        ObjRender_SetAngleZ(obj, 0);
+
+        ObjPrim_SetDestCenter(obj, 0, 0, 128, 128);
+
+        let x = (GetPlayerX + ObjRender_GetX(Bobj)) / 2;
+        let y = (GetPlayerY + ObjRender_GetY(Bobj)) / 2;
+        ObjRender_SetPosition(obj, x, y, 0);
+
+        let Alpha = 0.75;
+        let R = 255;
+        let G = 255;
+        let B = 255;
+        let speed = rand(2, 6);
+        let angle = rand(0, 360);
+        let Scale = 0.1;
+        let ScaleMax = Scale;
+        loop(10) {
+            ObjRender_SetPosition(obj, ObjRender_GetX(obj) + speed * cos(angle),
+                                  ObjRender_GetY(obj) + speed * sin(angle), 0);
+            ObjRender_SetScaleXYZ(obj, Scale, Scale, 1);
+            ObjRender_SetColor(obj, R * Alpha, G * Alpha, B * Alpha);
+            //		ObjRender_SetAngleZ(obj,Zangle);
+            //		Alpha-=1.0/8;
+            Scale -= ScaleMax / 10;
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+}
+task SlowEffect {  // 低速エフェクト
+    while (GetPlayerState != STATE_END) {
+        if (GetVirtualKeyState(VK_SLOWMOVE) == KEY_PUSH ||
+            GetVirtualKeyState(VK_SLOWMOVE) == KEY_HOLD) {
+            SlowEffectRender1;
+            SlowEffectRender2;
+            while (GetVirtualKeyState(VK_SLOWMOVE) == KEY_PUSH ||
+                   GetVirtualKeyState(VK_SLOWMOVE) == KEY_HOLD &&
+                       GetPlayerState != STATE_END) {
+                yield;
+            }
+        }
+        yield;
+    }
+
+    // 時計、反時計で若干挙動が違う
+
+    task SlowEffectRender1 {
+        let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+        ObjPrim_SetTexture(obj, IMG_MOVEMAGICCIRCLE);
+        ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+        ObjPrim_SetVertexCount(obj, 4);
+        //	ObjRender_SetBlendType(obj, BLEND_ADD_RGB);
+        Obj_SetRenderPriorityI(obj, 44);
+        ObjRender_SetAngleZ(obj, 0);
+
+        ObjPrim_SetDestCenter(obj, 0, 0, 256, 256);
+
+        let Alpha = 0;
+        let R = 255;
+        let G = 255;
+        let B = 255;
+        let Zangle = 0;
+        let Scale = 0.25;
+        let ScaleMax = Scale;
+        let ScaleAmount = 1;
+        if (IMG_PLAYER == IMG_SHINMY) {
+            ScaleAmount = 1 / 1.5;
+        }
+        loop(5) {
+            if (GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH &&
+                GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD) {
+                break;
+            }
+            ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+            ObjRender_SetScaleXYZ(obj, Scale * ScaleAmount, Scale * ScaleAmount,
+                                  1);
+            ObjRender_SetAlpha(obj, 255 * Alpha);
+            ObjRender_SetAngleZ(obj, Zangle);
+            Alpha += 1.0 / 15;
+            Scale += 0.0125;
+            yield;
+        }
+        loop(10) {
+            if (GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH &&
+                GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD) {
+                break;
+            }
+            ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+            ObjRender_SetScaleXYZ(obj, Scale * ScaleAmount, Scale * ScaleAmount,
+                                  1);
+            ObjRender_SetAlpha(obj, 255 * Alpha);
+            ObjRender_SetAngleZ(obj, Zangle);
+            Alpha += 1.0 / 15;
+            Scale -= 0.00625;
+            yield;
+        }
+        while (GetPlayerState != STATE_END) {
+            if (GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH &&
+                GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD) {
+                break;
+            }
+            ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+            ObjRender_SetScaleXYZ(obj, Scale * ScaleAmount, Scale * ScaleAmount,
+                                  1);
+            ObjRender_SetAlpha(obj, 255 * Alpha);
+            ObjRender_SetAngleZ(obj, Zangle);
+            Zangle -= 3;
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+
+    task SlowEffectRender2 {
+        let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+        ObjPrim_SetTexture(obj, IMG_MOVEMAGICCIRCLE);
+        ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+        ObjPrim_SetVertexCount(obj, 4);
+        //	ObjRender_SetBlendType(obj, BLEND_ADD_RGB);
+        Obj_SetRenderPriorityI(obj, 44);
+        ObjRender_SetAngleZ(obj, 0);
+
+        ObjPrim_SetDestCenter(obj, 0, 0, 256, 256);
+
+        let Alpha = 0;
+        let R = 255;
+        let G = 255;
+        let B = 255;
+        let Zangle = 0;
+        let ZanglePlus = 6;
+        let Scale = 0.25;
+        let ScaleAmount = 1;
+        if (IMG_PLAYER == IMG_SHINMY) {
+            ScaleAmount = 1 / 1.5;
+        }
+        loop(5) {
+            Zangle += ZanglePlus;
+            ZanglePlus -= 6 / 15;
+            if (GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH &&
+                GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD) {
+                break;
+            }
+            ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+            ObjRender_SetScaleXYZ(obj, Scale * ScaleAmount, Scale * ScaleAmount,
+                                  1);
+            ObjRender_SetAlpha(obj, 255 * Alpha);
+            ObjRender_SetAngleZ(obj, Zangle);
+            Alpha += 1.0 / 15;
+            yield;
+        }
+        loop(10) {
+            Zangle += ZanglePlus;
+            ZanglePlus -= 6 / 15;
+            if (GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH &&
+                GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD) {
+                break;
+            }
+            ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+            ObjRender_SetScaleXYZ(obj, Scale * ScaleAmount, Scale * ScaleAmount,
+                                  1);
+            ObjRender_SetAlpha(obj, 255 * Alpha);
+            ObjRender_SetAngleZ(obj, Zangle);
+            Alpha += 1.0 / 15;
+            yield;
+        }
+        while (GetPlayerState != STATE_END) {
+            if (GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH &&
+                GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD) {
+                break;
+            }
+            ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+            ObjRender_SetScaleXYZ(obj, Scale * ScaleAmount, Scale * ScaleAmount,
+                                  1);
+            ObjRender_SetAlpha(obj, 255 * Alpha);
+            ObjRender_SetAngleZ(obj, Zangle);
+            Zangle += 3;
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+}
+task TShake(tim, am) {
+    descent(i in 0..tim) {
+        let range = am / tim * i;
+        Set2DCameraFocusX(GetStgFrameWidth / 2 + rand(range, -range));
+        Set2DCameraFocusY(GetStgFrameHeight / 2 + rand(range, -range));
+
+        yield;
+        Reset2DCamera();
+    }
+}
+task TExplosion {  // 被弾エフェクト
+    let XXX = GetPlayerX;
+    let YYY = GetPlayerY;
+    TShake(15, 3);
+    while (GetPlayerState == STATE_HIT) {  // 喰らいボム可能時のエフェクト
+        yield;
+    }
+    TShake(30, 5);
+    // 反転エフェクトの終了合図用フラグ
+    let ReverseEffectFlag = true;
+
+    if (GetPlayerState != STATE_NORMAL) {
+        Shaker;
+        SE_PlayLen(SE_PLAYERDOWN);
+
+        ExplodeEffect;
+        ShockWave;
+		let rx = GetPlayerX;
+        let ry = GetPlayerY;
+        ReverseEffect(rx, ry);
+		
+        RebirthEffect(GetStgFrameWidth / 2, 466);
+        
+        loop(4) { yield; }
+        ReverseEffect(rx + 32, ry);
+        ReverseEffect(rx - 32, ry);
+        ReverseEffect(rx, ry + 32);
+        ReverseEffect(rx, ry - 32);
+        loop(23) { yield; }
+        ReverseEffect(rx, ry);
+        loop(13) { yield; }
+        loop(47) { yield; }
+    }
+    ReverseEffectFlag = false;
+    task Shaker {
+        let amount = 3;
+        loop(50) {
+            SetCommonData("StateFaceShake", amount);
+            amount -= 3 / 50;
+            yield;
+        }
+        SetCommonData("StateFaceShake", 0);
+    }
+    task ShockWave {  // 衝撃波
+        let x = GetPlayerX;
+        let y = GetPlayerY;
+        loop(30) { yield; }
+        let obj = CreatePlayerShotA1(x, y, 0, 0, 8, 65535, 100);
+        let range = 0;
+        loop(30) {
+            // ObjShot_SetIntersectionCircleA1(obj,range);
+            range += 20;
+            yield;
+        }
+        // DeleteShotAll(TYPE_SHOT,TYPE_IMMEDIATE);
+        Obj_Delete(obj);
+    }
+
+    task ReverseEffect(x, y) {  // 反転複合エフェクト
+        let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+        ObjPrim_SetTexture(obj, IMG_WHITECIRCLE_L);
+        ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+        ObjRender_SetBlendType(obj, BLEND_INV_DESTRGB);
+        ObjPrim_SetVertexCount(obj, 4);
+        Obj_SetRenderPriorityI(obj, 69);
+        ObjRender_SetAngleZ(obj, 0);
+
+        ObjPrim_SetDestCenter(obj, 0, 0, 512, 512);
+
+        ObjRender_SetPosition(obj, x, y, 0);
+
+        let Alpha = 1.0;
+        let Scale = 0;
+        let ScalePlus = 0;
+        let ScalePlusSpeed = 0.0125 / 8 * 1.33;
+        let R = 255;
+        let G = 255;
+        let B = 255;
+
+        while (ReverseEffectFlag) {
+            ScalePlus += ScalePlusSpeed;
+            Scale += ScalePlus;
+            ObjRender_SetScaleXYZ(obj, Scale, Scale, 1);
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+
+    task ExplodeEffect {
+        let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+        ObjPrim_SetTexture(obj, IMG_DEADCIRCLE);
+        ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+        ObjPrim_SetVertexCount(obj, 4);
+        ObjRender_SetBlendType(obj, BLEND_ADD_RGB);
+        Obj_SetRenderPriorityI(obj, 30);
+        ObjRender_SetAngleZ(obj, 0);
+
+        ObjPrim_SetDestCenter(obj, 0, 128, 64, 192);
+
+        ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+
+        let Alpha = 1.0;
+        let Scale = 1;
+        let R = 255;
+        let G = 255;
+        let B = 255;
+
+        loop(24) {
+            Alpha -= 1.0 / 24;
+            Scale += 4.5 / 24;
+            ObjRender_SetScaleXYZ(obj, Scale, Scale, 1);
+            ObjRender_SetColor(obj, R * Alpha, G * Alpha, B * Alpha);
+            yield;
+        }
+        Obj_Delete(obj);
+    }
+
+    task RebirthEffect(X, Y) {  // 復活時の自機制御
+        //	let X=GetStgFrameWidth/2;
+        //	let Y=466;//416
+        RebirthFlag = true;
+		
+        loop(35) {
+			ObjRender_SetAlpha(objPlayer,0);
+            ObjMove_SetPosition(objPlayer, X, Y);
+            yield;
+        }
+        SetForbidPlayerShot(true);
+        loop(5) {
+			ObjRender_SetAlpha(objPlayer,0);
+            ObjMove_SetPosition(objPlayer, X, Y);
+            yield;
+        }
+        ascent(i in 0..50) {
+			ObjRender_SetAlpha(objPlayer,255/49*i);
+            ObjMove_SetPosition(objPlayer, X, Y);
+            Y -= 1;
+            yield;
+        }
+
+        RebirthFlag = false;
+        SetForbidPlayerShot(false);
+    }
+}
+
+task PlayerDeletionEffect(obj,type) {
+    let x = ObjMove_GetX(obj);
+    let y = ObjMove_GetY(obj);
+    let speed = ObjMove_GetSpeed(obj);
+    let speed2 = speed;
+	let ang = ObjMove_GetAngle(obj);
+	let col = ObjRender_GetColor(obj);
+	
+	let obj2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetTexture(obj2,IMG_SHOT);
+	ObjPrim_SetPrimitiveType(obj2, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj2, 4);
+	ObjRender_SetBlendType(obj2, BLEND_ALPHA);
+	Obj_SetRenderPriorityI(obj2,40);
+	ObjRender_SetAngleZ(obj2,0);
+	ObjPrim_SetDestCenter(obj2,32*(type),0,32*(type+1),64);
+	ObjRender_SetPosition(obj2, x, y, 0);
+	ObjRender_SetAngleZ(obj2, ang + 90);
+	ObjRender_SetColor(obj2, col[0], col[1], col[2]);
+	ObjRender_SetAlpha(obj2, 128);
+	
+	speed *= 0.5;
+	let xSpd = speed*cos(ang);
+	let ySpd = speed*sin(ang);
+	let t = 10;
+	ascent(i in 0..t)
+	{
+		let scl = 1-1/t*i;
+		ObjRender_SetAlpha(obj2, 128*scl);
+		ObjRender_SetPosition(obj2, x, y, 0);
+		ObjRender_SetScaleX(obj2, scl);
+		x+=xSpd*scl;
+		y+=ySpd*scl;
+		yield;
+	}
+	Obj_Delete(obj2);
+}
+
+task PlayerDeletionEffect2(obj) {
+    let x = ObjMove_GetX(obj);
+    let y = ObjMove_GetY(obj);
+	let ang = ObjMove_GetAngle(obj);
+    let speed = ObjMove_GetSpeed(obj);
+    let speed2 = speed;
+	
+	let obj2 = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetTexture(obj2,IMG_SHOT);
+	ObjPrim_SetPrimitiveType(obj2, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj2, 4);
+	ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+	Obj_SetRenderPriorityI(obj2,40);
+	ObjRender_SetAngleZ(obj2,ang+90);
+	ObjPrim_SetDestCenter(obj2,0,144,64,208) ;
+	let sprd = 10;
+	
+	let xSpd = cos(ang);
+	let ySpd = sin(ang);
+	let scalex = 1;
+	let scaley = 1;
+	ascent(i in 0..12)
+	{
+		ObjRender_SetAlpha(obj2, 96-96/12*i);
+		scaley = 1-0.75*sin(90/12*i);
+		scalex = 1+2*sin(90/12*i);
+		ObjRender_SetScaleXYZ(obj2, scalex/3, scaley, 0);
+		ObjRender_SetPosition(obj2, x, y, 0);
+		x+=speed*xSpd;
+		y+=speed*ySpd;
+		speed = max(0,speed - speed2/6);
+		yield;
+		
+	}
+	Obj_Delete(obj2);
+}
+task ShockEffect(R, G, B, XTimes, YTimes) {
+    let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+    ObjPrim_SetTexture(obj, IMG_SHOCK);
+    ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+    ObjPrim_SetVertexCount(obj, 4);
+    ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+    Obj_SetRenderPriorityI(obj, 40);
+    ObjRender_SetAngleZ(obj, 0);
+
+    ObjPrim_SetDestCenter(obj, 0, 0, 512, 512);
+
+    ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+
+    // let Zangle=-num*60;
+    let Alpha = 1;
+    let AlphaMax = Alpha;
+
+    let Scale = 0;
+    let ScaleSpeed = 0.09;
+    ObjRender_SetScaleXYZ(obj, Scale, Scale, Scale);
+    loop(20) {
+        ObjRender_SetPosition(obj, GetPlayerX, GetPlayerY, 0);
+        ObjRender_SetColor(obj, R * Alpha, G * Alpha, B * Alpha);
+        ObjRender_SetScaleXYZ(obj, Scale * XTimes, Scale * YTimes, Scale);
+        Alpha -= 1 / 20;
+        Scale += ScaleSpeed / 4;
+        ScaleSpeed -= ScaleSpeed / 20;
+        yield;
+    }
+    Obj_Delete(obj);
+}

@@ -1,0 +1,37 @@
+
+
+let IMG_SHINMY = "";
+
+let IMG_SPARK=GetCurrentScriptDirectory~"./bombimg/marisaspark.png";
+let IMG_SPARK2=GetCurrentScriptDirectory~"./bombimg/marisaspark.png";
+
+
+let IMG_STAR=GetCurrentScriptDirectory~"./bombimg/star.png";
+let IMG_STAR2=GetCurrentScriptDirectory~"./bombimg/star2.png";
+let IMG_PUREWHITE=GetCurrentScriptDirectory~"./img/whiteness.png";
+let IMG_WHITECIRCLE_S=GetCurrentScriptDirectory~"./img/WhiteCircle_S.png";
+let IMG_WHITECIRCLE_L=GetCurrentScriptDirectory~"./img/WhiteCircle_L.png";
+let IMG_LIGHT= GetCurrentScriptDirectory~"./img/Light.png";
+let IMG_DEADCIRCLE=GetCurrentScriptDirectory~"./img/deadcircle.png";
+let IMG_MOVEMAGICCIRCLE=GetCurrentScriptDirectory~"./img/Effectelse.png";
+let IMG_SHOT=GetCurrentScriptDirectory~"./img/pl_shot.png";
+let IMG_LASER=GetCurrentScriptDirectory~"./img/pl_shot_laser.png";
+let IMG_SHOCK=GetCurrentScriptDirectory~"./img/Shock.png";
+let IMG_SPLASH=GetCurrentScriptDirectory~"./img/eff_splash.png";
+let IMG_PAGODA=GetCurrentScriptDirectory~"./img/PagodaLaser_Fire.png";
+let IMG_MSD=GetCurrentScriptDirectory~"./img/MSDEffect.png";
+let IMG_CLIMAX=GetCurrentScriptDirectory~"./img/ClimaxRing.png";
+let IMG_BACKGROUND=GetCurrentScriptDirectory~"./img/mask_ball.png";
+let IMG_PIXEL=GetCurrentScriptDirectory~"./img/pixel.png";
+
+let IMG_WOOSH=GetCurrentScriptDirectory~"./img/weatherCall001.png";
+
+let IMG_GIANTBALL=GetCurrentScriptDirectory~"./img/flashAuraY000.png";
+let IMG_GIANTBALLGLOW=GetCurrentScriptDirectory~"./img/breakAttack012.png";
+let IMG_TAIRA_SLASH=GetCurrentScriptDirectory~"./img/slash.png";
+
+task ImageLoad() {
+	LoadTexture(IMG_MOVEMAGICCIRCLE);
+	LoadTexture(IMG_SHOT);
+	LoadTexture(IMG_WOOSH);
+}
