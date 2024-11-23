@@ -29,16 +29,16 @@ let MusicFade = false;
 task MusicChange
 {
 	music1 = ObjSound_Create;
-	musicPath = GetCurrentScriptDirectory~"./../../../bgm/th19_20.wav";
+	musicPath = BGM_BOSS_06;
 	LoadSound(musicPath);
 	ObjSound_Load(music1,musicPath);
 	ObjSound_SetSoundDivision(music1, SOUND_BGM);
 	ObjSound_SetResumeEnable(music1, true);
 	ObjSound_SetLoopEnable(music1, true);	
-	ObjSound_SetLoopSampleCount(music1, 61952, 11212800);	
+	//ObjSound_SetLoopSampleCount(music1, 61952, 11212800);	
 	ObjSound_Play(music1);
 	startMusic=true;
-	vol = 85;
+	vol = 100;
 }
 task StartMusic
 {
@@ -137,7 +137,7 @@ task StartStage
 		yield;
 	}
 	//StartMusic;
-	//MusicChange;
+	MusicChange;
 	SetCommonData("LifeBombAlpha",255);
 	//ObjSound_Seek(music1,135);
 	/*
