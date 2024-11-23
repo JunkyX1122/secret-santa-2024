@@ -151,6 +151,9 @@ let debugSlow = false;
 task DebugKeys()
 {
 	while(true) {
+		if (GetKeyState(KEY_L) == KEY_PUSH ) {
+			SetPlayerLife(GetPlayerLife+1);
+		}
 		if (GetKeyState(KEY_P) == KEY_PUSH ) {
 			debugDamageRate = !debugDamageRate;
 		}

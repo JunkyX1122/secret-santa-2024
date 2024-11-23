@@ -159,7 +159,7 @@ task Laser(x,y,del,angle)
 	wait(del);
 	if(!Obj_IsDeleted(objEnemy))
 	{
-		SE_PlayLen(laser0,50);
+		SE_PlayLen(laser0,40);
 	
 	//let obj1 = CreateLooseLaserA1(ObjMove_GetX(famz)+20*cos(angleT),ObjMove_GetY(famz)+20*sin(angleT), 4, angleT, 160, 30, 422, 10);
 		let obj2 = CreateLooseLaserA1(x,y, 10, angle, 200, 9, 293, 10);

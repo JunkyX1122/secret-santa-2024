@@ -73,7 +73,7 @@ task StartMusic
 	SetStgFrame(x1,0,x2,480,10,80);
 	SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
 	if(GetPlayerY<150){CollectAllItems;}
-	ObjSound_SetVolumeRate(music1,vol*GetCommonData("MusicVolume",0));
+	ObjSound_SetVolumeRate(music1,vol*GetCommonData("MusicVolume",1));
 	yield;
 }
 @Event
