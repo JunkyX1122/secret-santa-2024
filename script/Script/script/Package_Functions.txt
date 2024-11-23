@@ -1,5 +1,6 @@
 
 let activeTeam = 0;
+let startingLives = 2;
 const PLAYERTEAM_A = 0;
 const PLAYERTEAM_B = 1;
 const PLAYERTEAM_C = 2;
@@ -62,6 +63,8 @@ function StartStageProgression()
 {
 	carryOn = true;
 	SetCommonData("hasThingsInitialised",false);
+    SetCommonData("PlayerLife", startingLives);
+    DeleteCommonData("PlayerSpell");
 	let WAITER = 0;
 	
 	SetCommonData("GatoPlayerSprite", 1);

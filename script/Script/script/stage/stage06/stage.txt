@@ -18,7 +18,7 @@ let MusicFade = false;
 	
 	LoadBoss();
 	InitialiseIndiv();
-	SetPlayerLife(9999);
+	//SetPlayerLife(9999);
 	//SetForbidPlayerSpell(true);
 	
 	EndStage;

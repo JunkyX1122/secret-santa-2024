@@ -10,7 +10,7 @@ task InitialiseIndiv()
 	SetCommonData("bossBarDampenAmount",0.05);
 	SetCommonData("Smoother",0);
 	SetCommonData("WideScreen",true);
-	SetPlayerLife(999);
+	//SetPlayerLife(999);
 	SetStgFrame(x1,0,x2,480,10,80);
 	SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
 	SetEnemyAutoDeleteClip(32,32,32,32);

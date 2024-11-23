@@ -99,6 +99,9 @@ let PLAYERSPEED = [4.25, 1.5];
 	let initialPlayerPos = [GetCommonData("PlayerX", GetStgFrameWidth/2), GetCommonData("PlayerY", 416)];
 	ObjMove_SetPosition(objPlayer,initialPlayerPos[0], initialPlayerPos[1]);
 	
+	SetPlayerLife(GetCommonData("PlayerLife", 2));
+    SetPlayerSpell(GetCommonData("PlayerSpell", SPELL_REVIVE_TOTAL));
+	
 	ascent(i in 0..length(OptionX))
 	{
 		OptionX[i] = GetPlayerX;
@@ -175,6 +178,8 @@ task PlayerLoad {}
 
     SetCommonData("PlayerX", GetPlayerX);
     SetCommonData("PlayerY", GetPlayerY);
+    SetCommonData("PlayerLife", GetPlayerLife());
+    SetCommonData("PlayerSpell", GetPlayerSpell());
     if (GetCommonData("ForceInvincible", false) == true) {
         SetPlayerInvincibilityFrame_Special(2);
     }
