@@ -218,37 +218,54 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	//ステージ操作
 	let END_RESULT = 0;
 	let stgSceneState = GetStageSceneState();
+	let pauseEnd = false;
 	while(stgSceneState != STAGE_STATE_FINISHED)
 	{
 		
 		stgSceneState = GetStageSceneState();
 		//--------------------------------
 		//一時停止チェック
-		if(GetVirtualKeyState(VK_PAUSE) == KEY_PUSH)
+		if(GetVirtualKeyState(VK_PAUSE) == KEY_PUSH && !isGamovering)
 		{
 			let resPause = RunPauseScene();
 			alternative(resPause)
 			case(RESULT_RETRY)
 			{
-				//TTransition();
 				TerminateStageScene();
 				carryOn = false;
 				StartStageProgression();
-				//return;
-			
+				return;
 			}
 			case(RESULT_END)
 			{
-
 				//TTransition();
 				TerminateStageScene();
 				carryOn = false;
-				TTitleScene;
+				TTitleScene();
+				return;
+				//TTitleScene;
 			}
 		}
+	
 		if(stgSceneState == STAGE_STATE_FINISHED)
 		{
-		
+			// Put Retry Here;
+			FinalizeStageScene();
+			let stageResult = GetStageSceneResult();
+			alternative(stageResult)
+			case(STAGE_RESULT_CLEARED)
+			{
+				carryOn = true;
+			}
+			case(STAGE_RESULT_PLAYER_DOWN)
+			{
+				carryOn = false;
+				//TEndScene();
+			}
+			case(STAGE_RESULT_BREAK_OFF)
+			{
+				carryOn = false;
+			}
 		}
 		if(stgSceneState != STAGE_STATE_FINISHED)
 		{
@@ -256,46 +273,43 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 		}
 		
 	}	
-	FinalizeStageScene();
 
 	//TTransition();
 }
-
-//----------------------------------------------------
-
-//----------------------------------------------------
+let isGamovering = false;
 task TEndScene()
 {
-
-	//--------------------------------
-
-	FinalizeStageScene();
-
-	//--------------------------------
-
 	let dirModule = GetModuleDirectory();
 	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndScene.txt";
 	let idScript = LoadScript(pathScript);
 	StartScript(idScript);
-
+	
+	PauseStageScene(true);
+	isGamovering = true;
 	while(!IsCloseScript(idScript))
 	{
 		yield;
 	}
-
-	//--------------------------------
-
+	isGamovering = false;
 	let result = GetScriptResult(idScript);
 	alternative(result)
+	case(RESULT_CANCEL)
+	{
+		PauseStageScene(false);
+	}
 	case(RESULT_END)
 	{
-		LastInfo;
+		TerminateStageScene();
+		TTitleScene();
 	}
 	case(RESULT_RETRY)
 	{
-		TStageScene("",0,1);
+		TerminateStageScene();
+		StartStageProgression();
+		return;
 	}
 }
+
 function textCentreX(obj)
 {
 	return ObjText_GetTotalWidth(obj)/2;

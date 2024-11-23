@@ -4,6 +4,7 @@
 #Player["./../../player/Gato/Player_Gato.txt", "./../../player/Sullen/Player_Sullen.txt", "./../../player/Viivi/Player_Viivi.txt"]
 #include "./lib/lib_img.txt"
 #include "./lib/lib_sound.txt"
+#include "./lib/lib_event.txt"
 #include "./Loading.txt"
 #include "./Package_Functions.txt"
 #include "./Package_MainMenu.txt"
@@ -26,6 +27,15 @@ let skipIntro = false;
 		ClosePackage();
 	}
 	yield;
+}
+
+@Event
+{
+	alternative(GetEventType())
+	case(EV_USER_PLAYER_DEATH){	
+		WriteLog("PLAYERDEAD");
+		TEndScene();
+	}
 }
 
 @Finalize
@@ -60,9 +70,12 @@ function TIntro()
 
 task TTitleScene
 {
-	menuState = MENUSTATE_MAIN;
-	TDarkManager();
-	Title_Display();
+	if(menuState==MENUSTATE_UNACTIVE)
+	{
+		menuState = MENUSTATE_MAIN;
+		TDarkManager();
+		Title_Display();
+	}
 }
 let totalDarkness = 0;
 task TDarkManager()

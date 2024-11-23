@@ -64,6 +64,7 @@ let IMG_OPTION = "";
 #include "./Sound.txt"
 #include "./Spell.txt"
 #include "./Image.txt"
+#include "./../Event.txt"
 
 function CreateParticleListRect(type, path, source, blend,
                                 priority)  // possibly copied from tcl
@@ -131,7 +132,7 @@ let PLAYERSPEED = [5, 2.25];
     SetPlayerRebirthFrame(18);
     SetPlayerRebirthLossFrame(0);
     SetPlayerDownStateFrame(40);
-    SetPlayerStateEndEnable(true);
+    //SetPlayerStateEndEnable(true);
 
     ascent(i in 0..7) {
         xPos ~= [20 * cos(360 / 6 * i)];
@@ -265,9 +266,20 @@ let ysp = 0;
             TExplosion();
         }
     }
+    case(EV_PLAYER_SHOOTDOWN){
+		if(GetPlayerLife <= -1){ //prompt the end scene
+		
+			NotifyEventAll(EV_USER_PLAYER_DEATH, 0);
+			SE_PlayLen(SE_PLAYERDOWN);
+		}
+	}
     case(EV_PLAYER_REBIRTH)
     {
         //•œ‹A
+		if(GetPlayerLife <= -1){ //prompt the end scene
+		
+			SetPlayerLife(2);
+		}
         SetPlayerSpell(SPELL_REVIVE_TOTAL);
         SetPlayerInvincibilityFrame_Special(240);
 		DownFrames = 240;

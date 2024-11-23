@@ -326,6 +326,7 @@ task TExplosion {  // 被弾エフェクト
     if (GetPlayerState != STATE_NORMAL) {
         Shaker;
         SE_PlayLen(SE_PLAYERDOWN);
+		
 
         ExplodeEffect;
         ShockWave;

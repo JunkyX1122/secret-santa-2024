@@ -268,7 +268,7 @@ task Char_BoxDetails()
 		{
 			ObjRender_SetAlpha(objArrows[i], 255*characterSelect_AlphaScl);
 			ObjRender_SetAlpha(objArrowsPage[i], 255*characterSelect_AlphaScl);
-			ObjRender_SetPosition(objArrowsPage[i], GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i], GetScreenHeight/2, 0);
+			ObjRender_SetPosition(objArrowsPage[i], round(GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i]), GetScreenHeight/2, 0);
 		}
 		c++;
 		yield;
