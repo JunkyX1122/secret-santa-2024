@@ -279,6 +279,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 let isGamovering = false;
 task TEndScene()
 {
+	RenderSceneToTransitionTexture();
 	let dirModule = GetModuleDirectory();
 	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndScene.txt";
 	let idScript = LoadScript(pathScript);
@@ -306,7 +307,6 @@ task TEndScene()
 	{
 		TerminateStageScene();
 		StartStageProgression();
-		return;
 	}
 }
 
