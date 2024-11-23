@@ -50,7 +50,6 @@ task StartMusic
 	
 	startMusic=true;
 	ObjSound_Play(music1);
-	SetCommonData("MusicVolume",1);
 }
 @MainLoop
 {
@@ -173,18 +172,5 @@ task EndStage
 		yield;
 	}
 }
-task VolIncrease
-{
-	SetCommonData("MusicVolume",0);
-	wait(30);
-	ascent(i in 0..120)
-	{
-		SetCommonData("MusicVolume",1/120*i);
-		yield;
-	}
-	SetCommonData("MusicVolume",1);
-}
-
-
 
 
