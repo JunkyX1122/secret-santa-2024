@@ -6,6 +6,7 @@
 #Text[" "]
 #ReplayName["Gato"]
 
+let SPELL_REVIVE_TOTAL = 3;
 let objPlayer = GetPlayerObjectID();
 let PlayerPower = 400;
 let PlayerPower_Int = PlayerPower / 100;
@@ -271,7 +272,7 @@ let ysp = 0;
     case(EV_PLAYER_REBIRTH)
     {
         //•œ‹A
-        SetPlayerSpell(3);
+        SetPlayerSpell(SPELL_REVIVE_TOTAL);
         SetPlayerInvincibilityFrame_Special(240);
 		DownFrames = 240;
     }

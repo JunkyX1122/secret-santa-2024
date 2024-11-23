@@ -1,0 +1,7 @@
+
+
+
+task TOutro()
+{
+	TTitleScene();
+}

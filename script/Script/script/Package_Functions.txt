@@ -115,6 +115,10 @@ function StartStageProgression()
 	{
 		TStageScene("",STAGE_6,WAITER);
 	}
+	if(carryOn==true)
+	{
+		TOutro();
+	}
 }
 //----------------------------------------------------
 // ステージシーン
@@ -394,6 +398,9 @@ task TReplaySaveScene()
 //----------------------------------------------------
 
 //----------------------------------------------------
+
+
+
 function RenderSceneToTransitionTexture()
 {
 	let textureName = GetTransitionRenderTargetName();

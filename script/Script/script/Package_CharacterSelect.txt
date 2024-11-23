@@ -1,10 +1,11 @@
-task CharacterSelectScreen()
+function CharacterSelectScreen()
 {
 	hasSelected = false;
 	characterSelect_AlphaScl = 1;
 	menuState = MENUSTATE_CHARACTER_SELECT;
 	Char_BoxRender();
 	Char_BoxDetails();
+	Char_PlayerIcons();
 	SkippableWait(TO_CHARSELECT_TRANSITION);
 	yield;
 	ascent(i in 0..3)
@@ -25,6 +26,7 @@ task CharacterSelectScreen()
 		}
 		yield;
 	}
+	activeTeam = selectedTeam;
 	if(hasCanceled)
 	{
 		ascent(i in 0..30)
@@ -32,8 +34,13 @@ task CharacterSelectScreen()
 			characterSelect_AlphaScl = 1 - 1/29*i;
 			yield;
 		}
-		Title_Display();
+		
 	}
+	else
+	{
+		
+	}
+	return hasCanceled;
 	//wait(120);
 	//Title_Display();
 }
@@ -89,8 +96,77 @@ let characterSelect_AlphaScl = 1;
 let charSelectX = GetScreenWidth/2 - 192;
 
 let selectedTeam = PLAYERTEAM_A;
-const teamNames = ["Team Terra", "Team Paladin", "Team Granini"];
+const teamNames 	= ["Team Terra", "Team Paladin", "Team Granini"];
+const statNames 	= ["Speed", "Shot Power", "Range", "Spell Power", "Spell Capacity"];
+const statValues	= [
+						[[6, 3]		 , 	[4.25, 1.5], 	[5, 2.25]		], // Speed
+						[[23.2, 23.2], 	[ 15, 26.6], 	[24, 24] 		], // Shot Power
+						[[100,100],	   	[50, 20],    	[60, 85]		], // Range
+						[[28.3, 32.3], 	[6, 24.9],   	[55.5, 38.4]	], // Spell Power
+						[[3,3],			[4,4],			[2,2]]			   // Spell Capacity
+						];
+						
+const statMaxValues = [8, 40, 100, 75, 8];
 
+const tabTitles 	= ["Weapons", "Shot", "Spells"];
+const tabInfoText 	= [
+						["Blade, Cards, Death", "Holy Sword, Poke-abilities", "Lance, Nuclear Energy, Blades"],
+						["Homing Shot, Average Power", "Narrow Shot, Cardinal Shooting", "Misdirection Lock Shot, High Skill"],
+						["-Nova- -Ruin-", "&quot;Chesnaught's Aegis&quot; &quot;All-Out Sphere Attack&quot;", "&quot;Death Dagger&quot; &quot;Pilfer&quot;"]
+					  ];
+
+const charPreviews = [IMG_TITLE_CHARSELECT_PREVIEW_A, IMG_TITLE_CHARSELECT_PREVIEW_B, IMG_TITLE_CHARSELECT_PREVIEW_C];
+const characterBios = [
+						"Placeholder Text Placeholder Text Placeholder Text[r]" ~
+						"Placeholder Text Placeholder Text Placeholder Text[r]", 
+						"", 
+						""];
+						
+const CHAR_ICONS = [IMG_TITLE_CHARSELECT_ICON_A, IMG_TITLE_CHARSELECT_ICON_B, IMG_TITLE_CHARSELECT_ICON_C];						
+task Char_PlayerIcons()
+{
+	ascent(i in 0..3)
+	{
+		MakeIcon(charSelectX - 64 + 64*i, GetScreenHeight/2 - 190, i);
+	}
+	
+	task MakeIcon(x,y,id)
+	{
+		let objCSIc = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCSIc, CHAR_ICONS[id]);
+		Obj_SetRenderPriorityI(objCSIc, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objCSIc,0, 0, 64, 64);
+		ObjSprite2D_SetDestRect(objCSIc,0, 0, 64, 64);
+		ObjSprite2D_SetDestCenter(objCSIc);
+		ObjRender_SetPosition(objCSIc,x,y,0);
+		
+		let coll = 128;
+		ObjRender_SetColor(objCSIc, coll, coll, coll);
+		
+		let t = TO_CHARSELECT_TRANSITION;
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objCSIc, 255*scl);
+			SkippableWait(1);
+		}
+		yield;
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			let colTarg = 128;
+			if(selectedTeam == id)
+			{
+				colTarg = 255;
+			}
+			coll = coll * 0.8 + colTarg * 0.2;
+			ObjRender_SetColor(objCSIc, coll, coll, coll);
+			ObjRender_SetAlpha(objCSIc, 255*characterSelect_AlphaScl);
+			yield;
+		}
+		Obj_Delete(objCSIc);
+	}
+}
+						
 task Char_BoxDetails()
 {
 	let objNBG = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -100,6 +176,18 @@ task Char_BoxDetails()
 	ObjSprite2D_SetDestRect(objNBG,0, 0, 256, 32);
 	ObjSprite2D_SetDestCenter(objNBG);
 	ObjRender_SetPosition(objNBG,charSelectX,GetScreenHeight/2-152,0);
+	
+	
+	Previews();
+	ascent(i in 0..5)
+	{
+		StatIcons(charSelectX - 165 + 121 * (i%3), GetScreenHeight/2 + 25 + 26 * floor(i/3),i);
+	}
+	ascent(i in 0..3)
+	{
+		InfoTabs(charSelectX - 157,GetScreenHeight/2-1 - 44 + 22*i,i);
+	}
+	
 	let t = TO_CHARSELECT_TRANSITION;
 	ascent(i in 0..t)
 	{	
@@ -109,30 +197,291 @@ task Char_BoxDetails()
 	}
 	yield;
 	
-	let objText = CreateText(
+	let objArrows = [];
+	ascent(i in 0..2)
+	{
+		let objAr = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objAr, IMG_TITLE_MAINMENU_SELECTARROW);
+		Obj_SetRenderPriorityI(objAr, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objAr,0, 0, 64, 32);
+		ObjSprite2D_SetDestRect(objAr,0, 0, 64, 32);
+		ObjSprite2D_SetDestCenter(objAr);
+		ObjRender_SetScaleXYZ(objAr, (1-2*i) * 0.8, 1 * 0.8, 0);
+		ObjRender_SetBlendType(objAr, BLEND_ADD_ARGB);
+		ObjRender_SetPosition(objAr, charSelectX - 140*[1,-1][i], GetScreenHeight/2-152-3, 0);
+		ObjRender_SetTextureFilter(objAr, FILTER_NONE,FILTER_NONE,FILTER_NONE);
+		objArrows ~= [objAr];
+	}
+	
+	let objArrowsPage = [];
+	ascent(i in 0..2)
+	{
+		let objArPa = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objArPa, IMG_TITLE_CHARSELECT_ARROW);
+		Obj_SetRenderPriorityI(objArPa, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objArPa,0, 0, 64, 64);
+		ObjSprite2D_SetDestRect(objArPa,0, 0, 64, 64);
+		ObjSprite2D_SetDestCenter(objArPa);
+		ObjRender_SetScaleXYZ(objArPa, -(1-2*i), 1, 0);
+		//ObjRender_SetBlendType(objArPa, BLEND_ADD_ARGB);
+		ObjRender_SetPosition(objArPa, GetScreenWidth/2 - (GetScreenWidth/2 - 32 - 16)*[1,-1][i], GetScreenHeight/2, 0);
+		objArrowsPage ~= [objArPa];
+	}
+	
+	let objTeamNamesText = CreateText(
 		"",
 		25,
 		[[255,255,255],
-		[255,255,255]],
+		[255,255,200]],
 		[0,0,0],
 		charSelectX,
 		GetScreenHeight/2-152,
 		"Lucida Fax Demibold",
 		BASE_RENDERI+7);
 		
-	ObjText_SetFontBorderWidth(objText, 2);
-	ObjText_SetFontBorderType(objText, BORDER_FULL);
-	ObjText_SetSidePitch(objText, -1);
+	ObjText_SetFontBorderWidth(objTeamNamesText, 2);
+	ObjText_SetFontBorderType(objTeamNamesText, BORDER_FULL);
+	ObjText_SetSidePitch(objTeamNamesText, -1);
 	
+	let objBioText = CreateText(
+		"A",
+		14,
+		[[255,255,255],
+		 [255,255,200]],
+		[0,0,0],
+		charSelectX - 176,
+		GetScreenHeight/2 - 130,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+	//ObjText_SetSidePitch(objBioText, -1);
+	ObjText_SetLinePitch(objBioText, -1);
+	ObjText_SetText(objBioText, characterBios[selectedTeam]);
+	let c = 0;
 	while(menuState==MENUSTATE_CHARACTER_SELECT)
 	{
-		RenameRecenterText(objText, teamNames[selectedTeam], charSelectX,GetScreenHeight/2-156);
-		ObjRender_SetAlpha(objText, 255*characterSelect_AlphaScl);
+		RenameRecenterText(objTeamNamesText, teamNames[selectedTeam], charSelectX,GetScreenHeight/2-156);
+		ObjRender_SetAlpha(objTeamNamesText, 255*characterSelect_AlphaScl);
 		ObjRender_SetAlpha(objNBG, 255*characterSelect_AlphaScl);
+		ObjRender_SetAlpha(objBioText, 255*characterSelect_AlphaScl);
+		ObjText_SetText(objBioText, characterBios[selectedTeam]);
+		ascent(i in 0..2)
+		{
+			ObjRender_SetAlpha(objArrows[i], 255*characterSelect_AlphaScl);
+			ObjRender_SetAlpha(objArrowsPage[i], 255*characterSelect_AlphaScl);
+			ObjRender_SetPosition(objArrowsPage[i], GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i], GetScreenHeight/2, 0);
+		}
+		c++;
 		yield;
 	}
+	Obj_Delete(objBioText);
 	Obj_Delete(objNBG);
-	Obj_Delete(objText);
+	Obj_Delete(objTeamNamesText);
+	ascent(i in 0..2)
+	{
+		Obj_Delete(objArrows[i]);
+		Obj_Delete(objArrowsPage[i]);
+	}
+	
+	task Previews()
+	{
+		let objCSPr = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCSPr, IMG_TITLE_CHARSELECT_PREVIEW_EMPTY);
+		Obj_SetRenderPriorityI(objCSPr, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objCSPr,0, 0, 512, 128);
+		ObjSprite2D_SetDestRect(objCSPr,0, 0, 512, 128);
+		ObjSprite2D_SetDestCenter(objCSPr);
+		ObjRender_SetPosition(objCSPr,charSelectX-1,GetScreenHeight/2+134,0);
+		let t = TO_CHARSELECT_TRANSITION;
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objCSPr, 255*scl);
+			SkippableWait(1);
+		}
+		let currentTeam = -1;
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			if(currentTeam!=selectedTeam)
+			{
+				currentTeam = selectedTeam;
+				ObjPrim_SetTexture(objCSPr, charPreviews[currentTeam]);
+				
+			}
+			ObjRender_SetAlpha(objCSPr, 255*characterSelect_AlphaScl);
+			yield;
+		}
+		Obj_Delete(objCSPr);
+	}
+	
+	task InfoTabs(x,y,id)
+	{
+		let objCST = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCST, IMG_TITLE_CHARSELECT_TAB);
+		Obj_SetRenderPriorityI(objCST, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objCST, 0, 0, 128, 32);
+		ObjSprite2D_SetDestRect(objCST,   0, 0, 128, 32);
+		ObjSprite2D_SetDestCenter(objCST);
+		ObjRender_SetPosition(objCST,x,y,0);
+		
+		let objTabTitleText = CreateText(
+		tabTitles[id],
+		15,
+		[[255,255,255],
+		 [255,255,200]],
+		[0,0,0],
+		x,
+		y-1,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		ObjText_SetSidePitch(objTabTitleText, -1);
+		
+		let t = TO_CHARSELECT_TRANSITION;
+		
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objCST, 255*scl);
+			ObjRender_SetAlpha(objTabTitleText, 255*scl);
+			SkippableWait(1);
+		}
+		let objTabText = CreateText(
+		"A",
+		15,
+		[[255,255,255],
+		 [255,255,255]],
+		[0,0,0],
+		x + 45,
+		y-1,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		//ObjText_SetSidePitch(objTabText, -1);
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			ObjText_SetText(objTabText, tabInfoText[id][selectedTeam]);
+			ObjRender_SetAlpha(objCST, 255*characterSelect_AlphaScl);
+			ObjRender_SetAlpha(objTabTitleText, 255*characterSelect_AlphaScl);
+			ObjRender_SetAlpha(objTabText, 255*characterSelect_AlphaScl);
+			yield;
+		}
+		Obj_Delete(objCST);
+		Obj_Delete(objTabTitleText);
+		Obj_Delete(objTabText);
+	}
+	
+	task StatIcons(x,y,id)
+	{
+		let objCSSI = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCSSI, IMG_TITLE_CHARSELECT_STATICONS);
+		Obj_SetRenderPriorityI(objCSSI, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objCSSI, 32*id, 0, 32*(id+1), 32);
+		ObjSprite2D_SetDestRect(objCSSI,   32*id, 0, 32*(id+1), 32);
+		ObjSprite2D_SetDestCenter(objCSSI);
+		ObjRender_SetPosition(objCSSI,x,y,0);
+		
+		let objBarBack = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetPrimitiveType(objBarBack,PRIMITIVE_TRIANGLESTRIP);
+		ObjPrim_SetVertexCount(objBarBack, 4);
+		Obj_SetRenderPriorityI(objBarBack,BASE_RENDERI+7);
+		ObjPrim_SetVertexPosition(objBarBack , 0, 0, -3,0);
+		ObjPrim_SetVertexPosition(objBarBack , 1, 0,  3,0);
+		ObjPrim_SetVertexPosition(objBarBack , 2, 75, -3,0);
+		ObjPrim_SetVertexPosition(objBarBack , 3, 75,  3,0);
+		ObjRender_SetPosition(objBarBack, x + 7, y + 5, 0);
+		ObjRender_SetColor(objBarBack, 0,0,0);
+		
+		let objStatTitle = CreateText(
+		"",
+		14,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		x + 9,
+		y-12,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		ObjText_SetText(objStatTitle, statNames[id]);
+		ObjText_SetSidePitch(objStatTitle, -1);
+		
+		let t = TO_CHARSELECT_TRANSITION;
+		
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objCSSI, 255*scl);
+			ObjRender_SetAlpha(objBarBack, 255*scl);
+			ObjRender_SetAlpha(objStatTitle, 255*scl);
+			SkippableWait(1);
+		}
+		
+		let objBars = [];
+		ascent(o in 0..2)
+		{
+			let objBar = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+			ObjPrim_SetPrimitiveType(objBar,PRIMITIVE_TRIANGLESTRIP);
+			ObjPrim_SetVertexCount(objBar, 4);
+			Obj_SetRenderPriorityI(objBar,BASE_RENDERI+7);
+			ObjPrim_SetVertexPosition(objBar , 0, 0, -2+4*o,0);
+			ObjPrim_SetVertexPosition(objBar , 1, 0,  0,0);
+			ObjPrim_SetVertexPosition(objBar , 2, 73, -2+4*o,0);
+			ObjPrim_SetVertexPosition(objBar , 3, 73,  0,0);
+			ObjRender_SetPosition(objBar, x + 8, y + 5, 0);
+			let col = 255 - 128*o;
+			ObjRender_SetColor(objBar, col, col, col);
+			if(id==4)
+			{	
+				ObjRender_SetColor(objBar, 255, 255, 255);
+			}
+			objBars ~= [objBar];
+		}
+		
+		let objStatText = CreateText(
+		"30[r]30",
+		13,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		x + 92,
+		y+1,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		ObjText_SetLinePitch(objStatText, -1);
+		
+		
+		
+		let statValueSet = [0,0];
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			ObjRender_SetAlpha(objCSSI, 255*characterSelect_AlphaScl);
+			ObjRender_SetAlpha(objBarBack, 255*characterSelect_AlphaScl);
+			ObjRender_SetAlpha(objStatTitle, 255*characterSelect_AlphaScl);
+			ObjRender_SetAlpha(objStatText, 255*characterSelect_AlphaScl);
+			let textt = "";
+			if(id == 4){ textt = textt~"[r]"; }
+			ascent(o in 0..2)
+			{
+				statValueSet[o] = statValueSet[o] * 0.8 + statValues[id][selectedTeam][o] * 0.2;
+				if((id==4 && o==0) || id < 4)
+				{
+					textt = textt~rtos("00.0",statValues[id][selectedTeam][o]);
+					if(id < 4){ textt = textt~"[r]"; }
+				}
+				let statScl = statValueSet[o] / statMaxValues[id];
+				ObjPrim_SetVertexPosition(objBars[o] , 2, round(73 * statScl), -2+4*o,0);
+				ObjPrim_SetVertexPosition(objBars[o] , 3, round(73 * statScl),  0,0);
+				ObjRender_SetAlpha(objBars[o], 255*characterSelect_AlphaScl);
+			}
+			ObjText_SetText(objStatText, textt);
+			yield;
+		}
+		Obj_Delete(objCSSI);
+		Obj_Delete(objBarBack);
+		Obj_Delete(objStatText);
+		Obj_Delete(objStatTitle);
+		ascent(i in 0..2)
+		{
+			Obj_Delete(objBars[i]);
+		}
+	}
 }
 
 task Char_BoxRender()

@@ -81,14 +81,14 @@ let TIME = 60*60;
 		//move;
 		Fire;	
 		
-		ObjEnemy_SetDamageRate(objEnemy, (0.05)/1.5, (0.05)/3);
+		ObjEnemy_SetDamageRate(objEnemy, (0.1)/1.5, (0.1)/3);
         count = 1111;
     }
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
        
     }
-	
+	//Set2DCameraRatio(0.5);
     count++;
     yield;
 }
@@ -98,9 +98,39 @@ let TIME = 60*60;
 
 task Fire
 {
-
+	
+	DPS("Damage per Second: ",5,60);
 }
-
+task DPS(text,y,repet)
+{
+	let objText = ObjText_Create();
+	ObjText_SetFontSize(objText, 13);
+	ObjText_SetFontBold(objText, true);
+	ObjText_SetFontColorTop(objText, 255, 255, 255);
+	ObjText_SetFontColorBottom(objText, 255, 255, 255);
+	ObjText_SetFontBorderType(objText, BORDER_FULL);
+	ObjText_SetFontBorderColor(objText,1, 1, 1);
+	ObjText_SetFontBorderWidth(objText, 1);
+	Obj_SetRenderPriority(objText, 0.86);
+	
+	ObjRender_SetY(objText, y);
+	ObjText_SetFontType(objText,"Times New Roman");
+	let Health = ObjEnemy_GetInfo(objEnemy,INFO_LIFE);
+	let NewHealth = Health;
+	let Difference = 0;
+	loop
+	{
+		Difference = Health-NewHealth;
+		Health = NewHealth;
+		loop(repet)
+		{
+			NewHealth = ObjEnemy_GetInfo(objEnemy,INFO_LIFE);
+			ObjText_SetText(objText, text~rtos("000.000",Difference));
+			ObjRender_SetX(objText, (GetStgFrameWidth/2)-(ObjText_GetTotalWidth(objText)/2));
+			yield;
+		}
+	}
+}
 task timer
 {
     while(TIME>60*10)

@@ -8,6 +8,7 @@
 #include "./Package_Functions.txt"
 #include "./Package_MainMenu.txt"
 #include "./Package_CharacterSelect.txt"
+#include "./Package_Outro.txt"
 let skipIntro = false;
 @Initialize
 {
@@ -33,8 +34,8 @@ let skipIntro = false;
 //----------------------------------------------------
 task Loader
 {
-	//LoadThings;
-	//while(mainLoadBool==false){yield;}
+	LoadThings;
+	while(mainLoadBool==false){yield;}
 	LoadingBool = true;
 	skipIntro = false;
 	TIntro;
@@ -60,14 +61,44 @@ function TIntro()
 task TTitleScene
 {
 	menuState = MENUSTATE_MAIN;
+	TDarkManager();
 	Title_Display();
-	//タイトルシーン終了フラグ
-	while(true)
+}
+let totalDarkness = 0;
+task TDarkManager()
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetScaleY(obj, 1.9);
+	ObjRender_SetPosition(obj, GetScreenWidth/2, GetScreenHeight/2, 0);
+	Obj_SetRenderPriorityI(obj, 100);
+	ObjRender_SetColor(obj, 0, 0, 0);
+	while(menuState!=MENUSTATE_UNACTIVE)
 	{
+		ObjRender_SetAlpha(obj, 255*totalDarkness);
 		yield;
 	}
-	
+	Obj_Delete(obj);
+}
 
-	StartStageProgression();
-	ClosePackage();
+task TFlash(t)
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 418);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetScaleY(obj, 1.9);
+	ObjRender_SetPosition(obj, GetScreenWidth/2, GetScreenHeight/2, 0);
+	Obj_SetRenderPriorityI(obj, 100);
+	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+	ascent(i in 0..t)
+	{
+		ObjRender_SetAlpha(obj, 64-64/t*i);
+		yield;
+	}
+	Obj_Delete(obj);
 }

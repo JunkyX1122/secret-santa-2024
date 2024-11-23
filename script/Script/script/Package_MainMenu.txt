@@ -82,7 +82,25 @@ task Title_Display()
 			SkippableWait(1);
 		}
 		
-		CharacterSelectScreen();
+		let hasCanceled = CharacterSelectScreen();
+		if(hasCanceled)
+		{
+			Title_Display();
+		}
+		else
+		{
+			TFlash(50);
+			wait(50);
+			ascent(i in 0..180)
+			{
+				totalDarkness = min(1, 1/120*i);
+				yield;
+			}
+			totalDarkness = 0;
+			menuState = MENUSTATE_UNACTIVE;
+			firstTimeBoot = true;
+			StartStageProgression();
+		}
 	}
 	case(MAINMENUSTATE_EXIT)
 	{
