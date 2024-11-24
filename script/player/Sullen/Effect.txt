@@ -510,7 +510,7 @@ task PlayerDeletionEffect2(obj) {
 	ObjRender_SetBlendType(obj2, BLEND_ALPHA);
 	Obj_SetRenderPriorityI(obj2,40);
 	ObjRender_SetAngleZ(obj2,0);
-	ObjPrim_SetDestCenter(obj2,96,0,128,32);
+	ObjPrim_SetDestCenter(obj2,97,0,127,32);
 	ObjRender_SetPosition(obj2, x, y, 0);
 	ObjRender_SetAngleZ(obj2, ang + 90);
 	ObjRender_SetColor(obj2, col[0], col[1], col[2]);

@@ -47,7 +47,7 @@ let TIME = 60*60;
 @MainLoop
 {
     ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
-    ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+    //ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
         SetAutoDeleteObject(true);

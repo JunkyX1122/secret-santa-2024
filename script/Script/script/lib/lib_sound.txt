@@ -221,6 +221,18 @@ const doorclose = GetCurrentScriptDirectory~"./../../se3/DoorClose.wav";
 //=======================BGM============================
 //======================================================
 
+const BGM_STAGE_01A = GetCurrentScriptDirectory~"./../../bgm/stage_01a.ogg";
+const BGM_STAGE_01B = GetCurrentScriptDirectory~"./../../bgm/stage_01b.ogg";
+const BGM_STAGE_01C = GetCurrentScriptDirectory~"./../../bgm/stage_01c.ogg";
+
+const BGM_STAGE_02  = GetCurrentScriptDirectory~"./../../bgm/stage_02.ogg";
+const BGM_STAGE_03  = GetCurrentScriptDirectory~"./../../bgm/stage_03.ogg";
+const BGM_STAGE_04  = GetCurrentScriptDirectory~"./../../bgm/stage_04.ogg";
+const BGM_STAGE_05  = GetCurrentScriptDirectory~"./../../bgm/stage_05.ogg";
+const BGM_STAGE_06  = GetCurrentScriptDirectory~"./../../bgm/stage_06.ogg";
+
+
+
 const BGM_BOSS_01A = GetCurrentScriptDirectory~"./../../bgm/boss_01a.ogg";
 const BGM_BOSS_01B = GetCurrentScriptDirectory~"./../../bgm/boss_01b.ogg";
 const BGM_BOSS_01C = GetCurrentScriptDirectory~"./../../bgm/boss_01c.ogg";
