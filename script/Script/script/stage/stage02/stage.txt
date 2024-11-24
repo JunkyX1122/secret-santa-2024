@@ -65,7 +65,7 @@ task StartStage
 	wait(120);
 	SetCommonData("MaxNumberOfPhases",2);
 	SetCommonData("Stage2DualSpellPhase",0);
-	MusicChange(BGM_BOSS_02, 90, -1, -1);
+	MusicChange(BGM_BOSS_02, 90, 602574, 5157047);
 	SetCommonData("LifeBombAlpha",255);
 	SetForbidPlayerSpell(false);
 	loop(1)

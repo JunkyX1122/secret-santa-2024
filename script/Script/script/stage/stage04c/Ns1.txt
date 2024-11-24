@@ -182,32 +182,35 @@ task Fire
 		}
 		wait(6);
 		wait(60*3);
-		if(!Obj_IsDeleted(objEnemy))
-		{
-			SE_PlayLen(charge0,60);
-		}
-		ascent(i in 0..13)
+		if(!isPhase1Over)
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
-				let ang = -90 + 111.121*bit * (i+1);
-				let dis = 300;
-				let x3 = GetStgFrameWidth/2 + dis*cos(ang);
-				let y3 = GetStgFrameHeight/2 + dis*sin(ang);
-				GatoSlasher(x2, y2, x3, y3, bit);
-				x2 = x3;
-				y2 = y3;
-				wait(6);
+				SE_PlayLen(charge0,60);
 			}
-		}
-		if(!Obj_IsDeleted(objEnemy))
-		{
-			GatoSlasher(x2, y2, GetStgFrameWidth/2, 125, bit);
-		}
-		wait(6);
-		ascent(i in 0..60*5)
-		{
-			yield;
+			ascent(i in 0..13)
+			{
+				if(!Obj_IsDeleted(objEnemy))
+				{
+					let ang = -90 + 111.121*bit * (i+1);
+					let dis = 300;
+					let x3 = GetStgFrameWidth/2 + dis*cos(ang);
+					let y3 = GetStgFrameHeight/2 + dis*sin(ang);
+					GatoSlasher(x2, y2, x3, y3, bit);
+					x2 = x3;
+					y2 = y3;
+					wait(6);
+				}
+			}
+			if(!Obj_IsDeleted(objEnemy))
+			{
+				GatoSlasher(x2, y2, GetStgFrameWidth/2, 125, bit);
+			}
+			wait(6);
+			ascent(i in 0..60*5)
+			{
+				yield;
+			}
 		}
 		ObjEnemy_SetDamageRate(objEnemy, (0.1)/1.5, (0.1)/3);
 	}

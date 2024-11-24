@@ -331,7 +331,7 @@ task LastInfo
 function RunPauseScene()
 {
 	RenderSceneToTransitionTexture();
-	PauseStageScene(true);
+	
 
 	let dirModule = GetModuleDirectory();
 	let pathScript = GetCurrentScriptDirectory ~ "lib/system/Pause.txt";
@@ -340,7 +340,7 @@ function RunPauseScene()
 
 	let idScript = LoadScript(pathScript);
 	StartScript(idScript);
-
+	PauseStageScene(true);
 	while(!IsCloseScript(idScript))
 	{
 		yield;
