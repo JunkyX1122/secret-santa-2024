@@ -1,3 +1,5 @@
+#include "./StageFunctions.txt"
+
 let x1 = GetScreenWidth/2-208;
 let x2 = GetScreenWidth/2+208;
 x1 = (107);

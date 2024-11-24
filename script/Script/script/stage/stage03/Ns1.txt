@@ -95,9 +95,12 @@ task Fire
 		let startAng = rand(10,-10);
 		ascent(i in 0..5)
 		{
-			let ang = 90-90*bit+180/4*bit*i+startAng;
-			BookOpen(ObjMove_GetX(objEnemy)+200*cos(ang),ObjMove_GetY(objEnemy)+200*sin(ang),bit);
-			wait(14);
+			if(!Obj_IsDeleted(objEnemy)) 
+			{
+				let ang = 90-90*bit+180/4*bit*i+startAng;
+				BookOpen(ObjMove_GetX(objEnemy)+200*cos(ang),ObjMove_GetY(objEnemy)+200*sin(ang),bit);
+				wait(14);
+			}
 		}
 		bit*=-1;
 		wait(60);
