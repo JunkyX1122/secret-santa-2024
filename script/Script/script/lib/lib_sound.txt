@@ -208,7 +208,23 @@ const gap = GetCurrentScriptDirectory~"./../../se2/gap.wav";
 //======================================================
 //===================Character Talk=====================
 //======================================================
+const TALK_GATO      = GetCurrentScriptDirectory~"./../../se3/talk_gato.wav";
+const TALK_ANUBIS	 = GetCurrentScriptDirectory~"./../../se3/talk_anubis.wav";
 
+const TALK_SULLEN    = GetCurrentScriptDirectory~"./../../se3/talk_sullen.wav";
+const TALK_DAISUKE   = GetCurrentScriptDirectory~"./../../se3/talk_daisuke.wav";
+const TALK_DANDARA   = GetCurrentScriptDirectory~"./../../se3/talk_dandara.wav";
+
+const TALK_VIIVI     = GetCurrentScriptDirectory~"./../../se3/talk_viivi.wav";
+const TALK_TAZUE     = GetCurrentScriptDirectory~"./../../se3/talk_tazue.wav";
+const TALK_GRANDIS	 = GetCurrentScriptDirectory~"./../../se3/talk_grandis.wav";
+
+const TALK_SCYLLA	 = GetCurrentScriptDirectory~"./../../se3/talk_scylla.wav";
+const TALK_KIERAN	 = GetCurrentScriptDirectory~"./../../se3/talk_kieran.wav";
+
+const TALK_KAIRYU	 = GetCurrentScriptDirectory~"./../../se3/talk_kairyu.wav";
+const TALK_HIROYUKI	 = GetCurrentScriptDirectory~"./../../se3/talk_hiroyuki.wav";
+const TALK_REDRIN	 = GetCurrentScriptDirectory~"./../../se3/talk_redrin.wav";
 //======================================================
 //=======================EXTRA==========================
 //======================================================
@@ -288,8 +304,15 @@ charge0,charge1,charge2,charge3,charge4,charge5,
 spawnfm1,spawnfm2,spawnfm3,
 spellcard,compositespellcard,
 nodamage,
-gap,select,selected,cancel];
-
+gap,select,selected,cancel
+TALK_GATO, TALK_ANUBIS,
+TALK_SULLEN, TALK_DAISUKE, TALK_DANDARA,
+TALK_VIIVI, TALK_TAZUE, TALK_GRANDIS,
+TALK_SCYLLA, TALK_KIERAN,
+TALK_KAIRYU,
+TALK_HIROYUKI,
+TALK_REDRIN
+];
 
 
 
