@@ -48,6 +48,7 @@ let finalSpellBool = false;
 	SE_PlayLen(warning, 100);
 	SE_PlayLen(charge0, 100);
 	SE_PlayLen(LaserDelLong, 100);
+	RecordAttackHistory("04c", "S4", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SlowStart();
 }

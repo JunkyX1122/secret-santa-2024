@@ -45,6 +45,7 @@ let finalSpellBool = false;
 	
 	renderBossUnanimated(objEnemy, IMG_BOSS_DAISUKE, 7);
 	magiccircle(objEnemy,1);
+	RecordAttackHistory("04a", "S1", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

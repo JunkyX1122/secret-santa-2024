@@ -45,6 +45,7 @@ let finalSpellBool = false;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	renderBossUnanimated(objEnemy, IMG_BOSS_SULLEN, 15);
 	magiccircle(objEnemy,1);
+	RecordAttackHistory("04a", "S2", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

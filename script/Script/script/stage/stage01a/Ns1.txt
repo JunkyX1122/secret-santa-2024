@@ -39,7 +39,7 @@ let TIME = 60*60;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,140 );
 	renderBossUnanimated(objEnemy, IMG_BOSS_ANUBIS, 5);
-	RecordAttackHistory("01a", "Ns1", "Hard");
+	RecordAttackHistory("01a", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SetCommonData("SpellCardBG1",false);
 	SetCommonData("GatoPlayerSprite", 1);

@@ -61,6 +61,7 @@ let objEnemy3 = CreateFamiliar;
 	renderBossUnanimated(objEnemy3, IMG_BOSS_KEIRAN, 10);
 	HitCirc(objEnemy3);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 100, 60);
+	RecordAttackHistory("02", "S3", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

@@ -39,6 +39,7 @@ let TIME = 60*60;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2,150,40);
 	renderBossUnanimated(objEnemy, IMG_BOSS_KAIRYU, 7);
+	RecordAttackHistory("03", "Ns2", DIFFICULTY_NAMES[DIFFICULTY]);
 
 	end;
 	SetCommonData("SpellCardBG1",false);

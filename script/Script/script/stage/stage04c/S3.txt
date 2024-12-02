@@ -45,6 +45,7 @@ let finalSpellBool = false;
 	
 	renderBossUnanimated(objEnemy, IMG_BOSS_ANUGATO, 10);
 	magiccircle(objEnemy,1);
+	RecordAttackHistory("04c", "S3", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

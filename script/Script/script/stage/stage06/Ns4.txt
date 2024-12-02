@@ -40,6 +40,7 @@ let TIME = 60*60;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	renderBossUnanimated(objEnemy, IMG_BOSS_REDRIN, 20);
+	RecordAttackHistory("06", "Ns4", DIFFICULTY_NAMES[DIFFICULTY]);
 
 	
 	end;

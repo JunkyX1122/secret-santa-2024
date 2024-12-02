@@ -39,6 +39,7 @@ let TIME = 90*60;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	renderBossUnanimated(objEnemy, IMG_BOSS_HIROYUKI, 30);
+	RecordAttackHistory("05", "Ns3", DIFFICULTY_NAMES[DIFFICULTY]);
 
 	end;
 	SetCommonData("SpellCardBG1",false);

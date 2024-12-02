@@ -61,6 +61,7 @@ let finalSpellBool = false;
 	renderBossUnanimated(objEnemy3, IMG_BOSS_SULLEN, 15);
 	Obj_SetRenderPriority(objEnemy3, 0.38);
 	
+	RecordAttackHistory("04a", "S4", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);

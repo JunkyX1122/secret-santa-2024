@@ -48,6 +48,7 @@ let TIME = 60*60;
 	renderBossUnanimated(objEnemy2, IMG_BOSS_KEIRAN, 10);
 	Obj_SetRenderPriority(objEnemy2, 0.29);
 	HitCirc(objEnemy2);
+	RecordAttackHistory("02", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 
 	end;
 	SetCommonData("SpellCardBG1",false);

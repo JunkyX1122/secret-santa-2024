@@ -62,6 +62,7 @@ let finalSpellBool = false;
 	magiccircle(objEnemy2,1);
 	magiccircle(objEnemy3,1);
 	
+	RecordAttackHistory("04a", "S3", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

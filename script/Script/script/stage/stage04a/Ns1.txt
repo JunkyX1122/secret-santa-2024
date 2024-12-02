@@ -46,6 +46,7 @@ let TIME = 60*60;
 	ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
 	renderBossUnanimated(objEnemy2, IMG_BOSS_SULLEN, 15);
 	HitCirc(objEnemy2);
+	RecordAttackHistory("04a", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SetCommonData("SpellCardBG1",false);
 	

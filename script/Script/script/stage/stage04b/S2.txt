@@ -54,6 +54,7 @@ let finalSpellBool = false;
 	SE_PlayLen(BossSpell,75);
 	
 	TazueHandle(globalBit);
+	RecordAttackHistory("04b", "S2", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 
 	

@@ -42,6 +42,7 @@ let HEALTH_MAX = 220 * 3;
 	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,125 );
 	renderBossUnanimated(objEnemy, IMG_BOSS_GATO, 30);
 	BossPhaseManager();
+	RecordAttackHistory("04c", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SetCommonData("SpellCardBG1",false);
 	SetShotAutoDeleteClip(48,48,48,32);

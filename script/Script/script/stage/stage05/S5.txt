@@ -45,6 +45,7 @@ let HEALTH_MAX = 225/3;
 	
 	renderBossUnanimated(objEnemy, IMG_BOSS_HIROYUKI, 30);
 	
+	RecordAttackHistory("05", "S5", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

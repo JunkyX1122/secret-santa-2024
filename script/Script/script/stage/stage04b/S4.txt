@@ -60,6 +60,7 @@ let finalSpellBool = false;
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2-100, 100, 60);
 	
 	
+	RecordAttackHistory("04b", "S4", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);

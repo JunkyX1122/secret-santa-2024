@@ -46,6 +46,7 @@ let finalSpellBool = false;
 	renderBossUnanimated(objEnemy, IMG_BOSS_GRANDIS, 20);
 	magiccircle(objEnemy,1);
 	ShrinkCircle();
+	RecordAttackHistory("01c", "S2", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 
 	ObjEnemyBossScene_StartSpell(GetEnemyBossSceneObjectID);

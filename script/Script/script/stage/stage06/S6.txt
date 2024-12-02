@@ -46,6 +46,7 @@ let MAX_HEALTH = 300/3;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
 	renderBossUnanimated(objEnemy, IMG_BOSS_REDRIN, 20);
+	RecordAttackHistory("06", "S6", DIFFICULTY_NAMES[DIFFICULTY]);
 
 	end;
 

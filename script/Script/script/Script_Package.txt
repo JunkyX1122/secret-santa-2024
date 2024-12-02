@@ -90,9 +90,11 @@ task LoadSaveDataStuff()
 {
 	if(!LoadCommonDataAreaA2("Setting", DATA_SETTINGS_PATH)){
 		CreateCommonDataArea("Setting");
+		SaveCommonDataAreaA2("Setting", DATA_SETTINGS_PATH);
 	}
 	if(!LoadCommonDataAreaA2("History", DATA_HISTORY_PATH)){
 		CreateCommonDataArea("History");
+		SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
 	}
 }
 

@@ -62,6 +62,7 @@ let finalSpellBool = false;
 	//HitCirc(objEnemy3);
 	//ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 175, 60);
 	
+	RecordAttackHistory("04b", "S3", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

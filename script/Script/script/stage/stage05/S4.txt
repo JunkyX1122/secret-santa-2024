@@ -45,6 +45,7 @@ let finalSpellBool = false;
 	
 	renderBossUnanimated(objEnemy, IMG_BOSS_HIROYUKI, 30);
 	magiccircle(objEnemy,1);
+	RecordAttackHistory("05", "S4", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	end;
 

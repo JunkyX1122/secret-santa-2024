@@ -42,6 +42,7 @@ let finalSpellBool = false;
 	ObjEnemy_Regist(objEnemy);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
+	RecordAttackHistory("04c", "S2", DIFFICULTY_NAMES[DIFFICULTY]);
 	
 	renderBossUnanimated(objEnemy, IMG_BOSS_ANUGATO, 10);
 	magiccircle(objEnemy,1);

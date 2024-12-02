@@ -52,6 +52,7 @@ let TIME = 60*60;
 	//renderYuuma(objEnemy3);
 	HitCirc(objEnemy2);
 	//HitCirc(objEnemy3);
+	RecordAttackHistory("02", "Ns2", DIFFICULTY_NAMES[DIFFICULTY]);
 
 	end;
 	SetCommonData("SpellCardBG1",false);
