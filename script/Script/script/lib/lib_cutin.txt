@@ -4,6 +4,61 @@ let CutinDifficulty = "";
 
 
 
+let boss; //boss enemy object
+let bossScene; //boss scene object
+
+// Sorry Python but I'm stealing more code.
+task RecordAttackHistory(stage, pattern, diff){
+	boss = GetEnemyBossObjectID[0];
+	bossScene = GetEnemyBossSceneObjectID;
+
+	//DEBUG
+	if(!IsCommonDataAreaExists("History")){
+		CreateCommonDataArea("History");
+	}
+	LoadCommonDataAreaA2("History", DATA_HISTORY_PATH);
+
+	let player = GetPlayerID;
+
+	let sp_id = (stage) ~ "|" ~ (pattern) ~ "|" ~ (diff);
+	let SpellDataAttempt = sp_id ~ "|" ~ player ~ "|Attempt";
+	let SpellDataGet = sp_id ~ "|" ~ player ~ "|Get";
+
+	if(GetAreaCommonData("System", "IsPractice", false)){
+		SpellDataAttempt = SpellDataAttempt ~ "Prac";
+		SpellDataGet = SpellDataGet ~ "Prac";
+	}
+	
+	//This is actually the common data retrieval
+	let SpellValueAttempt = GetAreaCommonData("History", SpellDataAttempt, 0);
+	let SpellValueGet = GetAreaCommonData("History", SpellDataGet, 0);
+
+	SpellValueAttempt++;
+	SetAreaCommonData("History", SpellDataAttempt, SpellValueAttempt);
+	SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	
+	WriteLog(sp_id);
+	WriteLog(SpellDataAttempt);
+	WriteLog(SpellValueAttempt);
+	WriteLog(SpellDataGet);
+	WriteLog(SpellValueGet);
+	
+	let isFailed = false;
+	while(ObjEnemy_GetInfo(boss, INFO_LIFE) > 0){
+		if(ObjEnemyBossScene_GetInfo(bossScene, INFO_PLAYER_SHOOTDOWN_COUNT) + ObjEnemyBossScene_GetInfo(bossScene, INFO_PLAYER_SPELL_COUNT) > 0){ //if the player has bombed or died
+			isFailed = true;
+		}
+		yield;
+	}
+
+	if(!isFailed){
+		SpellValueGet++;
+		SetAreaCommonData("History", SpellDataGet, SpellValueGet);
+		SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	}
+}
+
+
 
 let Alpha_HUD = [255, 255]; 
 

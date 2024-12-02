@@ -1,0 +1,77 @@
+let options_AlphaScl = 1;
+
+let option_SFXVolume = 1;
+let option_MusicVolume = 1;
+let OPTIONSMENU_TRANSITION = 30;
+
+const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Effect Cut"];
+
+function OptionsScreen()
+{
+	option_SFXVolume = GetCommonData("SFXVolume",1);
+	option_MusicVolume = GetCommonData("MusicVolume",1);
+	options_AlphaScl = 1;
+	menuState = MENUSTATE_OPTIONS;
+	Options_BoxRender();
+	SkippableWait(OPTIONSMENU_TRANSITION);
+	yield;
+	let hasCanceled = false;
+	while(menuState==MENUSTATE_OPTIONS && !hasCanceled)
+	{
+		CharacterMenuSelectMove();
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+		{
+			hasCanceled = true;
+		}
+		yield;
+	}
+	ascent(i in 0..30)
+	{
+		options_AlphaScl = 1 - 1/29*i;
+		SkippableWait(1);
+	}
+}
+
+task Options_BoxRender()
+{
+	let objOB = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objOB, IMG_TITLE_OPTIONS_BOX);
+	Obj_SetRenderPriorityI(objOB, BASE_RENDERI+7);
+	ObjSprite2D_SetSourceRect(objOB,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objOB,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objOB);
+	ObjRender_SetPosition(objOB,GetScreenWidth/2,GetScreenHeight/2,0);
+	
+	let objOptionsTitle = CreateText(
+		"Options",
+		20,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2,
+		GetScreenHeight/2-215,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		
+	ObjText_SetFontBorderWidth(objOptionsTitle, 2);
+	ObjText_SetFontBorderType(objOptionsTitle, BORDER_FULL);
+	ObjText_SetSidePitch(objOptionsTitle, -1);
+	
+	let t = TO_CHARSELECT_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objOB, 255*scl);
+		ObjRender_SetAlpha(objOptionsTitle, 255*scl);
+		SkippableWait(1);
+	}
+	yield;
+	while(menuState==MENUSTATE_OPTIONS)
+	{
+		ObjRender_SetAlpha(objOB, 255*options_AlphaScl);
+		ObjRender_SetAlpha(objOptionsTitle, 255*options_AlphaScl);
+		yield;
+	}
+	Obj_Delete(objOB);
+	Obj_Delete(objOptionsTitle);
+}

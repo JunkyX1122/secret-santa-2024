@@ -10,6 +10,7 @@
 #include "./lib_generalrendering.txt"
 #include "./lib_cutin.txt"
 #include "./lib_event.txt"
+#include "./lib_data.txt"
 #include "./dialog_func.txt"
 
 let DIFF_EASY = 0;

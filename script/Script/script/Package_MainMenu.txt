@@ -9,7 +9,7 @@ const MAINMENUSTATE_GALLERY 	= 3;
 const MAINMENUSTATE_CREDITS 	= 4;
 const MAINMENUSTATE_EXIT 		= 5;
 const MAINMENU_TEXT = 		["Start", "Practice", "Options", "Gallery", "Credits", "Exit"];
-let   mainMenu_Selectable = [   true,      false,     false,     false,     false,   true];
+let   mainMenu_Selectable = [   true,      false,      true,     false,     false,   true];
 const TO_MAINMENU_TRANSITION = 100;
 const BOX_HEIGHTOFFSET = 110;
 const MAINMENU_TOTALOPTIONS = length(MAINMENU_TEXT);
@@ -20,7 +20,7 @@ let SELECTED_WAIT = 20;
 let firstTimeBoot = true;
 task Title_Display()
 {
-	mainMenuState = MAINMENUSTATE_START;
+	
 	menuState = MENUSTATE_MAIN;
 	mainMenu_AlphaScl = 1;
 	background_AlphaScl = 1;
@@ -101,6 +101,17 @@ task Title_Display()
 			firstTimeBoot = true;
 			StartStageProgression();
 		}
+	}
+	case(MAINMENUSTATE_OPTIONS)
+	{
+		let t = 40;
+		ascent(i in 0..t)
+		{
+			mainMenu_AlphaScl = 1 - 1/(t-1)*i;
+			SkippableWait(1);
+		}
+		OptionsScreen();
+		Title_Display();
 	}
 	case(MAINMENUSTATE_EXIT)
 	{

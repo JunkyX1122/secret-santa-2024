@@ -5,10 +5,12 @@
 #include "./lib/lib_img.txt"
 #include "./lib/lib_sound.txt"
 #include "./lib/lib_event.txt"
+#include "./lib/lib_data.txt"
 #include "./Loading.txt"
 #include "./Package_Functions.txt"
 #include "./Package_MainMenu.txt"
 #include "./Package_CharacterSelect.txt"
+#include "./Package_Options.txt"
 #include "./Package_Outro.txt"
 let skipIntro = false;
 @Initialize
@@ -48,6 +50,9 @@ task Loader
 	while(mainLoadBool==false){yield;}
 	LoadingBool = true;
 	skipIntro = false;
+	
+	LoadSaveDataStuff();
+	
 	TIntro;
 	TTitleScene;
 }
@@ -60,6 +65,7 @@ let BASE_RENDERI = BASE_RENDER*100;
 const MENUSTATE_UNACTIVE 				= 0;
 const MENUSTATE_MAIN 					= 1;
 const MENUSTATE_CHARACTER_SELECT 		= 2;
+const MENUSTATE_OPTIONS					= 3;
 
 let menuState = MENUSTATE_UNACTIVE;
 
@@ -77,6 +83,19 @@ task TTitleScene
 		Title_Display();
 	}
 }
+
+
+
+task LoadSaveDataStuff()
+{
+	if(!LoadCommonDataAreaA2("Setting", DATA_SETTINGS_PATH)){
+		CreateCommonDataArea("Setting");
+	}
+	if(!LoadCommonDataAreaA2("History", DATA_HISTORY_PATH)){
+		CreateCommonDataArea("History");
+	}
+}
+
 let totalDarkness = 0;
 task TDarkManager()
 {

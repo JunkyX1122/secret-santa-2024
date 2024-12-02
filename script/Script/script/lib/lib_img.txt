@@ -370,6 +370,8 @@ const IMG_TITLE_CHARSELECT_ICON_A =  		GetCurrentScriptDirectory()~"./../../img/
 const IMG_TITLE_CHARSELECT_ICON_B =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_charIconB.png";
 const IMG_TITLE_CHARSELECT_ICON_C =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_charIconC.png";
 
+const IMG_TITLE_OPTIONS_BOX =  		GetCurrentScriptDirectory()~"./../../img/title/title_options_box.png";
+
 const TitleScreen_ImgArray = [
 IMG_SELECTIONS,IMG_TITLEBACK, 
 IMG_TITLESHOW_01, IMG_TITLESHOW_02,

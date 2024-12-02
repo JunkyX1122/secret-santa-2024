@@ -1,0 +1,2 @@
+const DATA_SETTINGS_PATH = GetCurrentScriptDirectory() ~ "./../data/setting.dat";
+const DATA_HISTORY_PATH = GetCurrentScriptDirectory() ~ "./../data/history.dat";
