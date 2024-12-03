@@ -1,30 +1,83 @@
 let options_AlphaScl = 1;
 
-let option_SFXVolume = 1;
 let option_MusicVolume = 1;
+let option_SFXVolume = 1;
 let OPTIONSMENU_TRANSITION = 30;
 
-const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Effect Cut"];
+let OPTIONSMENUSTATE_MUSICVOL 		= 0;
+let OPTIONSMENUSTATE_SOUNDVOL 		= 1;
+let OPTIONSMENUSTATE_STARTINGLIVES 	= 2;
+let OPTIONSMENUSTATE_EFFECTCUT 		= 3;
+let OPTIONSMENUSTATE_BACK	 		= 4;
+
+const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Effect Cut", "Back"];
+
+let selectedOption = 0;
+const OPTIONSMENU_MAXOPTIONS = 5;
 
 function OptionsScreen()
 {
-	option_SFXVolume = GetCommonData("SFXVolume",1);
-	option_MusicVolume = GetCommonData("MusicVolume",1);
+	selectedOption = 0;
 	options_AlphaScl = 1;
 	menuState = MENUSTATE_OPTIONS;
 	Options_BoxRender();
+	Options_SubBoxRender();
+	Options_CreateOptions();
 	SkippableWait(OPTIONSMENU_TRANSITION);
+	
 	yield;
 	let hasCanceled = false;
 	while(menuState==MENUSTATE_OPTIONS && !hasCanceled)
 	{
-		CharacterMenuSelectMove();
+		let recordedSFXVol = option_SFXVolume;
+		
+		OptionsMenuSelectMove();
+		alternative(selectedOption)
+		case(OPTIONSMENUSTATE_MUSICVOL)
+		{
+			option_MusicVolume = OptionsMenuSlider(option_MusicVolume, 0.01, 0, 1, false, 2);
+		}
+		case(OPTIONSMENUSTATE_SOUNDVOL)
+		{
+			option_SFXVolume = OptionsMenuSlider(option_SFXVolume, 0.01, 0, 1, false, 2);
+		}
+		case(OPTIONSMENUSTATE_STARTINGLIVES)
+		{
+			startingLives = OptionsMenuSlider(startingLives, 1, 0, 9, true, 6);
+		}
+		case(OPTIONSMENUSTATE_BACK)
+		{
+			if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH || GetVirtualKeyState(VK_OK) == KEY_PUSH)
+			{
+				hasCanceled = true;
+			}
+		}
+		others
+		{
+		}
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
-			hasCanceled = true;
+			selectedOption = OPTIONSMENUSTATE_BACK;
+		}
+		SetCommonData("SFXVolume", option_SFXVolume);
+		SetCommonData("MusicVolume", option_MusicVolume);
+		if(recordedSFXVol != option_SFXVolume)
+		{
+			SE_PlayLen(shot1,60);
 		}
 		yield;
 	}
+	
+	SetCommonData("SFXVolume", option_SFXVolume);
+	SetCommonData("MusicVolume", option_MusicVolume);
+	
+	SetAreaCommonData("Setting", "SFXVolume", option_SFXVolume);
+	SetAreaCommonData("Setting", "MusicVolume", option_MusicVolume);
+	SetAreaCommonData("Setting", "StartingLives", startingLives);
+	
+	
+	
+	SaveCommonDataAreaA2("Setting", DATA_SETTINGS_PATH);
 	ascent(i in 0..30)
 	{
 		options_AlphaScl = 1 - 1/29*i;
@@ -32,6 +85,102 @@ function OptionsScreen()
 	}
 }
 
+let optionMenuHoldCounter = 0;
+function OptionsMenuSelectMove()
+{
+	if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH)  { 
+		MoveOption(1);
+		optionMenuHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_UP)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		optionMenuHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_DOWN) == KEY_HOLD)  {
+		optionMenuHoldCounter++;
+		if(optionMenuHoldCounter > 20)
+		{
+			if(optionMenuHoldCounter%6==0)
+			{
+				MoveOption(1);
+			}
+		}
+	}
+	if(GetVirtualKeyState(VK_UP) == KEY_HOLD)  {
+		optionMenuHoldCounter++;
+		if(optionMenuHoldCounter > 20)
+		{
+			if(optionMenuHoldCounter%6==0)
+			{
+				MoveOption(-1);
+			}
+		}
+	}
+	if((GetVirtualKeyState(VK_DOWN) == KEY_FREE && GetVirtualKeyState(VK_UP) == KEY_FREE) || 
+	   (GetVirtualKeyState(VK_DOWN) != KEY_FREE && GetVirtualKeyState(VK_UP) != KEY_FREE)) {
+		optionMenuHoldCounter = 0;
+	}
+		
+	
+	task MoveOption(am)
+	{
+		optionMenuSliderHoldCounter = 0;
+		selectedOption+=am;
+		if(selectedOption > OPTIONSMENU_MAXOPTIONS -1) { selectedOption = 0; }
+		if(selectedOption <  0) 						 { selectedOption = OPTIONSMENU_MAXOPTIONS - 1; }
+	}
+}
+
+let optionMenuSliderHoldCounter = 0;
+function OptionsMenuSlider(currentNumber, scl, minV, maxV, willLoop, slideRate)
+{
+	if(currentNumber <= minV || currentNumber >= maxV)
+	{
+		optionMenuSliderHoldCounter = 0;
+	}
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)  { 
+		MoveOption(1);
+		optionMenuSliderHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_LEFT)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		optionMenuSliderHoldCounter = 0; 
+	}
+	
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_HOLD)  {
+		optionMenuSliderHoldCounter++;
+		if(optionMenuSliderHoldCounter > 20 && optionMenuSliderHoldCounter%slideRate==0)
+		{
+			MoveOption(1);
+		}
+	}
+	if(GetVirtualKeyState(VK_LEFT) == KEY_HOLD)  {
+		optionMenuSliderHoldCounter++;
+		if(optionMenuSliderHoldCounter > 20 && optionMenuSliderHoldCounter%slideRate==0)
+		{
+			MoveOption(-1);
+		}
+	}
+	
+	
+	if((GetVirtualKeyState(VK_RIGHT) == KEY_FREE && GetVirtualKeyState(VK_LEFT) == KEY_FREE) || 
+	   (GetVirtualKeyState(VK_RIGHT) != KEY_FREE && GetVirtualKeyState(VK_LEFT) != KEY_FREE)) {
+		optionMenuSliderHoldCounter = 0;
+	}
+	return currentNumber;
+	task MoveOption(am)
+	{
+		currentNumber+=am * scl;
+		if(currentNumber > maxV) 
+		{ 
+			currentNumber = willLoop ? minV : maxV; 
+		}
+		if(currentNumber <  minV) 						 
+		{ 
+			currentNumber = willLoop ? maxV : minV; 
+		}
+	}
+}
 task Options_BoxRender()
 {
 	let objOB = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -74,4 +223,279 @@ task Options_BoxRender()
 	}
 	Obj_Delete(objOB);
 	Obj_Delete(objOptionsTitle);
+}
+
+task Options_SubBoxRender()
+{
+
+	let objAvOp = CreateText(
+		"Available Options",
+		13,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2-300,
+		GetScreenHeight/2-193,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+	ObjText_SetFontBorderWidth(objAvOp, 2);
+	ObjText_SetFontBorderType(objAvOp, BORDER_FULL);
+	ObjText_SetSidePitch(objAvOp, -1);
+	
+	let objOpDat = CreateText(
+		"Values",
+		13,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2 + 190,
+		GetScreenHeight/2-193,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+	ObjText_SetFontBorderWidth(objOpDat, 2);
+	ObjText_SetFontBorderType(objOpDat, BORDER_FULL);
+	ObjText_SetSidePitch(objOpDat, -1);
+	
+	let t = TO_CHARSELECT_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objAvOp, 255*scl);
+		ObjRender_SetAlpha(objOpDat, 255*scl);
+		SkippableWait(1);
+	}
+	yield;
+	while(menuState==MENUSTATE_OPTIONS)
+	{
+		ObjRender_SetAlpha(objAvOp, 255*options_AlphaScl);
+		ObjRender_SetAlpha(objOpDat, 255*options_AlphaScl);
+		yield;
+	}
+	Obj_Delete(objAvOp);
+	Obj_Delete(objOpDat);
+}
+
+task Options_CreateOptions()
+{
+	ascent(i in 0..OPTIONSMENU_MAXOPTIONS)
+	{
+		OptionCreate(i);
+	}
+	
+	task OptionCreate(id)
+	{
+		let offsetID = 0;
+		if(id == OPTIONSMENUSTATE_BACK)
+		{
+			offsetID = 1;
+		}
+		let opY = GetScreenHeight/2-215 + (23*3 + 3) + 23 * (id + offsetID);
+		if(id==OPTIONSMENUSTATE_MUSICVOL || id==OPTIONSMENUSTATE_SOUNDVOL)
+		{
+			OptionSlider(id,opY);
+		}
+		else if(id != OPTIONSMENUSTATE_BACK)
+		{
+			OptionInput(id,opY);
+		}
+		let objOptionsText = CreateText(
+		"A",
+		20,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2 - 370,
+		opY,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
+		ObjText_SetFontBorderWidth(objOptionsText, 1);
+		ObjText_SetFontBorderType(objOptionsText, BORDER_FULL);
+		ObjText_SetSidePitch(objOptionsText, -1);
+		ObjText_SetText(objOptionsText, OPTIONS_NAMES[id]);
+		
+		let objOSB = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objOSB, IMG_TITLE_OPTIONS_SELECTION_BACK);
+		Obj_SetRenderPriorityI(objOSB, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objOSB,0, 0, 1024, 16);
+		ObjSprite2D_SetDestRect(objOSB,0, 0, 1024, 16);
+		ObjSprite2D_SetDestCenter(objOSB);
+		ObjRender_SetPosition(objOSB,GetScreenWidth/2,opY,0);
+		ObjRender_SetAlpha(objOSB,0);
+		
+		let objOSF = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objOSF, IMG_TITLE_OPTIONS_SELECTION_FRONT);
+		Obj_SetRenderPriorityI(objOSF, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objOSF,0, 0, 1024, 32);
+		ObjSprite2D_SetDestRect(objOSF,0, 0, 1024, 32);
+		ObjSprite2D_SetDestCenter(objOSF);
+		ObjRender_SetPosition(objOSF,GetScreenWidth/2,opY,0);
+		ObjRender_SetAlpha(objOSF,0);
+		
+		let selAlph = 0;
+		
+		
+		let t = TO_CHARSELECT_TRANSITION;
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objOptionsText, 255*scl);
+			SkippableWait(1);
+		}
+		yield;
+		let c = 0;
+		while(menuState==MENUSTATE_OPTIONS)
+		{
+			let targetAlph = selectedOption == id ? 1 : 0;
+			selAlph = selAlph * 0.8 + targetAlph * 0.2;
+			
+			let scl1 = cos(c*3);
+			
+			ObjRender_SetAlpha(objOSB,255*selAlph*options_AlphaScl * (0.7 + 0.3 * scl1));
+			ObjRender_SetAlpha(objOSF,255*selAlph*options_AlphaScl);
+			ObjRender_SetAlpha(objOptionsText, 255*options_AlphaScl);
+			c++;
+			yield;
+		}
+		Obj_Delete(objOptionsText);
+		Obj_Delete(objOSB);
+		Obj_Delete(objOSF);
+		
+		task OptionSlider(id,opY)
+		{
+			let x = GetScreenWidth/2 + 190;
+			let objOSl = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(objOSl, IMG_TITLE_OPTIONS_SLIDER);
+			Obj_SetRenderPriorityI(objOSl, BASE_RENDERI+8);
+			ObjSprite2D_SetSourceRect(objOSl,0, 0, 512, 32);
+			ObjSprite2D_SetDestRect(objOSl,0, 0, 512, 32);
+			ObjSprite2D_SetDestCenter(objOSl);
+			ObjRender_SetPosition(objOSl,x, opY,0);
+			
+			let objBar = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+			ObjPrim_SetPrimitiveType(objBar,PRIMITIVE_TRIANGLESTRIP);
+			ObjPrim_SetVertexCount(objBar, 4);
+			Obj_SetRenderPriorityI(objBar,BASE_RENDERI+7);
+			ObjPrim_SetVertexPosition(objBar , 0, 0, -4,0);
+			ObjPrim_SetVertexPosition(objBar , 1, 0,  4,0);
+			ObjPrim_SetVertexPosition(objBar , 2, 129*2, -4,0);
+			ObjPrim_SetVertexPosition(objBar , 3, 129*2,  4,0);
+			ObjRender_SetPosition(objBar, x - 129, opY, 0);
+			ObjRender_SetColor(objBar, 0, 139, 159);
+			
+			let statScl = [option_MusicVolume, option_SFXVolume][id];
+			ObjPrim_SetVertexPosition(objBar , 2, round(129*2 * statScl), -4,0);
+			ObjPrim_SetVertexPosition(objBar , 3, round(129*2 * statScl),  4,0);
+
+			let objOG = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(objOG, IMG_TITLE_OPTIONS_GEM);
+			Obj_SetRenderPriorityI(objOG, BASE_RENDERI+8);
+			ObjSprite2D_SetSourceRect(objOG,0, 0, 32, 32);
+			ObjSprite2D_SetDestRect(objOG,0, 0, 32, 32);
+			ObjSprite2D_SetDestCenter(objOG);
+			ObjRender_SetPosition(objOG,x - 129 + round(129*2 * statScl), opY,0);
+
+			let objOptionsSliderValue = CreateText(
+			IntToString(round(statScl * 100)),
+			15,
+			[[255,255,255],
+			[255,255,200]],
+			[0,0,0],
+			x - 129 + round(129*2 * statScl),
+			opY,
+			"Lucida Fax Demibold",
+			BASE_RENDERI+8);
+
+			let t = TO_CHARSELECT_TRANSITION;
+			ascent(i in 0..t)
+			{	
+				let scl = 1*sin(90/(t-1)*i);
+				ObjRender_SetAlpha(objOSl, 255*scl);
+				ObjRender_SetAlpha(objBar, 255*scl);
+				ObjRender_SetAlpha(objOG, 255*scl);
+				ObjRender_SetAlpha(objOptionsSliderValue, 255*scl);
+				SkippableWait(1);
+			}
+			yield;
+			while(menuState==MENUSTATE_OPTIONS)
+			{
+				statScl = [option_MusicVolume, option_SFXVolume][id];
+				ObjPrim_SetVertexPosition(objBar , 2, round(129*2 * statScl), -4,0);
+				ObjPrim_SetVertexPosition(objBar , 3, round(129*2 * statScl),  4,0);
+				
+				let newX = x - 129 + round(129*2 * statScl);
+				ObjRender_SetPosition(objOG,newX, opY,0);
+				RenameRecenterText(objOptionsSliderValue, IntToString(round(statScl * 100)), newX, opY);
+				
+				ObjRender_SetAlpha(objOSl, 255*options_AlphaScl);
+				ObjRender_SetAlpha(objBar, 255*options_AlphaScl);
+				ObjRender_SetAlpha(objOG, 255*options_AlphaScl);
+				ObjRender_SetAlpha(objOptionsSliderValue, 255*options_AlphaScl);
+				yield;
+			}
+			Obj_Delete(objOSl);
+			Obj_Delete(objBar);
+			Obj_Delete(objOG);
+			Obj_Delete(objOptionsSliderValue);
+		
+		}
+		task OptionInput(id,opY)
+		{
+			let x = GetScreenWidth/2 + 190;
+			let objOIn = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(objOIn, IMG_TITLE_OPTIONS_INPUT);
+			Obj_SetRenderPriorityI(objOIn, BASE_RENDERI+8);
+			ObjSprite2D_SetSourceRect(objOIn,0, 0, 512, 32);
+			ObjSprite2D_SetDestRect(objOIn,0, 0, 512, 32);
+			ObjSprite2D_SetDestCenter(objOIn);
+			ObjRender_SetPosition(objOIn,x, opY,0);
+			
+			let objOptionsInputText = CreateText(
+				"",
+				20,
+				[[255,255,255],
+				[255,255,200]],
+				[0,0,0],
+				x,
+				opY,
+				"Lucida Fax Demibold",
+				BASE_RENDERI+8);
+				
+			ObjText_SetFontBorderWidth(objOptionsInputText, 1);
+			ObjText_SetFontBorderType(objOptionsInputText, BORDER_FULL);
+			ObjText_SetSidePitch(objOptionsInputText, -1);
+			RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? IntToString(startingLives) : "", x, opY);
+		
+			let t = TO_CHARSELECT_TRANSITION;
+			ascent(i in 0..t)
+			{	
+				let scl = 1*sin(90/(t-1)*i);
+				ObjRender_SetAlpha(objOIn, 255*scl);
+				ObjRender_SetAlpha(objOptionsInputText, 255*scl);
+				SkippableWait(1);
+			}
+			yield;
+			while(menuState==MENUSTATE_OPTIONS)
+			{
+				let theText = "< " ~ IntToString(startingLives) ~ " >";
+				if(startingLives == 9)
+				{
+					theText = "< " ~ "Infinite" ~ " >";
+				}
+				if(id==OPTIONSMENUSTATE_EFFECTCUT)
+				{
+					theText = "Not Implement";
+				}
+				RenameRecenterText(objOptionsInputText, theText, x, opY);
+
+				ObjRender_SetAlpha(objOIn, 255*options_AlphaScl);
+				ObjRender_SetAlpha(objOptionsInputText, 255*options_AlphaScl);
+				yield;
+			}
+			Obj_Delete(objOIn);
+			Obj_Delete(objOptionsInputText);
+		
+		}
+
+	}
 }

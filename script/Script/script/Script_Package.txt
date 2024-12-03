@@ -46,8 +46,8 @@ let skipIntro = false;
 //----------------------------------------------------
 task Loader
 {
-	LoadThings;
-	while(mainLoadBool==false){yield;}
+	//LoadThings;
+	//while(mainLoadBool==false){yield;}
 	LoadingBool = true;
 	skipIntro = false;
 	
@@ -96,6 +96,15 @@ task LoadSaveDataStuff()
 		CreateCommonDataArea("History");
 		SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
 	}
+	
+	LoadCommonDataAreaA2("Setting", DATA_SETTINGS_PATH);
+	LoadCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	option_SFXVolume = GetAreaCommonData("Setting", "SFXVolume", 1);
+	option_MusicVolume = GetAreaCommonData("Setting", "MusicVolume", 1);
+	startingLives = GetAreaCommonData("Setting", "StartingLives", 2);
+	
+	SetCommonData("SFXVolume", option_SFXVolume);
+	SetCommonData("MusicVolume", option_MusicVolume);
 }
 
 let totalDarkness = 0;

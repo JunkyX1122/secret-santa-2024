@@ -370,7 +370,12 @@ const IMG_TITLE_CHARSELECT_ICON_A =  		GetCurrentScriptDirectory()~"./../../img/
 const IMG_TITLE_CHARSELECT_ICON_B =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_charIconB.png";
 const IMG_TITLE_CHARSELECT_ICON_C =  		GetCurrentScriptDirectory()~"./../../img/title/title_charSelect_charIconC.png";
 
-const IMG_TITLE_OPTIONS_BOX =  		GetCurrentScriptDirectory()~"./../../img/title/title_options_box.png";
+const IMG_TITLE_OPTIONS_BOX 					=  		GetCurrentScriptDirectory()~"./../../img/title/title_options_box.png";
+const IMG_TITLE_OPTIONS_SLIDER 					=  		GetCurrentScriptDirectory()~"./../../img/title/title_options_slider.png";
+const IMG_TITLE_OPTIONS_GEM 					=  		GetCurrentScriptDirectory()~"./../../img/title/title_options_gem.png";
+const IMG_TITLE_OPTIONS_SELECTION_FRONT 		=  		GetCurrentScriptDirectory()~"./../../img/title/title_options_selection_front.png";
+const IMG_TITLE_OPTIONS_SELECTION_BACK 			=  		GetCurrentScriptDirectory()~"./../../img/title/title_options_selection_back.png";
+const IMG_TITLE_OPTIONS_INPUT					=  		GetCurrentScriptDirectory()~"./../../img/title/title_options_input.png";
 
 const TitleScreen_ImgArray = [
 IMG_SELECTIONS,IMG_TITLEBACK, 
@@ -380,7 +385,8 @@ IMG_TITLE_MAINMENU_BOX, IMG_TITLE_MAINMENU_LINES, IMG_TITLE_MAINMENU_CHARACTERS,
 IMG_TITLE_CHARSELECT_BOX, IMG_TITLE_CHARSELECT_TOPLINES, IMG_TITLE_CHARSELECT_BOXLINES, IMG_TITLE_CHARSELECT_NAMEBG, IMG_TITLE_CHARSELECT_STATICONS, IMG_TITLE_CHARSELECT_TAB, IMG_TITLE_CHARSELECT_ARROW, 
 IMG_TITLE_CHARSELECT_PREVIEW_EMPTY, IMG_TITLE_CHARSELECT_PREVIEW_A, IMG_TITLE_CHARSELECT_PREVIEW_B, IMG_TITLE_CHARSELECT_PREVIEW_C,
 IMG_TITLE_CHARSELECT_TEAM_A, IMG_TITLE_CHARSELECT_TEAM_B, IMG_TITLE_CHARSELECT_TEAM_C,
-IMG_TITLE_CHARSELECT_ICON_A, IMG_TITLE_CHARSELECT_ICON_B, IMG_TITLE_CHARSELECT_ICON_C];
+IMG_TITLE_CHARSELECT_ICON_A, IMG_TITLE_CHARSELECT_ICON_B, IMG_TITLE_CHARSELECT_ICON_C,
+IMG_TITLE_OPTIONS_BOX, IMG_TITLE_OPTIONS_SLIDER, IMG_TITLE_OPTIONS_GEM, IMG_TITLE_OPTIONS_SELECTION_FRONT, IMG_TITLE_OPTIONS_SELECTION_BACK, IMG_TITLE_OPTIONS_INPUT];
 
 
 

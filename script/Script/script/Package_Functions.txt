@@ -64,6 +64,10 @@ function StartStageProgression()
 	carryOn = true;
 	SetCommonData("hasThingsInitialised",false);
     SetCommonData("PlayerLife", startingLives);
+	if(startingLives == 9)
+	{
+		SetCommonData("PlayerLife", 9999);
+	}
     DeleteCommonData("PlayerSpell");
 	let WAITER = 0;
 	
