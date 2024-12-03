@@ -117,10 +117,21 @@ const tabInfoText 	= [
 
 const charPreviews = [IMG_TITLE_CHARSELECT_PREVIEW_A, IMG_TITLE_CHARSELECT_PREVIEW_B, IMG_TITLE_CHARSELECT_PREVIEW_C];
 const characterBios = [
-						"Placeholder Text Placeholder Text Placeholder Text[r]" ~
-						"Placeholder Text Placeholder Text Placeholder Text[r]", 
-						"", 
-						""];
+						"A once troublesome duo hailing from the world of[r]" ~
+						"Terra. At the request of his friend the god of death, the[r]" ~ 
+						"feline of many names journeys into Gensokyo to learn about[r]" ~
+						"the event known as 'Christmas'. Hopefully the cat doesn't[r]" ~ 
+						"get too distracted...", 
+						"A priest and the son of a friend. The two are headed[r]" ~
+						"towards the Human Village after the priest hears about a[r]" ~ 
+						"potential conflict. What started out as an early-morning[r]" ~
+						"trip may result in the wannabe hero learning some wisdom[r]" ~ 
+						"regarding his end goal.", 
+						"An ex-hero and her trusted dragon partner...And a 'friend'.[r]" ~ 
+						"As a result of her small winter wardrobe, the three make[r]" ~ 
+						"their way to the Human Village to go clothes shopping. It[r]" ~
+						"should be as simple as that, right?..."];
+					  //---------------------------------------------------
 						
 const CHAR_ICONS = [IMG_TITLE_CHARSELECT_ICON_A, IMG_TITLE_CHARSELECT_ICON_B, IMG_TITLE_CHARSELECT_ICON_C];						
 task Char_PlayerIcons()

@@ -464,7 +464,7 @@ task Options_CreateOptions()
 			ObjText_SetFontBorderWidth(objOptionsInputText, 1);
 			ObjText_SetFontBorderType(objOptionsInputText, BORDER_FULL);
 			ObjText_SetSidePitch(objOptionsInputText, -1);
-			RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? IntToString(startingLives) : "", x, opY);
+			RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? "< " ~ IntToString(startingLives) ~ " >" : "Not Implement", x, opY);
 		
 			let t = TO_CHARSELECT_TRANSITION;
 			ascent(i in 0..t)
