@@ -109,9 +109,9 @@ task SpellBG
 		ObjRender_SetBlendType(objRings[i],BLEND_SUBTRACT);
 		
 	}
-	ObjRender_SetScale(objRings[0],1);
-	ObjRender_SetScale(objRings[1],0.72);
-	ObjRender_SetScale(objRings[2],0.5185);
+	ObjRender_SetScaleXYZ(objRings[0],1);
+	ObjRender_SetScaleXYZ(objRings[1],0.72);
+	ObjRender_SetScaleXYZ(objRings[2],0.5185);
 	
 	ascent(i in 0..vertexCount/2)
 	{

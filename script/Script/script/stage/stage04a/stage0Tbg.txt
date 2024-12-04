@@ -238,7 +238,7 @@ task DaisukeBG()
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj, 1);
+	ObjRender_SetScaleXYZ(obj, 1);
 
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj2, 22); 
@@ -247,7 +247,7 @@ task DaisukeBG()
 	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj2);
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj2, 2);
+	ObjRender_SetScaleXYZ(obj2, 2);
 	ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
@@ -257,7 +257,7 @@ task DaisukeBG()
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj3, 1);
+	ObjRender_SetScaleXYZ(obj3, 1);
 	ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
 	let alpha1 = 0;
 	let c = 0;
@@ -305,7 +305,7 @@ task SullenBG()
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj, 1);
+	ObjRender_SetScaleXYZ(obj, 1);
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj2, 23); 
@@ -315,7 +315,7 @@ task SullenBG()
 	ObjSprite2D_SetDestCenter(obj2);
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 	ObjRender_SetBlendType(obj2, BLEND_SHADOW );
-	ObjRender_SetScale(obj2, 1.6);
+	ObjRender_SetScaleXYZ(obj2, 1.6);
 	//ObjRender_SetColor(obj2, 0, 0, 0);
 	
 
@@ -326,7 +326,7 @@ task SullenBG()
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj3, 1);
+	ObjRender_SetScaleXYZ(obj3, 1);
 	ObjRender_SetBlendType(obj3, BLEND_ADD_ARGB);
 	//ObjRender_SetColor(obj3, 255,255,128);
 	
@@ -340,8 +340,8 @@ task SullenBG()
 		ObjSprite2D_SetDestRect(obj4, 0, 0, 512, 512);
 		ObjSprite2D_SetDestCenter(obj4);
 		ObjRender_SetPosition(obj4,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-		ObjRender_SetScale(obj4, 1);
-		ObjRender_SetScale(obj4, 1+0.75*i);
+		ObjRender_SetScaleXYZ(obj4, 1);
+		ObjRender_SetScaleXYZ(obj4, 1+0.75*i);
 		ObjRender_SetBlendType(obj4, BLEND_SUBTRACT);
 		//ObjRender_SetColor(obj4, [0,128,128][i], [0,128,0][i], [128,0,0][i]);
 		//ObjRender_SetColor(obj4,0,0,0);
@@ -400,7 +400,7 @@ task DuoBG()
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj, 1);
+	ObjRender_SetScaleXYZ(obj, 1);
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj2, 23); 
@@ -410,7 +410,7 @@ task DuoBG()
 	ObjSprite2D_SetDestCenter(obj2);
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
 	ObjRender_SetBlendType(obj2, BLEND_SHADOW );
-	ObjRender_SetScale(obj2, 1.6);
+	ObjRender_SetScaleXYZ(obj2, 1.6);
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj3, 23); 
@@ -419,7 +419,7 @@ task DuoBG()
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj3, 1);
+	ObjRender_SetScaleXYZ(obj3, 1);
 	ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
 	
 	let scrlSpd2 = -0.5;

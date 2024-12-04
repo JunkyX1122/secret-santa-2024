@@ -1,0 +1,74 @@
+#TouhouDanmakufu[Stage]
+#ScriptVersion[1]
+#Title["PracStage"]
+#Text["PracStage"]
+#System["./../lib/system/System.txt"]
+#include "./../lib/lib_stageall.txt"
+#include "./Initiate.txt"
+
+let bg_script;
+
+@Initialize
+{
+	bg_script = LoadScript(GetCommonData("practice_Background_Path",""));
+	StartScript(bg_script);
+	
+	SetPlayerStateEndEnable(true);
+	SetAutoDeleteObject(true);
+	LoadBoss();
+	InitialiseIndiv();
+	SetForbidPlayerSpell(true);
+	EndStage;
+	StartStage;
+}
+
+@MainLoop
+{
+	let smooth1 = GetCommonData("Smoother",0);
+	let smooth2 = 1-smooth1;
+
+	x1 = (107);
+	x2 = (GetScreenWidth-107);
+	SetStgFrame(x1,0,x2,480,10,80);
+	SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
+	if(GetPlayerY<150){CollectAllItems;}
+
+	yield;
+}
+
+@Event
+{
+
+}
+
+@Finalize
+{
+
+}
+
+task Dialog
+{
+}
+
+let Boss;
+task LoadBoss()
+{
+	Boss=ObjEnemyBossScene_Create();
+	ObjEnemyBossScene_Add(Boss,0,GetCommonData("practice_Attack_Path", GetCurrentScriptDirectory()~"Ns1.txt"));
+	ObjEnemyBossScene_LoadInThread(Boss);
+}
+
+task StartStage
+{
+	SetCommonData("MaxNumberOfPhases",0);
+	loop(1)
+	{
+		ObjEnemyBossScene_Regist(Boss);	
+		while(!Obj_IsDeleted(Boss) && GetPlayerLife >= 0) { yield; }
+		wait(60);
+		
+		//CloseScript(bg_script);
+		CloseStgScene;
+	}
+}
+

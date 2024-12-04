@@ -105,3 +105,65 @@ task EndStage
 		yield;
 	}
 }
+
+let stageInProgress = false;
+
+task EndStageHistoryRecord()
+{
+	stageInProgress = false;
+}
+
+task RecordStageHistory(stage, diff){
+	
+	WriteLog("RECORDING STAGE HISTORY");
+	stageInProgress = true;
+	
+	//DEBUG
+	if(!IsCommonDataAreaExists("History")){
+		CreateCommonDataArea("History");
+	}
+	LoadCommonDataAreaA2("History", DATA_HISTORY_PATH);
+
+	let player = GetPlayerID;
+
+	let sp_id = (stage) ~ "|stage|" ~ (diff);
+	let SpellDataAttempt = sp_id ~ "|" ~ player ~ "|Attempt";
+	let SpellDataGet = sp_id ~ "|" ~ player ~ "|Get";
+
+	if(GetAreaCommonData("System", "IsPractice", false)){
+		SpellDataAttempt = SpellDataAttempt ~ "Prac";
+		SpellDataGet = SpellDataGet ~ "Prac";
+	}
+	
+	//This is actually the common data retrieval
+	let SpellValueAttempt = GetAreaCommonData("History", SpellDataAttempt, 0);
+	let SpellValueGet = GetAreaCommonData("History", SpellDataGet, 0);
+
+	SpellValueAttempt++;
+	SetAreaCommonData("History", SpellDataAttempt, SpellValueAttempt);
+	SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	
+	WriteLog(sp_id);
+	WriteLog(SpellDataAttempt);
+	WriteLog(SpellValueAttempt);
+	WriteLog(SpellDataGet);
+	WriteLog(SpellValueGet);
+	
+	let isFailed = false;
+	let recordedPlayerLife = GetPlayerLife;
+	let recordedPlayerSpell = GetPlayerSpell;
+	while(stageInProgress){
+		if(recordedPlayerLife != GetPlayerLife || recordedPlayerSpell != GetPlayerSpell){ //if the player has bombed or died
+			isFailed = true;
+			recordedPlayerLife = GetPlayerLife;
+			recordedPlayerSpell = GetPlayerSpell;
+		}
+		yield;
+	}
+
+	if(!isFailed){
+		SpellValueGet++;
+		SetAreaCommonData("History", SpellDataGet, SpellValueGet);
+		SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	}
+}

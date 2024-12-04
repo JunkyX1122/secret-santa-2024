@@ -51,9 +51,11 @@ task InitialisePracticeAttackPaths()
 		stage_attack_array ~= [[]];
 		let nonArray = [];
 		let spellArray = [];
+		let foundStage = GetScriptPathList(stageDir, TYPE_SCRIPT_STAGE)[0];
+		WriteLog(foundStage);
 		ascent(o in 0..length(allScripts))
 		{
-			//WriteLog(allScripts[o]);
+			
 			if(GetFileNameWithoutExtension(allScripts[o])[0] == 'N')
 			{
 				nonArray ~= [allScripts[o]];
@@ -61,7 +63,7 @@ task InitialisePracticeAttackPaths()
 			if(GetFileNameWithoutExtension(allScripts[o])[0] == 'S')
 			{
 				spellArray ~= [allScripts[o]];
-			}//WriteLog(stage_attack_array[i][o]);
+			}
 		}
 		let nonCount = 0;
 		let spellCount = 0;
@@ -78,6 +80,8 @@ task InitialisePracticeAttackPaths()
 			nonCount++;
 			spellCount++;
 		}
+		stage_attack_array[i] ~= [foundStage];
+		//stage_attack_array[i] ~= [STAGE_DIR ~ AVAILABLE_STAGES[i] ~ "/stage.txt"];
 	}
 	//WriteLog("ALL STAGES");
 	//WriteLog(stage_attack_array);
@@ -132,6 +136,7 @@ function PracticeScreen()
 }
 let selectableAttackArray = [];
 let currentPracticePath = "";
+let isPracticingWholeStage = false;
 function PracticeScreen_Attacks(stageID)
 {
 	currentPracticePath = "";
@@ -157,13 +162,26 @@ function PracticeScreen_Attacks(stageID)
 				background_AlphaScl = 0;
 				isRenderingBackground = false;
 				SetCommonData("isPracticing", true);
-				currentPracticePath = stage_attack_array[selectedPracticeStage][selectedPracticeAttack];
-				
-				let selectedSong = BOSS_MUSIC_DATA[selectedPracticeStage];
-				MusicChange(BOSS_MUSIC_PATHS[selectedPracticeStage], selectedSong[0], selectedSong[1], selectedSong[2]);
+				currentPracticePath = GetCurrentScriptDirectory() ~ "stage/prac_stage.txt";
+				isPracticingWholeStage = false;
+				if(selectedPracticeAttack == practiceWholeStageID)
+				{
+					isPracticingWholeStage = true;
+					currentPracticePath = stage_attack_array[selectedPracticeStage][selectedPracticeAttack];
+				}
+				else
+				{
+					SetCommonData("practice_Attack_Path", stage_attack_array[selectedPracticeStage][selectedPracticeAttack]);
+					SetCommonData("practice_Background_Path", STAGE_DIR ~ AVAILABLE_STAGES[selectedPracticeStage] ~ "/stage0Tbg.txt");
+					let selectedSong = BOSS_MUSIC_DATA[selectedPracticeStage];
+					MusicChange(BOSS_MUSIC_PATHS[selectedPracticeStage], selectedSong[0], selectedSong[1], selectedSong[2]);
+					
+				}
 				ManagePracticeScene();
-				DeleteMusicObj();
+				isPracticingWholeStage = false;
 				
+				DeleteMusicObj();
+				DeleteCommonData("practice_Attack_Path");
 				SetCommonData("isPracticing", false);
 				isRenderingBackground = true;
 				RenderMenuBackground(true);
@@ -450,22 +468,28 @@ task Practice_StageOptions()
 }
 
 let attackUpdateRequired = false;
-
+let isPracticeWholeStage = false;
+let practiceWholeStageID = -1;
 function Practice_AttackOptions(stageID)
 {
 	let totalAttacksInStage = 0;
 
-
-	ascent(i in 0..length(stage_attack_array[stageID]))
+	let tot = length(stage_attack_array[stageID]);
+	ascent(i in 0..(tot))
 	{
+		WriteLog(i);
 		selectableAttackArray ~= [false];
 		CreateAttackOption(i);
+		if(i==tot-1)
+		{
+			practiceWholeStageID = i;
+		}
 		totalAttacksInStage++;
 	}
 	return totalAttacksInStage;
 	task CreateAttackOption(id)
 	{
-
+		WriteLog(stage_attack_array[stageID][id]);
 		let attackName = GetScriptInfoA1(stage_attack_array[stageID][id], INFO_SCRIPT_TITLE);
 		
 		let opY = GetScreenHeight/2-215 + (23*3 + 3) + 23 * (id);

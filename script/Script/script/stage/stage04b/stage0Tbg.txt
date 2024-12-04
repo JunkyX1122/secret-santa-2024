@@ -255,7 +255,7 @@ task GrandisBG()
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
 	ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
-	ObjRender_SetScale(obj3, 0.9);
+	ObjRender_SetScaleXYZ(obj3, 0.9);
 	let alpha1 = 0;
 	let pos = 0;
 	let zangle = 0;
@@ -304,7 +304,7 @@ task ViiviBG()
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj, 1);
+	ObjRender_SetScaleXYZ(obj, 1);
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj2, 22); 
@@ -313,7 +313,7 @@ task ViiviBG()
 	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj2);
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj2, 1.2);
+	ObjRender_SetScaleXYZ(obj2, 1.2);
 	ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 

@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Stage]
 #ScriptVersion[1]
-#Title["Stage4C"]
+#Title["Stage 04c"]
 #Text["Stage4C"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]
@@ -9,6 +9,7 @@
 
 @Initialize
 {
+	RecordStageHistory("04c", DIFFICULTY_NAMES[DIFFICULTY]);
 	SetAutoDeleteObject(true);
 	LoadBoss();
 	InitialiseIndiv();
@@ -81,6 +82,7 @@ task StartStage
 		SetCommonData("MaxNumberOfPhases",3);
 		ObjEnemyBossScene_Regist(Boss2);	
 		while(!Obj_IsDeleted(Boss2)) { yield; }
+		EndStageHistoryRecord();
 		wait(300);
 		MusicVolumeChange(GetBGMVolume, 0, 90);
 		BGTransition(0, 255, 91);

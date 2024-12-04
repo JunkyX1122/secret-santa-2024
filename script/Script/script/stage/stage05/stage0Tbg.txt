@@ -117,7 +117,7 @@ task SpellBG
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj, 1);
+	ObjRender_SetScaleXYZ(obj, 1);
 	
 	let bit = 1;
 	
@@ -141,7 +141,7 @@ task SpellBG
 	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj2);
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2+30,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj2, 0.6);
+	ObjRender_SetScaleXYZ(obj2, 0.6);
 	ObjRender_SetColor(obj2, 0,0,0);
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
@@ -151,7 +151,7 @@ task SpellBG
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 512, 512);
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj3, 0.8);
+	ObjRender_SetScaleXYZ(obj3, 0.8);
 	ObjRender_SetColor(obj3, 0,0,0);
 	
 	let obj4 = ObjPrim_Create(OBJ_SPRITE_2D); 
@@ -172,7 +172,7 @@ task SpellBG
 	ObjSprite2D_SetDestRect(obj5, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj5);
 	ObjRender_SetPosition(obj5,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj5, 1);
+	ObjRender_SetScaleXYZ(obj5, 1);
 	
 	let alpha1 = 0;
 	let c = 0;

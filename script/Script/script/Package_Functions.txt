@@ -77,50 +77,50 @@ function StartStageProgression()
 		alternative(activeTeam)
 		case(PLAYERTEAM_A)
 		{
-			TStageScene("",STAGE_1a,WAITER);
+			TStageScene(STAGE_1a,WAITER);
 		}
 		case(PLAYERTEAM_B)
 		{
-			TStageScene("",STAGE_1b,WAITER);
+			TStageScene(STAGE_1b,WAITER);
 		}
 		case(PLAYERTEAM_C)
 		{
-			TStageScene("",STAGE_1c,WAITER);
+			TStageScene(STAGE_1c,WAITER);
 		}
 	}
 	
 	SetCommonData("GatoPlayerSprite", 0);
 	if(carryOn==true)
 	{
-		TStageScene("",STAGE_2,WAITER);
+		TStageScene(STAGE_2,WAITER);
 	}
 	if(carryOn==true)
 	{
-		TStageScene("",STAGE_3,WAITER);
+		TStageScene(STAGE_3,WAITER);
 	}
 	if(carryOn==true)
 	{
 		alternative(activeTeam)
 		case(PLAYERTEAM_A)
 		{
-			TStageScene("",STAGE_4a,WAITER);
+			TStageScene(STAGE_4a,WAITER);
 		}
 		case(PLAYERTEAM_B)
 		{
-			TStageScene("",STAGE_4b,WAITER);
+			TStageScene(STAGE_4b,WAITER);
 		}
 		case(PLAYERTEAM_C)
 		{
-			TStageScene("",STAGE_4c,WAITER);
+			TStageScene(STAGE_4c,WAITER);
 		}
 	}
 	if(carryOn==true)
 	{
-		TStageScene("",STAGE_5,WAITER);
+		TStageScene(STAGE_5,WAITER);
 	}
 	if(carryOn==true)
 	{
-		TStageScene("",STAGE_6,WAITER);
+		TStageScene(STAGE_6,WAITER);
 	}
 	if(carryOn==true)
 	{
@@ -137,7 +137,7 @@ function StartStageProgression()
 // ステージシーン
 //----------------------------------------------------
 
-function TStageScene(let pathReplay,SELECT_ID,waiter)
+function TStageScene(SELECT_ID,waiter)
 {
 
 	LoadingBool = true;
@@ -213,10 +213,6 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 	//--------------------------------
 	//ステージ初期化
 	InitializeStageScene();
-	if(length(pathReplay) > 0)
-	{
-		//SetStageReplayFile(pathReplay);
-	}
 
 	//--------------------------------
 	//初期ステージ設定
@@ -302,9 +298,16 @@ function ManagePracticeScene()
 function TPracticeScene(let pathMainScript)
 {
 	SetCommonData("hasThingsInitialised",false);
-    SetCommonData("PlayerLife", 0);
-    SetCommonData("PlayerSpell", 0);
-	
+	if(!isPracticingWholeStage)
+	{
+		SetCommonData("PlayerLife", 0);
+		SetCommonData("PlayerSpell", 0);
+	}
+	else
+	{
+		SetCommonData("PlayerLife", 99999);
+		DeleteCommonData("PlayerSpell");
+	}
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();
 	
@@ -327,18 +330,9 @@ function TPracticeScene(let pathMainScript)
 		
 	}
 
-	//--------------------------------
-	//画面遷移
-	//RenderSceneToTransitionTexture();
-	//TTransition();
-
-	//--------------------------------
-	//ステージ初期化
 	InitializeStageScene();
 
-	//--------------------------------
-	//初期ステージ設定
-	let indexStage = 1; //ステージインデックス
+	let indexStage = 1; 
 
 	SetStageIndex(indexStage);
 	SetStageMainScript(pathMainScript);
@@ -391,6 +385,10 @@ function TPracticeScene(let pathMainScript)
 			let stageResult = GetStageSceneResult();
 			alternative(stageResult)
 			case(STAGE_RESULT_CLEARED)
+			{
+				FEndPracticeScene(pathMainScript);
+			}
+			case(STAGE_RESULT_PLAYER_DOWN)
 			{
 				FEndPracticeScene(pathMainScript);
 			}
@@ -447,39 +445,6 @@ task TEndScene()
 	}
 }
 
-
-task TEndPracticeScene(pathMainScript)
-{
-	WriteLog("PRACTICE END SCENE TASK");
-	RenderSceneToTransitionTexture();
-	let dirModule = GetModuleDirectory();
-	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndPracticeScene.txt";
-	let idScript = LoadScript(pathScript);
-	StartScript(idScript);
-	
-	PauseStageScene(true);
-	isGamovering = true;
-	while(!IsCloseScript(idScript))
-	{
-		yield;
-	}
-	PauseStageScene(false);
-	isGamovering = false;
-	let result = GetScriptResult(idScript);
-
-	alternative(result)
-	case(RESULT_END)
-	{
-		TerminateStageScene();
-		return;
-	}
-	case(RESULT_RETRY)
-	{
-		TerminateStageScene();
-		notifyRestart = true;
-		return;
-	}
-}
 
 function FEndPracticeScene(pathMainScript)
 {
@@ -580,7 +545,7 @@ task TReplaySelectScene()
  	else
  	{
 
-		TStageScene(result,0,1);
+		//TStageScene(result,0,1);
 	}
 
 }

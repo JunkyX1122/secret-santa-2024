@@ -44,7 +44,7 @@ let skipIntro = false;
 		}
 		else
 		{
-			TEndPracticeScene(currentPracticePath);
+			//TEndPracticeScene(currentPracticePath);
 		}
 	}
 }
@@ -55,8 +55,8 @@ let skipIntro = false;
 //----------------------------------------------------
 task Loader
 {
-	//LoadThings;
-	//while(mainLoadBool==false){yield;}
+	LoadThings;
+	while(mainLoadBool==false){yield;}
 	InitialisePracticeAttackPaths();
 	LoadingBool = true;
 	skipIntro = false;

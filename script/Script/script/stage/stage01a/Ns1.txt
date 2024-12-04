@@ -343,13 +343,14 @@ task end
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
     SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
-
+	WriteLog("Attack Over");
 	loop(60)
 	{
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		yield;
 	}
 	
+	WriteLog("Attack Over Now Killing");
     CloseScript(GetOwnScriptID());
 	return;
 } 

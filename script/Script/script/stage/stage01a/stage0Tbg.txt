@@ -1,4 +1,4 @@
-#include "./../../lib/lib_stageall.txt"
+#include "./../../lib/lib_img.txt"
 let GCSD=GetCurrentScriptDirectory();
 let bSpell = false;
 let current = GetCurrentScriptDirectory();
@@ -15,7 +15,6 @@ let adder = 0;
 
 @MainLoop
 {
-
 	yield;
 }
 let counter = 0;
@@ -208,7 +207,7 @@ task SpellBG
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
-	ObjRender_SetScale(obj, 0.7);
+	ObjRender_SetScaleXYZ(obj, 0.7);
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
 	Obj_SetRenderPriorityI(obj2, 23); 
@@ -230,7 +229,7 @@ task SpellBG
 		ObjSprite2D_SetDestRect(obj3, 0, 0, 512, 1024);
 		ObjSprite2D_SetDestCenter(obj3);
 		ObjRender_SetPosition(obj3,[0,GetStgFrameWidth][i],GetStgFrameHeight/2,0);
-		ObjRender_SetScale(obj3, 0.6);
+		ObjRender_SetScaleXYZ(obj3, 0.6);
 		ObjRender_SetColor(obj3, 128,32,0);
 		objAnkhs ~= [obj3];
 	}

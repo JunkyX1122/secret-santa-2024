@@ -56,7 +56,7 @@ task Background()
 		ObjRender_SetPosition(objCloud, 0, -20-40*i, 0);
 		Obj_SetRenderPriorityI(objCloud, 19);
 		ObjRender_SetAlpha(objCloud, 200-25*i);
-		ObjRender_SetScale(objCloud, 1+0.2*i);
+		ObjRender_SetScaleXYZ(objCloud, 1+0.2*i);
 		ObjRender_SetBlendType(objCloud, BLEND_ADD_ARGB);
 		ObjRender_SetTextureFilterMag(objCloud, FILTER_ANISOTROPIC);
 		objClouds ~= [objCloud];
@@ -246,7 +246,7 @@ task SpellBG
 	ObjRender_SetPosition(obj2,GetStgFrameWidth/2,GetStgFrameHeight/2-70,0);
 	ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
 	ObjRender_SetAngleY(obj2, 0);
-	ObjRender_SetScale(obj2, 1.1);
+	ObjRender_SetScaleXYZ(obj2, 1.1);
 	SwitchTexture(obj2);
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
@@ -258,7 +258,7 @@ task SpellBG
 	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2-70,0);
 	ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
 	ObjRender_SetAngleY(obj3, 180);
-	ObjRender_SetScale(obj3, 1.1);
+	ObjRender_SetScaleXYZ(obj3, 1.1);
 	SwitchTexture(obj3);
 	
 	let obj4s = [];

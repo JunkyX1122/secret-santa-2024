@@ -60,6 +60,7 @@ task RecordAttackHistory(stage, pattern, diff){
 
 
 
+
 let Alpha_HUD = [255, 255]; 
 
 
