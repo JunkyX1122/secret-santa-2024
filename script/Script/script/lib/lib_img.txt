@@ -130,6 +130,15 @@ const Stage6Background_ImgArray = [
 		IMG_STAGE_06_SPELL_00, IMG_STAGE_06_SPELL_02, IMG_STAGE_06_SPELL_03, IMG_STAGE_06_SPELL_04, IMG_STAGE_06_SPELL_05
 		];
 
+const AllStageBackground_ImgArray = [
+										Stage1aBackground_ImgArray,Stage1bBackground_ImgArray,Stage1cBackground_ImgArray,
+										Stage2Background_ImgArray,
+										Stage2Background_ImgArray,
+										Stage4aBackground_ImgArray,Stage4bBackground_ImgArray,Stage4cBackground_ImgArray,
+										Stage5Background_ImgArray,
+										Stage6Background_ImgArray
+									];
+
 const Background_ImgArray = [IMG_FLATBG,IMG_CLOUDMASK,IMG_IESUA_EFF_2A,IMG_IESUA_EFF_2B,IMG_SUNGLOW,IMG_YUUMA_BG1,IMG_YUUMA_BG2,IMG_YUUMA_BG3];
 /*
 ------------------------------------------EVERYTHING PAST HERE GETS LOADED AT THE LOADING SCREEN. EVERYTHING BEFORE GETS LOADED BEFORE THE STAGE REQUIRED

@@ -20,7 +20,6 @@ let SELECTED_WAIT = 20;
 let firstTimeBoot = true; // Prevents calling everything more than once.
 task Title_Display()
 {
-	
 	menuState = MENUSTATE_MAIN;
 	mainMenu_AlphaScl = 1;
 	background_AlphaScl = 1;
@@ -37,7 +36,12 @@ task Title_Display()
 			SkippableWait(1);
 		}
 	}
-
+	if(firstTimeBoot)
+	{
+		MusicChange(BGM_TITLE, BMG_TITLE_VOLUME, 738849, 6695592);
+		
+	}
+	
 	yield;
 	firstTimeBoot = false;
 	
@@ -52,11 +56,14 @@ task Title_Display()
 	
 	
 	yield;
+	
+	SE_PlayLen(title_cursor, 60);
 	while(menuState==MENUSTATE_MAIN && !hasSelected)
 	{
 		MainMenuSelectMove();
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
+			SE_PlayLen(title_cancel, 60);
 			if(mainMenuState == MAINMENUSTATE_EXIT)
 			{
 				hasSelected = true;
@@ -65,11 +72,12 @@ task Title_Display()
 		}
 		if(GetVirtualKeyState(VK_OK) == KEY_PUSH)
 		{
+			SE_PlayLen(title_ok, 60);
 			hasSelected = true;
 		}
 		yield;
 	}
-	wait(SELECTED_WAIT);
+	SkippableWait(SELECTED_WAIT);
 	alternative(mainMenuState)
 	case(MAINMENUSTATE_START)
 	{
@@ -89,11 +97,13 @@ task Title_Display()
 		{
 			TFlash(50);
 			wait(50);
+			MusicVolumeChange(100, 0, 170);
+			TDarkTransition(0, 1, 120);
 			ascent(i in 0..180)
 			{
-				totalDarkness = min(1, 1/120*i);
 				yield;
 			}
+			DeleteMusicObj();
 			totalDarkness = 0;
 			menuState = MENUSTATE_UNACTIVE;
 			firstTimeBoot = true;
@@ -137,6 +147,7 @@ task Title_Display()
 			mainMenu_AlphaScl = 1 - 1/(t-1)*i;
 			yield;
 		}
+		MusicVolumeChange(vol, 0, t);
 		menuState = MENUSTATE_UNACTIVE;
 		wait(60);
 		ClosePackage();
@@ -150,6 +161,7 @@ task Title_Display()
 let mainMenuHoldCounter = 0;
 function MainMenuSelectMove()
 {
+	let hasMoved = false;
 	if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH)  { 
 		MoveOption(1);
 		mainMenuHoldCounter = 0; 
@@ -183,9 +195,11 @@ function MainMenuSelectMove()
 		mainMenuHoldCounter = 0;
 	}
 		
-	
+	return hasMoved;
 	task MoveOption(am)
 	{
+		SE_PlayLen(title_cursor, 60);
+		hasMoved = true;
 		mainMenuState+=am;
 		if(mainMenuState > MAINMENU_TOTALOPTIONS -1) { mainMenuState = 0; }
 		if(mainMenuState <  0) 						 { mainMenuState = MAINMENU_TOTALOPTIONS - 1; }
@@ -285,6 +299,11 @@ task CreateMainMenuOption(id)
 		if(hasSelected)
 		{
 			selectedTimer--;
+			if(IsSkipButtonPressed)
+			{
+				selectedTimer = 0;
+			}
+			
 		}
 		c++;
 		yield;

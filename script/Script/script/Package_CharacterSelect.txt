@@ -6,12 +6,14 @@ function CharacterSelectScreen()
 	Char_BoxRender();
 	Char_BoxDetails();
 	Char_PlayerIcons();
-	SkippableWait(TO_CHARSELECT_TRANSITION);
-	yield;
+	Char_SpellBGs();
 	ascent(i in 0..3)
 	{
 		RenderTeam(i);
 	}
+	SkippableWait(TO_CHARSELECT_TRANSITION);
+	yield;
+	
 	let hasCanceled = false;
 	while(menuState==MENUSTATE_CHARACTER_SELECT && !hasSelected && !hasCanceled)
 	{
@@ -19,10 +21,13 @@ function CharacterSelectScreen()
 		if(GetVirtualKeyState(VK_OK) == KEY_PUSH)
 		{
 			hasSelected = true;
+			SE_PlayLen(title_ok, 60);
+			TeamTalk(selectedTeam);
 		}
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
 			hasCanceled = true;
+			SE_PlayLen(title_cancel, 60);
 		}
 		yield;
 	}
@@ -32,7 +37,7 @@ function CharacterSelectScreen()
 		ascent(i in 0..30)
 		{
 			characterSelect_AlphaScl = 1 - 1/29*i;
-			yield;
+			SkippableWait(1);
 		}
 		
 	}
@@ -45,9 +50,52 @@ function CharacterSelectScreen()
 	//Title_Display();
 }
 
+task TeamTalk(teamID)
+{
+	wait(10);
+	let talkDel = 5;
+	ascent(i in 0..5)
+	{
+		alternative(teamID)
+		case(PLAYERTEAM_A)
+		{
+			SE_PlayLen(TALK_GATO,100, rand(0.95, 1.05));
+		}
+		case(PLAYERTEAM_B)
+		{
+			SE_PlayLen(TALK_SULLEN,100, rand(0.95, 1.05));
+		}
+		case(PLAYERTEAM_C)
+		{
+			SE_PlayLen(TALK_VIIVI,100, rand(0.95, 1.05));
+		}
+		wait(talkDel);
+	}
+	wait(8);
+	ascent(i in 0..5)
+	{
+		alternative(teamID)
+		case(PLAYERTEAM_A)
+		{
+			SE_PlayLen(TALK_ANUBIS,100, rand(0.95, 1.05));
+		}
+		case(PLAYERTEAM_B)
+		{
+			SE_PlayLen(TALK_DAISUKE,100, rand(0.95, 1.05));
+		}
+		case(PLAYERTEAM_C)
+		{
+			SE_PlayLen(TALK_GRANDIS,100, rand(0.95, 1.05));
+		}
+		wait(talkDel);
+	}
+}
+
+
 let characterMenuHoldCounter = 0;
 function CharacterMenuSelectMove()
 {
+	let hasMoved = false;
 	if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)  { 
 		MoveOption(1);
 		characterMenuHoldCounter = 0; 
@@ -80,11 +128,14 @@ function CharacterMenuSelectMove()
 	   (GetVirtualKeyState(VK_RIGHT) != KEY_FREE && GetVirtualKeyState(VK_LEFT) != KEY_FREE)) {
 		characterMenuHoldCounter = 0;
 	}
-		
+	
+	return hasMoved;
 	
 	task MoveOption(am)
 	{
+		SE_PlayLen(title_cursor, 60);
 		selectedTeam+=am;
+		hasMoved = true;
 		if(selectedTeam > CHARACTERMENU_TOTALOPTIONS -1) { selectedTeam = 0; }
 		if(selectedTeam <  0) 						 { selectedTeam = CHARACTERMENU_TOTALOPTIONS - 1; }
 	}
@@ -177,6 +228,7 @@ task Char_PlayerIcons()
 		Obj_Delete(objCSIc);
 	}
 }
+const NAME_BG_COLOURS = [[0,0,0], [128,255,128], [128,0,0]];
 						
 task Char_BoxDetails()
 {
@@ -187,7 +239,7 @@ task Char_BoxDetails()
 	ObjSprite2D_SetDestRect(objNBG,0, 0, 256, 32);
 	ObjSprite2D_SetDestCenter(objNBG);
 	ObjRender_SetPosition(objNBG,charSelectX,GetScreenHeight/2-152,0);
-	
+	ObjRender_SetColor(objNBG,NAME_BG_COLOURS[selectedTeam][0],NAME_BG_COLOURS[selectedTeam][1],NAME_BG_COLOURS[selectedTeam][2]);
 	
 	Previews();
 	ascent(i in 0..5)
@@ -198,15 +250,6 @@ task Char_BoxDetails()
 	{
 		InfoTabs(charSelectX - 157,GetScreenHeight/2-1 - 44 + 22*i,i);
 	}
-	
-	let t = TO_CHARSELECT_TRANSITION;
-	ascent(i in 0..t)
-	{	
-		let scl = 1*sin(90/(t-1)*i);
-		ObjRender_SetAlpha(objNBG, 255*scl);
-		SkippableWait(1);
-	}
-	yield;
 	
 	let objArrows = [];
 	ascent(i in 0..2)
@@ -267,10 +310,42 @@ task Char_BoxDetails()
 	//ObjText_SetSidePitch(objBioText, -1);
 	ObjText_SetLinePitch(objBioText, -1);
 	ObjText_SetText(objBioText, characterBios[selectedTeam]);
+	RenameRecenterText(objTeamNamesText, teamNames[selectedTeam], charSelectX,GetScreenHeight/2-156);
+	ObjText_SetText(objBioText, characterBios[selectedTeam]);
 	let c = 0;
+	let t = TO_CHARSELECT_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objNBG, 255*scl);
+		ObjRender_SetAlpha(objTeamNamesText, 255*scl);
+		ObjRender_SetAlpha(objBioText, 255*scl);
+		ascent(i in 0..2)
+		{
+			ObjRender_SetAlpha(objArrows[i], 255*scl);
+			ObjRender_SetAlpha(objArrowsPage[i], 255*scl);
+			ObjRender_SetPosition(objArrowsPage[i], round(GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i]), GetScreenHeight/2, 0);
+		}
+		c++;
+		SkippableWait(1);
+	}
+	yield;
+	
+	
+	let selectedColour = NAME_BG_COLOURS[selectedTeam];
+	let bgR = selectedColour[0];
+	let bgG = selectedColour[1];
+	let bgB = selectedColour[2];
 	while(menuState==MENUSTATE_CHARACTER_SELECT)
 	{
 		RenameRecenterText(objTeamNamesText, teamNames[selectedTeam], charSelectX,GetScreenHeight/2-156);
+		
+		selectedColour = NAME_BG_COLOURS[selectedTeam];
+		bgR = bgR * 0.9 + selectedColour[0] * 0.1;
+		bgG = bgG * 0.9 + selectedColour[1] * 0.1;
+		bgB = bgB * 0.9 + selectedColour[2] * 0.1;
+		ObjRender_SetColor(objNBG,bgR, bgG, bgB);
+		
 		ObjRender_SetAlpha(objTeamNamesText, 255*characterSelect_AlphaScl);
 		ObjRender_SetAlpha(objNBG, 255*characterSelect_AlphaScl);
 		ObjRender_SetAlpha(objBioText, 255*characterSelect_AlphaScl);
@@ -296,7 +371,7 @@ task Char_BoxDetails()
 	task Previews()
 	{
 		let objCSPr = ObjPrim_Create(OBJ_SPRITE_2D);
-		ObjPrim_SetTexture(objCSPr, IMG_TITLE_CHARSELECT_PREVIEW_EMPTY);
+		ObjPrim_SetTexture(objCSPr, charPreviews[selectedTeam]);
 		Obj_SetRenderPriorityI(objCSPr, BASE_RENDERI+7);
 		ObjSprite2D_SetSourceRect(objCSPr,0, 0, 512, 128);
 		ObjSprite2D_SetDestRect(objCSPr,0, 0, 512, 128);
@@ -309,7 +384,7 @@ task Char_BoxDetails()
 			ObjRender_SetAlpha(objCSPr, 255*scl);
 			SkippableWait(1);
 		}
-		let currentTeam = -1;
+		let currentTeam = selectedTeam;
 		while(menuState==MENUSTATE_CHARACTER_SELECT)
 		{
 			if(currentTeam!=selectedTeam)
@@ -346,15 +421,6 @@ task Char_BoxDetails()
 		BASE_RENDERI+7);
 		ObjText_SetSidePitch(objTabTitleText, -1);
 		
-		let t = TO_CHARSELECT_TRANSITION;
-		
-		ascent(i in 0..t)
-		{	
-			let scl = 1*sin(90/(t-1)*i);
-			ObjRender_SetAlpha(objCST, 255*scl);
-			ObjRender_SetAlpha(objTabTitleText, 255*scl);
-			SkippableWait(1);
-		}
 		let objTabText = CreateText(
 		"A",
 		15,
@@ -365,6 +431,19 @@ task Char_BoxDetails()
 		y-1,
 		"Lucida Fax Demibold",
 		BASE_RENDERI+7);
+		ObjText_SetText(objTabText, tabInfoText[id][selectedTeam]);
+		
+		let t = TO_CHARSELECT_TRANSITION;
+		
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objCST, 255*scl);
+			ObjRender_SetAlpha(objTabTitleText, 255*scl);
+			ObjRender_SetAlpha(objTabText, 255*scl);
+			SkippableWait(1);
+		}
+		
 		//ObjText_SetSidePitch(objTabText, -1);
 		while(menuState==MENUSTATE_CHARACTER_SELECT)
 		{
@@ -573,6 +652,274 @@ task RenderTeam(id)
 	Obj_Delete(objTeamPortrait);
 }
 
+task Char_SpellBGs()
+{
+	DuoBG_A();
+	DuoBG_B();
+	DuoBG_C();
+	
+	task DuoBG_A()
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj, BASE_RENDERI + 3); 
+		ObjPrim_SetTexture(obj, IMG_STAGE_01A_SPELL_00); 
+		ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 1024);
+		ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetScaleXYZ(obj, 0.7 * 1.5);
+		
+		let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj2, BASE_RENDERI + 4); 
+		ObjPrim_SetTexture(obj2, IMG_STAGE_01A_SPELL_01); 
+		ObjSprite2D_SetSourceRect(obj2, 0, 0,1024, 1024);
+		ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj2);
+		ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetBlendType(obj2,BLEND_SUBTRACT);
+		ObjRender_SetColor(obj2, 255, 128, 128);
+		ObjRender_SetScaleXYZ(obj2, 1.5);
+		
+		let objAnkhs = [];
+		ascent(i in 0..2)
+		{
+			let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
+			Obj_SetRenderPriorityI(obj3, BASE_RENDERI + 3); 
+			ObjPrim_SetTexture(obj3, IMG_STAGE_01A_SPELL_02); 
+			ObjSprite2D_SetSourceRect(obj3, 0, 0,512, 1024);
+			ObjSprite2D_SetDestRect(obj3, 0, 0, 512, 1024);
+			ObjSprite2D_SetDestCenter(obj3);
+			ObjRender_SetPosition(obj3,[0,GetScreenWidth][i],GetScreenHeight/2,0);
+			ObjRender_SetScaleXYZ(obj3, 0.6);
+			ObjRender_SetColor(obj3, 128,32,0);
+			objAnkhs ~= [obj3];
+		}
+		
+		let obj4 = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj4, BASE_RENDERI + 4); 
+		ObjPrim_SetTexture(obj4, IMG_STAGE_04C_SPELL_00); 
+		ObjSprite2D_SetSourceRect(obj4, 0, 0,1024, 1024);
+		ObjSprite2D_SetDestRect(obj4, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj4);
+		ObjRender_SetPosition(obj4,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetBlendType(obj4,BLEND_ADD_ARGB);
+		ObjRender_SetScaleXYZ(obj4, 1 * 1.5);
+		//ObjRender_SetColor(obj4, 255, 128, 128);
+		//ObjRender_SetAngleZ(obj,-90);
+		//ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+
+		let alpha1 = 0;
+		let c = 0;
+		let scrollSpd_bg01 = 0.25 * 1.5;
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			if(selectedTeam == PLAYERTEAM_A)
+			{
+				if(alpha1 < 1)
+				{ 
+					alpha1 += 1/10;
+				}
+			} 
+			else
+			{
+				if(alpha1>0)
+				{
+					alpha1 -= 1/10;
+				}
+			}
+			
+			let combinedAlpha = alpha1 * characterSelect_AlphaScl;
+			
+			ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj4,GetScreenWidth/2,GetScreenHeight/2,0);
+			
+			ObjRender_SetAlpha(obj, 255*combinedAlpha);
+			ObjRender_SetAlpha(obj2, 64*combinedAlpha);
+			ascent(i in 0..2)
+			{
+				ObjRender_SetPosition(objAnkhs[i],[0,GetScreenWidth][i],GetScreenHeight/2,0);
+				ObjRender_SetAlpha(objAnkhs[i], 128*combinedAlpha);
+			}
+			
+			ObjRender_SetAlpha(obj4, 64*combinedAlpha);
+			ObjRender_SetAngleZ(obj4, -0.05*c);
+			
+			ObjSprite2D_SetSourceRect(obj2, 0, c*scrollSpd_bg01,1024, 1024+c*scrollSpd_bg01);
+			c++;
+			yield;
+		}
+		Obj_Delete(obj);
+		Obj_Delete(obj2);
+		Obj_Delete(obj4);
+		ascent(i in 0..2)
+		{
+			Obj_Delete(objAnkhs[i]);
+		}
+		
+	}
+
+	task DuoBG_B()
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj, BASE_RENDERI + 3); 
+		ObjPrim_SetTexture(obj, IMG_STAGE_01B_SPELL_00); 
+		ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
+		ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetScaleXYZ(obj, 1*1.5);
+		
+		let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj2, BASE_RENDERI + 4); 
+		ObjPrim_SetTexture(obj2, IMG_STAGE_04A_SPELL_01); 
+		ObjSprite2D_SetSourceRect(obj2, 0, 0,512, 512);
+		ObjSprite2D_SetDestRect(obj2, 0, 0, 512, 512);
+		ObjSprite2D_SetDestCenter(obj2);
+		ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetBlendType(obj2, BLEND_SHADOW );
+		ObjRender_SetScaleXYZ(obj2, 1.6*1.5);
+		
+		let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj3, BASE_RENDERI + 4); 
+		ObjPrim_SetTexture(obj3, IMG_STAGE_01B_SPELL_02); 
+		ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 1024);
+		ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj3);
+		ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetScaleXYZ(obj3, 1*1.5);
+		ObjRender_SetBlendType(obj3, BLEND_SUBTRACT);
+		
+		let scrlSpd2 = -0.5;
+		let alpha1 = 0;
+		let c = 0;
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			if(selectedTeam == PLAYERTEAM_B)
+			{
+				if(alpha1 < 1)
+				{ 
+					alpha1 += 1/10;
+				}
+			} 
+			else
+			{
+				if(alpha1>0)
+				{
+					alpha1 -= 1/10;
+				}
+			}
+			
+			ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
+				
+			let combinedAlpha = alpha1 * characterSelect_AlphaScl;
+			ObjRender_SetAlpha(obj, 255*combinedAlpha);
+			ObjRender_SetColor(obj2, 255*combinedAlpha,255*combinedAlpha,255*combinedAlpha);
+			ObjRender_SetAlpha(obj3, 32*combinedAlpha);
+			
+			ObjRender_SetAngleZ(obj2, c*0.1);
+			ObjSprite2D_SetSourceRect(obj3, 0, c*scrlSpd2,1024, 1024+c*scrlSpd2);
+			c++;
+			yield;
+		}
+		Obj_Delete(obj);
+		Obj_Delete(obj2);
+		Obj_Delete(obj3);
+	}
+	
+	task DuoBG_C()
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(obj, BASE_RENDERI+3);
+		ObjPrim_SetTexture(obj, IMG_STAGE_01C_SPELL_00);
+		ObjSprite2D_SetSourceRect(obj, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetPosition(obj, GetScreenWidth/2, GetScreenHeight/2, 0);
+		
+		let obj2 = ObjPrim_Create(OBJ_SPRITE_2D);
+		Obj_SetRenderPriorityI(obj2, BASE_RENDERI+3);
+		ObjPrim_SetTexture(obj2, IMG_STAGE_01C_SPELL_01);
+		ObjSprite2D_SetSourceRect(obj2, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj2);
+		ObjRender_SetPosition(obj2, GetScreenWidth/2, GetScreenHeight/2, 0);
+		ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+		
+		let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj3, BASE_RENDERI+3); 
+		ObjPrim_SetTexture(obj3, IMG_STAGE_04B_SPELL_02); 
+		ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 1024);
+		ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj3);
+		ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetAngleZ(obj3,30);
+		
+		let obj4 = ObjPrim_Create(OBJ_SPRITE_2D); 
+		Obj_SetRenderPriorityI(obj4, BASE_RENDERI+3); 
+		ObjPrim_SetTexture(obj4, IMG_STAGE_04B_SPELL_02); 
+		ObjSprite2D_SetSourceRect(obj4, 0, 0,1024, 1024);
+		ObjSprite2D_SetDestRect(obj4, 0, 0, 1024, 1024);
+		ObjSprite2D_SetDestCenter(obj4);
+		ObjRender_SetPosition(obj4,GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetAngleZ(obj4,-30);
+		
+		ObjRender_SetColor(obj3, 64,64,64);
+		ObjRender_SetColor(obj4, 64,64,64);
+		
+		let alpha1 = 0;
+		let pos = 0;
+		let zangle = 0;
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			if(selectedTeam == PLAYERTEAM_C)
+			{
+				if(alpha1 < 1)
+				{ 
+					alpha1 += 1/10;
+				}
+			} 
+			else
+			{
+				if(alpha1>0)
+				{
+					alpha1 -= 1/10;
+				}
+			}
+			
+			ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
+			ObjRender_SetPosition(obj4,GetScreenWidth/2,GetScreenHeight/2,0);
+			
+			let combinedAlpha = alpha1 * characterSelect_AlphaScl;
+			
+			ObjSprite2D_SetSourceRect(obj, 0, -pos, 1024, 1024 - pos);
+			ObjRender_SetAlpha(obj, 255*combinedAlpha);
+			
+			ObjRender_SetAngleZ(obj2, zangle);
+			ObjRender_SetAlpha(obj2, 255*combinedAlpha*0.35);
+			
+			ObjRender_SetAlpha(obj3, 255*combinedAlpha);
+			ObjRender_SetAlpha(obj4, 255*combinedAlpha);
+			
+			ObjSprite2D_SetSourceRect(obj3, 0, pos,1024, 1024+pos);
+			ObjSprite2D_SetSourceRect(obj4, 0, pos,1024, 1024+pos);
+
+			zangle += 0.075;
+			pos += 1;
+			yield;
+		}
+		Obj_Delete(obj);
+		Obj_Delete(obj2);
+		Obj_Delete(obj3);
+		Obj_Delete(obj4);
+	}
+
+
+
+
+}
 
 
 

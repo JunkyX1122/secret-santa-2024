@@ -14,6 +14,7 @@
 #include "./Package_Options.txt"
 #include "./Package_Outro.txt"
 let skipIntro = false;
+const BMG_TITLE_VOLUME = 75;
 @Initialize
 {
 	//SetSkipModeKey(KEY_INVALID);
@@ -25,6 +26,7 @@ let skipIntro = false;
 }
 @MainLoop
 {
+	HandleMusicVolume();
 	if(GetKeyState(KEY_0)==KEY_PUSH)
 	{
 		ClosePackage();
@@ -78,6 +80,7 @@ const MENUSTATE_CHARACTER_SELECT 		= 2;
 const MENUSTATE_PRACTICE				= 3;
 const MENUSTATE_OPTIONS					= 4;
 
+
 let menuState = MENUSTATE_UNACTIVE;
 
 function TIntro()
@@ -120,8 +123,11 @@ task LoadSaveDataStuff()
 }
 
 let totalDarkness = 0;
+let hasIntiatedTDark = false;
 task TDarkManager()
 {
+	if(hasIntiatedTDark) return;
+	hasIntiatedTDark = true;
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
 	ObjPrim_SetTexture(obj, IMG_PIXEL);
 	ObjSprite2D_SetSourceRect(obj, 0, 0, 1024, 418);
@@ -131,7 +137,7 @@ task TDarkManager()
 	ObjRender_SetPosition(obj, GetScreenWidth/2, GetScreenHeight/2, 0);
 	Obj_SetRenderPriorityI(obj, 100);
 	ObjRender_SetColor(obj, 0, 0, 0);
-	while(menuState!=MENUSTATE_UNACTIVE)
+	while(true)
 	{
 		ObjRender_SetAlpha(obj, 255*totalDarkness);
 		yield;
@@ -139,6 +145,14 @@ task TDarkManager()
 	Obj_Delete(obj);
 }
 
+task TDarkTransition(d1,d2, t)
+{
+	ascent(i in 0..t)
+	{
+		totalDarkness = Interpolate_Linear(d1, d2, 1/(t-1)*i);
+		yield;
+	}
+}
 task TFlash(t)
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);

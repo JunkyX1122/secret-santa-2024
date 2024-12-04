@@ -35,7 +35,12 @@ function OptionsScreen()
 		alternative(selectedOption)
 		case(OPTIONSMENUSTATE_MUSICVOL)
 		{
+			let savedVol = option_MusicVolume;
 			option_MusicVolume = OptionsMenuSlider(option_MusicVolume, 0.01, 0, 1, false, 2);
+			if(savedVol!=option_MusicVolume)
+			{
+				SE_PlayLen(title_cursor, 60 * option_MusicVolume);
+			}
 		}
 		case(OPTIONSMENUSTATE_SOUNDVOL)
 		{
@@ -43,12 +48,23 @@ function OptionsScreen()
 		}
 		case(OPTIONSMENUSTATE_STARTINGLIVES)
 		{
+			let savedLives = startingLives;
 			startingLives = OptionsMenuSlider(startingLives, 1, 0, 9, true, 6);
+			if(savedLives!=startingLives)
+			{
+				SE_PlayLen(chime1, 60, 0.9 + 0.4/8 * startingLives);
+				if(startingLives==9)
+				{
+					SE_PlayLen(extend2, 60);
+				}
+				SE_PlayLen(title_cursor, 60);
+			}
 		}
 		case(OPTIONSMENUSTATE_BACK)
 		{
 			if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH || GetVirtualKeyState(VK_OK) == KEY_PUSH)
 			{
+				SE_PlayLen(title_cancel, 60);
 				hasCanceled = true;
 			}
 		}
@@ -58,6 +74,7 @@ function OptionsScreen()
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
 			selectedOption = OPTIONSMENUSTATE_BACK;
+			SE_PlayLen(title_cancel, 60);
 		}
 		SetCommonData("SFXVolume", option_SFXVolume);
 		SetCommonData("MusicVolume", option_MusicVolume);
@@ -124,6 +141,7 @@ function OptionsMenuSelectMove()
 	
 	task MoveOption(am)
 	{
+		SE_PlayLen(title_cursor, 60);
 		optionMenuSliderHoldCounter = 0;
 		selectedOption+=am;
 		if(selectedOption > OPTIONSMENU_MAXOPTIONS -1) { selectedOption = 0; }
@@ -466,7 +484,10 @@ task Options_CreateOptions()
 			ObjText_SetFontBorderType(objOptionsInputText, BORDER_FULL);
 			ObjText_SetSidePitch(objOptionsInputText, -1);
 			RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? "< " ~ IntToString(startingLives) ~ " >" : "Not Implement", x, opY);
-		
+			if(startingLives == 9)
+			{
+				RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? "< Infinite >" : "Not Implement", x, opY);
+			}
 			let t = OPTIONSMENU_TRANSITION;
 			ascent(i in 0..t)
 			{	

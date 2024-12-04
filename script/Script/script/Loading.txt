@@ -42,10 +42,13 @@ task LoadThings
 		yield;
 	}
 	
-	ascent(i in 0..length(Background_ImgArray))
+	ascent(i in 0..length(AllStageBackground_ImgArray))
 	{
-		LoadTexture(Background_ImgArray[i]);
-		yield;
+		ascent(o in 0..length(AllStageBackground_ImgArray[i]))
+		{
+			LoadTexture(AllStageBackground_ImgArray[i][o]);
+			yield;
+		}
 	}
 	ascent(i in 0..length(TitleScreen_ImgArray))
 	{

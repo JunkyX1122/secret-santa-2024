@@ -30,7 +30,7 @@ function SkippableYield()
 }
 function IsSkipButtonPressed()
 {
-	return GetVirtualKeyState(VK_OK) == KEY_PUSH;
+	return GetVirtualKeyState(VK_OK) == KEY_PUSH || GetVirtualKeyState(VK_CANCEL) == KEY_PUSH ;
 }
 
 function CreateParticleListRect(type, path, source, blend, priority) //possibly copied from tcl
@@ -61,6 +61,7 @@ function CreateParticleListRect(type, path, source, blend, priority) //possibly 
 }
 function StartStageProgression()
 {
+	TDarkTransition(1, 0, 60);
 	carryOn = true;
 	SetCommonData("hasThingsInitialised",false);
     SetCommonData("PlayerLife", startingLives);
@@ -292,6 +293,7 @@ function ManagePracticeScene()
 	if(notifyRestart)
 	{
 		notifyRestart = false;
+		TDarkTransition(1, 0, 30);
 		ManagePracticeScene();
 	}
 }
@@ -474,6 +476,7 @@ function FEndPracticeScene(pathMainScript)
 	case(RESULT_RETRY)
 	{
 		TerminateStageScene();
+		TDarkTransition(1, 0, 30);
 		TPracticeScene(currentPracticePath);
 		return;
 	}
@@ -575,13 +578,6 @@ task TReplaySaveScene()
 	TTitleScene();
 }
 
-
-//----------------------------------------------------
-
-//----------------------------------------------------
-
-
-
 function RenderSceneToTransitionTexture()
 {
 	let textureName = GetTransitionRenderTargetName();
@@ -656,6 +652,7 @@ task MusicChange(musicPath, v, sl1, sl2)
 function SetBGMVolume(v)
 {
 	vol = v;
+	ObjSound_SetVolumeRate(objPackageBGM,vol*GetCommonData("MusicVolume",1));
 }
 function GetBGMVolume()
 {

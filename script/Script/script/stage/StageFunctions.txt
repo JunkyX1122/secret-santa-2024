@@ -129,12 +129,15 @@ task RecordStageHistory(stage, diff){
 	let sp_id = (stage) ~ "|stage|" ~ (diff);
 	let SpellDataAttempt = sp_id ~ "|" ~ player ~ "|Attempt";
 	let SpellDataGet = sp_id ~ "|" ~ player ~ "|Get";
-
+	
+	let SpellDataLives = sp_id ~ "|" ~ player ~ "|Lives";
+	let SpellDataBombs = sp_id ~ "|" ~ player ~ "|Bombs";
+	/*
 	if(GetAreaCommonData("System", "IsPractice", false)){
 		SpellDataAttempt = SpellDataAttempt ~ "Prac";
 		SpellDataGet = SpellDataGet ~ "Prac";
 	}
-	
+	*/
 	//This is actually the common data retrieval
 	let SpellValueAttempt = GetAreaCommonData("History", SpellDataAttempt, 0);
 	let SpellValueGet = GetAreaCommonData("History", SpellDataGet, 0);
@@ -152,11 +155,26 @@ task RecordStageHistory(stage, diff){
 	let isFailed = false;
 	let recordedPlayerLife = GetPlayerLife;
 	let recordedPlayerSpell = GetPlayerSpell;
+	
+	let totalLivesLost = GetAreaCommonData("History", SpellDataLives, 0);
+	let totalBombsUsed = GetAreaCommonData("History", SpellDataBombs, 0);
+
+	SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	
 	while(stageInProgress){
-		if(recordedPlayerLife != GetPlayerLife || recordedPlayerSpell != GetPlayerSpell){ //if the player has bombed or died
+		if(recordedPlayerLife != GetPlayerLife){ //if the player has bombed or died
 			isFailed = true;
 			recordedPlayerLife = GetPlayerLife;
+			totalLivesLost++;
+			SetAreaCommonData("History", SpellDataLives, totalLivesLost);
+			SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+		}
+		if(recordedPlayerSpell != GetPlayerSpell){ //if the player has bombed or died
+			isFailed = true;
 			recordedPlayerSpell = GetPlayerSpell;
+			totalBombsUsed++;
+			SetAreaCommonData("History", SpellDataBombs, totalBombsUsed);
+			SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
 		}
 		yield;
 	}
