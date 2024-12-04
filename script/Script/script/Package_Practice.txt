@@ -1,0 +1,593 @@
+let practice_AlphaScl = 1;
+
+let PRACTICEMENU_TRANSITION = 30;
+
+let selectedPracticeStage = 0;
+let selectedPracticeAttack = 0;
+const PLAYER_IDS = ["ID_Gato", "ID_Sullen", "ID_Viivi"];
+const PRACTICE_STAGE_01A = "01a";
+const PRACTICE_STAGE_01B = "01b";
+const PRACTICE_STAGE_01C = "01c";
+const PRACTICE_STAGE_02  = "02";
+const PRACTICE_STAGE_03  = "03";
+const PRACTICE_STAGE_04A = "04a";
+const PRACTICE_STAGE_04B = "04b";
+const PRACTICE_STAGE_04C = "04c";
+const PRACTICE_STAGE_05  = "05";
+const PRACTICE_STAGE_06  = "06";
+const STAGE_DIR = GetCurrentScriptDirectory() ~ "stage/stage";
+
+
+
+let practice_selection_state = 0;
+const PRACTICE_SELECTION_STATE_STAGE = 0;
+const PRACTICE_SELECTION_STATE_ATTACK = 1;
+const AVAILABLE_STAGES = [
+							PRACTICE_STAGE_01A,
+							PRACTICE_STAGE_01B,
+							PRACTICE_STAGE_01C,
+							PRACTICE_STAGE_02,
+							PRACTICE_STAGE_03,
+							PRACTICE_STAGE_04A,
+							PRACTICE_STAGE_04B,
+							PRACTICE_STAGE_04C,
+							PRACTICE_STAGE_05,
+							PRACTICE_STAGE_06
+						];
+
+let stage_attack_array = [];
+
+let stage_practice_array = 0;
+
+task InitialisePracticeAttackPaths()
+{
+	ascent(i in 0..length(AVAILABLE_STAGES))
+	{
+		//WriteLog("STAGE " ~ AVAILABLE_STAGES[i]);
+		let stageDir = STAGE_DIR ~ AVAILABLE_STAGES[i] ~ "/";
+		//WriteLog(stageDir);
+		let allScripts = GetScriptPathList(stageDir, TYPE_SCRIPT_SINGLE); 
+		//WriteLog(allScripts);
+		stage_attack_array ~= [[]];
+		let nonArray = [];
+		let spellArray = [];
+		ascent(o in 0..length(allScripts))
+		{
+			//WriteLog(allScripts[o]);
+			if(GetFileNameWithoutExtension(allScripts[o])[0] == 'N')
+			{
+				nonArray ~= [allScripts[o]];
+			}
+			if(GetFileNameWithoutExtension(allScripts[o])[0] == 'S')
+			{
+				spellArray ~= [allScripts[o]];
+			}//WriteLog(stage_attack_array[i][o]);
+		}
+		let nonCount = 0;
+		let spellCount = 0;
+		while(nonCount < length(nonArray) || spellCount < length(spellArray))
+		{
+			if(nonCount < length(nonArray))
+			{
+				stage_attack_array[i] ~= [nonArray[nonCount]];
+			}
+			if(spellCount < length(spellArray))
+			{
+				stage_attack_array[i] ~= [spellArray[spellCount]];
+			}
+			nonCount++;
+			spellCount++;
+		}
+	}
+	//WriteLog("ALL STAGES");
+	//WriteLog(stage_attack_array);
+}
+
+function PracticeScreen()
+{
+	
+	LoadCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	
+	practice_AlphaScl = 1;
+	menuState = MENUSTATE_PRACTICE;
+	
+	Practice_BoxRender();
+	Practice_StageOptions();
+	Practice_PlayerIcons();
+	SkippableWait(PRACTICEMENU_TRANSITION);
+	
+	yield;
+	
+	
+	let hasCanceled = false;
+	while(menuState==MENUSTATE_PRACTICE && !hasCanceled)
+	{
+		selectedPracticeStage = PracticeMenuSelect(selectedPracticeStage, 1, 0, length(AVAILABLE_STAGES) - 1, true, 6);
+		selectedTeam = PracticeMenuCharacterSelect(selectedTeam, 1, 0, 2, true, 6);
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+		{
+			hasCanceled = true;
+		}
+		if(GetVirtualKeyState(VK_OK) == KEY_PUSH && !hasCanceled)
+		{
+			practice_selection_state = PRACTICE_SELECTION_STATE_ATTACK;
+			let hasCanceledAttack = PracticeScreen_Attacks(selectedPracticeStage);
+			if(hasCanceledAttack)
+			{
+				practice_selection_state = PRACTICE_SELECTION_STATE_STAGE;
+			}
+			else
+			{
+				// Run Attack
+			}
+		}
+		yield;
+	}
+	ascent(i in 0..30)
+	{
+		practice_AlphaScl = 1 - 1/29*i;
+		SkippableWait(1);
+	}
+	return hasCanceled;
+}
+let selectableAttackArray = [];
+let currentPracticePath = "";
+function PracticeScreen_Attacks(stageID)
+{
+	currentPracticePath = "";
+	selectedPracticeAttack = 0;
+	let hasCanceled = false;
+	selectableAttackArray = [];
+	let maxOptions = Practice_AttackOptions(stageID);
+	yield;
+	while(menuState==MENUSTATE_PRACTICE && !hasCanceled)
+	{
+		selectedPracticeAttack = PracticeMenuSelect(selectedPracticeAttack, 1, 0, maxOptions - 1, true, 6);
+		selectedTeam = PracticeMenuCharacterSelect(selectedTeam, 1, 0, 2, true, 6);
+		activeTeam = selectedTeam;
+		if(GetVirtualKeyState(VK_OK) == KEY_PUSH)
+		{
+			if(!selectableAttackArray[selectedPracticeAttack]) 
+			{
+				SE_PlayLen(shot1, 60);
+			}
+			else
+			{
+				practice_AlphaScl = 0;
+				background_AlphaScl = 0;
+				isRenderingBackground = false;
+				SetCommonData("isPracticing", true);
+				currentPracticePath = stage_attack_array[selectedPracticeStage][selectedPracticeAttack];
+				
+				let selectedSong = BOSS_MUSIC_DATA[selectedPracticeStage];
+				MusicChange(BOSS_MUSIC_PATHS[selectedPracticeStage], selectedSong[0], selectedSong[1], selectedSong[2]);
+				ManagePracticeScene();
+				DeleteMusicObj();
+				
+				SetCommonData("isPracticing", false);
+				isRenderingBackground = true;
+				RenderMenuBackground(true);
+				practice_AlphaScl = 1;
+				background_AlphaScl = 1;
+				attackUpdateRequired = true;
+				yield;
+				attackUpdateRequired = false;
+			}
+		}
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+		{
+			hasCanceled = true;
+		}
+		yield;
+	}
+	return hasCanceled;
+}
+let practiceMenuHoldCounter = 0;
+function PracticeMenuSelect(currentNumber, scl, minV, maxV, willLoop, slideRate)
+{
+	if(currentNumber <= minV || currentNumber >= maxV)
+	{
+		practiceMenuHoldCounter = 0;
+	}
+	if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH)  { 
+		MoveOption(1);
+		practiceMenuHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_UP)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		practiceMenuHoldCounter = 0; 
+	}
+	
+	if(GetVirtualKeyState(VK_DOWN) == KEY_HOLD)  {
+		practiceMenuHoldCounter++;
+		if(practiceMenuHoldCounter > 20 && practiceMenuHoldCounter%slideRate==0)
+		{
+			MoveOption(1);
+		}
+	}
+	if(GetVirtualKeyState(VK_UP) == KEY_HOLD)  {
+		practiceMenuHoldCounter++;
+		if(practiceMenuHoldCounter > 20 && practiceMenuHoldCounter%slideRate==0)
+		{
+			MoveOption(-1);
+		}
+	}
+	
+	
+	if((GetVirtualKeyState(VK_DOWN) == KEY_FREE && GetVirtualKeyState(VK_UP) == KEY_FREE) || 
+	   (GetVirtualKeyState(VK_DOWN) != KEY_FREE && GetVirtualKeyState(VK_UP) != KEY_FREE)) {
+		practiceMenuHoldCounter = 0;
+	}
+	return currentNumber;
+	task MoveOption(am)
+	{
+		currentNumber+=am * scl;
+		if(currentNumber > maxV) 
+		{ 
+			currentNumber = willLoop ? minV : maxV; 
+		}
+		if(currentNumber <  minV) 						 
+		{ 
+			currentNumber = willLoop ? maxV : minV; 
+		}
+	}
+}
+
+let practiceMenuCharacterHoldCounter = 0;
+function PracticeMenuCharacterSelect(currentNumber, scl, minV, maxV, willLoop, slideRate)
+{
+	if(currentNumber <= minV || currentNumber >= maxV)
+	{
+		practiceMenuCharacterHoldCounter = 0;
+	}
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)  { 
+		MoveOption(1);
+		practiceMenuCharacterHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_LEFT)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		practiceMenuCharacterHoldCounter = 0; 
+	}
+	
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_HOLD)  {
+		practiceMenuCharacterHoldCounter++;
+		if(practiceMenuCharacterHoldCounter > 20 && practiceMenuCharacterHoldCounter%slideRate==0)
+		{
+			MoveOption(1);
+		}
+	}
+	if(GetVirtualKeyState(VK_LEFT) == KEY_HOLD)  {
+		practiceMenuCharacterHoldCounter++;
+		if(practiceMenuCharacterHoldCounter > 20 && practiceMenuCharacterHoldCounter%slideRate==0)
+		{
+			MoveOption(-1);
+		}
+	}
+	
+	
+	if((GetVirtualKeyState(VK_RIGHT) == KEY_FREE && GetVirtualKeyState(VK_LEFT) == KEY_FREE) || 
+	   (GetVirtualKeyState(VK_RIGHT) != KEY_FREE && GetVirtualKeyState(VK_LEFT) != KEY_FREE)) {
+		practiceMenuCharacterHoldCounter = 0;
+	}
+	return currentNumber;
+	task MoveOption(am)
+	{
+		currentNumber+=am * scl;
+		if(currentNumber > maxV) 
+		{ 
+			currentNumber = willLoop ? minV : maxV; 
+		}
+		if(currentNumber <  minV) 						 
+		{ 
+			currentNumber = willLoop ? maxV : minV; 
+		}
+	}
+}
+
+
+task Practice_BoxRender()
+{
+	let objPB = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objPB, IMG_TITLE_PRACTICE_BOX);
+	Obj_SetRenderPriorityI(objPB, BASE_RENDERI+7);
+	ObjSprite2D_SetSourceRect(objPB,0, 0, 1024, 512);
+	ObjSprite2D_SetDestRect(objPB,0, 0, 1024, 512);
+	ObjSprite2D_SetDestCenter(objPB);
+	ObjRender_SetPosition(objPB,GetScreenWidth/2,GetScreenHeight/2,0);
+	
+	let objPracticeTitle = CreateText(
+		"Practice Mode",
+		20,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2,
+		GetScreenHeight/2-215,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		
+	ObjText_SetFontBorderWidth(objPracticeTitle, 2);
+	ObjText_SetFontBorderType(objPracticeTitle, BORDER_FULL);
+	ObjText_SetSidePitch(objPracticeTitle, -1);
+	
+	let t = TO_CHARSELECT_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objPB, 255*scl);
+		ObjRender_SetAlpha(objPracticeTitle, 255*scl);
+		SkippableWait(1);
+	}
+	yield;
+	while(menuState==MENUSTATE_PRACTICE)
+	{
+		ObjRender_SetAlpha(objPB, 255*practice_AlphaScl);
+		ObjRender_SetAlpha(objPracticeTitle, 255*practice_AlphaScl);
+		yield;
+	}
+	Obj_Delete(objPB);
+	Obj_Delete(objPracticeTitle);
+}
+
+task Practice_PlayerIcons()
+{
+	ascent(i in 0..3)
+	{
+		MakeIcon(GetScreenWidth/2 - 48 + 48*i, GetScreenHeight/2 - 165, i);
+	}
+	
+	task MakeIcon(x,y,id)
+	{
+		let objCSIc = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCSIc, CHAR_ICONS[id]);
+		Obj_SetRenderPriorityI(objCSIc, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objCSIc,0, 0, 64, 64);
+		ObjSprite2D_SetDestRect(objCSIc,0, 0, 64, 64);
+		ObjSprite2D_SetDestCenter(objCSIc);
+		ObjRender_SetPosition(objCSIc,x,y,0);
+		
+		let coll = 128;
+		ObjRender_SetColor(objCSIc, coll, coll, coll);
+		
+		let t = PRACTICEMENU_TRANSITION;
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objCSIc, 255*scl);
+			SkippableWait(1);
+		}
+		yield;
+		while(menuState==MENUSTATE_PRACTICE)
+		{
+			let colTarg = 128;
+			if(selectedTeam == id)
+			{
+				colTarg = 255;
+			}
+			coll = coll * 0.8 + colTarg * 0.2;
+			ObjRender_SetColor(objCSIc, coll, coll, coll);
+			ObjRender_SetAlpha(objCSIc, 255*practice_AlphaScl);
+			yield;
+		}
+		Obj_Delete(objCSIc);
+	}
+}
+
+task Practice_StageOptions()
+{
+	ascent(i in 0..length(AVAILABLE_STAGES))
+	{
+		CreateStageOption(i);
+	}
+	
+	task CreateStageOption(id)
+	{
+		let opY = GetScreenHeight/2-215 + (23*3 + 3) + 23 * (id);
+		
+		let objStageText = CreateText(
+		"A",
+		20,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2 - 370,
+		opY,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
+		ObjText_SetFontBorderWidth(objStageText, 1);
+		ObjText_SetFontBorderType(objStageText, BORDER_FULL);
+		ObjText_SetSidePitch(objStageText, -1);
+		ObjText_SetText(objStageText, "Stage " ~ AVAILABLE_STAGES[id]);
+		
+		let objPStgSB = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objPStgSB, IMG_TITLE_OPTIONS_SELECTION_BACK);
+		Obj_SetRenderPriorityI(objPStgSB, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objPStgSB,0, 0, 1024, 16);
+		ObjSprite2D_SetDestRect(objPStgSB,0, 0, 1024, 16);
+		ObjSprite2D_SetDestCenter(objPStgSB);
+		ObjRender_SetPosition(objPStgSB,GetScreenWidth/2,opY,0);
+		ObjRender_SetAlpha(objPStgSB,0);
+		
+		let objPStgSF = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objPStgSF, IMG_TITLE_OPTIONS_SELECTION_FRONT);
+		Obj_SetRenderPriorityI(objPStgSF, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objPStgSF,0, 0, 1024, 32);
+		ObjSprite2D_SetDestRect(objPStgSF,0, 0, 1024, 32);
+		ObjSprite2D_SetDestCenter(objPStgSF);
+		ObjRender_SetPosition(objPStgSF,GetScreenWidth/2,opY,0);
+		ObjRender_SetAlpha(objPStgSF,0);
+		
+		let t = PRACTICEMENU_TRANSITION;
+		ascent(i in 0..t)
+		{	
+			let scl = 1*sin(90/(t-1)*i);
+			ObjRender_SetAlpha(objStageText, 255*scl);
+			SkippableWait(1);
+		}
+		yield;
+		let selAlph = 0;
+		let c = 0;
+		while(menuState==MENUSTATE_PRACTICE)
+		{
+			let isStageSelecting = practice_selection_state == PRACTICE_SELECTION_STATE_STAGE;
+			let targetAlph = selectedPracticeStage == id ? 1 : 0;
+			selAlph = selAlph * 0.8 + targetAlph * 0.2;
+			
+			let scl1 = cos(c*3);
+			
+			ObjRender_SetAlpha(objPStgSB,255*selAlph*practice_AlphaScl * (0.7 + 0.3 * scl1) * isStageSelecting);
+			ObjRender_SetAlpha(objPStgSF,255*selAlph*practice_AlphaScl * isStageSelecting);
+			ObjRender_SetAlpha(objStageText, 255*practice_AlphaScl * isStageSelecting);
+			c++;
+			yield;
+		}
+		Obj_Delete(objStageText);
+		Obj_Delete(objPStgSB);
+		Obj_Delete(objPStgSF);
+		
+	}
+}
+
+let attackUpdateRequired = false;
+
+function Practice_AttackOptions(stageID)
+{
+	let totalAttacksInStage = 0;
+
+
+	ascent(i in 0..length(stage_attack_array[stageID]))
+	{
+		selectableAttackArray ~= [false];
+		CreateAttackOption(i);
+		totalAttacksInStage++;
+	}
+	return totalAttacksInStage;
+	task CreateAttackOption(id)
+	{
+
+		let attackName = GetScriptInfoA1(stage_attack_array[stageID][id], INFO_SCRIPT_TITLE);
+		
+		let opY = GetScreenHeight/2-215 + (23*3 + 3) + 23 * (id);
+		
+		let objStageText = CreateText(
+		"A",
+		20,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2 - 370,
+		opY,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
+		ObjText_SetFontBorderWidth(objStageText, 1);
+		ObjText_SetFontBorderType(objStageText, BORDER_FULL);
+		ObjText_SetSidePitch(objStageText, -1);
+		ObjText_SetText(objStageText, "?????");
+		
+		let historyTexts = [];
+		ascent(i in 0..3)
+		{
+			let objStageHistoryText = CreateText(
+			["000", "/", "000"][i],
+			20,
+			[[255,255,255],
+			[255,255,200]],
+			[0,0,0],
+			GetScreenWidth/2 + 270 - 30 + 30 * i,
+			opY,
+			"Lucida Fax Demibold",
+			BASE_RENDERI+8);
+			
+			ObjText_SetFontBorderWidth(objStageHistoryText, 1);
+			ObjText_SetFontBorderType(objStageHistoryText, BORDER_FULL);
+			ObjText_SetSidePitch(objStageHistoryText, -1);
+			historyTexts ~= [objStageHistoryText];
+		}
+		
+		let objPStgSB = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objPStgSB, IMG_TITLE_OPTIONS_SELECTION_BACK);
+		Obj_SetRenderPriorityI(objPStgSB, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objPStgSB,0, 0, 1024, 16);
+		ObjSprite2D_SetDestRect(objPStgSB,0, 0, 1024, 16);
+		ObjSprite2D_SetDestCenter(objPStgSB);
+		ObjRender_SetPosition(objPStgSB,GetScreenWidth/2,opY,0);
+		ObjRender_SetAlpha(objPStgSB,0);
+		
+		let objPStgSF = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objPStgSF, IMG_TITLE_OPTIONS_SELECTION_FRONT);
+		Obj_SetRenderPriorityI(objPStgSF, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objPStgSF,0, 0, 1024, 32);
+		ObjSprite2D_SetDestRect(objPStgSF,0, 0, 1024, 32);
+		ObjSprite2D_SetDestCenter(objPStgSF);
+		ObjRender_SetPosition(objPStgSF,GetScreenWidth/2,opY,0);
+		ObjRender_SetAlpha(objPStgSF,0);
+		
+		let t = PRACTICEMENU_TRANSITION;
+
+		let selAlph = 0;
+		let c = 0;
+		let savedPlayerTeam = -1;
+		let isPlayable = false;
+		while(menuState==MENUSTATE_PRACTICE && practice_selection_state == PRACTICE_SELECTION_STATE_ATTACK)
+		{
+			if(savedPlayerTeam != selectedTeam || attackUpdateRequired)
+			{
+				
+				savedPlayerTeam = selectedTeam;
+				let player = PLAYER_IDS[selectedTeam];
+				let pattern = GetFileNameWithoutExtension(stage_attack_array[stageID][id]);
+				let diff = "Hard";
+
+				let sp_id = (AVAILABLE_STAGES[stageID]) ~ "|" ~ (pattern) ~ "|" ~ (diff);
+				let SpellDataAttempt = sp_id ~ "|" ~ player ~ "|Attempt";
+				let SpellDataGet = sp_id ~ "|" ~ player ~ "|Get";
+				
+				let attempts = GetAreaCommonData("History", SpellDataAttempt, 0);
+				let captures = GetAreaCommonData("History", SpellDataGet, 0);
+				ObjText_SetText(historyTexts[0], rtos("000", captures));
+				ObjText_SetText(historyTexts[2], rtos("000", attempts));
+				if(attempts > 0)
+				{
+					isPlayable = true;
+					selectableAttackArray[id] = true;
+					ObjText_SetText(objStageText, attackName);
+					ObjRender_SetColor(objStageText,255,255,255);
+				}
+				else
+				{
+					isPlayable = false;	
+					selectableAttackArray[id] = false;
+					ObjText_SetText(objStageText, "?????");
+					ObjRender_SetColor(objStageText,165,165,165);
+				}
+			}
+			
+			
+			let isStageSelecting = practice_selection_state == PRACTICE_SELECTION_STATE_STAGE;
+			let targetAlph = selectedPracticeAttack == id ? 1 : 0;
+			selAlph = selAlph * 0.8 + targetAlph * 0.2;
+			
+			let scl1 = cos(c*3);
+			
+			ObjRender_SetAlpha(objPStgSB,255*selAlph*practice_AlphaScl * (0.7 + 0.3 * scl1));
+			ObjRender_SetAlpha(objPStgSF,255*selAlph*practice_AlphaScl);
+			ObjRender_SetAlpha(objStageText, 255*practice_AlphaScl);
+			ascent(i in 0..3)
+			{
+				ObjRender_SetAlpha(historyTexts[i], 255*practice_AlphaScl);
+			}
+			c++;
+			yield;
+		}
+		ascent(i in 0..3)
+		{
+			Obj_Delete(historyTexts[i]);
+		}
+		Obj_Delete(objStageText);
+		Obj_Delete(objPStgSB);
+		Obj_Delete(objPStgSF);
+		
+	}
+}

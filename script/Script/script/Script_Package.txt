@@ -10,6 +10,7 @@
 #include "./Package_Functions.txt"
 #include "./Package_MainMenu.txt"
 #include "./Package_CharacterSelect.txt"
+#include "./Package_Practice.txt"
 #include "./Package_Options.txt"
 #include "./Package_Outro.txt"
 let skipIntro = false;
@@ -34,9 +35,17 @@ let skipIntro = false;
 @Event
 {
 	alternative(GetEventType())
-	case(EV_USER_PLAYER_DEATH){	
+	case(EV_USER_PLAYER_DEATH)
+	{	
 		WriteLog("PLAYERDEAD");
-		TEndScene();
+		if(!GetCommonData("isPracticing", false))
+		{
+			TEndScene();
+		}
+		else
+		{
+			TEndPracticeScene(currentPracticePath);
+		}
 	}
 }
 
@@ -48,6 +57,7 @@ task Loader
 {
 	//LoadThings;
 	//while(mainLoadBool==false){yield;}
+	InitialisePracticeAttackPaths();
 	LoadingBool = true;
 	skipIntro = false;
 	
@@ -65,7 +75,8 @@ let BASE_RENDERI = BASE_RENDER*100;
 const MENUSTATE_UNACTIVE 				= 0;
 const MENUSTATE_MAIN 					= 1;
 const MENUSTATE_CHARACTER_SELECT 		= 2;
-const MENUSTATE_OPTIONS					= 3;
+const MENUSTATE_PRACTICE				= 3;
+const MENUSTATE_OPTIONS					= 4;
 
 let menuState = MENUSTATE_UNACTIVE;
 
@@ -105,6 +116,7 @@ task LoadSaveDataStuff()
 	
 	SetCommonData("SFXVolume", option_SFXVolume);
 	SetCommonData("MusicVolume", option_MusicVolume);
+	SetCommonData("isPracticing", false);
 }
 
 let totalDarkness = 0;

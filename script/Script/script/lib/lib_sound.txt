@@ -263,6 +263,41 @@ const BGM_BOSS_04C = GetCurrentScriptDirectory~"./../../bgm/boss_04c.ogg";
 const BGM_BOSS_05  = GetCurrentScriptDirectory~"./../../bgm/boss_05.ogg";
 const BGM_BOSS_06  = GetCurrentScriptDirectory~"./../../bgm/boss_06.ogg";
 
+const ID_BOSSBGM_1A = 0;
+const ID_BOSSBGM_1B = 1;
+const ID_BOSSBGM_1C = 2;
+const ID_BOSSBGM_2  = 3;
+const ID_BOSSBGM_3  = 4;
+const ID_BOSSBGM_4A = 5;
+const ID_BOSSBGM_4B = 6;
+const ID_BOSSBGM_4C = 7;
+const ID_BOSSBGM_5  = 8;
+const ID_BOSSBGM_6  = 9;
+const BOSS_MUSIC_PATHS = [
+							BGM_BOSS_01A,
+							BGM_BOSS_01B,
+							BGM_BOSS_01C,
+							BGM_BOSS_02,
+							BGM_BOSS_03,
+							BGM_BOSS_04A,
+							BGM_BOSS_04B,
+							BGM_BOSS_04C,
+							BGM_BOSS_05,
+							BGM_BOSS_06,
+						];
+const BOSS_MUSIC_DATA  = [
+							[ 	60, 	16550, 		6337369],
+							[ 	85, 	1154787, 	6305006],
+							[ 	85, 	279333, 	5708522],
+							[ 	90, 	602574, 	5157047],
+							[ 	85, 	1355317, 	8981665],
+							[ 	90, 	641189, 	6460558],
+							[ 	90, 	375460, 	5107052],
+							[ 	85, 	22423, 		7994797],
+							[ 	95, 	2956441, 	10937988],
+							[ 	100, 	428054, 	17987865]
+						];
+
 let seobj = ObjSound_Create;
 //======================================================
 task SE_PlayLen(let path, let vl)

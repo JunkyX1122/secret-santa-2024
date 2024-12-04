@@ -181,6 +181,7 @@ function OptionsMenuSlider(currentNumber, scl, minV, maxV, willLoop, slideRate)
 		}
 	}
 }
+
 task Options_BoxRender()
 {
 	let objOB = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -206,7 +207,7 @@ task Options_BoxRender()
 	ObjText_SetFontBorderType(objOptionsTitle, BORDER_FULL);
 	ObjText_SetSidePitch(objOptionsTitle, -1);
 	
-	let t = TO_CHARSELECT_TRANSITION;
+	let t = OPTIONSMENU_TRANSITION;
 	ascent(i in 0..t)
 	{	
 		let scl = 1*sin(90/(t-1)*i);
@@ -256,7 +257,7 @@ task Options_SubBoxRender()
 	ObjText_SetFontBorderType(objOpDat, BORDER_FULL);
 	ObjText_SetSidePitch(objOpDat, -1);
 	
-	let t = TO_CHARSELECT_TRANSITION;
+	let t = OPTIONSMENU_TRANSITION;
 	ascent(i in 0..t)
 	{	
 		let scl = 1*sin(90/(t-1)*i);
@@ -335,7 +336,7 @@ task Options_CreateOptions()
 		let selAlph = 0;
 		
 		
-		let t = TO_CHARSELECT_TRANSITION;
+		let t = OPTIONSMENU_TRANSITION;
 		ascent(i in 0..t)
 		{	
 			let scl = 1*sin(90/(t-1)*i);
@@ -406,7 +407,7 @@ task Options_CreateOptions()
 			"Lucida Fax Demibold",
 			BASE_RENDERI+8);
 
-			let t = TO_CHARSELECT_TRANSITION;
+			let t = OPTIONSMENU_TRANSITION;
 			ascent(i in 0..t)
 			{	
 				let scl = 1*sin(90/(t-1)*i);
@@ -466,7 +467,7 @@ task Options_CreateOptions()
 			ObjText_SetSidePitch(objOptionsInputText, -1);
 			RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? "< " ~ IntToString(startingLives) ~ " >" : "Not Implement", x, opY);
 		
-			let t = TO_CHARSELECT_TRANSITION;
+			let t = OPTIONSMENU_TRANSITION;
 			ascent(i in 0..t)
 			{	
 				let scl = 1*sin(90/(t-1)*i);

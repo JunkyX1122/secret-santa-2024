@@ -126,6 +126,12 @@ function StartStageProgression()
 	{
 		TOutro();
 	}
+	
+	if(notifyRestart) // We let everything get to the end before considering whether we should restart
+	{ // This prevents the black screen from showing
+		notifyRestart = false;
+		StartStageProgression();
+	}
 }
 //----------------------------------------------------
 // ステージシーン
@@ -240,7 +246,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 			{
 				TerminateStageScene();
 				carryOn = false;
-				StartStageProgression();
+				notifyRestart = true;
 				return;
 			}
 			case(RESULT_END)
@@ -272,6 +278,7 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 			case(STAGE_RESULT_BREAK_OFF)
 			{
 				carryOn = false;
+				
 			}
 		}
 		if(stgSceneState != STAGE_STATE_FINISHED)
@@ -283,6 +290,126 @@ function TStageScene(let pathReplay,SELECT_ID,waiter)
 
 	//TTransition();
 }
+function ManagePracticeScene()
+{
+	TPracticeScene(currentPracticePath);
+	if(notifyRestart)
+	{
+		notifyRestart = false;
+		ManagePracticeScene();
+	}
+}
+function TPracticeScene(let pathMainScript)
+{
+	SetCommonData("hasThingsInitialised",false);
+    SetCommonData("PlayerLife", 0);
+    SetCommonData("PlayerSpell", 0);
+	
+	let dirCurrent = GetCurrentScriptDirectory();
+	let dirModule = GetModuleDirectory();
+	
+	let pathPlayer = dirCurrent ~ "./../../player/The Ultimate Player (Set 1)/A Ultimate1.txt";
+	alternative(activeTeam)
+	case(PLAYERTEAM_A)
+	{
+		pathPlayer = dirCurrent ~ "./../../player/Gato/Player_Gato.txt";
+	}
+	case(PLAYERTEAM_B)
+	{
+		pathPlayer = dirCurrent ~ "./../../player/Sullen/Player_Sullen.txt";
+	}
+	case(PLAYERTEAM_C)
+	{
+		pathPlayer = dirCurrent ~ "./../../player/Viivi/Player_Viivi.txt";
+	}
+	others
+	{
+		
+	}
+
+	//--------------------------------
+	//画面遷移
+	//RenderSceneToTransitionTexture();
+	//TTransition();
+
+	//--------------------------------
+	//ステージ初期化
+	InitializeStageScene();
+
+	//--------------------------------
+	//初期ステージ設定
+	let indexStage = 1; //ステージインデックス
+
+	SetStageIndex(indexStage);
+	SetStageMainScript(pathMainScript);
+	SetStagePlayerScript(pathPlayer);
+	StartStageScene();
+
+	//--------------------------------
+	//ステージ操作
+	let END_RESULT = 0;
+	let stgSceneState = GetStageSceneState();
+	let pauseEnd = false;
+	WriteLog("START PRACTICE");
+	
+	while(stgSceneState != STAGE_STATE_FINISHED)
+	{
+		stgSceneState = GetStageSceneState();
+		//--------------------------------
+		//一時停止チェック
+		if(GetVirtualKeyState(VK_PAUSE) == KEY_PUSH && !isGamovering)
+		{
+			HandleMusicEvent(0);
+			let resPause = RunPauseScene();
+			alternative(resPause)
+			case(RESULT_CANCEL)
+			{
+				WriteLog("RESUME PRACTICE");
+				HandleMusicEvent(1);
+			}
+			case(RESULT_RETRY)
+			{
+				HandleMusicEvent(1);
+				TerminateStageScene();
+				notifyRestart = true;
+				return;
+			}
+			case(RESULT_END)
+			{
+				
+				//TTransition();
+				TerminateStageScene();
+				return;
+				//TTitleScene;
+			}
+		}
+	
+		if(stgSceneState == STAGE_STATE_FINISHED)
+		{
+			WriteLog("PRACTICE END");
+			FinalizeStageScene();
+			let stageResult = GetStageSceneResult();
+			alternative(stageResult)
+			case(STAGE_RESULT_CLEARED)
+			{
+				FEndPracticeScene(pathMainScript);
+			}
+			case(STAGE_RESULT_BREAK_OFF)
+			{
+				
+			}
+
+		}
+		if(stgSceneState != STAGE_STATE_FINISHED)
+		{
+			yield;
+		}
+		
+	}	
+
+	//TTransition();
+}
+let notifyRestart = false;
 let isGamovering = false;
 task TEndScene()
 {
@@ -304,16 +431,86 @@ task TEndScene()
 	case(RESULT_CANCEL)
 	{
 		PauseStageScene(false);
+		return;
 	}
 	case(RESULT_END)
 	{
 		TerminateStageScene();
 		TTitleScene();
+		return;
 	}
 	case(RESULT_RETRY)
 	{
 		TerminateStageScene();
-		StartStageProgression();
+		notifyRestart = true;
+		return;
+	}
+}
+
+
+task TEndPracticeScene(pathMainScript)
+{
+	WriteLog("PRACTICE END SCENE TASK");
+	RenderSceneToTransitionTexture();
+	let dirModule = GetModuleDirectory();
+	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndPracticeScene.txt";
+	let idScript = LoadScript(pathScript);
+	StartScript(idScript);
+	
+	PauseStageScene(true);
+	isGamovering = true;
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+	PauseStageScene(false);
+	isGamovering = false;
+	let result = GetScriptResult(idScript);
+
+	alternative(result)
+	case(RESULT_END)
+	{
+		TerminateStageScene();
+		return;
+	}
+	case(RESULT_RETRY)
+	{
+		TerminateStageScene();
+		notifyRestart = true;
+		return;
+	}
+}
+
+function FEndPracticeScene(pathMainScript)
+{
+	WriteLog("PRACTICE END SCENE FUNCTION");
+	//RenderSceneToTransitionTexture();
+	let dirModule = GetModuleDirectory();
+	let pathScript = dirModule ~ "script/Script/script/lib/system/Default_EndPracticeScene.txt";
+	let idScript = LoadScript(pathScript);
+	StartScript(idScript);
+	
+	PauseStageScene(true);
+	isGamovering = true;
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+	PauseStageScene(false);
+	isGamovering = false;
+	let result = GetScriptResult(idScript);
+
+	alternative(result)
+	case(RESULT_END)
+	{
+		TerminateStageScene();
+		return;
+	}
+	case(RESULT_RETRY)
+	{
+		TerminateStageScene();
+		TPracticeScene(currentPracticePath);
+		return;
 	}
 }
 
@@ -336,15 +533,13 @@ function RunPauseScene()
 {
 	RenderSceneToTransitionTexture();
 	
-
 	let dirModule = GetModuleDirectory();
 	let pathScript = GetCurrentScriptDirectory ~ "lib/system/Pause.txt";
-
-	//--------------------------------
-
 	let idScript = LoadScript(pathScript);
 	StartScript(idScript);
+	
 	PauseStageScene(true);
+	
 	while(!IsCloseScript(idScript))
 	{
 		yield;
@@ -467,4 +662,81 @@ function TTransition(t)
 		yield;
 	}
 	Obj_Delete(objImage);
+}
+
+
+let objPackageBGM = ObjSound_Create;
+let vol = 100;
+let startMusic = false;
+task MusicChange(musicPath, v, sl1, sl2)
+{
+	if(!Obj_IsDeleted(objPackageBGM))
+	{
+		Obj_Delete(objPackageBGM);
+	}
+	objPackageBGM = ObjSound_Create;
+	ObjSound_Load(objPackageBGM,musicPath);
+	ObjSound_SetSoundDivision(objPackageBGM, SOUND_BGM);
+	ObjSound_SetResumeEnable(objPackageBGM, true);
+	ObjSound_SetLoopEnable(objPackageBGM, true);	
+	if(sl1>-1 && sl2 > -1)
+	{
+		ObjSound_SetLoopSampleCount(objPackageBGM, sl1, sl2);	
+	}
+	ObjSound_Play(objPackageBGM);
+	startMusic=true;
+	vol = v;
+	HandleMusicVolume();
+}
+function SetBGMVolume(v)
+{
+	vol = v;
+}
+function GetBGMVolume()
+{
+	return vol;
+}
+task MusicVolumeChange(v1, v2, t)
+{
+	ascent(i in 0..t)
+	{
+		SetBGMVolume(Interpolate_Linear(v1, v2, 1/(t-1)*i));
+		yield;
+	}
+}
+task HandleMusicVolume()
+{
+	if(!Obj_IsDeleted(objPackageBGM))
+	{
+		ObjSound_SetVolumeRate(objPackageBGM,vol*GetCommonData("MusicVolume",1));
+	}
+}
+task HandleMusicEvent(p)
+{
+	if(!Obj_IsDeleted(objPackageBGM))
+	{
+		if(p==0)
+		{
+			if(startMusic==true)
+			{
+				ObjSound_Stop(objPackageBGM);
+			}
+		}
+		if(p==1)
+		{
+			if(startMusic==true)
+			{
+				ObjSound_Play(objPackageBGM);
+			}
+		}	
+	}
+}
+
+task DeleteMusicObj()
+{
+	if(!Obj_IsDeleted(objPackageBGM))
+	{
+		Obj_Delete(objPackageBGM);
+	}
+	startMusic=false;
 }
