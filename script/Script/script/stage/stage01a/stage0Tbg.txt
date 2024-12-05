@@ -42,7 +42,7 @@ task TCallBg
 task SkyBG
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj, 7); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj, 6); //描画優先度を設定
 	ObjPrim_SetTexture(obj, IMG_STAGE_01A_SKY); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
@@ -52,7 +52,7 @@ task SkyBG
 	ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/4,0);
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj2, 7); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj2, 6); //描画優先度を設定
 	ObjPrim_SetTexture(obj2, IMG_STAGE_01A_CLOUDS); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj2, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj2, 0, 0, 1024, 512);
@@ -61,7 +61,7 @@ task SkyBG
 	ObjRender_SetPosition(obj2,GetScreenWidth/2,-50,0);
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj3, 9); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj3, 8); //描画優先度を設定
 	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
@@ -110,7 +110,7 @@ task TNormalBackground(pos1,pos2,yp,id)
 	let path = MESH_ICEMOUNTAIN;
 	let obj = ObjMesh_Create();
 	ObjMesh_Load(obj, path);
-	Obj_SetRenderPriorityI(obj, 8);
+	Obj_SetRenderPriorityI(obj, 7);
 	ObjRender_SetY(obj,yp);
 
 	ObjRender_SetScaleXYZ(obj,BASE_SCALE,1,BASE_SCALE);
@@ -143,7 +143,7 @@ task TNormalBackground2(pos1,id)
 	let path = MESH_ICEMOUNTAIN;
 	let obj = ObjMesh_Create();
 	ObjMesh_Load(obj, path);
-	Obj_SetRenderPriorityI(obj, 8);
+	Obj_SetRenderPriorityI(obj, 7);
 	ObjRender_SetY(obj,100);
 
 	ObjRender_SetScaleXYZ(obj,BASE_SCALE,9,BASE_SCALE * bgMountainScale);

@@ -31,7 +31,7 @@ task SkyBG
 {
 
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj3, 9); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj3, 8); //描画優先度を設定
 	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
@@ -97,7 +97,7 @@ task StartNamelessPath{
 	SetCommonData("BGSpeed", 2.000000);
 	let obj = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjRender_SetBlendType(obj, BLEND_ALPHA);
-	Obj_SetRenderPriorityI(obj,6);
+	Obj_SetRenderPriorityI(obj,5);
 	ObjPrim_SetTexture(obj,field);
 	ObjSprite3D_SetSourceDestRect(obj, 0, 0+pathscroll, 500, 1500+pathscroll);
 	ObjRender_SetAngleXYZ(obj, 90, 0, 0);
@@ -106,7 +106,7 @@ task StartNamelessPath{
 
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjRender_SetBlendType(obj2, BLEND_ALPHA);
-	Obj_SetRenderPriorityI(obj2,7);
+	Obj_SetRenderPriorityI(obj2,6);
 	ObjPrim_SetTexture(obj2,trail);
 	ObjSprite3D_SetSourceDestRect(obj2, 0, 0+pathscroll, 512, 1500+pathscroll);
 	ObjRender_SetAngleXYZ(obj2, 90, 0, 0);
@@ -115,7 +115,7 @@ task StartNamelessPath{
 	
 	let obj5 = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjRender_SetBlendType(obj5, BLEND_ALPHA);
-	Obj_SetRenderPriorityI(obj5,5);
+	Obj_SetRenderPriorityI(obj5,4);
 	ObjPrim_SetTexture(obj5,fogback);
 	ObjSprite3D_SetSourceDestRect(obj5, 1, 1, 256, 256);
 	ObjRender_SetAngleXYZ(obj5, 0, 180, 180);

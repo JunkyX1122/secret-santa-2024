@@ -59,7 +59,7 @@ task ResetBG
 task SkyBG
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj, 7); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj, 6); //描画優先度を設定
 	ObjPrim_SetTexture(obj, IMG_STAGE_02_SKY); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
@@ -72,7 +72,7 @@ task SkyBG
 
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj3, 9); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj3, 8); //描画優先度を設定
 	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
@@ -101,7 +101,7 @@ task Scrolling(z)
 	let repeatingZ = 1;
 	let treeScale = 2;
 	let obj=ObjPrim_Create(OBJ_SPRITE_3D);
-	Obj_SetRenderPriorityI(obj,8);
+	Obj_SetRenderPriorityI(obj,7);
 	ObjPrim_SetTexture(obj,IMG_STAGE_02_TREE);
 	ObjRender_SetZWrite(obj,true);
 	ObjRender_SetZTest(obj,true);
@@ -131,7 +131,7 @@ task TNormalBackground(pos1,pos2,yp,id)
 	let path = MESH_ICEMOUNTAIN;
 	let obj = ObjMesh_Create();
 	ObjMesh_Load(obj, path);
-	Obj_SetRenderPriorityI(obj, 8);
+	Obj_SetRenderPriorityI(obj, 7);
 	ObjRender_SetY(obj,yp);
 	ObjRender_SetZWrite(obj,true);
 	ObjRender_SetZTest(obj,true);

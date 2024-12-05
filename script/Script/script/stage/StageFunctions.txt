@@ -76,7 +76,7 @@ task DeleteMusicObj()
 task BGTransition(a1, a2, t)
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
-	Obj_SetRenderPriorityI(obj,24);
+	Obj_SetRenderPriorityI(obj,9);
 	
 	ObjPrim_SetTexture(obj,IMG_PIXEL);
 	ObjSprite2D_SetSourceRect(obj,0,0,1024,1024);
@@ -85,8 +85,9 @@ task BGTransition(a1, a2, t)
 	ObjRender_SetColor(obj,0,0,0);
 	ascent(i in 0..t)
 	{
+		Obj_SetRenderPriorityI(obj,9);
 		ObjRender_SetAlpha(obj, Interpolate_Linear(a1, a2, 1/(t-1)*i));
-		ObjRender_SetPosition(obj,GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj,GetScreenWidth/2, GetScreenHeight/2,0);
 		yield;
 	}
 	Obj_Delete(obj);
