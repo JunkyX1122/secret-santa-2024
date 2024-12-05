@@ -67,7 +67,7 @@ function StartStageProgression()
     SetCommonData("PlayerLife", startingLives);
 	if(startingLives == 9)
 	{
-		SetCommonData("PlayerLife", 9999);
+		SetCommonData("PlayerLife", 99999);
 	}
     DeleteCommonData("PlayerSpell");
 	let WAITER = 0;

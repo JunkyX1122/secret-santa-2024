@@ -417,7 +417,12 @@ const IMG_SYSTEM_BOSS_NAMEBAR =  	GetCurrentScriptDirectory()~"./../../img/stgsy
 const IMG_SYSTEM_BORDER =  			GetCurrentScriptDirectory()~"./../../img/stgsystem/system_border.png";
 const IMG_SYSTEM_SPELL_DISPLAY =  	GetCurrentScriptDirectory()~"./../../img/stgsystem/system_spell_display.png";
 
-const System_ImgArray = [];
+const System_ImgArray = [
+IMG_SYSTEM_ICON_A, IMG_SYSTEM_ICON_B, IMG_SYSTEM_ICON_C,
+IMG_SYSTEM_LIFEBOMBBAR, 
+IMG_SYSTEM_CLOCK, IMG_SYSTEM_CLOCKHAND,
+IMG_SYSTEM_BOSS_HEALTHBAR, IMG_SYSTEM_BOSS_NAMEBAR,
+IMG_SYSTEM_BORDER, IMG_SYSTEM_SPELL_DISPLAY];
 
 
 

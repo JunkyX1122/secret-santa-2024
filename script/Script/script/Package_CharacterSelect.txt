@@ -654,10 +654,29 @@ task RenderTeam(id)
 
 task Char_SpellBGs()
 {
+	let alphaModifier = 0.75;
 	DuoBG_A();
 	DuoBG_B();
 	DuoBG_C();
-	
+	//SpellBGFlatColor();
+	task SpellBGFlatColor
+	{
+		let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+		Obj_SetRenderPriorityI(obj, BASE_RENDERI+4); //描画優先度を設定
+		ObjPrim_SetTexture(obj, IMG_PIXEL); //テクスチャを設定
+		ObjSprite2D_SetSourceRect(obj, 0, 0,GetScreenWidth, GetScreenHeight);
+		ObjSprite2D_SetDestRect(obj, 0, 0, GetScreenWidth, GetScreenHeight);
+		ObjSprite2D_SetDestCenter(obj);
+		//ObjRender_SetColor(obj,0,0,0);
+		let alpha1 = 0;
+		while(menuState==MENUSTATE_CHARACTER_SELECT)
+		{
+			ObjRender_SetAlpha(obj,32*characterSelect_AlphaScl);
+			ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
+			yield;
+		}
+		Obj_Delete(obj);
+	}
 	task DuoBG_A()
 	{
 		let obj = ObjPrim_Create(OBJ_SPRITE_2D); 
@@ -728,7 +747,7 @@ task Char_SpellBGs()
 				}
 			}
 			
-			let combinedAlpha = alpha1 * characterSelect_AlphaScl;
+			let combinedAlpha = alpha1 * characterSelect_AlphaScl * alphaModifier;
 			
 			ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
 			ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
@@ -814,7 +833,7 @@ task Char_SpellBGs()
 			ObjRender_SetPosition(obj2,GetScreenWidth/2,GetScreenHeight/2,0);
 			ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
 				
-			let combinedAlpha = alpha1 * characterSelect_AlphaScl;
+			let combinedAlpha = alpha1 * characterSelect_AlphaScl * alphaModifier;
 			ObjRender_SetAlpha(obj, 255*combinedAlpha);
 			ObjRender_SetColor(obj2, 255*combinedAlpha,255*combinedAlpha,255*combinedAlpha);
 			ObjRender_SetAlpha(obj3, 32*combinedAlpha);
@@ -892,7 +911,7 @@ task Char_SpellBGs()
 			ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
 			ObjRender_SetPosition(obj4,GetScreenWidth/2,GetScreenHeight/2,0);
 			
-			let combinedAlpha = alpha1 * characterSelect_AlphaScl;
+			let combinedAlpha = alpha1 * characterSelect_AlphaScl * alphaModifier;
 			
 			ObjSprite2D_SetSourceRect(obj, 0, -pos, 1024, 1024 - pos);
 			ObjRender_SetAlpha(obj, 255*combinedAlpha);

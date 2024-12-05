@@ -601,7 +601,7 @@ task end
 	}
 	
 	SetPortalManaging(false);
-	SetCommonData("bossBarDampenAmount",0.05);
+	SetCommonData("bossBarDampenAmount",0.3);
 	SE_PlayLen(BossDead,50);
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 	SetAutoDeleteObject(true);

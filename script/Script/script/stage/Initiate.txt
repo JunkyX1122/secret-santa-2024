@@ -9,7 +9,7 @@ task InitialiseIndiv()
 {
 	if(GetCommonData("hasThingsInitialised",false)==true) return;
 	WriteLog("INITIALISE THINGS");
-	SetCommonData("bossBarDampenAmount",0.05);
+	SetCommonData("bossBarDampenAmount",0.3);
 	SetCommonData("Smoother",0);
 	SetCommonData("WideScreen",true);
 	//SetPlayerLife(999);
