@@ -41,7 +41,11 @@ task LoadThings
 		LoadTexture(TextImg_ImgArray[i]);
 		yield;
 	}
-	
+	ascent(i in 0..length(System_ImgArray))
+	{
+		LoadTexture(System_ImgArray[i]);
+		yield;
+	}
 	ascent(i in 0..length(AllStageBackground_ImgArray))
 	{
 		ascent(o in 0..length(AllStageBackground_ImgArray[i]))

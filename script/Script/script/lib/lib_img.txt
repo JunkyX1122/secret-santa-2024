@@ -401,9 +401,17 @@ IMG_TITLE_OPTIONS_BOX, IMG_TITLE_OPTIONS_SLIDER, IMG_TITLE_OPTIONS_GEM, IMG_TITL
 IMG_TITLE_PRACTICE_BOX];
 
 
+//---------------------------------------
+//----------------SYSTEM-----------------
+//---------------------------------------
 
 
+const IMG_SYSTEM_ICON_A =  		GetCurrentScriptDirectory()~"./../../img/stgsystem/system_playerIcon_a.png";
+const IMG_SYSTEM_ICON_B =  		GetCurrentScriptDirectory()~"./../../img/stgsystem/system_playerIcon_b.png";
+const IMG_SYSTEM_ICON_C =  		GetCurrentScriptDirectory()~"./../../img/stgsystem/system_playerIcon_c.png";
+const IMG_SYSTEM_LIFEBOMBBAR =  		GetCurrentScriptDirectory()~"./../../img/stgsystem/system_bar_container.png";
 
+const System_ImgArray = [];
 
 
 

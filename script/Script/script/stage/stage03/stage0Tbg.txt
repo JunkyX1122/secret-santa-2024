@@ -61,7 +61,7 @@ task ResetBG
 {
 	SetCameraFocusX(-7000);
 	SetCameraFocusY(300);
-	SetCameraFocusZ(-600);
+	SetCameraFocusZ(-200);
 	SetCameraAzimuthAngle(0);
 	SetCameraElevationAngle(0);
 	
@@ -80,34 +80,34 @@ task ResetBG
 task SkyBG
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj, 17); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj, 7); //描画優先度を設定
 	ObjPrim_SetTexture(obj, IMG_STAGE_02_SKY); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj);
 
 	ObjRender_SetAlpha(obj,255);
-	ObjRender_SetPosition(obj,GetStgFrameWidth/2+90,290,0);
-	ObjRender_SetScaleXYZ(obj,1.4, 1.4, 0);
+	ObjRender_SetPosition(obj,GetScreenWidth/2+90,290,0);
+	ObjRender_SetScaleXYZ(obj,1.8, 1.4, 0);
 	//ObjRender_SetColor(obj, 162,165,172);
 
 	
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj3, 19); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj3, 9); //描画優先度を設定
 	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetAlpha(obj3,64);
-	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
 	ObjRender_SetColor(obj3,0,0,64);
 	
 	//ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
 	let cc = 0;
 	while(true)
 	{
-		ObjRender_SetPosition(obj,GetStgFrameWidth/2+90,290,0);
-		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj,GetScreenWidth/2+160,290,0);
+		ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
 		//ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
 		cc+=0.5;
 		yield;
@@ -122,7 +122,7 @@ task Scrolling(x,z,c)
 	let repeatingZ = 1;
 	let treeScale = 3;
 	let obj=ObjPrim_Create(OBJ_SPRITE_3D);
-	Obj_SetRenderPriorityI(obj,18);
+	Obj_SetRenderPriorityI(obj,8);
 	ObjPrim_SetTexture(obj,IMG_STAGE_03_TREE);
 	ObjRender_SetZWrite(obj,true);
 	ObjRender_SetZTest(obj,true);
@@ -151,7 +151,7 @@ task TNormalBackground(z)
 	let repeatingX = 14;
 	let repeatingZ = 2;
 	let obj=ObjPrim_Create(OBJ_SPRITE_3D);
-	Obj_SetRenderPriorityI(obj,18);
+	Obj_SetRenderPriorityI(obj,8);
 	ObjPrim_SetTexture(obj,IMG_STAGE_01B_SNOW);
 	ObjRender_SetZWrite(obj,true);
 	ObjRender_SetZTest(obj,true);
@@ -181,7 +181,7 @@ task ScrollingMesh(pos1, pos2,yp,id, ss, totalLngth)
 	let path = id;
 	let obj = ObjMesh_Create();
 	ObjMesh_Load(obj, path);
-	Obj_SetRenderPriorityI(obj, 18);
+	Obj_SetRenderPriorityI(obj, 8);
 	ObjRender_SetY(obj,yp);
 	ObjRender_SetZWrite(obj,true);
 	ObjRender_SetZTest(obj,true);

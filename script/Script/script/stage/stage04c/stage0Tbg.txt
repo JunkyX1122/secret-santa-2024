@@ -31,20 +31,20 @@ task SkyBG
 {
 
 	let obj3 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	Obj_SetRenderPriorityI(obj3, 20); //描画優先度を設定
+	Obj_SetRenderPriorityI(obj3, 9); //描画優先度を設定
 	ObjPrim_SetTexture(obj3, IMG_PIXEL); //テクスチャを設定
 	ObjSprite2D_SetSourceRect(obj3, 0, 0,1024, 512);
 	ObjSprite2D_SetDestRect(obj3, 0, 0, 1024, 512);
 	ObjSprite2D_SetDestCenter(obj3);
 	ObjRender_SetAlpha(obj3,96);
-	ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
 	ObjRender_SetColor(obj3,0,0,64);
-	
+	ObjRender_SetScaleX(obj3, 1.4);
 	//ObjRender_SetBlendType(obj3,BLEND_SUBTRACT);
 	let cc = 0;
 	while(true)
 	{
-		ObjRender_SetPosition(obj3,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+		ObjRender_SetPosition(obj3,GetScreenWidth/2,GetScreenHeight/2,0);
 		//ObjSprite2D_SetSourceRect(obj2, cc, 0,1024+cc, 512);
 		cc+=0.5;
 		yield;
@@ -97,7 +97,7 @@ task StartNamelessPath{
 	SetCommonData("BGSpeed", 2.000000);
 	let obj = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjRender_SetBlendType(obj, BLEND_ALPHA);
-	Obj_SetRenderPriorityI(obj,17);
+	Obj_SetRenderPriorityI(obj,6);
 	ObjPrim_SetTexture(obj,field);
 	ObjSprite3D_SetSourceDestRect(obj, 0, 0+pathscroll, 500, 1500+pathscroll);
 	ObjRender_SetAngleXYZ(obj, 90, 0, 0);
@@ -106,7 +106,7 @@ task StartNamelessPath{
 
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjRender_SetBlendType(obj2, BLEND_ALPHA);
-	Obj_SetRenderPriorityI(obj2,18);
+	Obj_SetRenderPriorityI(obj2,7);
 	ObjPrim_SetTexture(obj2,trail);
 	ObjSprite3D_SetSourceDestRect(obj2, 0, 0+pathscroll, 512, 1500+pathscroll);
 	ObjRender_SetAngleXYZ(obj2, 90, 0, 0);
@@ -115,11 +115,11 @@ task StartNamelessPath{
 	
 	let obj5 = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjRender_SetBlendType(obj5, BLEND_ALPHA);
-	Obj_SetRenderPriorityI(obj5,16);
+	Obj_SetRenderPriorityI(obj5,5);
 	ObjPrim_SetTexture(obj5,fogback);
 	ObjSprite3D_SetSourceDestRect(obj5, 1, 1, 256, 256);
 	ObjRender_SetAngleXYZ(obj5, 0, 180, 180);
-	ObjRender_SetScaleXYZ(obj5, 10, 10, 1);
+	ObjRender_SetScaleXYZ(obj5, 20, 10, 1);
 	ObjRender_SetPosition(obj5, 0, 0, 1900); 
 	let totalTrees = 2;
 	descent(i in 1..totalTrees+1)
@@ -129,7 +129,7 @@ task StartNamelessPath{
 		{
 			let obj3 = ObjPrim_Create(OBJ_SPRITE_3D);
 			ObjRender_SetBlendType(obj3, BLEND_ALPHA);
-			Obj_SetRenderPriorityI(obj3,19);
+			Obj_SetRenderPriorityI(obj3,8);
 			ObjPrim_SetTexture(obj3,trees);
 			ObjSprite3D_SetSourceDestRect(obj3, 0, 0, 512, 700);
 			ObjRender_SetAngleXYZ(obj3, 0, 0, 180);
@@ -140,7 +140,7 @@ task StartNamelessPath{
 			
 			let obj4 = ObjPrim_Create(OBJ_SPRITE_3D);
 			ObjRender_SetBlendType(obj4, BLEND_ALPHA);
-			Obj_SetRenderPriorityI(obj4,19);
+			Obj_SetRenderPriorityI(obj4,8);
 			ObjPrim_SetTexture(obj4,trees);
 			ObjSprite3D_SetSourceDestRect(obj4, 0, 0, 512, 700);
 			ObjRender_SetAngleXYZ(obj4, 0, 0, 180);
@@ -156,8 +156,6 @@ task StartNamelessPath{
 	loop
 	{
 	
-		ObjRender_SetPosition(obj5, 0, 0, 1900); 
-		
 		globalscroll%=110;		
 		time++;
 		ObjRender_SetBlendType(obj, BLEND_ALPHA);
@@ -172,6 +170,8 @@ task StartNamelessPath{
 		ObjRender_SetAngleXYZ(obj2, 90, 0, 0);
 		ObjRender_SetScaleXYZ(obj2, 0.5, 1, 1);
 		ObjRender_SetPosition(obj2, 0, -300, 600);
+		
+		ObjRender_SetPosition(obj5, 0, 0, 1900); 
 
 		ascent(i in 0..length(objtreesright))
 		{
@@ -187,6 +187,7 @@ task StartNamelessPath{
 		wait(1);
 	}
 }
+
 task SpellFlatColor
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成

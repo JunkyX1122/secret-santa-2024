@@ -50,23 +50,23 @@ task Normal {
 
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
 	ObjRender_SetBlendType(obj, BLEND_ALPHA);
-	Obj_SetRenderPriority(obj, 0.21);
+	Obj_SetRenderPriorityI(obj, 7);
 	ObjPrim_SetTexture(obj, IMG_STAGE_05_SKY);
-	ObjSprite2D_SetSourceRect(obj, 0, 0, 384, 268);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, 512, 512);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj, 320, 64, 0);
 	ObjRender_SetScaleXYZ(obj, 2, 1, 0);
 	ObjSprite2D_SetDestCenter(obj);
 	
 	let obj2 = ObjPrim_Create(OBJ_SPRITE_3D);
-	Obj_SetRenderPriority(obj2, 0.20);
+	Obj_SetRenderPriorityI(obj2, 8);
 	ObjPrim_SetTexture(obj2, IMG_STAGE_05_WATER);
 	ObjRender_SetPosition(obj2, 0, -194, 0);
 	let c = 0;
 	
 	loop 
 	{
-		ObjRender_SetPosition(obj, 320, 64, 0);
+		ObjRender_SetPosition(obj, 107+320, 48, 0);
 		ObjRender_SetPosition(obj2, 0, -194, 0);
 		ObjSprite3D_SetSourceDestRect(obj2, 0, c, 512, 512 + c);
 		c++;

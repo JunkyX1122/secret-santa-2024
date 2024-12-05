@@ -54,7 +54,7 @@ task Background()
 		ObjSprite2D_SetSourceRect(objCloud, 0, 0, 1024, 418);
 		ObjSprite2D_SetDestRect(objCloud, 0, 0, 1024, 256);
 		ObjRender_SetPosition(objCloud, 0, -20-40*i, 0);
-		Obj_SetRenderPriorityI(objCloud, 19);
+		Obj_SetRenderPriorityI(objCloud, 8);
 		ObjRender_SetAlpha(objCloud, 200-25*i);
 		ObjRender_SetScaleXYZ(objCloud, 1+0.2*i);
 		ObjRender_SetBlendType(objCloud, BLEND_ADD_ARGB);
@@ -67,13 +67,13 @@ task Background()
 	ObjSprite2D_SetSourceRect(objSky, 0, 0, 1024, 418);
 	ObjSprite2D_SetDestRect(objSky, 0, 0, 1024, 418);
 	ObjRender_SetPosition(objSky, 0, -167, 0);
-	Obj_SetRenderPriorityI(objSky, 18);
+	Obj_SetRenderPriorityI(objSky, 7);
 
 	let obj = ObjPrim_Create(OBJ_SPRITE_3D);
 	ObjPrim_SetTexture(obj, IMG_STAGE_06_GROUND);
 	ObjRender_SetPosition(obj, 0, -30, -30);
-	Obj_SetRenderPriorityI(obj, 19);
-	ObjSprite3D_SetSourceDestRect(obj, 0, 0, 256*2, 256);
+	Obj_SetRenderPriorityI(obj, 8);
+	ObjSprite3D_SetSourceDestRect(obj, 0, 0, 256*4, 256);
 	ObjRender_SetAlpha(obj, 255);
 	ObjRender_SetColor(objSky, 150, 150, 255);
 	ObjRender_SetColor(obj, 255, 255, 255);
@@ -82,8 +82,8 @@ task Background()
 	ObjPrim_SetTexture(objDark, IMG_PIXEL);
 	ObjSprite2D_SetSourceRect(objDark, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestRect(objDark, 0, 0, 1024, 1024);
-	ObjRender_SetPosition(objDark, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
-	Obj_SetRenderPriorityI(objDark, 19);
+	ObjRender_SetPosition(objDark, GetScreenWidth/2, GetScreenHeight/2, 0);
+	Obj_SetRenderPriorityI(objDark, 8);
 	ObjRender_SetColor(objDark, 0,0,0);
 	ObjRender_SetAlpha(objDark, 64);
 	ObjSprite2D_SetDestCenter(objDark);
@@ -93,9 +93,9 @@ task Background()
 	ObjPrim_SetTexture(objDark2, IMG_PIXEL);
 	ObjSprite2D_SetSourceRect(objDark2, 0, 0, 1024, 1024);
 	ObjSprite2D_SetDestRect(objDark2, 0, 0, 1024, 1024);
-	ObjRender_SetPosition(objDark2, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
-	Obj_SetRenderPriorityI(objDark2, 10);
-	ObjRender_SetColor(objDark2, 255,0,0);
+	ObjRender_SetPosition(objDark2, GetScreenWidth/2, GetScreenHeight/2, 0);
+	Obj_SetRenderPriorityI(objDark2, 1);
+	ObjRender_SetColor(objDark2, 0,0,0);
 	ObjRender_SetAlpha(objDark2, 255);
 	ObjSprite2D_SetDestCenter(objDark2);
 	
@@ -116,13 +116,13 @@ task Background()
 		
 		ObjRender_SetPosition(objSky, 0, -167, 0);
 		ObjRender_SetPosition(obj, 0, -30, -30);
-		ObjRender_SetPosition(objDark, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
-		ObjRender_SetPosition(objDark2, GetStgFrameWidth/2, GetStgFrameHeight/2, 0);
+		ObjRender_SetPosition(objDark, GetScreenWidth/2, GetScreenHeight/2, 0);
+		ObjRender_SetPosition(objDark2, GetScreenWidth/2, GetScreenHeight/2, 0);
 		ascent(i in 0..3)
 		{
 			ObjRender_SetPosition(objClouds[i], 0, -20-40*i, 0);
 			let movSpd = mc * (2-1/2*i) * 0.5;
-			ObjSprite2D_SetSourceRect(objClouds[i], 0+movSpd + randStarts[i], 0, 1024+movSpd + randStarts[i], 418);
+			ObjSprite2D_SetSourceRect(objClouds[i], 0+movSpd + randStarts[i], 0, 512*2+movSpd + randStarts[i], 418);
 		}
 		mx+=zyoom;
 		mc+=nyoom;
@@ -134,7 +134,7 @@ task SnowProgram()
 {
 	let angSand = 90;
 	let alphaScaleSandstorm = 1;
-	let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_STAGE_06_SNOW, [0,0,128,128], BLEND_ALPHA, 0.19);
+	let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_STAGE_06_SNOW, [0,0,128,128], BLEND_ALPHA, 0.08);
 
 	let scl = 5;
 
