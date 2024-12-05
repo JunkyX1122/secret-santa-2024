@@ -230,14 +230,14 @@ task CutinS3(mimage, difficulty)
 	
 		let SpellBG = CreateSimple2DImageA2(0.81+0.01*max(0, 1-num), SpellAttack_img, 0, 0, 255, 42);
 		ObjSprite2D_SetDestRect(SpellBG, -220, -12, 32, 20);
-		ObjRender_SetPosition(SpellBG, GetScreenWidth/2, 24+32*num, 0);
+		ObjRender_SetPosition(SpellBG, GetScreenWidth/2, 38+32*num, 0);
 		ObjRender_SetAlpha(SpellBG, 0);
 		ObjRender_SetColor(SpellBG, Colors[0][0], Colors[0][1], Colors[0][2]);
 		ObjSprite2D_SetDestCenter(SpellBG);
 		
 		let SpellText = ObjText_Create;
 		ObjText_SetText(SpellText,SpellName);
-		ObjText_SetFontSize(SpellText,20);
+		ObjText_SetFontSize(SpellText,15);
 		ObjText_SetFontColorTop(SpellText,255,255,255);
 		ObjText_SetFontColorBottom(SpellText, 255, 255, 255);
 		ObjText_SetFontBorderType(SpellText,BORDER_FULL);
@@ -246,9 +246,9 @@ task CutinS3(mimage, difficulty)
 		ObjText_SetHorizontalAlignment(SpellText, ALIGNMENT_CENTER);
 		ObjText_SetMaxWidth(SpellText, GetStgFrameWidth-24);
 		Obj_SetRenderPriority(SpellText, 0.82+0.01*max(0, 1-num));
-		ObjRender_SetPosition(SpellText, 0, 12+32*num, 0);
+		ObjRender_SetPosition(SpellText, 0, 28+32*num, 0);
 		ObjRender_SetAlpha(SpellText, 0);
-		ObjText_SetFontType(SpellText,"Times New Roman");
+		ObjText_SetFontType(SpellText,"Lucida Fax Demibold");
 		
 		
 		let SpellInfo = ObjPrim_Create(OBJ_SPRITE_LIST_2D);
@@ -269,7 +269,7 @@ task CutinS3(mimage, difficulty)
 		{
 			let mod = i/len;
 			let tmod = min(1, ((i*2)/len));
-			ObjRender_SetScaleXYZ(SpellBG, 4-2.5*mod, 4-2.5*mod, 1);
+			ObjRender_SetScaleXYZ(SpellBG, (4-2.5*mod)/2, (4-2.5*mod)/2, 1);
 			ObjRender_SetAlpha(SpellBG, 255*mod);
 			ObjRender_SetX(SpellText, (GetStgFrameWidth-24)*(1-mod)+100);
 			//ObjRender_SetScaleXYZ(SpellText, 4-3*tmod, 4-3*tmod, 1);
@@ -279,7 +279,7 @@ task CutinS3(mimage, difficulty)
 		loop(40){yield;}
 		let mov = 0;
 		
-		RegularSpellCardDeclare([ObjRender_GetY(SpellText), 12+32*num, 0.135, 12]);
+		RegularSpellCardDeclare([ObjRender_GetY(SpellText), 28+32*num, 0.135, 12]);
 		//32 is the offset from the top of the screen
 		//If using a system where the lifebar is on the boss rather than the top of the screen, 12 is a good value
 

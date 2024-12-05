@@ -49,7 +49,7 @@ let TIME = 60*60;
 	RecordAttackHistory("04a", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	SetCommonData("BossName", "Daisuke");
 }
 @MainLoop
 {

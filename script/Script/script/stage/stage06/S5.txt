@@ -52,6 +52,7 @@ let HEALTH_MAX = 225/3;
 	//WingAura(objEnemy);
 	//SetIntersectionVisualization(true);
 	SetCommonData("bossBarDampenAmount",1);
+	SetCommonData("BossName", "Redrin Lightclaw");
 }
 
 

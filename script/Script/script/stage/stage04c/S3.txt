@@ -49,7 +49,7 @@ let finalSpellBool = false;
 	
 	end;
 
-	
+	SetCommonData("BossName", "Erlendur Mjaldr (Godsworn)");
 	
 }
 

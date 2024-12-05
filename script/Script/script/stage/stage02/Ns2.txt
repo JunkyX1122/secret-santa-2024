@@ -57,6 +57,7 @@ let TIME = 60*60;
 	end;
 	SetCommonData("SpellCardBG1",false);
 	//SetIntersectionVisualization(true);
+	SetCommonData("BossName", "Scylla Stargazer & Kieran Lightspeed");
 }
 @MainLoop
 {

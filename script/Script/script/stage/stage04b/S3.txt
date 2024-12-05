@@ -82,6 +82,7 @@ let finalSpellBool = false;
 	
 	StartPortalSystem();
 	Fire;
+	SetCommonData("BossName", "Grandis Ezekiel & Viivi von Xanten");
 }
 
 

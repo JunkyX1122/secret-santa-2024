@@ -65,7 +65,7 @@ let objEnemy3 = CreateFamiliar;
 	
 	end;
 
-	
+	SetCommonData("BossName", "Scylla Stargazer & Kieran Lightspeed");
 	//SetIntersectionVisualization(true);
 }
 

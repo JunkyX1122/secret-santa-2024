@@ -48,7 +48,7 @@ let finalSpellBool = false;
 	magiccircle(objEnemy,1);
 	
 	end;
-
+	SetCommonData("BossName", "Erlendur Mjaldr (Godsworn)");
 	
 	
 }

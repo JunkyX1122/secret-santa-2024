@@ -58,7 +58,7 @@ let finalSpellBool = false;
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
 	//SetIntersectionVisualization(true);
-	
+	SetCommonData("BossName", "Hatsudzuki no Kairyu");
 	
 }
 

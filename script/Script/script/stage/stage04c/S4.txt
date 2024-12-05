@@ -51,6 +51,7 @@ let finalSpellBool = false;
 	RecordAttackHistory("04c", "S4", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SlowStart();
+	SetCommonData("BossName", "Erlendur Mjaldr (Godsworn)");
 }
 
 

@@ -25,4 +25,5 @@ task InitialiseIndiv()
 	SetCommonData("PlayerX", GetStgFrameWidth/2);
     SetCommonData("PlayerY", 416);
 	SetCommonData("hasThingsInitialised",true);
+	SetCommonData("BossName", "");
 }

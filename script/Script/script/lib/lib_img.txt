@@ -412,6 +412,8 @@ const IMG_SYSTEM_ICON_C =  			GetCurrentScriptDirectory()~"./../../img/stgsystem
 const IMG_SYSTEM_LIFEBOMBBAR =  	GetCurrentScriptDirectory()~"./../../img/stgsystem/system_bar_container.png";
 const IMG_SYSTEM_CLOCK =  			GetCurrentScriptDirectory()~"./../../img/stgsystem/system_clock.png";
 const IMG_SYSTEM_CLOCKHAND =  		GetCurrentScriptDirectory()~"./../../img/stgsystem/system_clock_hand.png";
+const IMG_SYSTEM_BOSS_HEALTHBAR =  	GetCurrentScriptDirectory()~"./../../img/stgsystem/system_healthbar.png";
+const IMG_SYSTEM_BOSS_NAMEBAR =  	GetCurrentScriptDirectory()~"./../../img/stgsystem/system_name_bg.png";
 
 const System_ImgArray = [];
 

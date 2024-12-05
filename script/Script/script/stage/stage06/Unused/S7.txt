@@ -59,6 +59,7 @@ let finalSpellBool = false;
 	SE_PlayLen(BossSpell,75);
 	//WingAura(objEnemy);
 	//SetIntersectionVisualization(true);
+	SetCommonData("BossName", "Redrin Lightclaw");
 }
 
 

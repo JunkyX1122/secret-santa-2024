@@ -76,7 +76,7 @@ let finalSpellBool = false;
 	
 	magiccircle(objEnemy2,1);
 	magiccircle(objEnemy3,1);
-		
+	SetCommonData("BossName", "Daisuke & Sullen");
 }
 
 

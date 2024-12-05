@@ -73,6 +73,7 @@ let objEnemy2 = CreateFamiliar;
 	SE_PlayLen(BossSpell,75);
 	SetCommonData("Stage2DualSpellPhase",0);
 	//SetIntersectionVisualization(true);
+	SetCommonData("BossName", "Scylla Stargazer");
 }
 
 

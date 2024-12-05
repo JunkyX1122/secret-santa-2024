@@ -54,6 +54,7 @@ let TIME = 60*60;
 	SetCommonData("SpellCardBG1",false);
 	
 	TazueHandle();
+	SetCommonData("BossName", "Grandis Ezekiel & Viivi von Xanten");
 }
 @MainLoop
 {

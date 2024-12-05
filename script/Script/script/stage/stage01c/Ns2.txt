@@ -43,7 +43,7 @@ let TIME = 80*60;
 
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	SetCommonData("BossName", "Grandis Ezekiel");
 }
 @MainLoop
 {

@@ -49,7 +49,7 @@ let TIME = 60*60;
 	RecordAttackHistory("04b", "Ns2", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	SetCommonData("BossName", "Viivi von Xanten");
 }
 @MainLoop
 {

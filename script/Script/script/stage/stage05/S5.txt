@@ -50,7 +50,7 @@ let HEALTH_MAX = 225/3;
 	end;
 
 	
-	
+	SetCommonData("BossName", "Hiroyuki");
 }
 
 

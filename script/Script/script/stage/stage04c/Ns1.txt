@@ -46,6 +46,7 @@ let HEALTH_MAX = 220 * 3;
 	end;
 	SetCommonData("SpellCardBG1",false);
 	SetShotAutoDeleteClip(48,48,48,32);
+	SetCommonData("BossName", "Erlendur Mjaldr");
 }
 
 let isEnemyHittable = true;

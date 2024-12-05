@@ -73,6 +73,7 @@ let finalSpellBool = false;
 	SE_PlayLen(BossSpell,75);
 	magiccircle(objEnemy2,1);
 	magiccircle(objEnemy3,1);
+	SetCommonData("BossName", "Grandis Ezekiel & Viivi von Xanten");
 }
 
 
