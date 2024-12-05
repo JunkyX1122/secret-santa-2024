@@ -28,6 +28,7 @@ let IMG_WOOSH=GetCurrentScriptDirectory~"./img/weatherCall001.png";
 
 let IMG_GIANTBALL=GetCurrentScriptDirectory~"./img/flashAuraY000.png";
 let IMG_GIANTBALLGLOW=GetCurrentScriptDirectory~"./img/breakAttack012.png";
+let IMG_SPELLDISPLAY=GetCurrentScriptDirectory~"./img/spell_display.png";
 
 task ImageLoad() {
 	LoadTexture(IMG_MOVEMAGICCIRCLE);

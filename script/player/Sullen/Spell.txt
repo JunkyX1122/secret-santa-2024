@@ -7,10 +7,12 @@ task TSpell
 	Obj_Delete(objManage);
 	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
 	{
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Aura &quot;All-Out Sphere Attack&quot;", [128,255,128]);
 		SpellSullenFocus;
 	}
 	else
 	{
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Grass Art &quot;Chesnaught's Aegis&quot;", [128,255,128]);
 		SpellSullenUnfocus;
 	}
 	let amount = 3;

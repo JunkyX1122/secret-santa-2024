@@ -7,10 +7,12 @@ task TSpell
 	Obj_Delete(objManage);
 	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
 	{
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Thievery &quot;Pilfer&quot;", [128,0,0]);
 		SpellViiviFocus;
 	}
 	else
 	{
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Dark Blade &quot;Death Dagger&quot;", [128,0,0]);
 		SpellViiviUnfocus;
 	}
 	let amount = 3;

@@ -7,10 +7,12 @@ task TSpell
 	Obj_Delete(objManage);
 	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
 	{
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "-Ruin-", [0,0,0]);
 		SpellGatoFocus;
 	}
 	else
 	{
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "-Nova-", [0,0,0]);
 		SpellGatoUnfocus;
 	}
 	let amount = 3;
@@ -22,6 +24,7 @@ task TSpell
 	}
 	SetCommonData("StateFaceShake",0);
 }
+
 task FLASH
 {
 	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
