@@ -275,6 +275,7 @@ let ysp = 0;
         }
         else
         {
+			SetCommonData("TotalHits", GetCommonData("TotalHits", 0) + 1);
 			SE_PlayLen(HIT);
             TExplosion();
         }

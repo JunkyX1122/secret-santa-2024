@@ -78,7 +78,19 @@ task StartStage
 	{
 		ObjEnemyBossScene_Regist(Boss);	
 		while(!Obj_IsDeleted(Boss)) { yield; }
-		wait(60);
+		let objGato = CreateFamiliar;
+		ObjMove_SetPosition(objGato, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
+		renderBossUnanimated(objGato, IMG_BOSS_GATO, 30);
+		ObjMove_SetDestAtFrameWeight(objGato, GetStgFrameWidth/2, 150, 20);
+		wait(30);
+		TTransform(objGato);
+		wait(60*4);
+		SetCommonData("BossX", ObjMove_GetX(objGato));
+		SetCommonData("BossY", ObjMove_GetY(objGato));
+		Obj_Delete(objGato);
+		ScreenShake(120,6);
+		
+		
 		SetCommonData("MaxNumberOfPhases",3);
 		ObjEnemyBossScene_Regist(Boss2);	
 		while(!Obj_IsDeleted(Boss2)) { yield; }
@@ -92,3 +104,141 @@ task StartStage
 	}
 }
 
+
+let objGoop1 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [289,31,321,61], BLEND_ADD_ARGB, 0.78);
+let objGoop2 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [385,31,417,61], BLEND_SUBTRACT, 0.79);
+task TTransform(objTarget)
+{
+	let xB = ObjMove_GetX(objTarget);
+	let yB = ObjMove_GetY(objTarget);
+	let t = 60*4;
+	Flash(78,t,BLEND_SUBTRACT,128,255,255,0,128);
+	SE_PlayLen(LaserDelLong,80);
+	ScreenShakeReverse(t,4);
+	ascent(i in 0..t)
+	{
+		if(i==60)
+		{
+			SE_PlayLen(Charge3,90);
+		}
+		SE_PlayLen(Shot1,60);
+		let finalScl = 1+4/t*i;
+		CreateGoop(rand(0,360),rand(5,-5),round(rand(30,120)),finalScl);
+		yield;
+	}
+	Flash(78,120,BLEND_SUBTRACT,128,255,255,128,0);
+	Flash(79,120,BLEND_ADD_ARGB,255,255,255,200,0);
+	SE_PlayLen(Burst1, 80);
+	
+	task CreateGoop(ang,spd,innerT,fscl)
+	{
+		let disI = 600;
+		let dis = disI;
+		let x = -999;
+		let y = -999;
+		let scl = 0;
+		let hasCanceled = false;
+		let alpha = 255;
+		ascent(i in 0..innerT)
+		{
+			if(!Obj_IsDeleted(objTarget))
+			{	
+				dis = disI - disI*sin(90/innerT*i);
+				
+				scl = fscl/innerT*i;
+				x = xB + dis*cos(ang);
+				y = yB + dis*sin(ang);
+				ObjParticleList_SetAlpha(objGoop1,alpha);
+				ObjParticleList_SetScale(objGoop1,1.5*scl,1.5*scl,0);
+				ObjParticleList_SetPosition(objGoop1,x,y,0);
+				ObjParticleList_SetAngleZ(objGoop1,ang);
+				ObjParticleList_SetColor(objGoop1,255,0,0);
+				ObjParticleList_AddInstance(objGoop1);
+				
+				ObjParticleList_SetAlpha(objGoop2,alpha);
+				ObjParticleList_SetScale(objGoop2,1*scl,1*scl,0);
+				ObjParticleList_SetPosition(objGoop2,x,y,0);
+				ObjParticleList_SetAngleZ(objGoop2,ang);
+				ObjParticleList_SetColor(objGoop2,255,255,255);
+				ObjParticleList_AddInstance(objGoop2);
+				
+				ang+=spd;
+				yield;
+			}
+			else
+			{
+				hasCanceled = true;
+			}
+		}
+		while(!Obj_IsDeleted(objTarget))
+		{
+			ObjParticleList_SetAlpha(objGoop1,alpha);
+			ObjParticleList_SetScale(objGoop1,1.5*scl,1.5*scl,0);
+			ObjParticleList_SetPosition(objGoop1,x,y,0);
+			ObjParticleList_SetAngleZ(objGoop1,ang);
+			ObjParticleList_SetColor(objGoop1,255,0,0);
+			ObjParticleList_AddInstance(objGoop1);
+			
+			ObjParticleList_SetAlpha(objGoop2,alpha);
+			ObjParticleList_SetScale(objGoop2,1*scl,1*scl,0);
+			ObjParticleList_SetPosition(objGoop2,x,y,0);
+			ObjParticleList_SetAngleZ(objGoop2,ang);
+			ObjParticleList_SetColor(objGoop2,255,255,255);
+			ObjParticleList_AddInstance(objGoop2);
+			
+			yield;
+		}
+	
+		let randSpd = rand(3,10)*2;
+		let sclC = scl;
+		innerT = round(rand(10,30))*2;
+		ascent(i in 0..innerT)
+		{
+			let sinScl = 1 - 1 * sin(90/innerT*i);
+			scl = sclC - sclC / innerT*i;
+			x += randSpd*cos(ang)*sinScl;
+			y += randSpd*sin(ang)*sinScl;
+			ObjParticleList_SetAlpha(objGoop1,alpha);
+			ObjParticleList_SetScale(objGoop1,1.5*scl,1.5*scl,0);
+			ObjParticleList_SetPosition(objGoop1,x,y,0);
+			ObjParticleList_SetAngleZ(objGoop1,ang);
+			ObjParticleList_SetColor(objGoop1,255,0,0);
+			ObjParticleList_AddInstance(objGoop1);
+			
+			ObjParticleList_SetAlpha(objGoop2,alpha);
+			ObjParticleList_SetScale(objGoop2,1*scl,1*scl,0);
+			ObjParticleList_SetPosition(objGoop2,x,y,0);
+			ObjParticleList_SetAngleZ(objGoop2,ang);
+			ObjParticleList_SetColor(objGoop2,255,255,255);
+			ObjParticleList_AddInstance(objGoop2);
+			yield;
+		}
+		
+	}
+}
+task Flash(rp,t,bl,r,g,b,a1,a2)
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	Obj_SetRenderPriorityI(obj, rp);
+
+	ObjSprite2D_SetSourceRect(obj,0, 0, GetScreenWidth*2, GetStgFrameHeight+50);
+	ObjSprite2D_SetDestRect(obj,0, 0, GetScreenWidth*2, GetStgFrameHeight+50);
+	ObjSprite2D_SetDestCenter(obj);
+
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2, GetStgFrameHeight/2,0);
+	ObjRender_SetBlendType(obj, bl);
+	ObjRender_SetColor(obj, r,g,b);
+
+	let alph = 128;
+	ascent(i in 0..t)
+	{
+
+		ObjRender_SetAlpha(obj,Interpolate_Linear(a1,a2,1/(t-1)*i));
+		yield;
+		
+	}
+
+	Obj_Delete(obj);
+
+}

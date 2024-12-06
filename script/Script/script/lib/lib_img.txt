@@ -1,6 +1,6 @@
 
 
-const IMG_SHOT = GetCurrentScriptDirectory() ~ "./../../img/bulconst/bulconst01.png";
+const IMG_SHOT = GetCurrentScriptDirectory() ~ "./../../img/bullet/bullet01.png";
 
 //---------------------------------------
 //-----------BACKGROUND IMAGES-----------
@@ -200,6 +200,7 @@ const IMG_GRANDISPORTAL = GetCurrentScriptDirectory() ~ "./../../img/enemy/grand
 const IMG_GRANDISPORTALCRACK = GetCurrentScriptDirectory() ~ "./../../img/enemy/grandisCrack.png";
 const IMG_GATOWIND = GetCurrentScriptDirectory()  ~ "./../../img/enemy/vortexLoop0000.png";
 const IMG_GATOSWORD = GetCurrentScriptDirectory()  ~ "./../../img/enemy/gatosword.png";
+const IMG_GATOAURA = GetCurrentScriptDirectory()  ~ "./../../img/enemy/gatoAura.png";
 
 const IMG_BOSS_ANUBIS   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01a.png";
 const IMG_BOSS_DAISUKE  =	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01b.png";
@@ -304,7 +305,7 @@ const IMG_THROW = GetCurrentScriptDirectory()~"./../../img/effect/throw.png";
 const IMG_MAGICWARNING = GetCurrentScriptDirectory()~"./../../img/effect/magicWarning.png";
 
 
-const Effects_ImgArray = [IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,
+const Effects_ImgArray = [IMG_SHOT,IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,IMG_ITEM,IMG_BOSSPOS,IMG_LIGHT,IMG_MOMI,IMG_SMOKE,
 IMG_WARINING,IMG_AURA,IMG_LEFTEYE,IMG_FADERING,IMG_SUN1,IMG_SUN2,IMG_SUN3,IMG_SUN4,IMG_MASTER_SPARK,IMG_PAGODA1,IMG_PAGODA2,IMG_BOTTOMWARNING,
 IMG_GUARDRING,IMG_FLASHEFF,IMG_CHARGEEFF,IMG_STAR,IMG_GRADIENT,IMG_MAGICCIRCLE,IMG_FDFCHARGE,IMG_FDFBURST,IMG_FDFLINES,
 IMG_SAURA,IMG_SAURA2,IMG_SWITCHAURA,IMG_FADEBALL,

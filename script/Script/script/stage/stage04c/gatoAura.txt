@@ -1,0 +1,57 @@
+
+let gatoAuraScale = 0.35;
+
+task GatoAura(objTarg)
+{
+	
+	let dir = GetCurrentScriptDirectory();
+	let path = IMG_GATOAURA;
+
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D); //2Dスプライトオブジェクト生成
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj, 30); //描画優先度を設定
+	ObjPrim_SetTexture(obj, path); //テクスチャを設定
+	
+	ObjPrim_SetVertexPosition(obj, 0, -512, -512, 0);
+	ObjPrim_SetVertexPosition(obj, 1, 512, -512, 0); 
+	ObjPrim_SetVertexPosition(obj, 2, 512, 512, 0);
+	ObjPrim_SetVertexPosition(obj, 3, -512, 512, 0);
+	
+	ObjPrim_SetVertexUVT(obj, 0, 0, 0);
+	ObjPrim_SetVertexUVT(obj, 1, 1024, 0);
+	ObjPrim_SetVertexUVT(obj, 2, 1024, 1024);
+	ObjPrim_SetVertexUVT(obj, 3, 0, 1024);
+
+	ObjShader_SetShaderF(obj, GetCurrentScriptDirectory()~"hlslfire.txt");
+	//ObjRender_SetScaleXYZ(obj,0.5,0.5,0);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	//LoadTextureEx(IMG_STAGE_06_SPELL_01, false, false);
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	
+	ObjRender_SetScaleXYZ(obj, gatoAuraScale);
+	let timer = 0;
+	let alpha1 = 1;
+	while(!Obj_IsDeleted(objTarg))
+	{
+		ObjShader_SetFloat(obj, "time", timer*3);
+		ObjShader_SetFloat(obj, "rotation", timer*0.0);
+		ObjShader_SetFloat(obj, "scroll_y", 1);
+
+		ObjShader_SetTexture(obj, "texture_0", path);
+		ObjShader_SetTexture(obj, "texture_1", IMG_STAGE_06_SPELL_02);
+		ObjShader_SetTechnique(obj, "TecFire");
+		let ang = ObjRender_GetAngleZ(obj);
+		
+		
+	
+		
+		ObjShader_SetFloat(obj, "globalAlpha", alpha1*3);
+		ObjRender_SetPosition(obj,ObjMove_GetX(objTarg),ObjMove_GetY(objTarg)-35,0);
+
+		//ObjRender_SetAngleZ(obj,ang+0.5);
+		timer++;
+		yield;
+	}
+	Obj_Delete(obj);
+}

@@ -6,6 +6,7 @@
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./../Initiate.txt"
+#include "./gatoAura.txt"
 
 
 let objEnemy;
@@ -40,6 +41,7 @@ let finalSpellBool = false;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
+	ObjMove_SetPosition(objEnemy, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 20);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
@@ -58,6 +60,8 @@ let finalSpellBool = false;
 	SE_PlayLen(compositespellcard,75);
 	SE_PlayLen(BossSpell,75);
 	SetCommonData("BossName", "Erlendur Mjaldr (Godsworn)");
+	
+	GatoAura(objEnemy);
 }
 
 
@@ -71,6 +75,10 @@ let finalSpellBool = false;
         SetAutoDeleteObject(true);
     }
 	else
+	{
+		
+	}
+	if(!Obj_IsDeleted(objEnemy))
 	{
 		SetCommonData("BossX", ObjMove_GetX(objEnemy));
 		SetCommonData("BossY", ObjMove_GetY(objEnemy));

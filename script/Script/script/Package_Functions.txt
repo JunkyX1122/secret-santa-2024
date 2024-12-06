@@ -65,6 +65,7 @@ function StartStageProgression()
 	carryOn = true;
 	SetCommonData("hasThingsInitialised",false);
     SetCommonData("PlayerLife", startingLives);
+    SetCommonData("TotalHits", 0);
 	if(startingLives == 9)
 	{
 		SetCommonData("PlayerLife", 99999);
@@ -289,9 +290,11 @@ function TStageScene(SELECT_ID,waiter)
 }
 function ManagePracticeScene()
 {
+	SetCommonData("TotalHits", 0);
 	TPracticeScene(currentPracticePath);
 	if(notifyRestart)
 	{
+		SetCommonData("TotalHits", 0);
 		notifyRestart = false;
 		TDarkTransition(1, 0, 30);
 		ManagePracticeScene();
