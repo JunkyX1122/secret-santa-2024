@@ -49,8 +49,18 @@ let TIME = 60*60;
 }
 @MainLoop
 {
+	
     ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
     ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 24);
+	if(isInvuln)
+	{
+		ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 128);
+		if(ObjEnemy_GetInfo(objEnemy,INFO_SHOT_HIT_COUNT)>0&&invulnSoundCounter<=0)
+		{
+			SE_PlayLen(nodamage,50);
+			invulnSoundCounter = 2;
+		}
+	}
     if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0)
     {
         SetAutoDeleteObject(true);
@@ -77,14 +87,7 @@ let TIME = 60*60;
     {
        
     }
-	if(isInvuln)
-	{
-		if(ObjEnemy_GetInfo(objEnemy,INFO_SHOT_HIT_COUNT)>0&&invulnSoundCounter<=0)
-		{
-			SE_PlayLen(nodamage,50);
-			invulnSoundCounter = 2;
-		}
-	}
+	
 	invulnSoundCounter--;
     count++;
     yield;
@@ -94,8 +97,53 @@ let invulnSoundCounter = 0;
 {
 }
 let isInvuln = false;
+
+task ShieldRender()
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, IMG_BOSS_SHIELD0);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, 256, 256);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 256, 256);
+	ObjSprite2D_SetDestCenter(obj);
+	Obj_SetRenderPriorityI(obj, 40);
+	ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
+	
+	let obj2 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj2, IMG_BOSS_SHIELD1);
+	ObjSprite2D_SetSourceRect(obj2, 0, 0, 256, 256);
+	ObjSprite2D_SetDestRect(obj2, 0, 0, 256, 256);
+	ObjSprite2D_SetDestCenter(obj2);
+	Obj_SetRenderPriorityI(obj2, 41);
+	ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
+	let alpha = 0;
+	let scl = 2;
+	while(!Obj_IsDeleted(objEnemy))
+	{
+		let targetAlpha = 0;
+		let targetScl = 2;
+		if(isInvuln)
+		{
+			targetAlpha = 1;
+			targetScl = 1;
+		}
+		alpha = alpha * 0.9 + targetAlpha * 0.1;
+		scl = scl * 0.9 + targetScl * 0.1;
+		ObjRender_SetAlpha(obj, 255*alpha);
+		ObjRender_SetPosition(obj, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0);
+		ObjRender_SetScaleXYZ(obj, scl);
+		
+		ObjRender_SetAlpha(obj2, 255*alpha);
+		ObjRender_SetPosition(obj2, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0);
+		ObjRender_SetScaleXYZ(obj2, scl);
+		yield;
+	}
+	Obj_Delete(obj);
+	Obj_Delete(obj2);
+}
+
 task Fire
 {
+	ShieldRender();
 	let t = 120;
 	let initialT = 10;
 	let scl = 1.45;
@@ -133,12 +181,12 @@ task Fire
 	wait(36);
 	ObjEnemy_SetDamageRate(objEnemy, 0,0);
 	SE_PlayLen(LaserDelLong,60);
+	isInvuln = true;
 	wait(36);
-		
-	loop
+	while(!Obj_IsDeleted(objEnemy))
 	{
 		
-		isInvuln = true;
+		
 		let ang = -90;
 		let moveAmount = 8;
 		ascent(o in 0..moveAmount-1)
@@ -183,11 +231,14 @@ task Fire
 			}
 		}
 		
-		bit*=-1;
-		isInvuln = false;
-		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+		
 		if(!Obj_IsDeleted(objEnemy))
 		{
+			bit*=-1;
+			isInvuln = false;
+			ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
+			SE_PlayLen(poof, 60);
+		
 			SE_PlayLen(boon1,60);
 			SwordPathGreat(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),1*scl,0.5*scl, 90-90*bit,45*bit,(180+180-45),bit,0,t,6);
 			SE_PlayLen(charge0,80);
@@ -217,6 +268,7 @@ task Fire
 		wait(36);
 		ObjEnemy_SetDamageRate(objEnemy, 0,0);
 		SE_PlayLen(LaserDelLong,60);
+		isInvuln = true;
 		wait(36);
 		
 		
