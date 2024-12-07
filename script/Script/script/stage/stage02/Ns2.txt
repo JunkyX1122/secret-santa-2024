@@ -149,7 +149,7 @@ task KeiranFire(bit)
 	{
 		let objGyro = CreateFamiliar;
 		ObjEnemy_SetAutoDelete(objGyro,true);
-		renderTinyGoreF(objGyro,0);
+		renderGyro(objGyro,2);
 		ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2));
 		ObjMove_AddPatternA2(objGyro, 0, 2, ang, 0, 0, 0);
 		ascent(i in 0..8)
@@ -172,7 +172,7 @@ task KeiranFire(bit)
 	{
 		let objGyro = CreateFamiliar;
 		ObjEnemy_SetAutoDelete(objGyro,true);
-		renderTinyGoreF(objGyro,1);
+		renderGyro(objGyro,0);
 		ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2));
 		ObjMove_AddPatternA2(objGyro, 0, 2, ang, 0, 0, 0);
 		BlastHandle(objGyro);

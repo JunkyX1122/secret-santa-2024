@@ -220,6 +220,11 @@ const IMG_BOSS_TAZUE_BODY   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy
 const IMG_BOSS_TAZUE_LEGS   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/tazue_legs.png";
 const IMG_BOSS_TAZUE_BODY_BACK   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/tazue_body_back.png";
 
+const IMG_BOSS_GYRO_BLAST   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/gyro_blast.png";
+const IMG_BOSS_GYRO_FUNCTION   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/gyro_function.png";
+const IMG_BOSS_GYRO_SHRED   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/gyro_shred.png";
+const IMG_BOSS_GYRO_SNEAK   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/gyro_sneak.png";
+
 
 const BossSprite_ImgArray = [IMG_FAMILIAR,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD,
 IMG_BOSS_ANUBIS, IMG_BOSS_DAISUKE, IMG_BOSS_GRANDIS,
@@ -231,7 +236,9 @@ IMG_BOSS_REDRIN,
 IMG_BOSS_TAZUE_HEAD,
 IMG_BOSS_TAZUE_BODY,
 IMG_BOSS_TAZUE_LEGS,
-IMG_BOSS_TAZUE_BODY_BACK
+IMG_BOSS_TAZUE_BODY_BACK,
+IMG_BOSS_GYRO_BLAST, IMG_BOSS_GYRO_FUNCTION, IMG_BOSS_GYRO_SHRED, IMG_BOSS_GYRO_SNEAK
+
 ];
 
 //---------------------------------------

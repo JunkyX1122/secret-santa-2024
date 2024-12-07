@@ -157,14 +157,14 @@ task Fire
 		ObjEnemy_SetDamageRate(objEnemy, (0.07/3)/1.5, (0.07/3)/3);
 	}
 }
-let objFire = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SCYLLASTAFF, [0,0,512,32], BLEND_ALPHA, 0.48);
+let objFire = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SCYLLASTAFF, [0,0,512,64], BLEND_ALPHA, 0.48);
 task StaffHandle(bit)
 {
 	objStaff = CreateFamiliar;
 	ObjPrim_SetTexture(objStaff, IMG_SCYLLASTAFF);
 	Obj_SetRenderPriorityI(objStaff, 49);
-	ObjSprite2D_SetSourceRect(objStaff,0, 0, 512, 32);
-	ObjSprite2D_SetDestRect(objStaff,0, 0, 512, 32);
+	ObjSprite2D_SetSourceRect(objStaff,0, 0, 512, 64);
+	ObjSprite2D_SetDestRect(objStaff,0, 0, 512, 64);
 	ObjSprite2D_SetDestCenter(objStaff);
 	ObjRender_SetScale(objStaff,0.5);
 	

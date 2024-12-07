@@ -201,7 +201,7 @@ let isHealthAbove0 = true;
 function StealthGyro(d)
 {
 	let objGyro = CreateFamiliar;
-	renderTinyGoreF(objGyro,0);
+	renderGyro(objGyro,3);
 	ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3));
 	GyroHideHandle(objGyro);
 	return objGyro;
@@ -371,7 +371,7 @@ function ShredderGyro(ang,bit,d)
 {
 	let objGyro = CreateFamiliar;
 	ObjEnemy_SetAutoDelete(objGyro,true);
-	renderTinyGoreF(objGyro,0);
+	renderGyro(objGyro,2);
 	ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3));
 
 	ShredderHandle(objGyro);
