@@ -668,10 +668,10 @@ task SwordPath(sourceX, sourceY, startAng,bit,type)
 	ScreenShake(renderBetween*3,6);
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
 
-	ObjPrim_SetTexture(obj, IMG_PIXEL);
+	ObjPrim_SetTexture(obj, IMG_SWORD);
 	Obj_SetRenderPriorityI(obj, 49);
-	ObjSprite2D_SetSourceRect(obj,512, 0, 512*2, 128);
-	ObjSprite2D_SetDestRect(obj,512, 0, 512*2, 128);
+	ObjSprite2D_SetSourceRect(obj,1024, 0, 1024*2, 256);
+	ObjSprite2D_SetDestRect(obj,1024, 0, 1024*2, 256);
 	ObjSprite2D_SetDestCenter(obj);
 	ObjRender_SetPosition(obj, sourceX, sourceY,0);
 	ObjRender_SetAngleXYZ(obj, 0, 0,0);
@@ -730,7 +730,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type)
 				
 				}
 				ObjRender_SetAngleXYZ(obj, 0, 0,trueAng);
-				ObjRender_SetScaleXYZ(obj, scl,scl,0);
+				ObjRender_SetScaleXYZ(obj, scl/2,scl/2,0);
 				ObjRender_SetPosition(obj, sourceX+256*scl*cos(trueAng), sourceY+256*scl*sin(trueAng),0);
 				
 			}		
