@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Trap &quot;Dragon’s Maw&quot;"]
+#Title["Trap &quot;Dragon's Maw&quot;"]
 #Text["S3"]
 #Background["./stage0Tbg.txt"]
 #System["./../../lib/system/System.txt"]

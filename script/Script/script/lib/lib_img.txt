@@ -215,6 +215,11 @@ const IMG_BOSS_ANUGATO  = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/spr
 const IMG_BOSS_HIROYUKI = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_05.png";
 const IMG_BOSS_REDRIN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_06.png";
 
+const IMG_BOSS_TAZUE_HEAD   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/tazue_head.png";
+const IMG_BOSS_TAZUE_BODY   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/tazue_body.png";
+const IMG_BOSS_TAZUE_LEGS   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/tazue_legs.png";
+const IMG_BOSS_TAZUE_BODY_BACK   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/tazue_body_back.png";
+
 
 const BossSprite_ImgArray = [IMG_FAMILIAR,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD,
 IMG_BOSS_ANUBIS, IMG_BOSS_DAISUKE, IMG_BOSS_GRANDIS,
@@ -222,7 +227,11 @@ IMG_BOSS_SCYLLA, IMG_BOSS_KEIRAN,
 IMG_BOSS_KAIRYU,
 IMG_BOSS_SULLEN, IMG_BOSS_VIIVI, IMG_BOSS_GATO, IMG_BOSS_ANUGATO, 
 IMG_BOSS_HIROYUKI,
-IMG_BOSS_REDRIN
+IMG_BOSS_REDRIN,
+IMG_BOSS_TAZUE_HEAD,
+IMG_BOSS_TAZUE_BODY,
+IMG_BOSS_TAZUE_LEGS,
+IMG_BOSS_TAZUE_BODY_BACK
 ];
 
 //---------------------------------------

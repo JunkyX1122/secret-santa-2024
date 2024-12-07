@@ -114,6 +114,151 @@ task renderBoss(obj,path)
 	}
 }
 
+task RenderTazue(objTarget, usePreviousPosition) {
+	let OptionX = [];
+	let OptionY = [];
+		
+	let TOTAL_SEGMENTS = 16;
+	let MAX_SNAKEDIST = 16;
+	let defaultSegments = [];
+	ascent(i in 0..TOTAL_SEGMENTS)
+	{
+		defaultSegments ~= [-1000];
+	}
+	ascent(i in 0..TOTAL_SEGMENTS)
+	{
+		OptionX ~= [usePreviousPosition ? GetCommonData("TazueSegmentsX", defaultSegments)[i] : ObjMove_GetX(objTarget)];
+		OptionY ~= [usePreviousPosition ? GetCommonData("TazueSegmentsY", defaultSegments)[i] : ObjMove_GetY(objTarget) - 100*i];
+	}
+    let D_OptionX = [];
+    let D_OptionY = [];
+
+	ascent(i in 0..length(OptionX))
+	{
+		D_OptionX ~= [OptionX[i]];
+		D_OptionY ~= [OptionY[i]];
+	}
+	let targetX = ObjMove_GetX(objTarget);
+	let targetY = ObjMove_GetY(objTarget);
+
+	let dampn = 0.95;
+	let traverse = 3;
+	RenderTazueSegments(objTarget);
+    while (!Obj_IsDeleted(objTarget)) 
+	{
+		targetX = ObjMove_GetX(objTarget);
+		targetY = ObjMove_GetY(objTarget);
+		
+		D_OptionX[0] = targetX;
+		D_OptionY[0] = targetY;
+	
+		ascent(i in 0..(TOTAL_SEGMENTS)-1)
+		{
+			let x1 = D_OptionX[i+1];
+			let y1 = D_OptionY[i+1];
+			
+			let x2 = D_OptionX[i];
+			let y2 = D_OptionY[i];
+			
+			let angTo = Get_PointAngle(x1,y1,x2,y2);
+			let disTo = Get_Distance(x1,y1,x2,y2);
+	
+			D_OptionX[i+1] = D_OptionX[i] + MAX_SNAKEDIST * cos(angTo);
+			D_OptionY[i+1] = D_OptionY[i] + MAX_SNAKEDIST * sin(angTo);
+			
+		}
+		
+		ascent(i in 0..(TOTAL_SEGMENTS))
+		{
+			OptionX[i]=D_OptionX[i];
+			OptionY[i]=D_OptionY[i];
+		}
+		SetCommonData("TazueSegmentsX", OptionX);
+		SetCommonData("TazueSegmentsY", OptionY);
+        yield;
+    }
+	
+	
+	task RenderTazueSegments(objTarget) {
+
+		ascent(i in 0..length(OptionX)-1)
+		{
+			DrawOption(i);
+		}
+
+		task DrawOption(num)
+		{
+			let path;
+			let scale=1.2;
+			let widthScl = 1;
+			let rp = 39;
+			if(num==0)
+			{
+				path = IMG_BOSS_TAZUE_HEAD;
+				
+			}
+			else
+			{
+				path = IMG_BOSS_TAZUE_BODY;
+				rp = rp-1;
+			}
+			if(num==8)
+			{
+				path = IMG_BOSS_TAZUE_LEGS;
+			}
+			if(num > 8)
+			{
+				widthScl = 1 - 1/(TOTAL_SEGMENTS - 8 + 2)*(num-8);
+			}
+			let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(obj, path);	
+			Obj_SetRenderPriorityI(obj,rp);
+			ObjSprite2D_SetSourceRect(obj, 0, 0, 128, 128);
+			ObjSprite2D_SetDestCenter(obj);
+			ObjRender_SetTextureFilter(obj, FILTER_POINT,FILTER_POINT,FILTER_POINT);
+			ObjRender_SetBlendType(obj, BLEND_ALPHA);
+			
+			let obj2 = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(obj2, IMG_BOSS_TAZUE_BODY_BACK);	
+			Obj_SetRenderPriorityI(obj2,rp-1);
+			ObjSprite2D_SetSourceRect(obj2, 0, 0, 128, 128);
+			ObjSprite2D_SetDestCenter(obj2);
+			ObjRender_SetTextureFilter(obj2, FILTER_POINT,FILTER_POINT,FILTER_POINT);
+			ObjRender_SetBlendType(obj2, BLEND_ALPHA);
+
+			while(!Obj_IsDeleted(objTarget))
+			{
+				let iniAng = 0;
+				
+				if(num>0)
+				{
+					iniAng = Get_PointAngle(OptionX[num-1], OptionY[num-1],OptionX[num], OptionY[num])+180;
+					ObjRender_SetPosition(obj, OptionX[num],OptionY[num], 0);
+					ObjRender_SetPosition(obj2, OptionX[num],OptionY[num], 0);
+				}
+				else
+				{
+					ObjRender_SetPosition(obj, OptionX[num],OptionY[num], 0);
+				}
+				ObjRender_SetAngleZ(obj, iniAng);
+				ObjRender_SetAngleZ(obj2, iniAng);
+				ObjRender_SetScaleXYZ(obj,scale,scale*widthScl,1);
+				ObjRender_SetScaleXYZ(obj2,scale,scale*widthScl,1);
+
+				ObjRender_SetAlpha(obj,ObjRender_GetAlpha(objTarget));
+				ObjRender_SetAlpha(obj2,ObjRender_GetAlpha(objTarget));
+				if(num==0)
+				{
+					ObjRender_SetAlpha(obj2,0);
+				}
+				yield;
+			}
+			Obj_Delete(obj);
+			Obj_Delete(obj2);
+		}
+	}
+}
+
 
 task renderBossUnanimated(obj, path, tiltAmount){
 	

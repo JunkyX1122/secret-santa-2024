@@ -255,7 +255,8 @@ task TazueHandle()
 	let objTazue = CreateFamiliar;
 	renderTinyGoreF(objTazue,0);
 	ObjMove_SetPosition(objTazue,GetCommonData("tazuePosition", [0,0])[0], GetCommonData("tazuePosition", [0,0])[1]);
-	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, -100, 60*3, LERP_SMOOTHER);
+	RenderTazue(objTazue, true);
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, -400, 60*3, LERP_SMOOTHER);
 	wait(60*3);
 	Obj_Delete(objTazue);
 }

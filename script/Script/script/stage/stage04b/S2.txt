@@ -431,8 +431,9 @@ let tazueY = 0;
 task TazueHandle(bit)
 {
 	let objTazue = CreateFamiliar;
-	renderTinyGoreF(objTazue,0);
+	
 	ObjMove_SetPosition(objTazue,GetCommonData("tazuePosition", [0,0])[0], GetCommonData("tazuePosition", [0,0])[1]);
+	RenderTazue(objTazue, true);
 	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, 100, 95, LERP_SMOOTHER);
 	wait(95);
 	tazueX = ObjMove_GetX(objTazue);

@@ -199,9 +199,9 @@ task Fire
 task TazueHandle()
 {
 	let objTazue = CreateFamiliar;
-	renderTinyGoreF(objTazue,0);
 	ObjMove_SetPosition(objTazue,GetStgFrameWidth/2, -125);
-	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, 60, 95, LERP_SMOOTHER);
+	RenderTazue(objTazue, false);
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2, 100, 95, LERP_SMOOTHER);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 60-25, 60);
 	SetBaseBlendType(BLEND_ADD_ARGB);
 	wait(60*2);

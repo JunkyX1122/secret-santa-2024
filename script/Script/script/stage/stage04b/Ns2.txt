@@ -123,7 +123,7 @@ task Fire
 		}
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2 - 200*bit, 100, 50);
+			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2 - 200*bit, 80, 50);
 			let startAng = ObjMove_GetAngle(objEnemy2)+180;
 			ascent(i in 0..3)
 			{
@@ -135,6 +135,7 @@ task Fire
 		needMount = true;
 		let startX = GetStgFrameWidth/2 - 200*bit;
 		let desX = GetStgFrameWidth/2 + 200*bit;
+		let y = ObjMove_GetY(objEnemy2);
 		let t = 60*3;
 		ascent(i in 0..t)
 		{
@@ -142,6 +143,7 @@ task Fire
 			{
 				let x = 1/(t-1)*i;
 				ObjMove_SetX(objEnemy2,Interpolate_Smooth(startX,desX,x));
+				ObjMove_SetY(objEnemy2, y + 100/(60*3)*i);
 				if(i%(t/10)==0)
 				{
 					let ang = GetAngleToPlayer(objEnemy2);
@@ -166,8 +168,9 @@ task TazueHandle(bit)
 {
 	
 	let objTazue = CreateFamiliar;
-	renderTinyGoreF(objTazue,0);
+	
 	ObjMove_SetPosition(objTazue,GetStgFrameWidth/2 + (GetStgFrameWidth/2+100)*bit,100+40);
+	RenderTazue(objTazue, false);
 	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2 - 200*bit, 100+40, 40*4, LERP_SMOOTH);
 	let startX = GetStgFrameWidth/2 - 200*bit;
 	let desX = GetStgFrameWidth/2 + 200*bit;
@@ -196,6 +199,7 @@ task TazueHandle(bit)
 		yield;
 	}
 	t = 60*3;
+	let y = ObjMove_GetY(objTazue);
 	ascent(i in 0..60*3)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -203,10 +207,11 @@ task TazueHandle(bit)
 			SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
 			let x = 1/(t-1)*i;
 			ObjMove_SetX(objTazue,Interpolate_Smooth(startX,desX,x));
+			ObjMove_SetY(objTazue, y + 100/(60*3)*i);
 			yield;
 		}
 	}
-	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2 + (GetStgFrameWidth/2+200)*bit, 100+40, 180, LERP_SMOOTHER);
+	ObjMove_SetDestAtFrame(objTazue, GetStgFrameWidth/2 + (GetStgFrameWidth/2+400)*bit, 100+40, 180, LERP_SMOOTHER);
 	loop(180)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -228,6 +233,8 @@ task NukeShot(zuzu,angB,bit)
 		let shot = ShotA1(ObjMove_GetX(zuzu), ObjMove_GetY(zuzu), spd, ang, 400, 400,  15, 3, BLEND_ADD_ARGB, false);
 		let shotAesthethic = ShotA1(ObjMove_GetX(zuzu), ObjMove_GetY(zuzu), spd, ang, 400, 400, 15, 3, BLEND_ADD_ARGB, false);
 		ObjShot_SetIntersectionEnable(shotAesthethic, false);
+		ObjShot_SetSpellResist(shot,true);
+		ObjShot_SetSpellResist(shotAesthethic,true);
 		ShotAesthethic(shotAesthethic, shot, 15);
 	}
 	
@@ -306,6 +313,13 @@ task Stab(ang)
 	}
 
 }
+
+
+
+
+
+
+
 task timer
 {
     while(TIME>60*10)
