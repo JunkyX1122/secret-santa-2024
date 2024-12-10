@@ -131,7 +131,7 @@ function Stage01APB()
 						IMG_PORTRAIT_GATO_BASE, IMGAR_PORTRAIT_GATO_00, 
 						id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 						
-	SlideInEnemy(40, id_anubis, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset);
+	//SlideInEnemy(40, id_anubis, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset);
 
 
 		

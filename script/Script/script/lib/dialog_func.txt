@@ -421,6 +421,10 @@ task RemovePlayerPort(i)
 	ObjPrim_SetTexture(playerobjects[i], "");
 	ObjSprite2D_SetSourceRect(playerobjects[i], 0, 0, 0, 0);
 	ObjSprite2D_SetDestCenter(playerobjects[i]);
+	
+	ObjPrim_SetTexture(playerfaceobjects[i], "");
+	ObjSprite2D_SetSourceRect(playerfaceobjects[i], 0, 0, 0, 0);
+	ObjSprite2D_SetDestCenter(playerfaceobjects[i]);
 
 }
 task RemoveEnemyPort(i)
@@ -433,6 +437,10 @@ task RemoveEnemyPort(i)
 	ObjPrim_SetTexture(enemyobjects[i], "");
 	ObjSprite2D_SetSourceRect(enemyobjects[i], 0, 0, 0, 0);
 	ObjSprite2D_SetDestCenter(enemyobjects[i]);
+	
+	ObjPrim_SetTexture(enemyfaceobjects[i], "");
+	ObjSprite2D_SetSourceRect(enemyfaceobjects[i], 0, 0, 0, 0);
+	ObjSprite2D_SetDestCenter(enemyfaceobjects[i]);
 }
 
 
