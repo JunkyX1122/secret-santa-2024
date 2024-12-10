@@ -1,0 +1,138 @@
+const DIALOGUE_STAGE01A = 0;
+const DIALOGUE_STAGE01B = 1;
+const DIALOGUE_STAGE01C = 2;
+const DIALOGUE_STAGE02 	= 3;
+const DIALOGUE_STAGE03 	= 4;
+const DIALOGUE_STAGE04A = 5;
+const DIALOGUE_STAGE04B = 6;
+const DIALOGUE_STAGE04C = 7;
+const DIALOGUE_STAGE05 	= 8;
+const DIALOGUE_STAGE06 	= 9;
+
+const DIALOGUE_COLOUR_GATO 			= [128,128,128];
+const DIALOGUE_COLOUR_ANUBIS		= [0,0,0];
+const DIALOGUE_COLOUR_SULLEN 		= [64,64,64];
+const DIALOGUE_COLOUR_DAISUKE 		= [128,255,128];
+const DIALOGUE_COLOUR_DANDARA 		= [128,64,64];
+const DIALOGUE_COLOUR_VIIVI 		= [163,43,255];
+const DIALOGUE_COLOUR_TAZUE 		= [116,158,108];
+const DIALOGUE_COLOUR_GRANDIS		= [128,0,0];
+const DIALOGUE_COLOUR_SCYLLA		= [128,255,255];
+const DIALOGUE_COLOUR_KIERAN		= [128,255,128];
+const DIALOGUE_COLOUR_KAIRYU		= [0,0,255];
+const DIALOGUE_COLOUR_HIROYUKI		= [0,145,255];
+const DIALOGUE_COLOUR_REDRIN		= [255,0,0];
+const id_null = -1;
+let portraitY = GetScreenHeight;
+
+let portraitXLeft = 	GetScreenWidth/2 - 150;
+let portraitXRight = 	GetScreenWidth/2 + 150;
+let portraitYOffset = 	256;
+
+function PreBossDialogue(stageID)
+{
+	if(GetCommonData("isPracticing", false)==true)
+	{
+		return;
+	}
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+	SetCommonData("IsDialogueSequenceActive", true);
+	
+	SetPortraitNumber(3, 3);
+	StartDialog();
+	wait(30);
+	alternative(stageID)
+	case(DIALOGUE_STAGE01A)
+	{
+		Stage01APB();
+	}
+	while(forceStop){yield;}
+	SetCommonData("IsDialogueSequenceActive", false);
+	EndDialogueSequence;
+	SetForbidPlayerShot(false);
+	SetForbidPlayerSpell(false);
+}
+
+function PostBossDialogue(stageID)
+{
+	if(GetCommonData("isPracticing", false)==true)
+	{
+		return;
+	}
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+	SetCommonData("IsDialogueSequenceActive", true);
+	
+	SetPortraitNumber(3, 3);
+	StartDialog();
+	
+	while(forceStop){yield;}
+	SetCommonData("IsDialogueSequenceActive", false);
+	EndDialogueSequence;
+	SetForbidPlayerShot(false);
+	SetForbidPlayerSpell(false);
+}
+
+let forceStop = true;
+task SlideInPlayer(t, enID, x1, x2, y1, y2)
+{
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		let scl = 1*sin(90/(t-1)*i);
+		SetNewPlayerPort("", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl);
+		yield;
+	}
+	forceStop = false;
+}
+task SlideInEnemy(t, enID, x1, x2, y1, y2)
+{
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		let scl = 1*sin(90/(t-1)*i);
+		SetNewEnemyPort("", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl);
+		yield;
+	}
+	forceStop = false;
+}
+
+const gatoFaceOffsetData = 			[Get_Distance(0, 0, 0, -111),	Get_PointAngle(0, 0, 0, -111)+180];
+const anubisFaceOffsetData = 		[Get_Distance(0, 0, 0, -80),	Get_PointAngle(0, 0, 0, -80)+180];
+const anubisStandFaceOffsetData = 	[Get_Distance(0, 0, 8, -72),	Get_PointAngle(0, 0, 8, -72)+180];
+const sullenFaceOffsetData = 		[Get_Distance(0, 0, 40, -88),	Get_PointAngle(0, 0, 40, -88)+180];
+const daisukeFaceOffsetData = 		[Get_Distance(0, 0, 24, -104),	Get_PointAngle(0, 0, 24, -104)+180];
+const dandaraFaceOffsetData = 		[Get_Distance(0, 0, -8, -104),	Get_PointAngle(0, 0, -8, -104)+180];
+const viiviFaceOffsetData = 		[Get_Distance(0, 0, 32, -64),	Get_PointAngle(0, 0, 32, -64)+180];
+const tazueFaceOffsetData = 		[Get_Distance(0, 0, 48, 96),	Get_PointAngle(0, 0, 48, 96)+180];
+const grandisFaceOffsetData = 		[Get_Distance(0, 0, 16, -96),	Get_PointAngle(0, 0, 16, -96)+180];
+const scyllaFaceOffsetData = 		[Get_Distance(0, 0, -88, -120),	Get_PointAngle(0, 0, -88, -120)+180];
+const kieranFaceOffsetData = 		[Get_Distance(0, 0, 88, -168),	Get_PointAngle(0, 0, 88, -168)+180];
+const kairyuFaceOffsetData = 		[Get_Distance(0, 0, 0, -112),	Get_PointAngle(0, 0, 0, -112)+180];
+const godswornFaceOffsetData = 		[Get_Distance(0, 0, 0, -80),	Get_PointAngle(0, 0, 0, -80)+180];
+const hiroyukiFaceOffsetData = 		[Get_Distance(0, 0, -8, -72),	Get_PointAngle(0, 0, -8, -72)+180];
+const redrinFaceOffsetData = 		[Get_Distance(0, 0, -8, -168),	Get_PointAngle(0, 0, -8, -168)+180];
+
+function Stage01APB()
+{
+	
+	SetPortraitData([[0,0],[0,0],[0,0]], [[0,0],[0,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [gatoFaceOffsetData,[0,0],[0,0]], [[0,0],[0,0],[0,0]]);
+	let id_gato = 0;
+	let id_anubis = 0;
+	
+	SlideInPlayer(40, id_gato, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset);
+	
+	SetDialogueTextA3("Gato", 	"Testing Stuff. Testing Stuff. Testing Stuff. Testing Stuff.", 
+						DIALOGUE_COLOUR_GATO,   
+						0, id_null, 
+						IMG_PORTRAIT_GATO_BASE, IMGAR_PORTRAIT_GATO_00, 
+						id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						
+	SlideInEnemy(40, id_anubis, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset);
+
+
+		
+}

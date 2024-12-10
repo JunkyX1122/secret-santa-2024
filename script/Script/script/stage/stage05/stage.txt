@@ -72,7 +72,10 @@ task StartStage
 	BGTransition(255, 0, 120);
 	wait(120);
 	SetCommonData("MaxNumberOfPhases",4);
-	MusicChange(BGM_BOSS_05, 95, 2956441, 10937988);
+	if(GetCommonData("isPracticing", false)==true)
+	{
+		MusicChange(BGM_BOSS_05, 95, 2956441, 10937988);
+	}
 	SetCommonData("LifeBombAlpha",255);
 	SetForbidPlayerSpell(false);
 	loop(1)

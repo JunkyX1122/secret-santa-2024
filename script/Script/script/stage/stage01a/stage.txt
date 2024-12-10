@@ -6,7 +6,7 @@
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./../Initiate.txt"
-
+#include "./../stage_dialogue.txt"
 @Initialize
 {
 	RecordStageHistory("01a", DIFFICULTY_NAMES[DIFFICULTY]);
@@ -65,8 +65,12 @@ task StartStage
 	wait(60);
 	BGTransition(255, 0, 120);
 	wait(120);
+	PreBossDialogue(DIALOGUE_STAGE01A);
 	SetCommonData("MaxNumberOfPhases",1);
-	MusicChange(BGM_BOSS_01A, 60, 16550, 6337369);
+	if(GetCommonData("isPracticing", false)==true)
+	{
+		MusicChange(BGM_BOSS_01A, 60, 16550, 6337369);
+	}
 	SetCommonData("LifeBombAlpha",255);
 	SetForbidPlayerSpell(false);
 	loop(1)

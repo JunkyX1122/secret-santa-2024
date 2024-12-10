@@ -249,6 +249,65 @@ IMG_BOSS_SHIELD0, IMG_BOSS_SHIELD1
 //--------------FACE IMAGES--------------
 //---------------------------------------
 
+const IMG_PORTRAIT_GATO_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/gato_base.png";
+const IMG_PORTRAIT_GATO_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/gato_i.png";
+const IMGAR_PORTRAIT_GATO_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/gato_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/gato_00b.png"];
+
+const IMG_PORTRAIT_ANUBIS_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_base.png";
+const IMG_PORTRAIT_ANUBIS_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_i.png";
+const IMGAR_PORTRAIT_ANUBIS_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_00b.png"];
+
+const IMG_PORTRAIT_ANUBIS_STAND_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand_base.png";
+const IMG_PORTRAIT_ANUBIS_STAND_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand_i.png";
+const IMGAR_PORTRAIT_ANUBIS_STAND_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand_00b.png"];
+
+const IMG_PORTRAIT_SULLEN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen_base.png";
+const IMG_PORTRAIT_SULLEN_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen_i.png";
+const IMGAR_PORTRAIT_SULLEN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen_00b.png"];
+
+const IMG_PORTRAIT_DAISUKE_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke_base.png";
+const IMG_PORTRAIT_DAISUKE_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke_i.png";
+const IMGAR_PORTRAIT_DAISUKE_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke_00b.png"];
+
+const IMG_PORTRAIT_DANDARA_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara_base.png";
+const IMG_PORTRAIT_DANDARA_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara_i.png";
+const IMGAR_PORTRAIT_DANDARA_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara_00b.png"];
+
+const IMG_PORTRAIT_VIIVI_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi_base.png";
+const IMG_PORTRAIT_VIIVI_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi_i.png";
+const IMGAR_PORTRAIT_VIIVI_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi_00b.png"];
+
+const IMG_PORTRAIT_TAZUE_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue_base.png";
+const IMG_PORTRAIT_TAZUE_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue_i.png";
+const IMGAR_PORTRAIT_TAZUE_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue_00b.png"];
+
+const IMG_PORTRAIT_GRANDIS_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis_base.png";
+const IMG_PORTRAIT_GRANDIS_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis_i.png";
+const IMGAR_PORTRAIT_GRANDIS_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis_00b.png"];
+
+const IMG_PORTRAIT_SCYLLA_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla_base.png";
+const IMG_PORTRAIT_SCYLLA_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla_i.png";
+const IMGAR_PORTRAIT_SCYLLA_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla_00b.png"];
+
+const IMG_PORTRAIT_KIERAN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran_base.png";
+const IMG_PORTRAIT_KIERAN_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran_i.png";
+const IMGAR_PORTRAIT_KIERAN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran_00b.png"];
+
+const IMG_PORTRAIT_KAIRYU_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_base.png";
+const IMG_PORTRAIT_KAIRYU_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_i.png";
+const IMGAR_PORTRAIT_KAIRYU_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_00b.png"];
+
+const IMG_PORTRAIT_GODSWORN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_base.png";
+const IMG_PORTRAIT_GODSWORN_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_i.png";
+const IMGAR_PORTRAIT_GODSWORN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_00b.png"];
+
+const IMG_PORTRAIT_HIROYUKI_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_base.png";
+const IMG_PORTRAIT_HIROYUKI_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_i.png";
+const IMGAR_PORTRAIT_HIROYUKI_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_00b.png"];
+
+const IMG_PORTRAIT_REDRIN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_base.png";
+const IMG_PORTRAIT_REDRIN_I   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_i.png";
+const IMGAR_PORTRAIT_REDRIN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_00b.png"];
 
 const Team1PortraitImg_ImgArray = [];
 const Team2PortraitImg_ImgArray = [];
@@ -259,9 +318,11 @@ const BossPortraitImg_ImgArray = [];
 //---------------------------------------
 //--------------TEXT IMAGES--------------
 //---------------------------------------
+const IMG_TALK_BOX   				= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_box.png";
+const IMG_TALK_NAMEARROW_TOP   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_namearrow1.png";
+const IMG_TALK_NAMEARROW_BOTTOM   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_namearrow2.png";
 
-
-const TextImg_ImgArray =  [];
+const TalkImg_ImgArray =  [IMG_TALK_BOX, IMG_TALK_NAMEARROW_TOP, IMG_TALK_NAMEARROW_BOTTOM];
 
 
 //---------------------------------------

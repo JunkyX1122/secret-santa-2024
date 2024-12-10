@@ -36,9 +36,9 @@ task LoadThings
 		LoadTexture(BossSprite_ImgArray[i]);
 		yield;
 	}
-	ascent(i in 0..length(TextImg_ImgArray))
+	ascent(i in 0..length(TalkImg_ImgArray))
 	{
-		LoadTexture(TextImg_ImgArray[i]);
+		LoadTexture(TalkImg_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(System_ImgArray))
