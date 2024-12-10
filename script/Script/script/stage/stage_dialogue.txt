@@ -81,7 +81,7 @@ task SlideInPlayer(t, enID, x1, x2, y1, y2)
 	{
 		forceStop = true;
 		let scl = 1*sin(90/(t-1)*i);
-		SetNewPlayerPort("", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl);
+		SetNewPlayerPort("", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl, 1);
 		yield;
 	}
 	forceStop = false;
@@ -92,7 +92,7 @@ task SlideInEnemy(t, enID, x1, x2, y1, y2)
 	{
 		forceStop = true;
 		let scl = 1*sin(90/(t-1)*i);
-		SetNewEnemyPort("", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl);
+		SetNewEnemyPort("", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl, 1);
 		yield;
 	}
 	forceStop = false;

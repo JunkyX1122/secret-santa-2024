@@ -149,8 +149,12 @@ function SetDialogueTextA2(speaker, text, color , spkP, spkE, imgS, imgF, iS, xm
 { //event will advance only upon button press
 	SetDialogueTextA3(speaker, text, color , spkP, spkE, imgS, imgF, iS, xm, ym,textScrollSound, 1, 0, 2);
 }
-
 function SetDialogueTextA3(speaker, text, color , spkP, spkE, imgS, imgF, iS, xm, ym,textScrollSound, basePitch, randPitchRange, textDelay)
+{ 
+	SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgF, iS, xm, ym,textScrollSound, basePitch, randPitchRange, textDelay, 1);
+}
+
+function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgF, iS, xm, ym,textScrollSound, basePitch, randPitchRange, textDelay, yFlip)
 { //added pitch changing
 	let y = GetScreenHeight - 48*2;
 	SetSpeaker(spkP,spkE);
@@ -160,11 +164,11 @@ function SetDialogueTextA3(speaker, text, color , spkP, spkE, imgS, imgF, iS, xm
 	}
 	else if(spkP>=0)
 	{
-		SetNewPlayerPort(imgS, imgF[0], iS, xm, ym, 0, -1);
+		SetNewPlayerPort(imgS, imgF[0], iS, xm, ym, 0, -1, yFlip);
 	}
 	else if(spkE>=0)
 	{
-		SetNewEnemyPort(imgS, imgF[0], iS, xm, ym, 0, -1);
+		SetNewEnemyPort(imgS, imgF[0], iS, xm, ym, 0, -1, yFlip);
 	}
 	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
 	dialogue_text = text;
@@ -276,7 +280,7 @@ function SetPortraitData(offsetsPlayer, offsetsEnemy, scalesPlayer, scalesEnemy,
 	enemyfaceoffsets = offsetEnemyFace;
 }
 
-function SetNewPlayerPort(img,imgf, i,x,y,ang,alph){ //moves in the player portrait from below
+function SetNewPlayerPort(img,imgf, i,x,y,ang,alph,yFlip){ //moves in the player portrait from below
 	if(img != "")
 	{
 		ObjPrim_SetTexture(playerobjects[i], img);
@@ -293,13 +297,13 @@ function SetNewPlayerPort(img,imgf, i,x,y,ang,alph){ //moves in the player portr
 	let y2 = y + playeroffsets[i][1];
 	ObjRender_SetPosition(playerobjects[i], round(x2), round(y2), 0); 
 	ObjRender_SetAngleZ(playerobjects[i],ang);
-	ObjRender_SetScaleXYZ(playerobjects[i],playerscales[i],playerscales[i],playerscales[i]);
+	ObjRender_SetScaleXYZ(playerobjects[i],playerscales[i]*yFlip,playerscales[i],playerscales[i]);
 	
 	let faceDist = playerfaceoffsets[i][0]*playerscales[i];
 	let faceAng = playerfaceoffsets[i][1];
-	ObjRender_SetPosition(playerfaceobjects[i], round(x2 + faceDist*cos(faceAng)), round(y2 + faceDist*sin(faceAng)), 0); 
+	ObjRender_SetPosition(playerfaceobjects[i], round(x2 + faceDist*cos(faceAng + ang)), round(y2 + faceDist*sin(faceAng + ang)), 0); 
 	ObjRender_SetAngleZ(playerfaceobjects[i],ang);
-	ObjRender_SetScaleXYZ(playerfaceobjects[i],playerscales[i],playerscales[i],playerscales[i]);
+	ObjRender_SetScaleXYZ(playerfaceobjects[i],playerscales[i]*yFlip,playerscales[i],playerscales[i]);
 	
 	if(alph!=-1)
 	{
@@ -308,7 +312,7 @@ function SetNewPlayerPort(img,imgf, i,x,y,ang,alph){ //moves in the player portr
 	}
 }
 
-function SetNewEnemyPort(img,imgf, i,x,y,ang,alph){ //moves in the enemy portrait from below
+function SetNewEnemyPort(img,imgf, i,x,y,ang,alph,yFlip){ //moves in the enemy portrait from below
 	if(img != "")
 	{
 		ObjPrim_SetTexture(enemyobjects[i], img);
@@ -325,13 +329,13 @@ function SetNewEnemyPort(img,imgf, i,x,y,ang,alph){ //moves in the enemy portrai
 	let y2 = y + enemyoffsets[i][1];
 	ObjRender_SetPosition(enemyobjects[i], round(x2), round(y2), 0); 
 	ObjRender_SetAngleZ(enemyobjects[i],ang);
-	ObjRender_SetScaleXYZ(enemyobjects[i],enemyscales[i],enemyscales[i],enemyscales[i]);
+	ObjRender_SetScaleXYZ(enemyobjects[i],enemyscales[i]*yFlip,enemyscales[i],enemyscales[i]);
 	
 	let faceDist = enemyfaceoffsets[i][0]*enemyscales[i];
 	let faceAng = enemyfaceoffsets[i][1];
-	ObjRender_SetPosition(enemyfaceobjects[i], round(x2 + faceDist*cos(faceAng)), round(y2 + faceDist*sin(faceAng)), 0); 
+	ObjRender_SetPosition(enemyfaceobjects[i], round(x2 + faceDist*cos(faceAng + ang)), round(y2 + faceDist*sin(faceAng + ang)), 0); 
 	ObjRender_SetAngleZ(enemyfaceobjects[i],ang);
-	ObjRender_SetScaleXYZ(enemyfaceobjects[i],enemyscales[i],enemyscales[i],enemyscales[i]);
+	ObjRender_SetScaleXYZ(enemyfaceobjects[i],enemyscales[i]*yFlip,enemyscales[i],enemyscales[i]);
 	
 	if(alph!=-1)
 	{
