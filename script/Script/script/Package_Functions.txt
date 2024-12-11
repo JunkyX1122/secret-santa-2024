@@ -73,7 +73,7 @@ function StartStageProgression()
     DeleteCommonData("PlayerSpell");
 	let WAITER = 0;
 	
-	SetCommonData("GatoPlayerSprite", 1);
+	
 	if(carryOn==true)
 	{
 		alternative(activeTeam)
@@ -91,11 +91,12 @@ function StartStageProgression()
 		}
 	}
 	
-	SetCommonData("GatoPlayerSprite", 0);
+	
 	if(carryOn==true)
 	{
 		TStageScene(STAGE_2,WAITER);
 	}
+	SetCommonData("GatoPlayerSprite", 0);
 	if(carryOn==true)
 	{
 		TStageScene(STAGE_3,WAITER);

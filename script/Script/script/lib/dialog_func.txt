@@ -221,10 +221,21 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	{
 		ascent(i in 0..length(stringThing[j]))
 		{
+			let modiWait = 1;
 			scrollT = scrollT ~ [stringThing[j][i]];
 			if([stringThing[j][i]]==" ")
 			{
 				
+			}
+			else if([stringThing[j][i]]=="." || [stringThing[j][i]]=="!" || [stringThing[j][i]]=="!")
+			{
+				SE_PlayLen(textScrollSound,75, basePitch + rand(-randPitchRange, randPitchRange));
+				modiWait = 12;
+			}
+			else if([stringThing[j][i]]==",")
+			{
+				SE_PlayLen(textScrollSound,75, basePitch + rand(-randPitchRange, randPitchRange));
+				modiWait = 6;
 			}
 			else
 			{
@@ -233,30 +244,42 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			dialogue_text = scrollT;
 			ObjText_SetText(obj, dialogue_text);
 			
-			loop(textDelay)
+			if(j != length(stringThing)-1 || i != length(stringThing[j])-1)
 			{
-				if(spkP>=0&&spkE>=0)
+				loop(textDelay * modiWait)
 				{
-				}
-				else if(spkP>=0)
-				{
-					ObjPrim_SetTexture(playermouthobjects[iS],imgM[floor(c/8)%2]);
-				}
-				else if(spkE>=0)
-				{
-					ObjPrim_SetTexture(enemymouthobjects[iS],imgM[floor(c/8)%2]);
-				}
-				
-				c++;
-				if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
-				{
-					yield;
+					if(spkP>=0&&spkE>=0)
+					{
+					}
+					else if(spkP>=0)
+					{
+						ObjPrim_SetTexture(playermouthobjects[iS],imgM[floor(c/8)%2]);
+						if(modiWait>6)
+						{
+							ObjPrim_SetTexture(playermouthobjects[iS],imgM[0]);
+						}
+					}
+					else if(spkE>=0)
+					{
+						ObjPrim_SetTexture(enemymouthobjects[iS],imgM[floor(c/8)%2]);
+						if(modiWait>6)
+						{
+							ObjPrim_SetTexture(enemymouthobjects[iS],imgM[0]);
+						}
+					}
+					
+					c++;
+					if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+					{
+						yield;
+					}
 				}
 			}
 			
 		}
 		scrollT =  scrollT ~  "[r]";
 	}
+	//SE_PlayLen(title_cursor, 75);
 	if(spkP>=0&&spkE>=0)
 	{
 	}
@@ -274,6 +297,7 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
 		yield;
 	}
+	SE_PlayLen(title_cursor, 75);
 	yield;
 	Obj_Delete(obj);
 	Obj_Delete(objName);

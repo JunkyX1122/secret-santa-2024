@@ -47,7 +47,22 @@ function PreBossDialogue(stageID)
 	case(DIALOGUE_STAGE01A) { Stage01APreBattle(); }
 	case(DIALOGUE_STAGE01B) { Stage01BPreBattle(); }
 	case(DIALOGUE_STAGE01C) { Stage01CPreBattle(); }
-	case(DIALOGUE_STAGE02) 	{  }
+	case(DIALOGUE_STAGE02) 	
+	{  
+		alternative(GetPlayerID)
+		case("ID_Gato")
+		{
+			Stage02APreBattle();
+		}
+		case("ID_Sullen")
+		{
+			Stage02BPreBattle();
+		}
+		case("ID_Viivi")
+		{
+			Stage02CPreBattle();
+		}
+	}
 	case(DIALOGUE_STAGE03) 	{  }
 	case(DIALOGUE_STAGE04A) {  }
 	case(DIALOGUE_STAGE04B) {  }
@@ -80,8 +95,23 @@ function PostBossDialogue(stageID)
 	case(DIALOGUE_STAGE01A) { Stage01APostBattle(); }
 	case(DIALOGUE_STAGE01B) { Stage01BPostBattle(); }
 	case(DIALOGUE_STAGE01C) { Stage01CPostBattle(); }
-	case(DIALOGUE_STAGE02) 	{  }
+	case(DIALOGUE_STAGE02) 	{ 
+		alternative(GetPlayerID)
+		case("ID_Gato")
+		{
+			Stage02APostBattle();
+		}
+		case("ID_Sullen")
+		{
+			Stage02BPostBattle();
+		}
+		case("ID_Viivi")
+		{
+			Stage02CPostBattle();
+		}
+	}
 	case(DIALOGUE_STAGE03) 	{  }
+	
 	case(DIALOGUE_STAGE04A) {  }
 	case(DIALOGUE_STAGE04B) {  }
 	case(DIALOGUE_STAGE04C) {  }
@@ -114,6 +144,30 @@ task SlideInEnemy(t, enID, x1, x2, y1, y2, yRot)
 		forceStop = true;
 		let scl = 1*sin(90/(t-1)*i);
 		SetNewEnemyPort("", "", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, 255*scl, yRot);
+		yield;
+	}
+	forceStop = false;
+}
+
+task SlideInPlayer(t, enID, x1, x2, y1, y2, yRot, a1, a2)
+{
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		let scl = 1*sin(90/(t-1)*i);
+		SetNewPlayerPort("", "", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, Interpolate_Linear(a1, a2, scl), yRot);
+		yield;
+	}
+	forceStop = false;
+}
+
+task SlideInEnemy(t, enID, x1, x2, y1, y2, yRot, a1, a2)
+{
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		let scl = 1*sin(90/(t-1)*i);
+		SetNewEnemyPort("", "", "", enID, Interpolate_Linear(x1, x2, scl), Interpolate_Linear(y1, y2, scl), 0, Interpolate_Linear(a1, a2, scl), yRot);
 		yield;
 	}
 	forceStop = false;
@@ -545,14 +599,627 @@ function Stage01CPostBattle()
 	
 }
 
+let shiverGato = false;
+task ShiverGato()
+{
+	let t = 40;
+	let w = 2;
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		let scl = 1*sin(90/(t-1)*i);
+		SetNewPlayerPort("", "", "", 0, round(Interpolate_Linear(portraitXLeft-100, portraitXLeft, scl) + rand(w,-w)), portraitYOffset, 0, 255*scl, 1);
+		yield;
+	}
+	forceStop = false;
+	while(shiverGato)
+	{
+		SetNewPlayerPort("", "", "", 0, round(portraitXLeft + rand(w,-w)), portraitYOffset, 0, 255, 1);
+		yield;
+	}
+}
+task GatoOutfitChange()
+{
+	let t = 20;
+	let w = 2;
+	SetCommonData("GatoPlayerSprite", 1);
+	ascent(i in 0..t)
+	{
+		w = 2 + 18/(t-1)*i;
+		SetNewPlayerPort("", "", "", 0, round(portraitXLeft + rand(w,-w)), portraitYOffset, 0, 255-255/(t-1)*i, 1);
+		forceStop = true;
+		yield;
+	}
+	SetCommonData("GatoPlayerSprite", 0);
+	shiverGato = false;	
+	ascent(i in 0..t)
+	{
+		w = 20 - 20/(t-1)*i;
+		SetNewPlayerPort(IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00[0], 0, round(portraitXLeft + rand(w,-w)), portraitYOffset, 0, 255/(t-1)*i, 1);
+		forceStop = true;
+		yield;
+	}
+	forceStop = false;
+}
+function Stage02APreBattle()
+{
+	SetPortraitData([[-75,0],[25,0],[0,0]], [[-50+50,0],[50+50,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [gatoFaceOffsetData,anubisStandFaceOffsetData,[0,0]], [scyllaFaceOffsetData,kieranFaceOffsetData,[0,0]]);
+	let id_gato = 0;
+	let id_anubis = 1;
+	let id_scylla = 0;
+	let id_kieran = 1;
+	
+	shiverGato = true;
+	ShiverGato();
+	SetDialogueTextA3("Gato", "I have made a severe lapse in judgement.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO_SHIVER, "", ["",""], id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+				
+	SlideInPlayer(40, id_anubis, portraitXLeft, portraitXLeft, portraitYOffset+75, portraitYOffset, 1);
+	SetDialogueTextA3("Anubis", "(You're lucky your cockiness didn't result in something worse this|time.)", 
+						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Gato", "How do people even survive in such harsh conditions?!", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO_SHIVER, "", ["",""], id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						
+	SetDialogueTextA3("Anubis", "(Just put on the damn coat.)", 
+						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+	
+	SE_PlayLen(charge2, 70);
+	SetSpeaker( id_gato, id_null);
+	GatoOutfitChange();			
+	while(forceStop){yield;}	
+	wait(20);
+	SetDialogueTextA3("Gato", "This works.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
+	SetDialogueTextA3("Gato", "Right, what even is it that you wanted me to do specifically?", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 
+	SetDialogueTextA3("Anubis", "(Just go around and learn as much as you can.)", 
+						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+	SetDialogueTextA3("Anubis", "(Find out the true meaning of Christmas and all that.)", 
+						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Gato", "Corny.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 
+	SetDialogueTextA3("Anubis", "(Yeah yeah. Look, there's some people up ahead. Go ask them.)", 
+						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+	
+	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SlideInEnemy(80, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
 
+	SetDialogueTextA3("Gato", "Greetings there fellow...", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	SetDialogueTextA3("Gato", "Actually I'm not fully sure what I'm looking at.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 
+	SetDialogueTextA3("Scylla", "Excuse me?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 
+	SetDialogueTextA3("Gato", "I mean, multiple ears must be real useful, but I think I'm ok with|just the one pair.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	SetDialogueTextA3("Gato", "Nice outfits though. Really dig whatever's going on with Mr. Yakuza's|face thing.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 
+	SetDialogueTextA3("Kieran", "...And you are?", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Uki", "Uki. Cold survivor.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	SetDialogueTextA3("Uki", "I hear that the people of this land hold a celebration every winter.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	SetDialogueTextA3("Uki", "One of hearts and generosity.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 
+	SetDialogueTextA3("Scylla", "Well...Weeee'd love to talk and tell you what it's like, but we're kinda|busy looking for someone.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "That and we are not the most qualified when it comes to the|meaning behind traditions here.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Uki", "How unfortunate.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	SetDialogueTextA3("Uki", "Perhaps I can be of assistance then.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Scylla", "You know where Redrin Lightclaw is? You've seen him around?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Uki", "Seen directly? Not exactly.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Scylla", "Okay? So where do you think he is then?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Uki", "Somewhere in Gensokyo.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	SetDialogueTextA3("Uki", "...", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Scylla", "...", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "...", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	MusicChange(BGM_BOSS_02, 90, 602574, 5157047);
+	
+	SetDialogueTextA3("Scylla", "So are we beating him up?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "We've got time.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Uki", "Now hold on-", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+}
 
+function Stage02APostBattle()
+{
+	SetPortraitData([[-75,0],[25,0],[0,0]], [[-50+50,0],[50+50,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [gatoFaceOffsetData,anubisStandFaceOffsetData,[0,0]], [scyllaFaceOffsetData,kieranFaceOffsetData,[0,0]]);
+	let id_gato = 0;
+	let id_anubis = 1;
+	let id_scylla = 0;
+	let id_kieran = 1;
+	
+	SlideInPlayer(40, id_gato, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, 0,0, 0, 0, 1);
+	
+	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	
+	SetDialogueTextA3("Uki", "In my defense, what I said *did* narrow things down to two bodies of|land.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
+	
+	SetDialogueTextA3("Scylla", "Real useful aren't you?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Uki", "Only when I feel like it.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
+	SetDialogueTextA3("Uki", "Anyways, I would love to run circles around the two of you more but|I best be off.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
+	while(forceStop){yield;}
+	SlideInPlayer(40, id_gato, portraitXLeft, portraitXLeft-150, portraitYOffset, portraitYOffset, 1, 255, 0);
+	SetDialogueTextA3("Uki", "Gotta find more festive folks before the day's over.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
+	
+	SetDialogueTextA3("Kieran", "...What a strange individual...", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+}
+
+function Stage02BPreBattle()
+{
+	SetPortraitData([[-125,0],[50,0],[0,0]], [[-50+50,0],[50+50,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [daisukeFaceOffsetData,sullenFaceOffsetData,[0,0]], [scyllaFaceOffsetData,kieranFaceOffsetData,[0,0]]);
+	let id_daisuke = 0;
+	let id_sullen = 1;
+	let id_scylla = 0;
+	let id_kieran = 1;
+	
+	SetNewPlayerPort(IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00[0], id_daisuke, 0,0, 0, 0, 1);
+	SlideInPlayer(40, id_daisuke, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(40, id_sullen, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	SetDialogueTextA3("Sullen", "If I may ask, what was it you and your mother were delivering?", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "Oh, uh gifts! For a few people over there.", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	SetDialogueTextA3("Daisuke", "One of them was for my bro.", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Sullen", "I see. I hope that you and your family's situation has improved since|our last encounter.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "Mhm! Family's gotta stick together!", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Sullen", "Indeed. Regardless on whether said people in the family are blood|related.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Couldn't have said it better myself.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						"", "", mouth_null, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SlideInEnemy(80, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	
+	SetDialogueTextA3("Sullen", "Ah, greetings.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Kieran Lightspeed, and this is Scylla Stargazer.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Sorry to intrude on your conversation, but we're in a bit of a|situation right now.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "A situation? Like a problem?", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	SetDialogueTextA3("Daisuke", "How can we help?", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Oh it is not too urgent. We are just trying to find someone.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "The leader of our warband. Redrin Lightclaw. Have you maybe seen|him around anywhere?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Sullen", "Hm...I am afraid I have not. Sorry.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	SetDialogueTextA3("Sullen", "The last I have seen of him was years ago, and I am not very familiar|with the man.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Not to worry, we shall proceed with our search.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "You sure we can't help look too?", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Don't worry about it kid, we've got it.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "There goes our chance of a sidequest...", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Hey, if you're itching for some action, we could probably help you|instead.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	SetDialogueTextA3("Scylla", "You're look like the warrior type right?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "Hero-ey to be more specific!", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	MusicChange(BGM_BOSS_02, 90, 602574, 5157047);
+	
+	SetDialogueTextA3("Kieran", "Is it not tradition in Gensokyo for duels to happen regularly?", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "We've got some time on us, how about a spar with some strangers|for the road?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	SetDialogueTextA3("Scylla", "I could do with a warmup.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "If...it isn't too much of an issue, Mr. Sullen.", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Sullen", "The time we are to meet with the people in need of help is far later|in the day.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	SetDialogueTextA3("Sullen", "I can afford to be less early than I usually am.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+}
+
+function Stage02BPostBattle()
+{
+	SetPortraitData([[-125,0],[50,0],[0,0]], [[-50+50,0],[50+50,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [daisukeFaceOffsetData,sullenFaceOffsetData,[0,0]], [scyllaFaceOffsetData,kieranFaceOffsetData,[0,0]]);
+	let id_daisuke = 0;
+	let id_sullen = 1;
+	let id_scylla = 0;
+	let id_kieran = 1;
+	
+	SetNewPlayerPort(IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00[0], id_daisuke, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00[0], id_sullen, 0,0, 0, 0, 1);
+	SlideInPlayer(40, id_daisuke, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(40, id_sullen, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	
+	SetDialogueTextA3("Daisuke", "Woah, I wasn't expecting all those robots!", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Sullen", "Such agility.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Gotta be prepared for anything, right?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "With such an emphasis on defence and close quaters, perhaps your|priest friend here should teach you the ways of the paladin.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Oh, didn't quite catch your name kid.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Daisuke", "Daisuke! Hero of Grass!", 
+						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Sullen", "Hm. I shall consider that after our request is fufilled.", 
+						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+}
+
+function Stage02CPreBattle()
+{
+	SetPortraitData([[50,0],[-125,0],[0,0]], [[-50+50,0],[50+50,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [grandisFaceOffsetData,viiviFaceOffsetData,tazueFaceOffsetData], [scyllaFaceOffsetData,kieranFaceOffsetData,[0,0]]);
+	let id_grandis = 0;
+	let id_viivi = 1;
+	let id_tazue = 2;
+	let id_scylla = 0;
+	let id_kieran = 1;
+	
+	SetNewPlayerPort(IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00[0], id_grandis, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00[0], id_viivi, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00[0], id_tazue, 0,0, 0, 0, 1);
+	SlideInPlayer(60, id_grandis, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(120, id_viivi, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(120, id_tazue, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	SetDialogueTextA3("Grandis", "So...Have you got anything in mind?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	SetDialogueTextA3("Grandis", "We've been walking for a while now, you better have at least an idea.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "I'm sure something'll catch my eye when we get there.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "I ain't a fashion expert.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Tazue", "Meow.", 
+						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Hol'up. I think I see some people.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "Hey there!", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						
+	//SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	//SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	
+	SetDialogueTextA3("Kieran", "Oh, good morning.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Hey...I think I've seen your face around before.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "You're uhh...", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "From tiger-bread's crew I think.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	//SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	//SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	
+	SetDialogueTextA3("Scylla", "What?", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Who are these guys again?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Tiger Bread?", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "First thing that came to mind ok?!", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Scylla. This guy here's Kieran.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Right...", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	SetDialogueTextA3("Kieran", "And you two must be Viivi and...Grandis I think.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Yep. That's right.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Eh? Hold on. How'd you come about knowing my name?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "The Meowstic Mansion library. You are a fellow student of the|sciences.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	SetDialogueTextA3("Kieran", "I have read one of your papers on closing the physical distance|between two points. Very facinating might I add.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Someone actually read that?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "People actually read those things willingly?", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Anyways, we should probably get a move on. We've got someone|we've gotta look for.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Now hold on, this is a good opportunity to see these findings in|action.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	SetDialogueTextA3("Kieran", "If I may, would it not be too much trouble for a...demonstration of a|fellow scholar's capabilities?", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "So a duel?", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	MusicChange(BGM_BOSS_02, 90, 602574, 5157047);
+	
+	SetDialogueTextA3("Scylla", "Uh...I guess that's what's about to happen.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "...Sure. Why not?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "It's early enough, we've totally got time.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+}
+
+function Stage02CPostBattle()
+{
+	SetPortraitData([[50,0],[-125,0],[0,0]], [[-50+50,0],[50+50,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [grandisFaceOffsetData,viiviFaceOffsetData,tazueFaceOffsetData], [scyllaFaceOffsetData,kieranFaceOffsetData,[0,0]]);
+	let id_grandis = 0;
+	let id_viivi = 1;
+	let id_tazue = 2;
+	let id_scylla = 0;
+	let id_kieran = 1;
+	
+	SetNewPlayerPort(IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00[0], id_grandis, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00[0], id_viivi, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00[0], id_tazue, 0,0, 0, 0, 1);
+	SlideInPlayer(60, id_grandis, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(120, id_viivi, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(120, id_tazue, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	
+	SetDialogueTextA3("Kieran", "Fascinating!", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Good enough for your field study then?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Ok I'd love to let you two dorks chat about physics and all that, but|we should get going.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Very well, we shall see you two at a later time.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+	while(forceStop){yield;}
+	SlideInEnemy(40, id_scylla, portraitXRight, portraitXRight+100, portraitYOffset, portraitYOffset, 1, 255, 0);
+	SlideInEnemy(40, id_kieran, portraitXRight, portraitXRight+100, portraitYOffset, portraitYOffset, 1, 255, 0);
+	
+	SetDialogueTextA3("Viivi", "Wait hold up!", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "I was going to ask them for advice on what outfit to get.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Eh. I wouldn't worry about it. Let's just keep going.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+}
 
 
 
