@@ -400,8 +400,18 @@ const IMG_PORTRAIT_KIERAN_EYES_06   	= 	GetCurrentScriptDirectory()  ~ "./../../
 const IMG_PORTRAIT_KIERAN_EYES_07   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran/kieran_eyes_07.png";
 
 // ------------------------------------------ KAIRYU
-const IMG_PORTRAIT_KAIRYU_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_base.png";
-const IMGAR_PORTRAIT_KAIRYU_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu_00b.png"];
+const IMG_PORTRAIT_KAIRYU_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_base.png";
+const IMG_PORTRAIT_KAIRYU_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_00.png";
+const IMG_PORTRAIT_KAIRYU_EYES_01   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_01.png";
+const IMG_PORTRAIT_KAIRYU_EYES_02   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_02.png";
+const IMG_PORTRAIT_KAIRYU_EYES_03   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_03.png";
+const IMG_PORTRAIT_KAIRYU_EYES_04   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_04.png";
+const IMG_PORTRAIT_KAIRYU_EYES_05   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_05.png";
+const IMG_PORTRAIT_KAIRYU_EYES_06   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_06.png";
+const IMG_PORTRAIT_KAIRYU_EYES_07   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_eyes_07.png";
+const IMGAR_PORTRAIT_KAIRYU_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_00b.png"];
+const IMGAR_PORTRAIT_KAIRYU_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_01b.png"];
+const IMGAR_PORTRAIT_KAIRYU_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_02b.png"];
 
 // ------------------------------------------ GODSWORN
 const IMG_PORTRAIT_GODSWORN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_base.png";
