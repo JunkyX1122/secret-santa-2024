@@ -539,7 +539,7 @@ function Stage01CPreBattle()
 	SetDialogueTextA4("Grandis", "You think you wanna test that?", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
-	SetDialogueTextA4("Grandis", "I wouldn't have gotten this jacket if I wasn't prepared to throw hands at any moment.", 
+	SetDialogueTextA4("Grandis", "I wouldn't have gotten this jacket if I wasn't prepared to throw|hands at any moment.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
 
