@@ -77,7 +77,8 @@ task StartStage
 	{
 		ObjEnemyBossScene_Regist(Boss);	
 		while(!Obj_IsDeleted(Boss)) { yield; }
-		EndStageHistoryRecord();
+		EndStageHistoryRecord();	
+		PostBossDialogue(DIALOGUE_STAGE01A);
 		wait(120);
 		MusicVolumeChange(GetBGMVolume, 0, 90);
 		BGTransition(0, 255, 91);
