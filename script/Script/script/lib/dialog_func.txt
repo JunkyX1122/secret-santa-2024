@@ -217,6 +217,7 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	let stringThing = SplitString(text,"|");
 	let scrollT = [];
 	let c = 0;
+	let textSkips = false;
 	ascent(j in 0..length(stringThing))
 	{
 		ascent(i in 0..length(stringThing[j]))
@@ -241,10 +242,13 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				SE_PlayLen(textScrollSound,75, basePitch + rand(-randPitchRange, randPitchRange));
 			}
+			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
+			if([stringThing[j][i]]==";"){textSkips = false;}
+			
 			dialogue_text = scrollT;
 			ObjText_SetText(obj, dialogue_text);
 			
-			if(j != length(stringThing)-1 || i != length(stringThing[j])-1)
+			if((j != length(stringThing)-1 || i != length(stringThing[j])-1) && !textSkips )
 			{
 				loop(textDelay * modiWait)
 				{
@@ -290,6 +294,313 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	else if(spkE>=0)
 	{
 		ObjPrim_SetTexture(enemymouthobjects[iS],imgM[0]);
+	}
+	yield;
+	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	{
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		yield;
+	}
+	SE_PlayLen(title_cursor, 75);
+	yield;
+	Obj_Delete(obj);
+	Obj_Delete(objName);
+}
+
+function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, iS, xm, ym,textScrollSounds, basePitch, randPitchRange, textDelay, yFlip)
+{
+	let y = GetScreenHeight - 48*2;
+	SetSpeaker(spkP,spkE);
+	
+	if(spkP>=0)
+	{
+		SetNewPlayerPort(imgS[0], imgE[0], imgM[0][0], iS[0], xm[0], ym[0], 0, -1, yFlip[0]);
+	}
+	if(spkE>=0)
+	{
+		SetNewEnemyPort(imgS[1], imgE[1], imgM[1][0], iS[1], xm[1], ym[1], 0, -1, yFlip[1]);
+	}
+	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+	dialogue_text = text;
+	
+	let newCol = [(color[0]), (color[1]), (color[2])];
+	
+	
+	let obj = ObjText_Create();
+	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontSize(obj, 16);
+	ObjText_SetFontColorTop(obj, 255, 255, 255);
+	speakerColor = newCol;
+	ObjText_SetFontColorBottom(obj, 255,255,255);	
+	ObjText_SetFontBorderType(obj, BORDER_FULL);
+	ObjText_SetFontBorderWidth(obj, 1);
+	ObjText_SetFontBorderColor(obj, 0, 0, 0);
+	ObjText_SetLinePitch(obj, 7);
+	ObjText_SetMaxWidth(obj, widthGl*2-20);
+	Obj_SetRenderPriorityI(obj, 76+RP);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
+
+	let objName = ObjText_Create();
+	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontSize(objName, 22);
+	ObjText_SetFontColorTop(objName, 255, 255, 255);
+	speakerColor = newCol;
+	ObjText_SetFontColorBottom(objName, 255,255,255);	
+	ObjText_SetFontBorderType(objName, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objName, 1);
+	ObjText_SetFontBorderColor(objName, 0, 0, 0);
+	ObjText_SetLinePitch(objName, 7);
+	ObjText_SetMaxWidth(objName, widthGl*2);
+	Obj_SetRenderPriorityI(objName, 76+RP);
+	ObjRender_SetPosition(objName, GetScreenWidth/2-widthGl+32+8, y-24, 0);
+	ObjText_SetText(objName, speaker);
+	
+	let stringThing = SplitString(text,"|");
+	let scrollT = [];
+	let c = 0;
+	let textSkips = false;
+	ascent(j in 0..length(stringThing))
+	{
+		ascent(i in 0..length(stringThing[j]))
+		{
+			let modiWait = 1;
+			scrollT = scrollT ~ [stringThing[j][i]];
+			if([stringThing[j][i]]==" ")
+			{
+				
+			}
+			else if([stringThing[j][i]]=="." || [stringThing[j][i]]=="!" || [stringThing[j][i]]=="!")
+			{
+				ascent(p in 0..length(textScrollSounds))
+				{
+					SE_PlayLen(textScrollSounds[p],75, basePitch + rand(-randPitchRange, randPitchRange));
+				}
+				modiWait = 12;
+			}
+			else if([stringThing[j][i]]==",")
+			{
+				ascent(p in 0..length(textScrollSounds))
+				{
+					SE_PlayLen(textScrollSounds[p],75, basePitch + rand(-randPitchRange, randPitchRange));
+				}
+				modiWait = 6;
+			}
+			else
+			{
+				ascent(p in 0..length(textScrollSounds))
+				{
+					SE_PlayLen(textScrollSounds[p],75, basePitch + rand(-randPitchRange, randPitchRange));
+				}
+			}
+			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
+			if([stringThing[j][i]]==";"){textSkips = false;}
+			
+			dialogue_text = scrollT;
+			ObjText_SetText(obj, dialogue_text);
+			
+			if((j != length(stringThing)-1 || i != length(stringThing[j])-1) && !textSkips )
+			{
+				loop(textDelay * modiWait)
+				{
+					if(spkP>=0)
+					{
+						ObjPrim_SetTexture(playermouthobjects[iS[0]],imgM[0][floor(c/8)%2]);
+						if(modiWait>6)
+						{
+							ObjPrim_SetTexture(playermouthobjects[iS[0]],imgM[0][0]);
+						}
+					}
+					if(spkE>=0)
+					{
+						ObjPrim_SetTexture(enemymouthobjects[iS[1]],imgM[1][floor(c/8)%2]);
+						if(modiWait>6)
+						{
+							ObjPrim_SetTexture(enemymouthobjects[iS[1]],imgM[1][0]);
+						}
+					}
+					
+					c++;
+					if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+					{
+						yield;
+					}
+				}
+			}
+			
+		}
+		scrollT =  scrollT ~  "[r]";
+	}
+	//SE_PlayLen(title_cursor, 75);
+	if(spkP>=0)
+	{
+		ObjPrim_SetTexture(playermouthobjects[iS[0]],imgM[0][0]);
+	}
+	if(spkE>=0)
+	{
+		ObjPrim_SetTexture(enemymouthobjects[iS[1]],imgM[1][0]);
+	}
+	yield;
+	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	{
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		yield;
+	}
+	SE_PlayLen(title_cursor, 75);
+	yield;
+	Obj_Delete(obj);
+	Obj_Delete(objName);
+}
+
+
+function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, iS, xm, ym,textScrollSounds, basePitch, randPitchRange, textDelay, yFlip)
+{
+	let y = GetScreenHeight - 48*2;
+	SetSpeakerMultiple(iS[0],iS[1]);
+	
+	if(spkP>=0)
+	{
+		ascent(i in 0..length(iS[0]))
+		{
+			SetNewPlayerPort(imgS[0][i], imgE[0][i], imgM[0][i][0], iS[0][i], xm[0][i], ym[0][i], 0, -1, yFlip[0][i]);
+		}
+	}
+	if(spkE>=0)
+	{
+		ascent(i in 0..length(iS[1]))
+		{
+			SetNewEnemyPort(imgS[1][i], imgE[1][i], imgM[1][i][0], iS[1][i], xm[1][i], ym[1][i], 0, -1, yFlip[1][i]);
+		}
+	}
+	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+	dialogue_text = text;
+	
+	let newCol = [(color[0]), (color[1]), (color[2])];
+	
+	
+	let obj = ObjText_Create();
+	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontSize(obj, 16);
+	ObjText_SetFontColorTop(obj, 255, 255, 255);
+	speakerColor = newCol;
+	ObjText_SetFontColorBottom(obj, 255,255,255);	
+	ObjText_SetFontBorderType(obj, BORDER_FULL);
+	ObjText_SetFontBorderWidth(obj, 1);
+	ObjText_SetFontBorderColor(obj, 0, 0, 0);
+	ObjText_SetLinePitch(obj, 7);
+	ObjText_SetMaxWidth(obj, widthGl*2-20);
+	Obj_SetRenderPriorityI(obj, 76+RP);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
+
+	let objName = ObjText_Create();
+	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontSize(objName, 22);
+	ObjText_SetFontColorTop(objName, 255, 255, 255);
+	speakerColor = newCol;
+	ObjText_SetFontColorBottom(objName, 255,255,255);	
+	ObjText_SetFontBorderType(objName, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objName, 1);
+	ObjText_SetFontBorderColor(objName, 0, 0, 0);
+	ObjText_SetLinePitch(objName, 7);
+	ObjText_SetMaxWidth(objName, widthGl*2);
+	Obj_SetRenderPriorityI(objName, 76+RP);
+	ObjRender_SetPosition(objName, GetScreenWidth/2-widthGl+32+8, y-24, 0);
+	ObjText_SetText(objName, speaker);
+	
+	let stringThing = SplitString(text,"|");
+	let scrollT = [];
+	let c = 0;
+	let textSkips = false;
+	ascent(j in 0..length(stringThing))
+	{
+		ascent(i in 0..length(stringThing[j]))
+		{
+			let modiWait = 1;
+			scrollT = scrollT ~ [stringThing[j][i]];
+			if([stringThing[j][i]]==" ")
+			{
+				
+			}
+			else if([stringThing[j][i]]=="." || [stringThing[j][i]]=="!" || [stringThing[j][i]]=="!")
+			{
+				ascent(p in 0..length(textScrollSounds))
+				{
+					SE_PlayLen(textScrollSounds[p],75, basePitch + rand(-randPitchRange, randPitchRange));
+				}
+				modiWait = 12;
+			}
+			else if([stringThing[j][i]]==",")
+			{
+				ascent(p in 0..length(textScrollSounds))
+				{
+					SE_PlayLen(textScrollSounds[p],75, basePitch + rand(-randPitchRange, randPitchRange));
+				}
+				modiWait = 6;
+			}
+			else
+			{
+				ascent(p in 0..length(textScrollSounds))
+				{
+					SE_PlayLen(textScrollSounds[p],75, basePitch + rand(-randPitchRange, randPitchRange));
+				}
+			}
+			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
+			if([stringThing[j][i]]==";"){textSkips = false;}
+			
+			dialogue_text = scrollT;
+			ObjText_SetText(obj, dialogue_text);
+			
+			if((j != length(stringThing)-1 || i != length(stringThing[j])-1) && !textSkips )
+			{
+				loop(textDelay * modiWait)
+				{
+					if(spkP>=0)
+					{
+						ascent(o in 0..length(iS[0]))
+						{
+							ObjPrim_SetTexture(playermouthobjects[iS[0][o]],imgM[0][o][floor(c/8)%2]);
+							if(modiWait>6)
+							{
+								ObjPrim_SetTexture(playermouthobjects[iS[0][o]],imgM[0][o][0]);
+							}
+						}
+					}
+					if(spkE>=0)
+					{
+						ascent(o in 0..length(iS[0]))
+						{
+							ObjPrim_SetTexture(enemymouthobjects[iS[1][o]],imgM[1][o][floor(c/8)%2]);
+							if(modiWait>6)
+							{
+								ObjPrim_SetTexture(enemymouthobjects[iS[1][o]],imgM[1][o][0]);
+							}
+						}
+					}
+					
+					c++;
+					if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+					{
+						yield;
+					}
+				}
+			}
+			
+		}
+		scrollT =  scrollT ~  "[r]";
+	}
+	//SE_PlayLen(title_cursor, 75);
+	if(spkP>=0)
+	{
+		ascent(o in 0..length(iS[0]))
+		{
+			ObjPrim_SetTexture(playermouthobjects[iS[0][o]],imgM[0][o][0]);
+		}
+	}
+	if(spkE>=0)
+	{
+		ascent(o in 0..length(iS[0]))
+		{
+			ObjPrim_SetTexture(enemymouthobjects[iS[1][o]],imgM[1][o][0]);
+		}
 	}
 	yield;
 	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
@@ -456,6 +767,67 @@ function SetSpeaker(playerID,enemyID)
 			
 			ObjRender_SetColor(enemymouthobjects[o],32,32,32);
 			Obj_SetRenderPriorityI(enemymouthobjects[o], 74+RP);
+		}
+	}
+}
+
+function SetSpeakerMultiple(playerIDs,enemyIDs)
+{
+	ascent(o in 0..length(playerobjects))
+	{
+		ObjRender_SetColor(playerobjects[o],32,32,32);
+		Obj_SetRenderPriorityI(playerobjects[o], 74+RP);
+		
+		ObjRender_SetColor(playereyesobjects[o],32,32,32);
+		Obj_SetRenderPriorityI(playereyesobjects[o], 74+RP);
+		
+		ObjRender_SetColor(playermouthobjects[o],32,32,32);
+		Obj_SetRenderPriorityI(playermouthobjects[o], 74+RP);
+	}
+	ascent(o in 0..length(enemyobjects))
+	{
+		ObjRender_SetColor(enemyobjects[o],32,32,32);
+		Obj_SetRenderPriorityI(enemyobjects[o], 74+RP);
+		
+		ObjRender_SetColor(enemyeyesobjects[o],32,32,32);
+		Obj_SetRenderPriorityI(enemyeyesobjects[o], 74+RP);
+		
+		ObjRender_SetColor(enemymouthobjects[o],32,32,32);
+		Obj_SetRenderPriorityI(enemymouthobjects[o], 74+RP);
+	}
+	
+	ascent(o in 0..length(playerobjects))
+	{
+		ascent(i in 0..length(playerIDs))
+		{
+			if(o==playerIDs[i])
+			{
+				ObjRender_SetColor(playerobjects[o],255,255,255);
+				Obj_SetRenderPriorityI(playerobjects[o], 75+RP);
+				
+				ObjRender_SetColor(playereyesobjects[o],255,255,255);
+				Obj_SetRenderPriorityI(playereyesobjects[o], 75+RP);
+				
+				ObjRender_SetColor(playermouthobjects[o],255,255,255);
+				Obj_SetRenderPriorityI(playermouthobjects[o], 75+RP);
+			}
+		}
+	}
+	ascent(o in 0..length(enemyobjects))
+	{
+		ascent(i in 0..length(enemyIDs))
+		{
+			if(o==enemyIDs[i])
+			{
+				ObjRender_SetColor(enemyobjects[o],255,255,255);
+				Obj_SetRenderPriorityI(enemyobjects[o], 75+RP);
+				
+				ObjRender_SetColor(enemyeyesobjects[o],255,255,255);
+				Obj_SetRenderPriorityI(enemyeyesobjects[o], 75+RP);
+				
+				ObjRender_SetColor(enemymouthobjects[o],255,255,255);
+				Obj_SetRenderPriorityI(enemymouthobjects[o], 75+RP);
+			}
 		}
 	}
 }
