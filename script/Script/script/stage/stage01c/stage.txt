@@ -68,7 +68,7 @@ task StartStage
 	SetCommonData("MaxNumberOfPhases",1);
 	if(GetCommonData("isPracticing", false)==true)
 	{
-		MusicChange(BGM_BOSS_01C, 85, 279333, 5708522);
+		BossMusicChange(ID_BOSSBGM_1C);	
 	}
 	SetCommonData("LifeBombAlpha",255);
 	SetForbidPlayerSpell(false);

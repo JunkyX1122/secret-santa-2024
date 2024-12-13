@@ -74,7 +74,7 @@ task StartStage
 	SetCommonData("Stage2DualSpellPhase",0);
 	if(GetCommonData("isPracticing", false)==true)
 	{
-		MusicChange(BGM_BOSS_02, 90, 602574, 5157047);
+		BossMusicChange(ID_BOSSBGM_2);	
 	}
 	SetCommonData("LifeBombAlpha",255);
 	SetForbidPlayerSpell(false);

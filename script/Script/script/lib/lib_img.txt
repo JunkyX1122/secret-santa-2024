@@ -418,8 +418,21 @@ const IMG_PORTRAIT_GODSWORN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../i
 const IMGAR_PORTRAIT_GODSWORN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_00b.png"];
 
 // ------------------------------------------ HIROYUKI
-const IMG_PORTRAIT_HIROYUKI_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_base.png";
-const IMGAR_PORTRAIT_HIROYUKI_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki_00b.png"];
+const IMG_PORTRAIT_HIROYUKI_BASE 	  	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_base.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_00.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_01   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_01.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_02   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_02.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_03   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_03.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_04   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_04.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_05   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_05.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_06   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_06.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_07   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_07.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_08   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_08.png";
+const IMG_PORTRAIT_HIROYUKI_EYES_09   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_eyes_09.png";
+const IMGAR_PORTRAIT_HIROYUKI_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_00b.png"];
+const IMGAR_PORTRAIT_HIROYUKI_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_01b.png"];
+const IMGAR_PORTRAIT_HIROYUKI_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_02b.png"];
+const IMGAR_PORTRAIT_HIROYUKI_MOUTH_03 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_03b.png"];
 
 // ------------------------------------------ REDRIN
 const IMG_PORTRAIT_REDRIN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_base.png";

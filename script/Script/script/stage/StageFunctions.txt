@@ -2,6 +2,12 @@
 let music1 = ObjSound_Create;
 let vol = 100;
 let startMusic = false;
+
+task BossMusicChange(id)
+{
+	MusicChange(BOSS_MUSIC_PATHS[id], BOSS_MUSIC_DATA[id][0], BOSS_MUSIC_DATA[id][1], BOSS_MUSIC_DATA[id][2]);
+}
+
 task MusicChange(musicPath, v, sl1, sl2)
 {
 	if(!Obj_IsDeleted(music1))

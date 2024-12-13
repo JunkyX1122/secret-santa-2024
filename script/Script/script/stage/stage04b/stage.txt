@@ -72,7 +72,7 @@ task StartStage
 	SetCommonData("Stage4b_Phase",0);
 	if(GetCommonData("isPracticing", false)==true)
 	{
-		MusicChange(BGM_BOSS_04B, 90, 375460, 5107052);
+		BossMusicChange(ID_BOSSBGM_4B);
 	}
 	SetCommonData("LifeBombAlpha",255);
 	SetForbidPlayerSpell(false);
