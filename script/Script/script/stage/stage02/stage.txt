@@ -60,6 +60,10 @@ task LoadBoss()
 
 task StartStage
 {	
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		StageMusicChange(ID_STAGEBGM_2);	
+	}
 	SetCommonData("GatoPlayerSprite", 1);
 	if(GetCommonData("isPracticing", false)==true)
 	{

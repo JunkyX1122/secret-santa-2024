@@ -69,7 +69,7 @@ task Normal {
 		ObjRender_SetPosition(obj, 107+320, 48, 0);
 		ObjRender_SetPosition(obj2, 0, -194, 0);
 		ObjSprite3D_SetSourceDestRect(obj2, 0, c, 512, 512 + c);
-		c++;
+		c+=1.5;
 		yield;
 	}
 }

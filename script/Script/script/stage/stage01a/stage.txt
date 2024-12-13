@@ -60,7 +60,10 @@ task LoadBoss()
 
 task StartStage
 {	
-
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		StageMusicChange(ID_STAGEBGM_1A);	
+	}
 	BGTransition(255, 255, 60);
 	wait(60);
 	BGTransition(255, 0, 120);

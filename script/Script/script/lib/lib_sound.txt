@@ -255,7 +255,36 @@ const BGM_STAGE_04  = GetCurrentScriptDirectory~"./../../bgm/stage_04.ogg";
 const BGM_STAGE_05  = GetCurrentScriptDirectory~"./../../bgm/stage_05.ogg";
 const BGM_STAGE_06  = GetCurrentScriptDirectory~"./../../bgm/stage_06.ogg";
 
+const ID_STAGEBGM_1A = 0;
+const ID_STAGEBGM_1B = 1;
+const ID_STAGEBGM_1C = 2;
+const ID_STAGEBGM_2	 = 3;
+const ID_STAGEBGM_3	 = 4;
+const ID_STAGEBGM_4	 = 5;
+const ID_STAGEBGM_5	 = 6;
+const ID_STAGEBGM_6	 = 7;
 
+const STAGE_MUSIC_PATHS = 	[
+								BGM_STAGE_01A,
+								BGM_STAGE_01B,
+								BGM_STAGE_01C,
+								BGM_STAGE_02,
+								BGM_STAGE_03,
+								BGM_STAGE_04,
+								BGM_STAGE_05,
+								BGM_STAGE_06
+							];
+
+const STAGE_MUSIC_DATA  = [
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1],
+							[ 	80, 	-1, 	-1]
+						];
 
 const BGM_BOSS_01A = GetCurrentScriptDirectory~"./../../bgm/boss_01a.ogg";
 const BGM_BOSS_01B = GetCurrentScriptDirectory~"./../../bgm/boss_01b.ogg";

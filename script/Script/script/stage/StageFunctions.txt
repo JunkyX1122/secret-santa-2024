@@ -7,7 +7,10 @@ task BossMusicChange(id)
 {
 	MusicChange(BOSS_MUSIC_PATHS[id], BOSS_MUSIC_DATA[id][0], BOSS_MUSIC_DATA[id][1], BOSS_MUSIC_DATA[id][2]);
 }
-
+task StageMusicChange(id)
+{
+	MusicChange(STAGE_MUSIC_PATHS[id], STAGE_MUSIC_DATA[id][0], STAGE_MUSIC_DATA[id][1], STAGE_MUSIC_DATA[id][2]);
+}
 task MusicChange(musicPath, v, sl1, sl2)
 {
 	if(!Obj_IsDeleted(music1))
@@ -25,7 +28,10 @@ task MusicChange(musicPath, v, sl1, sl2)
 	}
 	ObjSound_Play(music1);
 	startMusic=true;
-	vol = v;
+	SetBGMVolume(v);
+	forceVolumeChangeSkipFlag = true;
+	yield; 
+	forceVolumeChangeSkipFlag = false;
 }
 function SetBGMVolume(v)
 {
@@ -35,14 +41,18 @@ function GetBGMVolume()
 {
 	return vol;
 }
+task MusicFade(t)
+{
+	MusicVolumeChange(GetBGMVolume, 0, t);
+}
 let forceVolumeChangeSkipFlag = false;
 task MusicVolumeChange(v1, v2, t)
 {
 	ascent(i in 0..t)
 	{
-		SetBGMVolume(Interpolate_Linear(v1, v2, 1/(t-1)*i));
 		if(!forceVolumeChangeSkipFlag)
 		{
+			SetBGMVolume(Interpolate_Linear(v1, v2, 1/(t-1)*i));
 			yield;
 		}
 	}

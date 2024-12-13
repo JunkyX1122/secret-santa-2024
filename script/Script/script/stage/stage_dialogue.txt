@@ -201,6 +201,8 @@ const godswornFaceOffsetData = 		[Get_Distance(0, 0, 0, -80),	Get_PointAngle(0, 
 const hiroyukiFaceOffsetData = 		[Get_Distance(0, 0, -8, -72),	Get_PointAngle(0, 0, -8, -72)+180];
 const redrinFaceOffsetData = 		[Get_Distance(0, 0, -8, -168),	Get_PointAngle(0, 0, -8, -168)+180];
 const mouth_null = ["", ""];
+
+const DEFAULT_MUSIC_FADE = 60*3;
 function Stage01APreBattle()
 {
 	SetPortraitData([[0,0],[0,0],[0,0]], [[0,0],[0,0],[0,0]], 
@@ -253,7 +255,9 @@ function Stage01APreBattle()
 	SetDialogueTextA3("Gato", "I mean, free gifts, snacks and booze am I right?", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
 						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
-						
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Anubis", "See here's the thing. ", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
 						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
@@ -398,6 +402,8 @@ function Stage01BPreBattle()
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA4("Daisuke", "Are people in danger?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
@@ -538,7 +544,9 @@ function Stage01CPreBattle()
 	SetDialogueTextA4("Grandis", "But there's nothing wrong with being flexible *and* comfortable|though, right?", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
-
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Viivi", "I mean, a jacket like that is nice and all, makes you more presentable|by the day.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
@@ -765,6 +773,8 @@ function Stage02APreBattle()
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Scylla", "You know where Redrin Lightclaw is? You've seen him around?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
 						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
@@ -947,6 +957,8 @@ function Stage02BPreBattle()
 	SetDialogueTextA3("Daisuke", "There goes our chance of a sidequest...", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Scylla", "Hey, if you're itching for some action, we could probably help you|instead.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
@@ -1152,6 +1164,8 @@ function Stage02CPreBattle()
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Scylla", "Anyways, we should probably get a move on. We've got someone|we've gotta look for.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
 						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
@@ -1336,6 +1350,8 @@ function Stage03APreBattle()
 	SetDialogueTextA3("Iqaluk", "So you able to help someone like me out?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Kairyu", "Well..Let's see.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
@@ -1575,6 +1591,8 @@ function Stage03BPreBattle()
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Sullen", "...Yes I suppose the Lord's blessing upon me can be seen as a form|of magic.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
@@ -1775,6 +1793,9 @@ function Stage03CPreBattle()
 	SetDialogueTextA3("Kairyu", "Yes. I suppose this gives me an excuse to touch up more on my|magic.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
 						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Kairyu", "Anyways, it has been some time since we have seen each other. How|have your studies been?", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
 						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
@@ -2090,6 +2111,8 @@ function Stage04APreBattle()
 	SetDialogueTextA3("Xue", "Kinda sounds like you're not doing your job there Mr.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA4("Sullen", "...It is indeed part of my duty to lead those to what I believe is the|right path.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
@@ -2473,6 +2496,9 @@ function Stage04BPreBattle()
 	SetDialogueTextA3("Daisuke", "Oh I am aware. There will be many burdens, expectations I will have|to shoulder.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Daisuke", "But a truly strong person will be able to carry all that and still do|what's best for people.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
@@ -2844,6 +2870,8 @@ function Stage04CPreBattle()
 	SetDialogueTextA3("Grandis", "Well you're probably not going to get any answers in a place like this.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Erlendur", "Heh, you'd be surprised my friend.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
@@ -3321,6 +3349,8 @@ function Stage05APreBattle()
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Hiroyuki", "They... Aren't really? Though, I wouldn't be surprised if they|celebrated it too.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
@@ -3626,6 +3656,8 @@ function Stage05BPreBattle()
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
 	SetDialogueTextA3("Hiroyuki", "As reliable as ever.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
@@ -3890,6 +3922,8 @@ function Stage05CPreBattle()
 	SetDialogueTextA3("Grandis", "You're obsessed.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Viivi", "It's less so the f-food and more... the warmth. ", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
