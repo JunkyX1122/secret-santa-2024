@@ -876,26 +876,26 @@ function Stage02BPreBattle()
 	
 	SetDialogueTextA3("Sullen", "If I may ask, what was it you and your mother were delivering?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Oh, uh gifts! For a few people over there.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_04, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "One of them was for my bro.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "I see. I hope that you and your family's situation has improved since|our last encounter.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Mhm! Family's gotta stick together!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Indeed. Regardless on whether said people in the family are blood|related.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "Couldn't have said it better myself.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
@@ -908,90 +908,94 @@ function Stage02BPreBattle()
 	
 	SetDialogueTextA3("Sullen", "Ah, greetings.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Kieran", "Greetings to you too sir.", 
+						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_07, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "Kieran Lightspeed, and this is Scylla Stargazer.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_05, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "Sorry to intrude on your conversation, but we're in a bit of a|situation right now.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_05, IMGAR_PORTRAIT_SCYLLA_MOUTH_01, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "A situation? Like a problem?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "How can we help?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "Oh it is not too urgent. We are just trying to find someone.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_04, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "The leader of our warband. Redrin Lightclaw. Have you maybe seen|him around anywhere?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_04, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Hm...I am afraid I have not. Sorry.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	SetDialogueTextA3("Sullen", "The last I have seen of him was years ago, and I am not very familiar|with the man.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "Not to worry, we shall proceed with our search.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_04, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "You sure we can't help look too?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_07, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "Don't worry about it kid, we've got it.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_04, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "There goes our chance of a sidequest...", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_08, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.8, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Scylla", "Hey, if you're itching for some action, we could probably help you|instead.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_02, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	SetDialogueTextA3("Scylla", "You're look like the warrior type right?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_04, IMGAR_PORTRAIT_SCYLLA_MOUTH_01, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Hero-ey to be more specific!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_2);	
 	
 	SetDialogueTextA3("Kieran", "Is it not tradition in Gensokyo for duels to happen regularly?", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_01, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "We've got some time on us, how about a spar with some strangers|for the road?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_04, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	SetDialogueTextA3("Scylla", "I could do with a warmup.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_04, IMGAR_PORTRAIT_SCYLLA_MOUTH_01, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "If...it isn't too much of an issue, Mr. Sullen.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "The time we are to meet with the people in need of help is far later|in the day.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	SetDialogueTextA3("Sullen", "I can afford to be less early than I usually am.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 }
 
