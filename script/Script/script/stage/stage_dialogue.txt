@@ -1069,28 +1069,28 @@ function Stage02CPreBattle()
 	
 	SetDialogueTextA3("Grandis", "So...Have you got anything in mind?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	SetDialogueTextA3("Grandis", "We've been walking for a while now, you better have at least an idea.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_05, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "I'm sure something'll catch my eye when we get there.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "I ain't a fashion expert.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Tazue", "Meow.", 
 						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
-						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_02, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Hol'up. I think I see some people.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_03, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "Hey there!", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_03, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 						
 	//SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
@@ -1099,17 +1099,17 @@ function Stage02CPreBattle()
 	
 	SetDialogueTextA3("Kieran", "Oh, good morning.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_07, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Hey...I think I've seen your face around before.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_03, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "You're uhh...", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_06, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	SetDialogueTextA3("Viivi", "From tiger-bread's crew I think.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_06, IMGAR_PORTRAIT_VIIVI_MOUTH_03, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SlideInEnemy(40, id_scylla, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	//SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
@@ -1118,84 +1118,85 @@ function Stage02CPreBattle()
 	
 	SetDialogueTextA3("Scylla", "What?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_02, IMGAR_PORTRAIT_SCYLLA_MOUTH_02, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Who are these guys again?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "Tiger Bread?", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_01, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "First thing that came to mind ok?!", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
-	
-	SetDialogueTextA3("Scylla", "Scylla. This guy here's Kieran.", 
-						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_09, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "Right...", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_02, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 0.8, 0.05, 2);
+	
+	SetDialogueTextA3("Scylla", "Scylla. This guy here's Kieran.", 
+						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_01, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+	
 	SetDialogueTextA3("Kieran", "And you two must be Viivi and...Grandis I think.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
 						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Yep. That's right.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Eh? Hold on. How'd you come about knowing my name?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_07, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "The Meowstic Mansion library. You are a fellow student of the|sciences.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_04, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	SetDialogueTextA3("Kieran", "I have read one of your papers on closing the physical distance|between two points. Very facinating might I add.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_06, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Someone actually read that?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_03, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "People actually read those things willingly?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_07, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Scylla", "Anyways, we should probably get a move on. We've got someone|we've gotta look for.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_04, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "Now hold on, this is a good opportunity to see these findings in|action.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_01, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	SetDialogueTextA3("Kieran", "If I may, would it not be too much trouble for a...demonstration of a|fellow scholar's capabilities?", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_03, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "So a duel?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_03, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_2);	
 	
 	SetDialogueTextA3("Scylla", "Uh...I guess that's what's about to happen.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_01, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "...Sure. Why not?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_09, IMGAR_PORTRAIT_GRANDIS_MOUTH_04, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "It's early enough, we've totally got time.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_08, IMGAR_PORTRAIT_VIIVI_MOUTH_03, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 }
 
