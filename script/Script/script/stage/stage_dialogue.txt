@@ -1442,48 +1442,48 @@ function Stage03APostBattle()
 	
 	SetDialogueTextA3("Kairyu", "Hm. May I ask you something Iqaluk?", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Yeah go on.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "The use of blades and fortune cards...Magic not common to|Gensokyo...", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "Though I have not met him directly, my colleagues have spoken of|an individual who caused quite some trouble in recent months.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_04, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.8, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "A man not native to this land, rather native to one of heat and sand.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "I hear he has had a change of heart recently.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Eh, he sounds interesting. ", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "Oh would you look at the time. Sorry, I'm on a pretty tight schedule|today.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 	while(forceStop){yield;}
 	SlideInPlayer(40, id_gato, portraitXLeft, portraitXLeft-150, portraitYOffset, portraitYOffset, 1, 255, 0);
 	
 	SetDialogueTextA3("Iqaluk", "Ta-ta~", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.3, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "...Hm.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_02, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "He does not give the expression of someone with an ulterior motive.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "I'll trust my sources are right on his change of heart.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_01, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1.1, 0.05, 2);					
 	
 }
 
