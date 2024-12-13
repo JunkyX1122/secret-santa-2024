@@ -64,16 +64,43 @@ task LoadThings
 		LoadTexture(System_ImgArray[i]);
 		yield;
 	}
-	/*
-	ascent(i in 0..length(CharacterImg_ImgArray))
+	
+	ascent(i in 0..length(Team1PortraitImg_ImgArray))
 	{
-		ascent(o in 0..length(CharacterImg_ImgArray[i]))
+		ascent(o in 0..length(Team1PortraitImg_ImgArray[i]))
 		{
-			LoadTexture(CharacterImg_ImgArray[i][o]);
+			LoadTexture(Team1PortraitImg_ImgArray[i][o]);
 		}
 		yield;
 	}
-	*/
+	
+	ascent(i in 0..length(Team2PortraitImg_ImgArray))
+	{
+		ascent(o in 0..length(Team2PortraitImg_ImgArray[i]))
+		{
+			LoadTexture(Team2PortraitImg_ImgArray[i][o]);
+		}
+		yield;
+	}
+	
+	ascent(i in 0..length(Team3PortraitImg_ImgArray))
+	{
+		ascent(o in 0..length(Team3PortraitImg_ImgArray[i]))
+		{
+			LoadTexture(Team3PortraitImg_ImgArray[i][o]);
+		}
+		yield;
+	}
+	
+	ascent(i in 0..length(BossPortraitImg_ImgArray))
+	{
+		ascent(o in 0..length(BossPortraitImg_ImgArray[i]))
+		{
+			LoadTexture(BossPortraitImg_ImgArray[i][o]);
+		}
+		yield;
+	}
+	
 	//-----------------Load Sound-----------------
 	ascent(i in 0..length(LoadAllSoundsArray))
 	{

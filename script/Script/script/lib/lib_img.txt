@@ -268,6 +268,28 @@ const IMGAR_PORTRAIT_GATO_MOUTH_01 	= [GetCurrentScriptDirectory()  ~ "./../../i
 const IMGAR_PORTRAIT_GATO_MOUTH_02 	= [GetCurrentScriptDirectory()  ~ "./../../img/talk/gato/gato_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/gato/gato_mouth_02b.png"];
 const IMGAR_PORTRAIT_GATO_MOUTH_03 	= [GetCurrentScriptDirectory()  ~ "./../../img/talk/gato/gato_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/gato/gato_mouth_03b.png"];
 
+const GatoPortrait_ImgArray = [
+IMG_PORTRAIT_GATO_BASE,
+IMG_PORTRAIT_GATO2_BASE,
+IMG_PORTRAIT_GATO_EYES_00,
+IMG_PORTRAIT_GATO_EYES_01,
+IMG_PORTRAIT_GATO_EYES_02,
+IMG_PORTRAIT_GATO_EYES_03,
+IMG_PORTRAIT_GATO_EYES_04,
+IMG_PORTRAIT_GATO_EYES_05,
+IMG_PORTRAIT_GATO_EYES_06,
+IMG_PORTRAIT_GATO_EYES_07,
+IMG_PORTRAIT_GATO_EYES_08,
+IMG_PORTRAIT_GATO_EYES_09,
+IMGAR_PORTRAIT_GATO_MOUTH_00[0],
+IMGAR_PORTRAIT_GATO_MOUTH_00[1],
+IMGAR_PORTRAIT_GATO_MOUTH_01[0],
+IMGAR_PORTRAIT_GATO_MOUTH_01[1],
+IMGAR_PORTRAIT_GATO_MOUTH_02[0],
+IMGAR_PORTRAIT_GATO_MOUTH_02[1],
+IMGAR_PORTRAIT_GATO_MOUTH_03[0],
+IMGAR_PORTRAIT_GATO_MOUTH_03[1],
+];
 // ------------------------------------------ ANUBIS
 const IMG_PORTRAIT_ANUBIS_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis/anubis_base.png";
 const IMG_PORTRAIT_ANUBIS_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis/anubis_eyes_00.png";
@@ -275,6 +297,15 @@ const IMG_PORTRAIT_ANUBIS_EYES_01   	= 	GetCurrentScriptDirectory()  ~ "./../../
 const IMG_PORTRAIT_ANUBIS_EYES_02   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis/anubis_eyes_02.png";
 const IMG_PORTRAIT_ANUBIS_EYES_03   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis/anubis_eyes_03.png";
 const IMG_PORTRAIT_ANUBIS_EYES_04   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis/anubis_eyes_04.png";
+
+const AnubisPortrait_ImgArray = [
+IMG_PORTRAIT_ANUBIS_BASE,
+IMG_PORTRAIT_ANUBIS_EYES_00,
+IMG_PORTRAIT_ANUBIS_EYES_01,
+IMG_PORTRAIT_ANUBIS_EYES_02,
+IMG_PORTRAIT_ANUBIS_EYES_03,
+IMG_PORTRAIT_ANUBIS_EYES_04
+];
 
 // ------------------------------------------ ANUBIS STAND
 const IMG_PORTRAIT_ANUBIS_STAND_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_base.png";
@@ -287,6 +318,22 @@ const IMG_PORTRAIT_ANUBIS_STAND_EYES_05   	= 	GetCurrentScriptDirectory()  ~ "./
 const IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_mouth_00b.png"];
 const IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_mouth_01b.png"];
 const IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/anubis_stand/anubis_stand_mouth_02b.png"];
+
+const AnubisStandPortrait_ImgArray = [
+IMG_PORTRAIT_ANUBIS_STAND_BASE,
+IMG_PORTRAIT_ANUBIS_STAND_EYES_00,
+IMG_PORTRAIT_ANUBIS_STAND_EYES_01,
+IMG_PORTRAIT_ANUBIS_STAND_EYES_02,
+IMG_PORTRAIT_ANUBIS_STAND_EYES_03,
+IMG_PORTRAIT_ANUBIS_STAND_EYES_04,
+IMG_PORTRAIT_ANUBIS_STAND_EYES_05,
+IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00[0],
+IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00[1],
+IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_01[0],
+IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_01[1],
+IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_02[0],
+IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_02[1]
+];
 
 // ------------------------------------------ SULLEN
 const IMG_PORTRAIT_SULLEN_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen/sullen_base.png";
@@ -302,6 +349,24 @@ const IMG_PORTRAIT_SULLEN_EYES_08   	= 	GetCurrentScriptDirectory()  ~ "./../../
 const IMG_PORTRAIT_SULLEN_EYES_09   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen/sullen_eyes_09.png";
 const IMGAR_PORTRAIT_SULLEN_MOUTH_00 	= [GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen/sullen_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen/sullen_mouth_00b.png"];
 const IMGAR_PORTRAIT_SULLEN_MOUTH_01 	= [GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen/sullen_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/sullen/sullen_mouth_01b.png"];
+
+const SullenPortrait_ImgArray = [
+IMG_PORTRAIT_SULLEN_BASE,
+IMG_PORTRAIT_SULLEN_EYES_00,
+IMG_PORTRAIT_SULLEN_EYES_01,
+IMG_PORTRAIT_SULLEN_EYES_02,
+IMG_PORTRAIT_SULLEN_EYES_03,
+IMG_PORTRAIT_SULLEN_EYES_04,
+IMG_PORTRAIT_SULLEN_EYES_05,
+IMG_PORTRAIT_SULLEN_EYES_06,
+IMG_PORTRAIT_SULLEN_EYES_07,
+IMG_PORTRAIT_SULLEN_EYES_08,
+IMG_PORTRAIT_SULLEN_EYES_09,
+IMGAR_PORTRAIT_SULLEN_MOUTH_00[0],
+IMGAR_PORTRAIT_SULLEN_MOUTH_00[1],
+IMGAR_PORTRAIT_SULLEN_MOUTH_01[0],
+IMGAR_PORTRAIT_SULLEN_MOUTH_01[1]
+];
 
 // ------------------------------------------ DAISUKE
 const IMG_PORTRAIT_DAISUKE_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke/daisuke_base.png";
@@ -321,6 +386,30 @@ const IMGAR_PORTRAIT_DAISUKE_MOUTH_02 	= [GetCurrentScriptDirectory()  ~ "./../.
 const IMGAR_PORTRAIT_DAISUKE_MOUTH_03 	= [GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke/daisuke_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke/daisuke_mouth_03b.png"];
 const IMGAR_PORTRAIT_DAISUKE_MOUTH_04 	= [GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke/daisuke_mouth_04a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/daisuke/daisuke_mouth_04b.png"];
 
+const DaisukePortrait_ImgArray = [
+IMG_PORTRAIT_DAISUKE_BASE,
+IMG_PORTRAIT_DAISUKE_EYES_00,
+IMG_PORTRAIT_DAISUKE_EYES_01,
+IMG_PORTRAIT_DAISUKE_EYES_02,
+IMG_PORTRAIT_DAISUKE_EYES_03,
+IMG_PORTRAIT_DAISUKE_EYES_04,
+IMG_PORTRAIT_DAISUKE_EYES_05,
+IMG_PORTRAIT_DAISUKE_EYES_06,
+IMG_PORTRAIT_DAISUKE_EYES_07,
+IMG_PORTRAIT_DAISUKE_EYES_08,
+IMG_PORTRAIT_DAISUKE_EYES_09,
+IMGAR_PORTRAIT_DAISUKE_MOUTH_00[0],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_00[1],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_01[0],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_01[1],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_02[0],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_02[1],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_03[0],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_03[1],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_04[0],
+IMGAR_PORTRAIT_DAISUKE_MOUTH_04[1]
+];
+
 // ------------------------------------------ DANDARA
 const IMG_PORTRAIT_DANDARA_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_base.png";
 const IMG_PORTRAIT_DANDARA_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_eyes_00.png";
@@ -329,6 +418,18 @@ const IMG_PORTRAIT_DANDARA_EYES_02   	= 	GetCurrentScriptDirectory()  ~ "./../..
 const IMG_PORTRAIT_DANDARA_EYES_03   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_eyes_03.png";
 const IMGAR_PORTRAIT_DANDARA_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_mouth_00b.png"];
 const IMGAR_PORTRAIT_DANDARA_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/dandara/dandara_mouth_01b.png"];
+
+const DandaraPortrait_ImgArray = [
+IMG_PORTRAIT_DANDARA_BASE,
+IMG_PORTRAIT_DANDARA_EYES_00,
+IMG_PORTRAIT_DANDARA_EYES_01,
+IMG_PORTRAIT_DANDARA_EYES_02,
+IMG_PORTRAIT_DANDARA_EYES_03,
+IMGAR_PORTRAIT_DANDARA_MOUTH_00[0],
+IMGAR_PORTRAIT_DANDARA_MOUTH_00[1],
+IMGAR_PORTRAIT_DANDARA_MOUTH_01[0],
+IMGAR_PORTRAIT_DANDARA_MOUTH_01[1]
+];
 
 // ------------------------------------------ VIIVI
 const IMG_PORTRAIT_VIIVI_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi/viivi_base.png";
@@ -348,6 +449,30 @@ const IMGAR_PORTRAIT_VIIVI_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../i
 const IMGAR_PORTRAIT_VIIVI_MOUTH_03 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi/viivi_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi/viivi_mouth_03b.png"];
 const IMGAR_PORTRAIT_VIIVI_MOUTH_04 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi/viivi_mouth_04a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/viivi/viivi_mouth_04b.png"];
 
+const ViiviPortrait_ImgArray = [
+IMG_PORTRAIT_VIIVI_BASE,
+IMG_PORTRAIT_VIIVI_EYES_00,
+IMG_PORTRAIT_VIIVI_EYES_01,
+IMG_PORTRAIT_VIIVI_EYES_02,
+IMG_PORTRAIT_VIIVI_EYES_03,
+IMG_PORTRAIT_VIIVI_EYES_04,
+IMG_PORTRAIT_VIIVI_EYES_05,
+IMG_PORTRAIT_VIIVI_EYES_06,
+IMG_PORTRAIT_VIIVI_EYES_07,
+IMG_PORTRAIT_VIIVI_EYES_08,
+IMG_PORTRAIT_VIIVI_EYES_09,
+IMGAR_PORTRAIT_VIIVI_MOUTH_00[0],
+IMGAR_PORTRAIT_VIIVI_MOUTH_00[1],
+IMGAR_PORTRAIT_VIIVI_MOUTH_01[0],
+IMGAR_PORTRAIT_VIIVI_MOUTH_01[1],
+IMGAR_PORTRAIT_VIIVI_MOUTH_02[0],
+IMGAR_PORTRAIT_VIIVI_MOUTH_02[1],
+IMGAR_PORTRAIT_VIIVI_MOUTH_03[0],
+IMGAR_PORTRAIT_VIIVI_MOUTH_03[1],
+IMGAR_PORTRAIT_VIIVI_MOUTH_04[0],
+IMGAR_PORTRAIT_VIIVI_MOUTH_04[1]
+];
+
 // ------------------------------------------ TAZUE
 const IMG_PORTRAIT_TAZUE_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_base.png";
 const IMG_PORTRAIT_TAZUE_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_eyes_00.png";
@@ -355,6 +480,17 @@ const IMG_PORTRAIT_TAZUE_EYES_01   	= 	GetCurrentScriptDirectory()  ~ "./../../i
 const IMG_PORTRAIT_TAZUE_EYES_02   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_eyes_02.png";
 const IMGAR_PORTRAIT_TAZUE_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_mouth_00b.png"];
 const IMGAR_PORTRAIT_TAZUE_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/tazue/tazue_mouth_01b.png"];
+
+const TazuePortrait_ImgArray = [
+IMG_PORTRAIT_TAZUE_BASE,
+IMG_PORTRAIT_TAZUE_EYES_00,
+IMG_PORTRAIT_TAZUE_EYES_01,
+IMG_PORTRAIT_TAZUE_EYES_02,
+IMGAR_PORTRAIT_TAZUE_MOUTH_00[0],
+IMGAR_PORTRAIT_TAZUE_MOUTH_00[1],
+IMGAR_PORTRAIT_TAZUE_MOUTH_01[0],
+IMGAR_PORTRAIT_TAZUE_MOUTH_01[1]
+];
 
 // ------------------------------------------ GRANDIS
 const IMG_PORTRAIT_GRANDIS_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis/grandis_base.png";
@@ -374,6 +510,30 @@ const IMGAR_PORTRAIT_GRANDIS_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../..
 const IMGAR_PORTRAIT_GRANDIS_MOUTH_03 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis/grandis_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis/grandis_mouth_03b.png"];
 const IMGAR_PORTRAIT_GRANDIS_MOUTH_04 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis/grandis_mouth_04a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/grandis/grandis_mouth_04b.png"];
 
+const GrandisPortrait_ImgArray = [
+IMG_PORTRAIT_GRANDIS_BASE,
+IMG_PORTRAIT_GRANDIS_EYES_00,
+IMG_PORTRAIT_GRANDIS_EYES_01,
+IMG_PORTRAIT_GRANDIS_EYES_02,
+IMG_PORTRAIT_GRANDIS_EYES_03,
+IMG_PORTRAIT_GRANDIS_EYES_04,
+IMG_PORTRAIT_GRANDIS_EYES_05,
+IMG_PORTRAIT_GRANDIS_EYES_06,
+IMG_PORTRAIT_GRANDIS_EYES_07,
+IMG_PORTRAIT_GRANDIS_EYES_08,
+IMG_PORTRAIT_GRANDIS_EYES_09,
+IMGAR_PORTRAIT_GRANDIS_MOUTH_00[0],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_00[1],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_01[0],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_01[1],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_02[0],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_02[1],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_03[0],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_03[1],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_04[0],
+IMGAR_PORTRAIT_GRANDIS_MOUTH_04[1]
+];
+
 // ------------------------------------------ SCYLLA
 const IMG_PORTRAIT_SCYLLA_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla/scylla_base.png";
 const IMG_PORTRAIT_SCYLLA_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla/scylla_eyes_00.png";
@@ -388,6 +548,24 @@ const IMGAR_PORTRAIT_SCYLLA_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../
 const IMGAR_PORTRAIT_SCYLLA_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla/scylla_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla/scylla_mouth_01b.png"];
 const IMGAR_PORTRAIT_SCYLLA_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla/scylla_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/scylla/scylla_mouth_02b.png"];
 
+const ScyllaPortrait_ImgArray = [
+IMG_PORTRAIT_SCYLLA_BASE,
+IMG_PORTRAIT_SCYLLA_EYES_00,
+IMG_PORTRAIT_SCYLLA_EYES_01,
+IMG_PORTRAIT_SCYLLA_EYES_02,
+IMG_PORTRAIT_SCYLLA_EYES_03,
+IMG_PORTRAIT_SCYLLA_EYES_04,
+IMG_PORTRAIT_SCYLLA_EYES_05,
+IMG_PORTRAIT_SCYLLA_EYES_06,
+IMG_PORTRAIT_SCYLLA_EYES_07,
+IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0],
+IMGAR_PORTRAIT_SCYLLA_MOUTH_00[1],
+IMGAR_PORTRAIT_SCYLLA_MOUTH_01[0],
+IMGAR_PORTRAIT_SCYLLA_MOUTH_01[1],
+IMGAR_PORTRAIT_SCYLLA_MOUTH_02[0],
+IMGAR_PORTRAIT_SCYLLA_MOUTH_02[1]
+];
+
 // ------------------------------------------ KIERAN
 const IMG_PORTRAIT_KIERAN_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran/kieran_base.png";
 const IMG_PORTRAIT_KIERAN_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran/kieran_eyes_00.png";
@@ -398,6 +576,18 @@ const IMG_PORTRAIT_KIERAN_EYES_04   	= 	GetCurrentScriptDirectory()  ~ "./../../
 const IMG_PORTRAIT_KIERAN_EYES_05   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran/kieran_eyes_05.png";
 const IMG_PORTRAIT_KIERAN_EYES_06   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran/kieran_eyes_06.png";
 const IMG_PORTRAIT_KIERAN_EYES_07   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kieran/kieran_eyes_07.png";
+
+const KieranPortrait_ImgArray = [
+IMG_PORTRAIT_KIERAN_BASE,
+IMG_PORTRAIT_KIERAN_EYES_00,
+IMG_PORTRAIT_KIERAN_EYES_01,
+IMG_PORTRAIT_KIERAN_EYES_02,
+IMG_PORTRAIT_KIERAN_EYES_03,
+IMG_PORTRAIT_KIERAN_EYES_04,
+IMG_PORTRAIT_KIERAN_EYES_05,
+IMG_PORTRAIT_KIERAN_EYES_06,
+IMG_PORTRAIT_KIERAN_EYES_07
+];
 
 // ------------------------------------------ KAIRYU
 const IMG_PORTRAIT_KAIRYU_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_base.png";
@@ -413,9 +603,32 @@ const IMGAR_PORTRAIT_KAIRYU_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../
 const IMGAR_PORTRAIT_KAIRYU_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_01b.png"];
 const IMGAR_PORTRAIT_KAIRYU_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/kairyu/kairyu_mouth_02b.png"];
 
+const KairyuPortrait_ImgArray = [
+IMG_PORTRAIT_KAIRYU_BASE,
+IMG_PORTRAIT_KAIRYU_EYES_00,
+IMG_PORTRAIT_KAIRYU_EYES_01,
+IMG_PORTRAIT_KAIRYU_EYES_02,
+IMG_PORTRAIT_KAIRYU_EYES_03,
+IMG_PORTRAIT_KAIRYU_EYES_04,
+IMG_PORTRAIT_KAIRYU_EYES_05,
+IMG_PORTRAIT_KAIRYU_EYES_06,
+IMG_PORTRAIT_KAIRYU_EYES_07,
+IMGAR_PORTRAIT_KAIRYU_MOUTH_00[0],
+IMGAR_PORTRAIT_KAIRYU_MOUTH_00[1],
+IMGAR_PORTRAIT_KAIRYU_MOUTH_01[0],
+IMGAR_PORTRAIT_KAIRYU_MOUTH_01[1],
+IMGAR_PORTRAIT_KAIRYU_MOUTH_02[0],
+IMGAR_PORTRAIT_KAIRYU_MOUTH_02[1]
+];
+
 // ------------------------------------------ GODSWORN
 const IMG_PORTRAIT_GODSWORN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_base.png";
-const IMGAR_PORTRAIT_GODSWORN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_00b.png"];
+const IMG_PORTRAIT_GODSWORN_EYES_00	=	GetCurrentScriptDirectory()  ~ "./../../img/talk/godsworn_eyes_00.png";
+
+const GodswornPortrait_ImgArray = [
+IMG_PORTRAIT_GODSWORN_BASE,
+IMG_PORTRAIT_GODSWORN_EYES_00
+];
 
 // ------------------------------------------ HIROYUKI
 const IMG_PORTRAIT_HIROYUKI_BASE 	  	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_base.png";
@@ -434,15 +647,50 @@ const IMGAR_PORTRAIT_HIROYUKI_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../.
 const IMGAR_PORTRAIT_HIROYUKI_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_02b.png"];
 const IMGAR_PORTRAIT_HIROYUKI_MOUTH_03 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/hiroyuki/hiroyuki_mouth_03b.png"];
 
+const HiroyukiPortrait_ImgArray = [
+IMG_PORTRAIT_HIROYUKI_BASE,
+IMG_PORTRAIT_HIROYUKI_EYES_00,
+IMG_PORTRAIT_HIROYUKI_EYES_01,
+IMG_PORTRAIT_HIROYUKI_EYES_02,
+IMG_PORTRAIT_HIROYUKI_EYES_03,
+IMG_PORTRAIT_HIROYUKI_EYES_04,
+IMG_PORTRAIT_HIROYUKI_EYES_05,
+IMG_PORTRAIT_HIROYUKI_EYES_06,
+IMG_PORTRAIT_HIROYUKI_EYES_07,
+IMG_PORTRAIT_HIROYUKI_EYES_08,
+IMG_PORTRAIT_HIROYUKI_EYES_09,
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_00[0],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_00[1],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_01[0],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_01[1],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_02[0],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_02[1],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_03[0],
+IMGAR_PORTRAIT_HIROYUKI_MOUTH_03[1]
+];
+
 // ------------------------------------------ REDRIN
 const IMG_PORTRAIT_REDRIN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_base.png";
 const IMGAR_PORTRAIT_REDRIN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_00b.png"];
 
-const Team1PortraitImg_ImgArray = [];
-const Team2PortraitImg_ImgArray = [];
-const Team3PortraitImg_ImgArray = [];
+const RedrinPortrait_ImgArray = [
+IMG_PORTRAIT_REDRIN_BASE
+];
 
-const BossPortraitImg_ImgArray = [];
+// ------------------------------------------
+const Team1PortraitImg_ImgArray = [GatoPortrait_ImgArray, AnubisStandPortrait_ImgArray];
+const Team2PortraitImg_ImgArray = [SullenPortrait_ImgArray, DaisukePortrait_ImgArray];
+const Team3PortraitImg_ImgArray = [ViiviPortrait_ImgArray, TazuePortrait_ImgArray, GrandisPortrait_ImgArray];
+
+const BossPortraitImg_ImgArray = [
+AnubisPortrait_ImgArray, 
+DandaraPortrait_ImgArray, 
+ScyllaPortrait_ImgArray, 
+KieranPortrait_ImgArray, 
+KairyuPortrait_ImgArray,
+GodswornPortrait_ImgArray,
+HiroyukiPortrait_ImgArray,
+RedrinPortrait_ImgArray];
 
 //---------------------------------------
 //--------------TEXT IMAGES--------------
