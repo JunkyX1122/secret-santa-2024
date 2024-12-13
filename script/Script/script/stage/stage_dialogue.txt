@@ -1270,11 +1270,11 @@ function Stage03APreBattle()
 	SetNewPlayerPort(IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00[0], id_anubis, 0,0, 0, 0, 1);
 	SetDialogueTextA3("Uki", "Ok that wasn't the best of starts.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(You think?)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_01, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_02, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Uki", "Just needed a warm up. Don't worry about iiiit~", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
@@ -1282,38 +1282,38 @@ function Stage03APreBattle()
 	
 	SetDialogueTextA3("Anubis", "(A warm up in asking people?)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Uki", "My charisma center needs some time to get things going.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Uki", "You think being lovable 24/7 an easy job?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(Lovable. Right.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Uki", "Besides, you didn't give me any sort of time limit. Let me take|things a bit easy.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Uki", "Make a couple mistakes, get a few people throwing glowy circles at|me.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Uki", "We can afford that, right?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Uki", "So you just sit back, relax, I'll get all the Christmas info you want.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(This was meant to be a simple request.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
-	SetDialogueTextA3("Anubis", "(But knowing you, I should have anticipated you getting into a bunch of fights with strangers.)", 
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_04, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+	SetDialogueTextA3("Anubis", "(But knowing you, I should have anticipated you getting into a bunch|of fights with strangers.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_05, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SlideInPlayer(40, id_anubis, portraitXLeft, portraitXLeft, portraitYOffset, portraitYOffset+100, 1, 255, 0);
 	
@@ -1326,103 +1326,103 @@ function Stage03APreBattle()
 	
 	SetDialogueTextA3("Kairyu", "You appear to be talking to yourself quite a bit.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_02, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Uki", "Just talkin' to my dog friend from another dimension. No biggie.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "...Not the most unbelievable thing in the world.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Uki", "Say kind stranger, what do you know about the meaning of|Christmas?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "The name's Iqaluk by the way. Just a friendly Inuit passing through.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Christmas? Er, I take it that you are new to this realm then.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_02, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Yes indeed. I feel so very isolated, not being able to partake in this|land's joyous traditions.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "So you able to help someone like me out?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Kairyu", "Well..Let's see.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "Christmas is a time of generosity. One of showing love and care for|those around you.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "The opportunity for you and your kin to get together and enjoy the|warmth of eachother's company.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1.1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Family huh?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Indeed. Though, this opportunity may extend to close friends too.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_06, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1.1, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "...But the chance to bring your relatives closer together is the aspect|I admire the most.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_06, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Heh. Wouldn't that be nice...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "And if you haven't got either? What then?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Then...You spend that time making the time of others' brighter.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Doing kind things for strangers then? Yeah that makes sense given|what I know.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "Right, what do you want in return? Some gold? Fish food? Books?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "You the nerd type?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "I beg your pardon?", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_02, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Well it's only fair right? You give me precious information, I give|you something in return. Whacha want?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_3);	
 	
 	SetDialogueTextA3("Kairyu", "Oh, nothing at all, really. This was a simple ask.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_02, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1.1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Yeah but, you know how karma is.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "...If you insist, then I suppose I can get some training completed|earlier than I had planned.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_06, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "That I can do, absolutely.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 }
 
