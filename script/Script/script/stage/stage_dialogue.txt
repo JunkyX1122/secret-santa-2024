@@ -1021,31 +1021,31 @@ function Stage02BPostBattle()
 	
 	SetDialogueTextA3("Daisuke", "Woah, I wasn't expecting all those robots!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_07, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Such agility.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "Gotta be prepared for anything, right?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_01, IMGAR_PORTRAIT_SCYLLA_MOUTH_01, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "With such an emphasis on defence and close quaters, perhaps your|priest friend here should teach you the ways of the paladin.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_04, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Scylla", "Oh, didn't quite catch your name kid.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Daisuke! Hero of Grass!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Hm. I shall consider that after our request is fufilled.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 }
 
