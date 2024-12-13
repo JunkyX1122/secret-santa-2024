@@ -221,77 +221,77 @@ function Stage01APreBattle()
 
 	SetDialogueTextA3("Anubis", "Research really.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_01, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
 	SetDialogueTextA3("Anubis", "Apparently people over there have some sort of tradition around the|colder times.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_01, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);			
 	SetDialogueTextA3("Anubis", "Something involving giving and receiving gifts, eating a hell of a lot of food and worshipping some guy in red and white.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_01, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
 	SetDialogueTextA3("Anubis", "I'd go myself to check it out but, well, you know.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_04, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 0.6, 0.05, 2);			
 	
 	SetDialogueTextA3("Gato", "If you wanted me to go buy you something for your e-date, you don't have to make stuff up.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);	
 						
 	SetDialogueTextA3("Anubis", "That's not!-", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_02, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
 						
 	SetDialogueTextA3("Gato", "Naaaah, I know what you're on about.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
 	SetDialogueTextA3("Gato", "Christmas or something along those lines.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);	
 	SetDialogueTextA3("Gato", "Most big celebrations tie themselves back to gods in one way or another. Wouldn't think that place would be any different though.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);	
 	SetDialogueTextA3("Gato", "Can't say I'm not somewhat intrigued.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);	
 	SetDialogueTextA3("Gato", "I mean, free gifts, snacks and booze am I right?", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);	
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Anubis", "See here's the thing. ", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_03, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
 	SetDialogueTextA3("Anubis", "If you are planning on making it up to people over there, it might|best to get youself involved with this event in some way.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_03, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
 	SetDialogueTextA3("Anubis", "Show that you're actually interested.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_03, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
 						
 	SetDialogueTextA3("Gato", "That...was something I was planning on getting around to yeah.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);	
 						
 	SetDialogueTextA3("Anubis", "Really now?", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_03, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 0.6, 0.05, 2);			
 						
 	SetDialogueTextA3("Gato", "Yep. I got plans. Always got plans.", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);	
 	
 	BossMusicChange(ID_BOSSBGM_1A);				
 	
 	SetDialogueTextA3("Anubis", "Okay, well, before anything we should probably see if those legs of|yours are even ok to go out.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_01, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);			
 						
 	SetDialogueTextA3("Gato", "Eh, they're in a good enough spot~", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);	
 	SetDialogueTextA3("Gato", "Just watch~", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);						
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);						
 }
 
 function Stage01APostBattle()
@@ -308,32 +308,32 @@ function Stage01APostBattle()
 	
 	SetDialogueTextA3("Gato", "See?", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 						
 	SetDialogueTextA3("Anubis", "Like you didn't get utterly destroyed in the first place.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_03, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Gato", "Yeah yeah. So you just want me to go scout things out?", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 		
 	SetDialogueTextA3("Anubis", "Exactly.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
-	SetDialogueTextA3("Anubis", "Oh, and before you do head out, you should probably wear something thicker.", 
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1.2, 0.05, 2);
+	SetDialogueTextA3("Anubis", "Oh, and before you do head out, you should probably wear something|thicker.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
 						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
 	SetDialogueTextA3("Anubis", "Winters there get real cold.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
-						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_00, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
+						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_04, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Gato", "I'll be fiiiiiiiine~", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	SetDialogueTextA3("Gato", "How cold can it be?", 
 						DIALOGUE_COLOUR_GATO, 0, id_null, 
-						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);	
+						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);	
 }
 
 function Stage01BPreBattle()
@@ -349,35 +349,35 @@ function Stage01BPreBattle()
 	
 	SetDialogueTextA3("Sullen", "Oh goodness, I perhaps should have brought something warmer to|clothe myself with.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	SetDialogueTextA3("Sullen", "I had almost forgotten how cold these parts can get.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Sullen!", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						"", "", mouth_null, id_sullen,   portraitXLeft,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						"", "", mouth_null, id_sullen,   portraitXLeft,  portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Oh?", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 		
 	SlideInEnemy(40, id_daisuke, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
 	SetDialogueTextA4("Daisuke", "It's been so long!", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Ah! Daisuke. Isn't this a pleasant surprise?", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Yeah! Uh, wow, when was the last time I've seen you around here?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Hm. I am not too sure. Terribly sorry for not visiting my child.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Dandara", "Priests are pretty busy people, aren't they?", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
@@ -385,48 +385,50 @@ function Stage01BPreBattle()
 	SlideInEnemy(40, id_dandara, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetDialogueTextA3("Dandara", "What brings you all the way out here?", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
-						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_00, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
+						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_02, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Dandara? Today is full of surprises!", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	SetDialogueTextA3("Sullen", "I am just passing through. I am to meet up with some people near|the human village regarding a request for help.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Dandara", "Is that why you brought that sword along?", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
-						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_00, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
+						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_02, IMGAR_PORTRAIT_DANDARA_MOUTH_01, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Indeed.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA4("Daisuke", "Are people in danger?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "I assume so yes.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Well if you're going to be walking into a fight...", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_02, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+	
 	BossMusicChange(ID_BOSSBGM_1B);	
+	
 	SetDialogueTextA4("Daisuke", "Is it ok if I come help too?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Oh my.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Dandara", "Don't you worry, Mr. Hero here's perfectly capable of keeping you|and himself safe.", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
-						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_00, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
+						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_01, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Is that so? Then it should not be any trouble to request a|demonstration, no?", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
@@ -434,7 +436,7 @@ function Stage01BPreBattle()
 	
 	SetDialogueTextA4("Daisuke", "Yeah! Here, just watch!", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);
 	
 }
 
@@ -456,11 +458,11 @@ function Stage01BPostBattle()
 	
 	SetDialogueTextA3("Sullen", "Very impressive!", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "It's the duty of a hero to be strong!", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Of course. Dandara my friend, will you be joining us?", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
@@ -468,19 +470,19 @@ function Stage01BPostBattle()
 	
 	SetDialogueTextA3("Dandara", "Oh, sorry, I can't. We were planning on heading to the mansion to|deliver something.", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
-						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_00, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
+						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_03, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Very well.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Dandara", "Do be sure to tell me all about today later you two, ok?", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
-						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_00, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
+						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_01, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Yeah! We'll meet up later mom!", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
 	
 }
 
@@ -496,22 +498,22 @@ function Stage01CPreBattle()
 	SlideInPlayer(40, id_viivi, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
 	SetDialogueTextA3("Viivi", "Okay. Everythin' here's almost ready? What do you think?", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SlideInPlayer(40, id_tazue, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
 	SetDialogueTextA3("Tazue", "Mao.", 
 						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
-						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_01, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Yeah, I guess we are pretty much done.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	SetDialogueTextA3("Viivi", "Should be good to rest a little now.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	SetDialogueTextA3("Viivi", "Then we could probably get some trainin' done later.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_03, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Grandis", "You know you could get something thicker to put on, right?", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
@@ -522,56 +524,52 @@ function Stage01CPreBattle()
 	
 	SetDialogueTextA3("Viivi", "Oh. Hey. It's been a while huh?", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Grandis", "Just a bit. Yeah.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2, -1);	
 
 	SetDialogueTextA3("Viivi", "Well, there aren't any special occasions happenin' right now.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_07, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	SetDialogueTextA3("Viivi", "No need to get the good outfits dirty, right?", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "Best to stay flexible.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Grandis", "Heh, if you say so.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_03, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2, -1);	
 	SetDialogueTextA4("Grandis", "But there's nothing wrong with being flexible *and* comfortable|though, right?", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Viivi", "I mean, a jacket like that is nice and all, makes you more presentable|by the day.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "But something like that'd probably hold back your arm movement.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Grandis", "Reeeaally now?", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1.1, 0.05, 2, -1);	
 	BossMusicChange(ID_BOSSBGM_1C);	
 	SetDialogueTextA4("Grandis", "You think you wanna test that?", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_04, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
 	SetDialogueTextA4("Grandis", "I wouldn't have gotten this jacket if I wasn't prepared to throw|hands at any moment.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_08, IMGAR_PORTRAIT_GRANDIS_MOUTH_04, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
 
 	SetDialogueTextA3("Viivi", "Hah! You still owe me some last words.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
-	
-
-
-
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_08, IMGAR_PORTRAIT_VIIVI_MOUTH_03, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 }
 
 function Stage01CPostBattle()
@@ -592,32 +590,32 @@ function Stage01CPostBattle()
 	
 	SetDialogueTextA4("Grandis", "****", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_09, IMGAR_PORTRAIT_GRANDIS_MOUTH_03, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 0.6, 0.05, 2, -1);	
 	SetDialogueTextA4("Grandis", "Alright, point proven.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_09, IMGAR_PORTRAIT_GRANDIS_MOUTH_02, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 0.8, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Viivi", "Guess we didn't need to wait for later then.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "...Though, you do bring up a good point.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	SetDialogueTextA3("Viivi", "Prolly should get some more winter-wear for later.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Grandis", "You want me to just?-...", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Viivi", "I'm good. If you want to tag along, use your legs.", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Grandis", "Eh. Sure. Got nothing else going on anyways.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_06, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2, -1);	
 	
 }
 
