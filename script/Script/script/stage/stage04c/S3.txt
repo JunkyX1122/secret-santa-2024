@@ -208,8 +208,11 @@ task CurveLaserFire(ang, bit)
 	ObjLaser_SetInvalidLength(obj2, 0.6, 0.6);
 	ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
 	Obj_SetRenderPriority(obj2, 0.51);
+	ObjShot_SetSpellResist(obj2, true);
+
 	let obj3 = CreateCurveLaserA1(x, y, 4, ang2, 100, 25, 376, 0) ;
 	ObjShot_SetIntersectionEnable(obj3, false);
+	ObjShot_SetSpellResist(obj3, true);
 	
 	ObjLaser_SetItemDistance(obj2, 1000);
 	ObjLaser_SetItemDistance(obj3, 1000);
@@ -230,7 +233,19 @@ task CurveLaserFire(ang, bit)
 			ObjMove_AddPatternA2(lasers[i], o, NO_CHANGE, NO_CHANGE, NO_CHANGE, NO_CHANGE, spnAm);
 		}
 	}
-	wait(t*1.4 + 100);
+	ascent(i in 0..round(t*1.4 + 100))
+	{
+		if(!Obj_IsDeleted(objEnemy)&&!Obj_IsDeleted(lasers[0]))
+		{
+			ObjShot_SetIntersectionEnable(obj2, true);
+			if(GetPlayerInvincibilityFrame()>0)
+			{
+				
+				ObjShot_SetIntersectionEnable(obj2, false);
+			}
+			yield;
+		}
+	}
 	ascent(i in 0..2)
 	{
 		if(!Obj_IsDeleted(lasers[i]))
