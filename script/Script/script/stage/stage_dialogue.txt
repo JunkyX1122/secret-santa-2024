@@ -1503,48 +1503,48 @@ function Stage03BPreBattle()
 	
 	SetDialogueTextA3("Daisuke", "Hey Sullen sir?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Yes my child?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "It isn't really common for a priest like you to also know how to fight|with a sword, right?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Hm. I suppose not, no.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "So why did you train to use one? Did you want to be a hero as well?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_07, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Knowing the ways of the blade came through necessity initially|rather than actively seeking to understand it.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
 	SetDialogueTextA3("Sullen", "Before that, my efforts went into studying scripture to become an|official priest.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "So if you wanted to just do normal priest things rather than fight|people...", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_08, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "I'm guessing there weren't that many people like knights to keep you|and others safe, back before you came over here that is.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "If the Lord requires me to engage in combat, then I must be prepared|to follow his word.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	SetDialogueTextA3("Sullen", "But I will always prefer more peaceful means of aiding others.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "That makes sense.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_04, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "I respect your fortitude.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
@@ -1555,64 +1555,64 @@ function Stage03BPreBattle()
 	
 	SetDialogueTextA3("Kairyu", "As a man of the law and as a man of art, to have knowledge over|such differing professions gives you a unique outlook on life, does|it not?", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Daisuke", "Sir Kairyu!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Oh? Who is this now?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "I am Hatsudzuki no Kairyu, Lunarian Knight.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 
 	SetDialogueTextA3("Daisuke", "He lives by the Misty Lake making sure people don't go fishing there.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 
 	SetDialogueTextA3("Sullen", "I see. Well, it is very nice to make your acquaintance. Sir Kairyu. My|name is Sullen.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Nice to meet you too.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1.1, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "The formality is much appreciated, but calling me just Kairyu is fine.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_06, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Daisuke", "You got it!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "Hey, I just realised. You two are pretty similar in what you do right?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "Both of you are fighters who use swords and holy magic.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Sullen", "...Yes I suppose the Lord's blessing upon me can be seen as a form|of magic.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "I would not really call my study of magic 'holy'.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "And as of this moment, I do not have my sword on me.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
 	SetDialogueTextA3("Kairyu", "I guess that means I am less of a knight than I usually am.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_02, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "The title of knight extends beyond his sword.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Oh of course.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
@@ -1622,22 +1622,22 @@ function Stage03BPreBattle()
 	
 	SetDialogueTextA3("Daisuke", "Oh! This would make for a great opportunity to demonstrate your|magical strengths.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "I'm sure Sullen has seen more than enough sword battles in his day.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Hm. I did plan to do some training without my usual gear today.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_01, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "And I admittedly must practice more against opponents less|physically combative in nature.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_07, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kairyu", "Very well. Have at thee!", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
-						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
+						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_07, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1.2, 0.05, 2);					
 	
 }
 
