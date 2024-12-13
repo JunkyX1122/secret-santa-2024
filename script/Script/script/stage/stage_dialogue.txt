@@ -675,20 +675,20 @@ function Stage02APreBattle()
 	ShiverGato(id_gato);
 	SetDialogueTextA3("Gato", "I have made a severe lapse in judgement.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO_SHIVER, "", ["",""], id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO_SHIVER, "", ["",""], id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.6, 0.05, 2);
 				
 	SlideInPlayer(40, id_anubis, portraitXLeft, portraitXLeft, portraitYOffset+75, portraitYOffset, 1);
 	SetDialogueTextA3("Anubis", "(You're lucky your cockiness didn't result in something worse this|time.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_02, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1.1, 0.05, 2);					
 	
 	SetDialogueTextA3("Gato", "How do people even survive in such harsh conditions?!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO_SHIVER, "", ["",""], id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO_SHIVER, "", ["",""], id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.3, 0.05, 2);
 						
 	SetDialogueTextA3("Anubis", "(Just put on the damn coat.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_04, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_02, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SE_PlayLen(charge2, 70);
 	SetSpeaker( id_gato, id_null);
@@ -697,25 +697,25 @@ function Stage02APreBattle()
 	wait(20);
 	SetDialogueTextA3("Gato", "This works.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);			
 	SetDialogueTextA3("Gato", "Right, what even is it that you wanted me to do specifically?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);					
 
 	SetDialogueTextA3("Anubis", "(Just go around and learn as much as you can.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
 	SetDialogueTextA3("Anubis", "(Find out the true meaning of Christmas and all that.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_05, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Gato", "Corny.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);					
 
 	SetDialogueTextA3("Anubis", "(Yeah yeah. Look, there's some people up ahead. Go ask them.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_05, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SlideInPlayer(40, id_anubis, portraitXLeft, portraitXLeft, portraitYOffset, portraitYOffset+100, 1, 255, 0);
 	
@@ -726,93 +726,93 @@ function Stage02APreBattle()
 
 	SetDialogueTextA3("Gato", "Greetings there fellow...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Gato", "Actually I'm not fully sure what I'm looking at.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.8, 0.05, 2);					
 
 	SetDialogueTextA3("Scylla", "Excuse me?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_02, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.8, 0.05, 2);
 
 	SetDialogueTextA3("Gato", "I mean, multiple ears must be real useful, but I think I'm ok with|just the one pair.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Gato", "Nice outfits though. Really dig whatever's going on with Mr. Yakuza's|face thing.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 
 	SetDialogueTextA3("Kieran", "...And you are?", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_01, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Uki", "Uki. Cold survivor.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Uki", "I hear that the people of this land hold a celebration every winter.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Uki", "One of hearts and generosity.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);					
 
 	SetDialogueTextA3("Scylla", "Well...Weeee'd love to talk and tell you what it's like, but we're kinda|busy looking for someone.", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_01, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "That and we are not the most qualified when it comes to the|meaning behind traditions here.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_04, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Uki", "How unfortunate.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.8, 0.05, 2);					
 	SetDialogueTextA3("Uki", "Perhaps I can be of assistance then.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.9, 0.05, 2);					
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Scylla", "You know where Redrin Lightclaw is? You've seen him around?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Uki", "Seen directly? Not exactly.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Scylla", "Okay? So where do you think he is then?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_01, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Uki", "Somewhere in Gensokyo.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Uki", "...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Scylla", "...", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_03, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "...", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_02, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_2);	
 	
 	SetDialogueTextA3("Scylla", "So are we beating him up?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
-						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
+						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_01, IMGAR_PORTRAIT_SCYLLA_MOUTH_01, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.7, 0.05, 2);
 	
 	SetDialogueTextA3("Kieran", "We've got time.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
-						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
+						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_04, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Uki", "Now hold on-", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.3, 0.05, 2);					
 }
 
 function Stage02APostBattle()

@@ -232,7 +232,7 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 		{
 			let modiWait = 1;
 			scrollT = scrollT ~ [stringThing[j][i]];
-			if([stringThing[j][i]]==" ")
+			if([stringThing[j][i]]==" " || [stringThing[j][i]]==")" || [stringThing[j][i]]=="(")
 			{
 				
 			}
@@ -373,7 +373,7 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 		{
 			let modiWait = 1;
 			scrollT = scrollT ~ [stringThing[j][i]];
-			if([stringThing[j][i]]==" ")
+			if([stringThing[j][i]]==" " || [stringThing[j][i]]==")" || [stringThing[j][i]]=="(")
 			{
 				
 			}
@@ -523,7 +523,7 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 		{
 			let modiWait = 1;
 			scrollT = scrollT ~ [stringThing[j][i]];
-			if([stringThing[j][i]]==" ")
+			if([stringThing[j][i]]==" " || [stringThing[j][i]]==")" || [stringThing[j][i]]=="(")
 			{
 				
 			}

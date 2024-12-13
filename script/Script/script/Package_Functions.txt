@@ -674,7 +674,18 @@ task HandleMusicVolume()
 {
 	if(!Obj_IsDeleted(objPackageBGM))
 	{
-		ObjSound_SetVolumeRate(objPackageBGM,vol*GetCommonData("MusicVolume",1));
+		if(GetKeyState(KEY_M)==KEY_PUSH)
+		{
+			SetCommonData("MuteMusic",!GetCommonData("MuteMusic",false));
+		}
+		if(GetCommonData("MuteMusic",false))
+		{
+			ObjSound_SetVolumeRate(objPackageBGM,0);
+		}
+		else
+		{
+			ObjSound_SetVolumeRate(objPackageBGM,vol*GetCommonData("MusicVolume",1));
+		}
 	}
 }
 task HandleMusicEvent(p)
