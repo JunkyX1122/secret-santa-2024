@@ -3532,91 +3532,91 @@ function Stage05APostBattle()
 	
 	SetDialogueTextA3("Hiroyuki", "Tch... So... You're familiar with my kind of fighting style.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_02, IMGAR_PORTRAIT_HIROYUKI_MOUTH_01, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Noooo comment. Fast? Strong? Decisive? Stright for the jugular? Ring|any bells?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "Plenty. We're at a warriors festival after all, and it's akin to the|faction there that I'm part of.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_01, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Hiroyuki", "What really brings you here?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_06, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Christmas!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "Forgive me if I have a hard time believing that. It seems like you|already have your mind made up about what it is.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_04, IMGAR_PORTRAIT_HIROYUKI_MOUTH_03, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.8, 0.05, 2);					
 	SetDialogueTextA3("Hiroyuki", "And that there is something inherently wrong with it.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_03, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Purrhaps there's something wrong with it, that's what I'm here to|find out!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "Now give me details, I won after all.~", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "I really have no idea what you think could be wrong with it. Even the|profiting off of the giving mood isn't anything major.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.7, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Nuh-uh, Christmas details please.~", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_09, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "What even else is there to go over? Hmm... well, you asked about the|gods involvement...", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_08, IMGAR_PORTRAIT_HIROYUKI_MOUTH_03, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1.1, 0.05, 2);					
 	SetDialogueTextA3("Hiroyuki", "While it's not relevant here, I think the origin of Christmas is|basically a birthday.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_01, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	SetDialogueTextA3("Hiroyuki", "&quot;Son of God&quot;, or something like that.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_09, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
-	SetDialogueTextA3("Tarkik", "Oh, that guy! I know the guy, pretty chill, kinda weird with all the zealotry around.", 
+	SetDialogueTextA3("Tarkik", "Oh, that guy! I know the guy, pretty chill, kinda weird with all the|zealotry around.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 	SetDialogueTextSize(28);
 	
 	SetDialogueTextA3("Hiroyuki", "...What?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_06, IMGAR_PORTRAIT_HIROYUKI_MOUTH_03, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.5, 0.05, 2);					
 	
 	SetDialogueTextSize(16);
 	
 	SetDialogueTextA3("Hiroyuki", "...I shouldn't be surprised, actually. Anyway, yes, pretty sure it's his|birthday.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_03, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Some very... conflicting information here! Not bad, not bad at all...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "We got the family coming together,  we got the shopping spree, we|got Provi's birthday?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "Next you'll say lightning bolts are involved, Or sheep!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "Is flying deer out there enough?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_04, IMGAR_PORTRAIT_HIROYUKI_MOUTH_02, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Tarkik", " That's it! I'm going!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_09, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 	
 }
