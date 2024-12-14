@@ -228,6 +228,7 @@ const IMG_BOSS_GYRO_SNEAK   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enem
 const IMG_BOSS_SHIELD0   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/spellBaria0000.png";
 const IMG_BOSS_SHIELD1   	= 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/spellBariaB0000.png";
 
+const IMG_COIN = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/coin.png"; 
 
 const BossSprite_ImgArray = [IMG_FAMILIAR,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD,
 IMG_BOSS_ANUBIS, IMG_BOSS_DAISUKE, IMG_BOSS_GRANDIS,
@@ -241,8 +242,8 @@ IMG_BOSS_TAZUE_BODY,
 IMG_BOSS_TAZUE_LEGS,
 IMG_BOSS_TAZUE_BODY_BACK,
 IMG_BOSS_GYRO_BLAST, IMG_BOSS_GYRO_FUNCTION, IMG_BOSS_GYRO_SHRED, IMG_BOSS_GYRO_SNEAK,
-IMG_BOSS_SHIELD0, IMG_BOSS_SHIELD1
-
+IMG_BOSS_SHIELD0, IMG_BOSS_SHIELD1,
+IMG_COIN
 ];
 
 //---------------------------------------

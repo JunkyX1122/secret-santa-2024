@@ -3043,6 +3043,7 @@ task SpinViiviGato()
 	}
 	forceStop = false;
 }
+
 function Stage04CTransform()
 {
 
@@ -3078,18 +3079,18 @@ function Stage04CTransform()
 	while(forceStop){yield;}
 	SetDialogueTextA3("Erlendur", "Maybe my legs aren't fully there yet huh.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Erlendur", "Hey! Back me up here before this 2v1 sends me back to the|wheelchair.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
 	
 	SetDialogueTextC4("Viivi & Erlendur", "Eeeeh???", 
 						[255,255,255] , 0, id_null, 
 						[[IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_GRANDIS_BASE], []], 
-						[[IMG_PORTRAIT_VIIVI_EYES_00, IMG_PORTRAIT_GRANDIS_EYES_00], []], 
-						[[[IMGAR_PORTRAIT_VIIVI_MOUTH_00[1],IMGAR_PORTRAIT_VIIVI_MOUTH_00[1]], [IMGAR_PORTRAIT_GRANDIS_MOUTH_00[1],IMGAR_PORTRAIT_GRANDIS_MOUTH_00[1]]], [mouth_null]], 
+						[[IMG_PORTRAIT_VIIVI_EYES_07, IMG_PORTRAIT_GRANDIS_EYES_01], []], 
+						[[[IMGAR_PORTRAIT_VIIVI_MOUTH_01[1],IMGAR_PORTRAIT_VIIVI_MOUTH_01[1]], [IMGAR_PORTRAIT_GRANDIS_MOUTH_01[1],IMGAR_PORTRAIT_GRANDIS_MOUTH_01[1]]], [mouth_null]], 
 						[[id_viivi, id_grandis], [id_null]], 
 						[[portraitXLeft,portraitXLeft],[0]], 
 						[[portraitYOffset,portraitYOffset],[0]],
@@ -3125,102 +3126,178 @@ function Stage04CPostBattle()
 	
 	SetDialogueTextA3("Erlendur", "Okay okay, I give up. Mercy.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1.2, 0.05, 2);					
 	SetDialogueTextA3("Erlendur", "We settled our disagreements according to this place's rules and|stuff.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Erlendur", "Now, what d'ya want from me?", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Viivi", "What...What was that?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_09, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Yeah, seriously, just who are you? Really?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_07, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	SetDialogueTextA3("Grandis", "That's some power for just a 'traveller'.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_07, IMGAR_PORTRAIT_GRANDIS_MOUTH_02, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Erlendur", "Hey, that was a two on one, it's only fair I call for some help yeah?", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Viivi", "Some Help?! Are you a devil summoner or something?!", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_02, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Erlendur", "Well...That's ooooone way to put it.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Erlendur", "...You know if it weren't for the way he dresses, I could totally see|him being more demon like.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Grandis", "You haven't answered our questions. ", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_09, IMGAR_PORTRAIT_GRANDIS_MOUTH_03, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Erlendur", "Look! We're out of the forest now. Finally~", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1.2, 0.05, 2);					
 	SetDialogueTextA3("Erlendur", "I'm real busy, so if you have any further questions, I'm sure fate will|let you find people who know me.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
 	SetDialogueTextA3("Erlendur", "Here, this should cover the troubles. See ya.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
-	
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);					
+	SandstormTransition(120);
+	CoinToss();
 	SlideInEnemy(40, id_gato, portraitXRight, portraitXRight+200, portraitYOffset, portraitYOffset, 1, 255, 0);
 	
 	SetDialogueTextA3("Viivi", "You get back here!", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_05, IMGAR_PORTRAIT_VIIVI_MOUTH_02, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.7, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "****. He's gone.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_03, IMGAR_PORTRAIT_GRANDIS_MOUTH_02, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Y'think?! Come on, let's go after 'im.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_08, IMGAR_PORTRAIT_VIIVI_MOUTH_01, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Just leave it. Save the energy for another day.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_03, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
-	SetDialogueTextA3("Viivi", "He can't' 'ave gone that far!", 
+	SetDialogueTextA3("Viivi", "He can't 'ave gone that far!", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_02, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	SetDialogueTextA3("Viivi", "He's probably tired as hell right about now.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_08, IMGAR_PORTRAIT_VIIVI_MOUTH_02, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Yeah, but I know for a fact that fight took way more effort than|either one of us were expecting.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_09, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	SetDialogueTextA3("Grandis", "You confident you could do that whole thing again if we managed to|catch up with him?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_04, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "...Ugh.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_08, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.7, 0.05, 2);
 	SetDialogueTextA3("Viivi", "You're right...", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 	SetDialogueTextA3("Viivi", "C'mon you two. ", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Tazue", "*Meow*", 
 						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
-						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_01, IMGAR_PORTRAIT_TAZUE_MOUTH_01, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
 	
 }
+task CoinToss()
+{
+	SE_PlayLen(chime1, 70);
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(obj, 99);
+	ObjPrim_SetTexture(obj, IMG_COIN);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, 256, 256);
+	ObjSprite2D_SetDestRect(obj, 0, 0, 256, 256);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetPosition(obj, portraitXRight, portraitYOffset, 0);
+	let x = portraitXRight;
+	let y = portraitYOffset;
+	let xSpd = -2;
+	let ySpd = -5;
+	ObjRender_SetScaleXYZ(obj, 0.3);
+	ObjRender_SetAngleZ(obj,rand(0,360));
+	let cnt = 0;
+	while(y < GetScreenHeight + 100 && !Obj_IsDeleted(obj))
+	{
+		forceStop = true;
+		ObjRender_SetAngleZ(obj,ObjRender_GetAngleZ(obj)+3);
+		ObjRender_SetScaleX(obj, 0.3*cos(cnt));
+		ObjRender_SetPosition(obj, x, y, 0);
+		x += xSpd;
+		y += ySpd;
+		ySpd += 9/60;
+		cnt+=10.123;
+		yield;
+	}
+	forceStop = false;
+	if(!Obj_IsDeleted(obj))
+	{
+		Obj_Delete(obj);
+	}
+}
+task SandstormTransition(t)
+{
+	SE_PlayLen(charge2,80);
+	let objBack = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objBack, 98);
+	ObjPrim_SetTexture(objBack, IMG_PIXEL);
+	ObjSprite2D_SetSourceRect(objBack, 0, 0, 1024*5, 1024*5);
+	ObjSprite2D_SetDestRect(objBack, 0, 0, 1024*1.5, 1024*1.5);
+	ObjSprite2D_SetDestCenter(objBack);
+	ObjRender_SetPosition(objBack, GetScreenWidth/2, GetScreenHeight/2, 0);
+	ObjRender_SetColor(objBack, 255, 165, 0);
+	
+	let objWind = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objWind, 98);
+	ObjPrim_SetTexture(objWind, IMG_GATOWIND);
+	ObjSprite2D_SetSourceRect(objWind, 0, 0, 1024*5, 1024*5);
+	ObjSprite2D_SetDestRect(objWind, 0, 0, 1024*1.5, 1024*1.5);
+	ObjSprite2D_SetDestCenter(objWind);
+	ObjRender_SetPosition(objWind, GetScreenWidth/2, GetScreenHeight/2, 0);
+	ObjRender_SetColor(objWind, 255, 165, 0);
 
+	let cc = 0;
+	let cc2 = 0;
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		let alphaScaleSandstorm = 1*sin(180/t*i);
+		
+		ObjRender_SetAlpha(objBack, 128*alphaScaleSandstorm);
+		
+		ObjRender_SetAlpha(objWind, 128*alphaScaleSandstorm);
+		ObjSprite2D_SetSourceRect(objWind, cc, 100, 1024+cc, 1024 + 100);
+
+		cc-=1.5*4;
+		yield;
+	}
+	forceStop = false;
+	Obj_Delete(objBack);
+	Obj_Delete(objWind);
+}
+	
 function Stage05APreBattle()
 {
 	SetPortraitData([[25,0],[-75,0],[0,0]], [[25,0],[0,0],[0,0]], 
