@@ -658,15 +658,18 @@ function SetNewPlayerPort(img,imge,imgm, i,x,y,ang,alph,yFlip){ //moves in the p
 	
 	let faceDist = playerfaceoffsets[i][0]*playerscales[i];
 	let faceAng = playerfaceoffsets[i][1];
-	if(yFlip==-1)
-	{
-		faceAng = 180 - faceAng;
-	}
-	ObjRender_SetPosition(playereyesobjects[i], round(x2 + faceDist*cos(faceAng + ang)), round(y2 + faceDist*sin(faceAng + ang)), 0); 
+	
+	let am = 1-absolute(-1 - yFlip)/2;
+	let flipFaceAng = 180 - faceAng;
+	
+	let faceX = Interpolate_Linear(x2 + faceDist*cos(faceAng + ang), x2 + faceDist*cos(flipFaceAng + ang), am);
+	let faceY = Interpolate_Linear(y2 + faceDist*sin(faceAng + ang), y2 + faceDist*sin(flipFaceAng + ang), am);
+
+	ObjRender_SetPosition(playereyesobjects[i], round(faceX), round(faceY), 0); 
 	ObjRender_SetAngleZ(playereyesobjects[i],ang);
 	ObjRender_SetScaleXYZ(playereyesobjects[i],playerscales[i]*yFlip,playerscales[i],playerscales[i]);
 	
-	ObjRender_SetPosition(playermouthobjects[i], round(x2 + faceDist*cos(faceAng + ang)), round(y2 + faceDist*sin(faceAng + ang)), 0); 
+	ObjRender_SetPosition(playermouthobjects[i], round(faceX), round(faceY), 0); 
 	ObjRender_SetAngleZ(playermouthobjects[i],ang);
 	ObjRender_SetScaleXYZ(playermouthobjects[i],playerscales[i]*yFlip,playerscales[i],playerscales[i]);
 	
@@ -705,15 +708,18 @@ function SetNewEnemyPort(img,imge,imgm, i,x,y,ang,alph,yFlip){ //moves in the en
 	
 	let faceDist = enemyfaceoffsets[i][0]*enemyscales[i];
 	let faceAng = enemyfaceoffsets[i][1];
-	if(yFlip==-1)
-	{
-		faceAng = 180 - faceAng;
-	}
-	ObjRender_SetPosition(enemyeyesobjects[i], round(x2 + faceDist*cos(faceAng + ang)), round(y2 + faceDist*sin(faceAng + ang)), 0); 
+	
+	let am = 1-absolute(-1 - yFlip)/2;
+	let flipFaceAng = 180 - faceAng;
+	
+	let faceX = Interpolate_Linear(x2 + faceDist*cos(faceAng + ang), x2 + faceDist*cos(flipFaceAng + ang), am);
+	let faceY = Interpolate_Linear(y2 + faceDist*sin(faceAng + ang), y2 + faceDist*sin(flipFaceAng + ang), am);
+	
+	ObjRender_SetPosition(enemyeyesobjects[i], round(faceX), round(faceY), 0); 
 	ObjRender_SetAngleZ(enemyeyesobjects[i],ang);
 	ObjRender_SetScaleXYZ(enemyeyesobjects[i],enemyscales[i]*yFlip,enemyscales[i],enemyscales[i]);
 	
-	ObjRender_SetPosition(enemymouthobjects[i], round(x2 + faceDist*cos(faceAng + ang)), round(y2 + faceDist*sin(faceAng + ang)), 0); 
+	ObjRender_SetPosition(enemymouthobjects[i], round(faceX), round(faceY), 0); 
 	ObjRender_SetAngleZ(enemymouthobjects[i],ang);
 	ObjRender_SetScaleXYZ(enemymouthobjects[i],enemyscales[i]*yFlip,enemyscales[i],enemyscales[i]);
 	if(alph!=-1)
