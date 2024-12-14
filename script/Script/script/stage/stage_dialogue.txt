@@ -3396,7 +3396,7 @@ function Stage05APreBattle()
 	SetDialogueTextA3("Hiroyuki", "Eh? Not really. Not even remotely related, actually. It's a warriors|festival.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_06, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.9, 0.05, 2);					
-	SetDialogueTextA3("Hiroyuki", "By their classifications, I'm concidered a warrior, so it seems I'm an|honored guest. ", 
+	SetDialogueTextA3("Hiroyuki", "By their classifications, I'm considered a warrior, so it seems I'm an|honored guest. ", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_09, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	SetDialogueTextA3("Hiroyuki", "My name is Hiroyuki. And you are?", 
