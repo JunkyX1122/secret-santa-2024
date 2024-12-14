@@ -41,6 +41,28 @@ function SetDialogueTextSize(t)
 {
 	textSize = t;
 }
+
+let isSkippable = true;
+
+function SetDialogueSkippable(t)
+{
+	isSkippable = t;
+}
+
+let isAutoContinue = false;
+
+function SetDialogueAutoContinue(t)
+{
+	isAutoContinue = t;
+}
+
+let autoContinueWait = 0;
+
+function SetDialogueAutoContinueWait(t)
+{
+	autoContinueWait = t;
+}
+
 function SetPortraitNumber(numplayer, numenemy)
 {
 	ascent(i in 0 .. numplayer)
@@ -281,7 +303,7 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 					}
 					
 					c++;
-					if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+					if((GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE) || !isSkippable)
 					{
 						yield;
 					}
@@ -303,11 +325,18 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	{
 		ObjPrim_SetTexture(enemymouthobjects[iS],imgM[0]);
 	}
-	yield;
-	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	if(isAutoContinue)
 	{
-		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		wait(autoContinueWait);
+	}
+	else
+	{
 		yield;
+		while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+		{
+			if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+			yield;
+		}
 	}
 	SE_PlayLen(title_cursor, 75);
 	yield;
@@ -428,7 +457,7 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 					}
 					
 					c++;
-					if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+					if((GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE) || !isSkippable)
 					{
 						yield;
 					}
@@ -447,11 +476,18 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	{
 		ObjPrim_SetTexture(enemymouthobjects[iS[1]],imgM[1][0]);
 	}
-	yield;
-	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	if(isAutoContinue)
 	{
-		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		wait(autoContinueWait);
+	}
+	else
+	{
 		yield;
+		while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+		{
+			if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+			yield;
+		}
 	}
 	SE_PlayLen(title_cursor, 75);
 	yield;
@@ -584,7 +620,7 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 					}
 					
 					c++;
-					if(GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE)
+					if((GetVirtualKeyState(VK_OK) != KEY_PUSH&&GetVirtualKeyState(VK_CANCEL) == KEY_FREE) || !isSkippable)
 					{
 						yield;
 					}
@@ -609,11 +645,18 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			ObjPrim_SetTexture(enemymouthobjects[iS[1][o]],imgM[1][o][0]);
 		}
 	}
-	yield;
-	while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+	if(isAutoContinue)
 	{
-		if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+		wait(autoContinueWait);
+	}
+	else
+	{
 		yield;
+		while(GetVirtualKeyState(VK_OK) != KEY_PUSH)
+		{
+			if(GetVirtualKeyState(VK_CANCEL) == KEY_HOLD){break;}
+			yield;
+		}
 	}
 	SE_PlayLen(title_cursor, 75);
 	yield;
