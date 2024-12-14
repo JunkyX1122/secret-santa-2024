@@ -1929,42 +1929,42 @@ function Stage04APreBattle()
 	
 	SetDialogueTextA3("Iqaluk", "Then we go down this way and...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "I could've sworn this path led to somewhere worth while.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_09, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(Where were you even planning to go?)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "Well it was supposed to be something I wanted to check out at a later|date.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_02, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "Clearly, this is too much of a detour.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(Luckily you're probably only 30 minutes away from that river.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_04, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Anubis", "(Just turn your *** around and start walking back.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_05, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Iqaluk", "&quot;Aye Aye Captain.&quot;", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.4, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "Wait up, someone's heading this way.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	while(forceStop){yield;}
 	SlideInPlayer(40, id_anubis, portraitXLeft, portraitXLeft, portraitYOffset, portraitYOffset+100, 1, 255, 0);
 	
 	SetDialogueTextA4("Daisuke", "Excuse us!", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						"", "", mouth_null, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						"", "", mouth_null, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);					
 	
 	SlideInEnemy(40, id_daisuke, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
 	SlideInEnemy(40, id_sullen, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
@@ -1973,63 +1973,63 @@ function Stage04APreBattle()
 	
 	SetDialogueTextA4("Sullen", "You would not happen to know the correct path to exit these woods|sir?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	
 	SetDialogueTextA4("Daisuke", "We may have wandered off too much and ended up lost for almost an|hour.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_08, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2, -1);					
 	
 	SetDialogueTextA3("Iqaluk", "I see...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	SetDialogueTextA3("Iqaluk", "Do not fret my friends, you two are very lucky!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Xue", "For I, Xue the Tiger of White Snow, know the routes of this forest|like the back of my hand~", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Xue", "Who will I be escorting today?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "My name is Sullen, a priest working for the Lord above.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "A priest eh?...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Xue", "(Just what I needed.)", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_02, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	SetDialogueTextA3("Xue", "And you? Are you his altar boy?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Negative!", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);					
 	SetDialogueTextA4("Daisuke", "Daisuke, Hero of Grass! Nice to meet you.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);					
 	
 	SetDialogueTextA3("Xue", "So we've got a 'holy' mage and his bodyguard. Nice.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "I wouldn't call myself a bodyguard, but if someone needed one I|would be able to help with that.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_07, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
 	SetDialogueTextA4("Daisuke", "But not right now. Sullen is just as proficient with combat as I am!", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);					
 	
 	SetDialogueTextA3("Xue", "Great.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Xue", "Okay. I'll help you free of charge. Follow my lead, freedom awaits.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	while(forceStop){yield;}
 	forceStop = true;
 	BGTransition(0, 255, 120, 99);
@@ -2049,152 +2049,152 @@ function Stage04APreBattle()
 	BGTransition(255, 0, 60, 99);
 	SetDialogueTextA3("Xue", "So which one is it?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "Pardon?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "What you mentioned earlier.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Xue", "There's a lot of 'lords above' and 'gods above', you've gotta be more|specific with which one you've sworn allegiance to.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "Ah.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	SetDialogueTextA4("Sullen", "The Lord has had many names. Unlike other faiths, there is only one|deity to worship.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	SetDialogueTextA4("Sullen", "As such, most simply refer to him as 'God'.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "Wow. Real specific there.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	SetDialogueTextA3("Xue", "Makes it really easy to distinguish yours from the rest of the bunch.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "He is the God of everything that has ever been. So a single word to|describe him will suffice.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "...Alright lay it on me Fantastic Mr. Fox. Why's your god is the most|powerful?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Xue", "What makes yours worthwhile over everyone elses?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "...I sense that you hold some negative feelings towards the idea of|higher beings.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "I've been through the whole sales pitch act a lotta times before. It's your guys' jobs to get as many followers for your boss as possible|isn't it?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_01, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "In a sense, yes.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2, -1);	
 	SetDialogueTextA4("Sullen", "But I have come to learn that some people require far more effort to|change their opinion on faith as a whole.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	SetDialogueTextA4("Sullen", "Some people do not wish to accept help nor willing to change.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	SetDialogueTextA4("Sullen", "If you want to seek faith, then that is something only you can do. ", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "Kinda sounds like you're not doing your job there Mr.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.8, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA4("Sullen", "...It is indeed part of my duty to lead those to what I believe is the|right path.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	SetDialogueTextA4("Sullen", "But if I cannot, then that does not bar them from being treated with|kindness and respect.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "Huh.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Xue", "I'll give that to you, you're not as wrathful as I thought you would be|when I poke at the religion topic.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_08, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "I believe I am far from a typical priest. My appearance alone should|make that very clear.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "No kidding.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Xue", "What about you big guy?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "O-oh. Uh, I don't fully get the whole religion thing.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_07, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2, -1);					
 	SetDialogueTextA4("Daisuke", "I am just glad that there are people out there who are as passionate|about helping others.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_04, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
 	
 	SetDialogueTextA3("Xue", "You said it.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Though, I am a bit annoyed. ", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_02, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2, -1);					
 	SetDialogueTextA4("Daisuke", "You did just start targetting Sullen out of the blue.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_02, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 0.8, 0.05, 2, -1);					
 	
 	SetDialogueTextA3("Xue", "Eh, you're right. Sorry about that.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	SetDialogueTextA3("Xue", "Tell you what.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_4A);	
 	
 	SetDialogueTextA3("Xue", "Since I've been a bit of a jerk, how about I make it up to ya and|lighten things up a bit eh?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "What are you suggesting?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_07, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2, -1);	
 	
 	SetDialogueTextA3("Xue", "A good ol' game of bullet dodging.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Xue", "It's tradition here, right?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Sullen", "I suppose it is.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXRight, portraitYOffset, TALK_SULLEN, 1, 0.05, 2, -1);	
 	
 	SetDialogueTextA4("Daisuke", "You sure? This seems like an unfair matchup.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_08, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);					
 	
 	SetDialogueTextA3("Xue", "Oh don't worry about that. Just let loose!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 }
 
