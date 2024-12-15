@@ -3935,147 +3935,147 @@ function Stage05CPreBattle()
 	
 	SetDialogueTextA3("Viivi", "Yipes, the cold is really nippin' at me now.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_09, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 						
 	SetDialogueTextA3("Grandis", "That's winter for ya.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_04, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Hey, look over there! I think our luck's just turned around.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_03, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 						
 	SetDialogueTextA3("Grandis", "Hmm? A bunch of people and stands on the shore, what's so lucky|about that?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_03, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "I need me a pick-me-up after that last fight, an' an event means|grub. ", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 						
 	SetDialogueTextA3("Grandis", "Hold your horses, did you even bring money for food and clothing?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_03, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "...Y-yeah, I got a bit on me.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 						
 	SetDialogueTextA3("Grandis", "Let me rephrase that, enough money for how much food you usually|eat, AND clothes?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_08, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "Hey Beetlejuice, do you want me to actually squash you into your|namesake?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_06, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.7, 0.05, 2);
 	
 	SetDialogueTextA3("Tazue", "*meow*", 
 						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
-						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_02, IMGAR_PORTRAIT_TAZUE_MOUTH_01, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "What do you mean &quot;he's right&quot;, Zuzu?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_08, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.2, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Hah. Think about this too, it's getting late and it's only going to get|colder. ", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_04, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "COLDER? It can get colder?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_09, IMGAR_PORTRAIT_VIIVI_MOUTH_01, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.3, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Yeah, doesn't make too much sense having an outdoor festival this|time of year.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "I can't say I'm much of a fan of the timing either.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						"", "", mouth_null, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						"", "", mouth_null, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.9, 0.05, 2);					
 	
 	SlideInEnemy(40, id_hiroyuki, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00[0], id_hiroyuki, 0,0, 0, 0, 1);
 	
 	SetDialogueTextA3("Hiroyuki", "...But it plays into the overall theme.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_01, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Hiroyuki", "Greetings Grandis, and... was it Viivi?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_09, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Viivi", "Heya! Yup. You attendin' that shindig over there with that getup?", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_04, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "Yes. It's a celebration of Gensoukyou's warriors, which is why|braving the cold is appropriate.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_05, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Viivi", "Brr...T-that makes a hot meal all the better.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "You're obsessed.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_02, IMGAR_PORTRAIT_GRANDIS_MOUTH_04, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.8, 0.05, 2);
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Viivi", "It's less so the f-food and more... the warmth. ", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_01, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Hey, hey, are you alright?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_04, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "No! I think I'm gonna turn into a Viivicicle out here!", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_02, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Grandis", "Shit, we shouldn't have flown over the lake. ", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_08, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "It's easy to underestimate the temperature.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_08, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	SetDialogueTextA3("Hiroyuki", "I figured something like this might happen to travelers taking this|route...", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_05, IMGAR_PORTRAIT_HIROYUKI_MOUTH_01, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Grandis", "Can you use your nuclear stuff to warm up?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Viivi", "P-pretty sure Tuna Can would tear me a new one if I killed all the|fish 'round me by doing that.", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_09, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	SetDialogueTextA3("Viivi", "I think I would rather freeze than be lectured for hours. ...But then|again...", 
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
-						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.8, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_5);	
 	
 	SetDialogueTextA3("Hiroyuki", "If I might. I have a quick way to turn up the temperature.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_01, IMGAR_PORTRAIT_HIROYUKI_MOUTH_02, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Grandis", "Are you saying what I think you're saying?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_08, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	SetDialogueTextA3("Grandis", "I mean, yeah, it's good to keep moving, but really?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_08, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Hiroyuki", "Feel the heat of my Danmaku!", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
-						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_02, IMGAR_PORTRAIT_HIROYUKI_MOUTH_02, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Grandis", "Having a fight with someone to keep them warm; that's a new one.", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
-						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_02, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
 }
 
 function Stage05CPostBattle()
