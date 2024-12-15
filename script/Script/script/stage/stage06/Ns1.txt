@@ -37,7 +37,16 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 110, 40);
+	
+	if(GetCommonData("isPracticing", true)==false)
+	{
+		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,110 );
+	}
+	else
+	{	
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 110, 40);
+	}
+	
 	renderBossUnanimated(objEnemy, IMG_BOSS_REDRIN, 20);
 	RecordAttackHistory("06", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 

@@ -38,13 +38,25 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100+100 );
-	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 60);
+	
 	renderBossUnanimated(objEnemy, IMG_BOSS_DAISUKE, 7);
 
-	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
-	ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
+	
 	renderBossUnanimated(objEnemy2, IMG_BOSS_SULLEN, 15);
+	
+	if(GetCommonData("isPracticing", true)==false)
+	{
+		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100+100 );
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 60);
+	
+		ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
+		ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
+	}
+	else
+	{	
+		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 60);
+		ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
+	}
 	HitCirc(objEnemy2);
 	RecordAttackHistory("04a", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
 	end;
