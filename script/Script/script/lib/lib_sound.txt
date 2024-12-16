@@ -286,6 +286,17 @@ const STAGE_MUSIC_DATA  = [
 							[ 	80, 	-1, 	-1]
 						];
 
+const STAGE_MUSIC_NAMES = [
+							"Touhou 3: Phantasmagoria of Dim. Dream - Phantasmagoria (Egyptian Remix)",
+							"Touhou 10.5: Scarlet Weather Rhapsody - Fuukou Meibi",
+							"Touhou 15.5: Antinomy of Common Flowers - Mushroom Waltz",
+							"Chrono Trigger - Corridors of Time (Pontus Hultgren Music Arrangement)",
+							"One Step From Eden - The Arctic",
+							"Rivals of Aether - Luna Ascension EX",
+							"Rabbit & Steel - Kingdom Outskirts (Action)",
+							"Trials of Mana Remake - 51 Religion Thunder"
+						  ];
+						
 const BGM_BOSS_01A = GetCurrentScriptDirectory~"./../../bgm/boss_01a.ogg";
 const BGM_BOSS_01B = GetCurrentScriptDirectory~"./../../bgm/boss_01b.ogg";
 const BGM_BOSS_01C = GetCurrentScriptDirectory~"./../../bgm/boss_01c.ogg";
@@ -334,6 +345,19 @@ const BOSS_MUSIC_DATA  = [
 							[ 	95, 	2956441, 	10937988],
 							[ 	100, 	428054, 	17987865]
 						];
+						
+const BOSS_MUSIC_NAMES = [
+							"Pokémon Sun & Moon - Rival Gladion Battle Music",
+							"Pokémon Masters EX - Battle Vs. Kalos Friends",
+							"Pokémon Black 2 & White 2 - Rival Battle Music",
+							"Chrono Trigger - Battle Theme (Pontus Hultgren Music Arrangement)",
+							"The Binding of Isaac: Antibirth - Gloria Filio",
+							"Bug Fables - Team, This One's Stronger (Gabocarina96 Rock Cover)",
+							"Digimon ReArise - Normal Battle",
+							"Touhou: Hollow Song of Birds - Tyrant of the Scorching Sun ~ Violent General",
+							"Pokémon Omega Ruby & Alpha Sapphire - Vs. Zinnia (Traditional Japanese Version)",
+							"Seiken Densetsu 3 - The Final Sacrifice (Sacrifice Part Three Remix)"
+						 ];
 
 let seobj = ObjSound_Create;
 //======================================================

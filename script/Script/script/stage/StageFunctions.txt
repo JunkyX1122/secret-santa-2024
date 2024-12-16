@@ -6,10 +6,88 @@ let startMusic = false;
 task BossMusicChange(id)
 {
 	MusicChange(BOSS_MUSIC_PATHS[id], BOSS_MUSIC_DATA[id][0], BOSS_MUSIC_DATA[id][1], BOSS_MUSIC_DATA[id][2]);
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		StageNameShow(BOSS_MUSIC_NAMES[id]);
+	}
 }
 task StageMusicChange(id)
 {
 	MusicChange(STAGE_MUSIC_PATHS[id], STAGE_MUSIC_DATA[id][0], STAGE_MUSIC_DATA[id][1], STAGE_MUSIC_DATA[id][2]);
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		StageNameShow(STAGE_MUSIC_NAMES[id]);
+	}
+}
+
+task StageNameShow(text)
+{
+	let yPos = 50;
+	let objArrows = [];
+	ascent(i in 0..2)
+	{
+		let objArrow = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objArrow, [IMG_TALK_NAMEARROW_BOTTOM, IMG_TALK_NAMEARROW_TOP][i]);
+		ObjSprite2D_SetSourceRect(objArrow,0, 464, 1024, 496);
+		ObjSprite2D_SetDestRect(objArrow,0, 464, 1024, 496);
+		ObjSprite2D_SetDestCenter(objArrow);
+		Obj_SetRenderPriorityI(objArrow, 76+10);
+		ObjRender_SetPosition(objArrow, GetScreenWidth/2, yPos+8, 0);
+		if(i==0)
+		{
+			ObjRender_SetColor(objArrow, 0,0,0);
+		}
+		objArrows ~= [objArrow];
+	}
+	
+	let obj = ObjText_Create();
+	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontSize(obj, 15);
+	ObjText_SetFontColorTop(obj, 255, 255, 255);
+	ObjText_SetFontColorBottom(obj, 255,255,255);	
+	ObjText_SetFontBorderType(obj, BORDER_FULL);
+	ObjText_SetFontBorderWidth(obj, 1);
+	ObjText_SetFontBorderColor(obj, 0, 0, 0);
+	ObjText_SetLinePitch(obj, 7);
+	Obj_SetRenderPriorityI(obj, 76+10);
+	ObjText_SetText(obj, text);
+	ObjText_SetSidePitch(obj, -1);
+	ObjRender_SetPosition(obj,round(GetScreenWidth/2-ObjText_GetTotalWidth(obj)/2),round(yPos+2-ObjText_GetTotalHeight(obj)/2),0);
+	
+	let scrollDis = 25;
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		let scl = 1 * sin(90/(t-1)*i);
+		yPos = 50 + scrollDis - scrollDis * scl;
+		ObjRender_SetAlpha(obj, 255 * scl);
+		ObjRender_SetPosition(obj,round(GetScreenWidth/2-ObjText_GetTotalWidth(obj)/2),round(yPos+2-ObjText_GetTotalHeight(obj)/2),0);
+		ascent(o in 0..2)
+		{
+			ObjRender_SetAlpha(objArrows[o], 255 * scl);
+			ObjRender_SetPosition(objArrows[o], round(GetScreenWidth/2), round(yPos+8), 0);
+		}
+		yield;
+	}
+	wait(180);
+	ascent(i in 0..t)
+	{
+		let scl = 1 - 1 * sin(90/(t-1)*i);
+		yPos = 50 + scrollDis - scrollDis * scl;
+		ObjRender_SetAlpha(obj, 255 * scl);
+		ObjRender_SetPosition(obj,round(GetScreenWidth/2-ObjText_GetTotalWidth(obj)/2),round(yPos+2-ObjText_GetTotalHeight(obj)/2),0);
+		ascent(o in 0..2)
+		{
+			ObjRender_SetAlpha(objArrows[o], 255 * scl);
+			ObjRender_SetPosition(objArrows[o], round(GetScreenWidth/2), round(yPos+8), 0);
+		}
+		yield;
+	}
+	Obj_Delete(obj);
+	ascent(o in 0..2)
+	{
+		Obj_Delete(objArrows[o]);
+	}
 }
 task MusicChange(musicPath, v, sl1, sl2)
 {
