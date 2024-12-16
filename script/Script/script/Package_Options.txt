@@ -539,7 +539,23 @@ task Options_CreateOptions()
 			}
 			if(id==OPTIONSMENUSTATE_TALKSOUNDS)
 			{
-				RenameRecenterText(objOptionsInputText, "< " ~ IntToString(option_TalkSound) ~ " >", x, opY);
+			
+				let ttt = "";
+				alternative(option_TalkSound)
+				case(0)
+				{
+					ttt = "Unique";
+				}
+				case(1)
+				{
+					ttt = "Generic";
+				}
+				others
+				{
+					ttt = "None";
+				}
+	
+				RenameRecenterText(objOptionsInputText, "< " ~ ttt ~ " >", x, opY);
 			}
 			let t = OPTIONSMENU_TRANSITION;
 			ascent(i in 0..t)
