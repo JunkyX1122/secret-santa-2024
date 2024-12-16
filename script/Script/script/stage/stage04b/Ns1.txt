@@ -9,7 +9,7 @@
 #include "./GrandisPortals.txt"
 let objEnemy;
 let objEnemy2 = CreateFamiliar;
-
+let objEnemy3;
 let count = 0;
    let objScene=GetEnemyBossSceneObjectID();
 let c = 0;
@@ -45,7 +45,7 @@ let TIME = 60*60;
 
 	renderBossUnanimated(objEnemy2, IMG_BOSS_VIIVI, 30);
 	
-	if(GetCommonData("isPracticing", true)==false)
+	if(GetCommonData("isPracticing", true)==true)
 	{
 		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,120 );
 		
@@ -57,6 +57,11 @@ let TIME = 60*60;
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 120, 60);
 		ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
 	}
+	
+	objEnemy3 = CreateFamiliar;
+	ObjMove_SetPosition(objEnemy3,GetCommonData("tazuePosition", [0,0])[0], GetCommonData("tazuePosition", [0,0])[1]);
+	RenderTazue(objEnemy3, true);
+	ObjMove_SetDestAtFrame(objEnemy3, ObjMove_GetX(objEnemy3), -300, 95, LERP_SMOOTHER);
 	
 	HitCirc(objEnemy2);
 	RecordAttackHistory("04b", "Ns1", DIFFICULTY_NAMES[DIFFICULTY]);
@@ -394,6 +399,8 @@ task end
 	DeleteShotAll(TYPE_ALL, TYPE_ITEM);
     SetAutoDeleteObject(true);
 	Obj_Delete(objEnemy);
+	Obj_Delete(objEnemy3);
+	
 	SetPortalManaging(false);
 	loop(60)
 	{

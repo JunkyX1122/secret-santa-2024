@@ -45,7 +45,7 @@ let TIME = 60*60;
 	renderBossUnanimated(objEnemy2, IMG_BOSS_KEIRAN, 10);
 	Obj_SetRenderPriority(objEnemy2, 0.29);
 	
-	if(GetCommonData("isPracticing", true)==false)
+	if(GetCommonData("isPracticing", true)==true)
 	{
 		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2-100,100+100);
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 200, 60);

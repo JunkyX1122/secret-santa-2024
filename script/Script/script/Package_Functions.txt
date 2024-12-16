@@ -142,7 +142,7 @@ function StartStageProgression()
 
 function TStageScene(SELECT_ID,waiter)
 {
-
+	SetCommonData("isPracticing", false);
 	LoadingBool = true;
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();

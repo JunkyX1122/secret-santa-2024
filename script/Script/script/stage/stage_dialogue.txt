@@ -80,6 +80,9 @@ function PreBossDialogue(stageID)
 	}
 	
 	while(forceStop){yield;}
+	if(!Obj_IsDeleted(objDummy)) 	{ Obj_Delete(objDummy); }
+	if(!Obj_IsDeleted(objDummy2)) 	{ Obj_Delete(objDummy2); }
+	if(!Obj_IsDeleted(objDummy3)) 	{ Obj_Delete(objDummy3); }
 	SetCommonData("IsDialogueSequenceActive", false);
 	EndDialogueSequence;
 	SetForbidPlayerShot(false);
@@ -203,6 +206,29 @@ const redrinFaceOffsetData = 		[Get_Distance(0, 0, -8, -168),	Get_PointAngle(0, 
 const mouth_null = ["", ""];
 
 const DEFAULT_MUSIC_FADE = 60*3;
+
+let objDummy;
+let objDummy2;
+let objDummy3;
+
+function InitialiseDummies()
+{
+	objDummy = CreateFamiliar;
+	objDummy2 = CreateFamiliar;
+	objDummy3 = CreateFamiliar;
+}
+
+task ObjMove_SetDestAtFrameWeightForceStop(obj, x, y, t)
+{
+	ObjMove_SetDestAtFrameWeight(obj, x, y, t);
+	ascent(i in 0..t)
+	{
+		forceStop = true;
+		yield;
+	}
+	forceStop = false;
+}
+
 function Stage01APreBattle()
 {
 	SetPortraitData([[0,0],[0,0],[0,0]], [[0,0],[0,0],[0,0]], 
@@ -218,7 +244,12 @@ function Stage01APreBattle()
 						IMG_PORTRAIT_GATO_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 						
 	SlideInEnemy(40, id_anubis, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
-
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_ANUBIS, 5);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 140, 60);
+	
 	SetDialogueTextA3("Anubis", "Research really.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
 						IMG_PORTRAIT_ANUBIS_BASE, IMG_PORTRAIT_ANUBIS_EYES_01, mouth_null, id_anubis,   portraitXRight,  portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);
@@ -363,6 +394,12 @@ function Stage01BPreBattle()
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 		
 	SlideInEnemy(40, id_daisuke, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_DAISUKE, 7);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 140, 60);
+	
 	SetDialogueTextA4("Daisuke", "It's been so long!", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2, -1);
@@ -522,6 +559,11 @@ function Stage01CPreBattle()
 	SlideInEnemy(40, id_grandis, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
 	SetNewEnemyPort(IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00[0], id_grandis, 0,0, 0, 0, -1);
 	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_GRANDIS, 20);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 140, 60);
+	
 	SetDialogueTextA3("Viivi", "Oh. Hey. It's been a while huh?", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
@@ -650,7 +692,7 @@ task GatoOutfitChange(id_gato)
 		forceStop = true;
 		yield;
 	}
-	SetCommonData("GatoPlayerSprite", id_gato);
+	SetCommonData("GatoPlayerSprite", 0);
 	shiverGato = false;	
 	ascent(i in 0..t)
 	{
@@ -723,6 +765,18 @@ function Stage02APreBattle()
 	SlideInEnemy(80, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+
+	InitialiseDummies();
+	
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_SCYLLA, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2-100,100+100, 60);
+	
+	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy2, IMG_BOSS_KEIRAN, 10);
+	Obj_SetRenderPriority(objDummy2, 0.29);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
+	
 
 	SetDialogueTextA3("Gato", "Greetings there fellow...", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
@@ -905,6 +959,17 @@ function Stage02BPreBattle()
 	SlideInEnemy(80, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
+	
+	InitialiseDummies();
+	
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_SCYLLA, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2-100,100+100, 60);
+	
+	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy2, IMG_BOSS_KEIRAN, 10);
+	Obj_SetRenderPriority(objDummy2, 0.29);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
 	
 	SetDialogueTextA3("Sullen", "Ah, greetings.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
@@ -1097,6 +1162,13 @@ function Stage02CPreBattle()
 	//SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
 	
+	InitialiseDummies();
+	
+	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy2, IMG_BOSS_KEIRAN, 10);
+	Obj_SetRenderPriority(objDummy2, 0.29);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
+	
 	SetDialogueTextA3("Kieran", "Oh, good morning.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
 						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_07, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 1, 0.05, 2);
@@ -1115,7 +1187,11 @@ function Stage02CPreBattle()
 	//SlideInEnemy(40, id_kieran, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_00, IMGAR_PORTRAIT_SCYLLA_MOUTH_00[0], id_scylla, 0,0, 0, 0, 1);
 	//SetNewEnemyPort(IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_00, ""							    , id_kieran, 0,0, 0, 0, 1);
-	
+
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_SCYLLA, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2-100,100+100, 60);
+
 	SetDialogueTextA3("Scylla", "What?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
 						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_02, IMGAR_PORTRAIT_SCYLLA_MOUTH_02, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 1, 0.05, 2);
@@ -1323,6 +1399,12 @@ function Stage03APreBattle()
 						
 	SlideInEnemy(40, id_kairyu, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00[0], id_kairyu, 0,0, 0, 0, 1);
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_KAIRYU, 7);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 150, 60);
+	
 	
 	SetDialogueTextA3("Kairyu", "You appear to be talking to yourself quite a bit.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
@@ -1553,6 +1635,11 @@ function Stage03BPreBattle()
 	SlideInEnemy(40, id_kairyu, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00[0], id_kairyu, 0,0, 0, 0, 1);
 	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_KAIRYU, 7);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 150, 60);
+	
 	SetDialogueTextA3("Kairyu", "As a man of the law and as a man of art, to have knowledge over|such differing professions gives you a unique outlook on life, does|it not?", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
 						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
@@ -1763,6 +1850,11 @@ function Stage03CPreBattle()
 	SlideInEnemy(40, id_kairyu, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_00, IMGAR_PORTRAIT_KAIRYU_MOUTH_00[0], id_kairyu, 0,0, 0, 0, 1);
 	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_KAIRYU, 7);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 150, 60);
+	
 	SetDialogueTextA3("Kairyu", "And for natural sciences such as your friend's field of choice, I|doubt he has yet to uncover everything there is to learn.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
 						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_03, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
@@ -1970,6 +2062,16 @@ function Stage04APreBattle()
 	SlideInEnemy(40, id_sullen, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
 	SetNewEnemyPort(IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00[0], id_daisuke, 0,0, 0, 0, -1);
 	SetNewEnemyPort(IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00[0], id_sullen, 0,0, 0, 0, -1);
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_DAISUKE, 7);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2,100+100, 60);
+	
+	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy2, IMG_BOSS_SULLEN, 15);
+	Obj_SetRenderPriority(objDummy2, 0.29);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
 	
 	SetDialogueTextA4("Sullen", "You would not happen to know the correct path to exit these woods|sir?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
@@ -2333,6 +2435,19 @@ function Stage04APostBattle()
 	
 }
 
+task KeepTazue()
+{
+	let ang = -90;
+	let dis = 100;
+	while(!Obj_IsDeleted(objDummy2) && !Obj_IsDeleted(objDummy3))
+	{
+		ObjMove_SetPosition(objDummy3, ObjMove_GetX(objDummy2)+dis*cos(ang), ObjMove_GetY(objDummy2)+dis*sin(ang));
+		SetCommonData("tazuePosition", [ObjMove_GetX(objDummy3),ObjMove_GetY(objDummy3)]);
+		ang+=1;
+		yield;
+	}
+}
+
 function Stage04BPreBattle()
 {
 	SetPortraitData([[-125,0],[50,0],[0,0]], [[-50,0],[125,0],[0,0]], 
@@ -2386,6 +2501,19 @@ function Stage04BPreBattle()
 	SlideInEnemy(40, id_viivi, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
 	SlideInEnemy(40, id_tazue, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, -1);
 	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_GRANDIS, 20);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2,120, 60);
+	
+	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy2, IMG_BOSS_VIIVI, 30);
+	Obj_SetRenderPriority(objDummy2, 0.29);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2+200, 100, 60);
+	
+	ObjMove_SetPosition(objDummy3, GetStgFrameWidth/2, -100);
+	KeepTazue();
+	RenderTazue(objDummy3, false);
 	SetDialogueTextA4("Viivi", "Hopefully you's ain't, otherwise we'd be outa luck.", 
 						DIALOGUE_COLOUR_VIIVI, id_null, id_viivi, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXRight, portraitYOffset, TALK_VIIVI, 1, 0.05, 2, -1);	
@@ -2721,6 +2849,12 @@ function Stage04CPreBattle()
 	
 	SlideInEnemy(40, id_gato, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00[0], id_gato, 0,0, 0, 0, 1);
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_GATO, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 125, 60);
+	
 	
 	SetDialogueTextA3("???", "You strangers lost too?", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
@@ -3348,6 +3482,11 @@ function Stage05APreBattle()
 	SlideInEnemy(40, id_hiroyuki, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00[0], id_hiroyuki, 0,0, 0, 0, 1);
 	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_HIROYUKI, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 120, 60);
+	
 	SetDialogueTextA3("Anubis", "(Ah, there's a party goer. Now's your chance. Don't let your bias get|in the way of relevant questions this time.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
 						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_04, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
@@ -3678,6 +3817,11 @@ function Stage05BPreBattle()
 	SlideInEnemy(40, id_hiroyuki, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00[0], id_hiroyuki, 0,0, 0, 0, 1);
 	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_HIROYUKI, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 120, 60);
+	
 	SetDialogueTextA3("Daisuke", "Big Bro!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.3, 0.05, 2);
@@ -3995,6 +4139,11 @@ function Stage05CPreBattle()
 	
 	SlideInEnemy(40, id_hiroyuki, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_00, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00[0], id_hiroyuki, 0,0, 0, 0, 1);
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_HIROYUKI, 30);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 120, 60);
 	
 	SetDialogueTextA3("Hiroyuki", "...But it plays into the overall theme.", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 

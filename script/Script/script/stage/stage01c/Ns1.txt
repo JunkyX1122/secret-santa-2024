@@ -37,7 +37,7 @@ let TIME = 60*60;
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
-	if(GetCommonData("isPracticing", true)==false)
+	if(GetCommonData("isPracticing", true)==true)
 	{
 		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,140 );
 	}
