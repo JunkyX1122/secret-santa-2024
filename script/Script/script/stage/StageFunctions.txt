@@ -23,6 +23,15 @@ task StageMusicChange(id)
 task StageNameShow(text)
 {
 	let yPos = 50;
+	
+	let objBox = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objBox, IMG_MUSIC_BOX);
+	ObjSprite2D_SetSourceRect(objBox,0, 0, 1024, 64);
+	ObjSprite2D_SetDestRect(objBox,0, 0, 1024, 64);
+	ObjSprite2D_SetDestCenter(objBox);
+	Obj_SetRenderPriorityI(objBox, 76+10);
+	ObjRender_SetPosition(objBox, GetScreenWidth/2, yPos+8, 0);
+	
 	let objArrows = [];
 	ascent(i in 0..2)
 	{
@@ -60,8 +69,13 @@ task StageNameShow(text)
 	{
 		let scl = 1 * sin(90/(t-1)*i);
 		yPos = 50 + scrollDis - scrollDis * scl;
+		
+		ObjRender_SetPosition(objBox,round(GetScreenWidth/2),round(yPos+7),0);
+		ObjRender_SetAlpha(objBox, 255 * scl * 0.85);
+		
 		ObjRender_SetAlpha(obj, 255 * scl);
 		ObjRender_SetPosition(obj,round(GetScreenWidth/2-ObjText_GetTotalWidth(obj)/2),round(yPos+2-ObjText_GetTotalHeight(obj)/2),0);
+		
 		ascent(o in 0..2)
 		{
 			ObjRender_SetAlpha(objArrows[o], 255 * scl);
@@ -74,8 +88,13 @@ task StageNameShow(text)
 	{
 		let scl = 1 - 1 * sin(90/(t-1)*i);
 		yPos = 50 + scrollDis - scrollDis * scl;
+		
+		ObjRender_SetPosition(objBox,round(GetScreenWidth/2),round(yPos+7),0);
+		ObjRender_SetAlpha(objBox, 255 * scl * 0.85);
+		
 		ObjRender_SetAlpha(obj, 255 * scl);
 		ObjRender_SetPosition(obj,round(GetScreenWidth/2-ObjText_GetTotalWidth(obj)/2),round(yPos+2-ObjText_GetTotalHeight(obj)/2),0);
+		
 		ascent(o in 0..2)
 		{
 			ObjRender_SetAlpha(objArrows[o], 255 * scl);
@@ -84,6 +103,7 @@ task StageNameShow(text)
 		yield;
 	}
 	Obj_Delete(obj);
+	Obj_Delete(objBox);
 	ascent(o in 0..2)
 	{
 		Obj_Delete(objArrows[o]);

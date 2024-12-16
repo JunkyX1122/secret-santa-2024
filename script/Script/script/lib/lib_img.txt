@@ -671,11 +671,45 @@ IMGAR_PORTRAIT_HIROYUKI_MOUTH_03[1]
 ];
 
 // ------------------------------------------ REDRIN
-const IMG_PORTRAIT_REDRIN_BASE   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_base.png";
-const IMGAR_PORTRAIT_REDRIN_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin_00b.png"];
+const IMG_PORTRAIT_REDRIN_BASE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_base.png";
+const IMG_PORTRAIT_REDRIN_EYES_00   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_00.png";
+const IMG_PORTRAIT_REDRIN_EYES_01   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_01.png";
+const IMG_PORTRAIT_REDRIN_EYES_02   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_02.png";
+const IMG_PORTRAIT_REDRIN_EYES_03   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_03.png";
+const IMG_PORTRAIT_REDRIN_EYES_04   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_04.png";
+const IMG_PORTRAIT_REDRIN_EYES_05   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_05.png";
+const IMG_PORTRAIT_REDRIN_EYES_06   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_06.png";
+const IMG_PORTRAIT_REDRIN_EYES_07   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_07.png";
+const IMG_PORTRAIT_REDRIN_EYES_08   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_08.png";
+const IMG_PORTRAIT_REDRIN_EYES_09   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_eyes_09.png";
+const IMGAR_PORTRAIT_REDRIN_MOUTH_00 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_00a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_00b.png"];
+const IMGAR_PORTRAIT_REDRIN_MOUTH_01 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_01a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_01b.png"];
+const IMGAR_PORTRAIT_REDRIN_MOUTH_02 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_02a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_02b.png"];
+const IMGAR_PORTRAIT_REDRIN_MOUTH_03 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_03a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_03b.png"];
+const IMGAR_PORTRAIT_REDRIN_MOUTH_04 = [GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_04a.png", GetCurrentScriptDirectory()  ~ "./../../img/talk/redrin/redrin_mouth_04b.png"];
 
 const RedrinPortrait_ImgArray = [
-IMG_PORTRAIT_REDRIN_BASE
+IMG_PORTRAIT_REDRIN_BASE,
+IMG_PORTRAIT_REDRIN_EYES_00,
+IMG_PORTRAIT_REDRIN_EYES_01,
+IMG_PORTRAIT_REDRIN_EYES_02,
+IMG_PORTRAIT_REDRIN_EYES_03,
+IMG_PORTRAIT_REDRIN_EYES_04,
+IMG_PORTRAIT_REDRIN_EYES_05,
+IMG_PORTRAIT_REDRIN_EYES_06,
+IMG_PORTRAIT_REDRIN_EYES_07,
+IMG_PORTRAIT_REDRIN_EYES_08,
+IMG_PORTRAIT_REDRIN_EYES_09,
+IMGAR_PORTRAIT_REDRIN_MOUTH_00[0],
+IMGAR_PORTRAIT_REDRIN_MOUTH_00[1],
+IMGAR_PORTRAIT_REDRIN_MOUTH_01[0],
+IMGAR_PORTRAIT_REDRIN_MOUTH_01[1],
+IMGAR_PORTRAIT_REDRIN_MOUTH_02[0],
+IMGAR_PORTRAIT_REDRIN_MOUTH_02[1],
+IMGAR_PORTRAIT_REDRIN_MOUTH_03[0],
+IMGAR_PORTRAIT_REDRIN_MOUTH_03[1],
+IMGAR_PORTRAIT_REDRIN_MOUTH_04[0],
+IMGAR_PORTRAIT_REDRIN_MOUTH_04[1]
 ];
 
 // ------------------------------------------
@@ -699,8 +733,9 @@ RedrinPortrait_ImgArray];
 const IMG_TALK_BOX   				= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_box.png";
 const IMG_TALK_NAMEARROW_TOP   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_namearrow1.png";
 const IMG_TALK_NAMEARROW_BOTTOM   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_namearrow2.png";
+const IMG_MUSIC_BOX   				= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/music_box.png";
 
-const TalkImg_ImgArray =  [IMG_TALK_BOX, IMG_TALK_NAMEARROW_TOP, IMG_TALK_NAMEARROW_BOTTOM];
+const TalkImg_ImgArray =  [IMG_TALK_BOX, IMG_TALK_NAMEARROW_TOP, IMG_TALK_NAMEARROW_BOTTOM, IMG_MUSIC_BOX];
 
 
 //---------------------------------------

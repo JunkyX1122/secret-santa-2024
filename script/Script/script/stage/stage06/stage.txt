@@ -6,7 +6,7 @@
 #System["./../../lib/system/System.txt"]
 #include "./../../lib/lib_stageall.txt"
 #include "./../Initiate.txt"
-
+#include "./../stage_dialogue.txt"
 @Initialize
 {
 	RecordStageHistory("06", DIFFICULTY_NAMES[DIFFICULTY]);
@@ -74,6 +74,7 @@ task StartStage
 	wait(60);
 	BGTransition(255, 0, 120);
 	wait(120);
+	PreBossDialogue(DIALOGUE_STAGE06);
 	SetCommonData("MaxNumberOfPhases",5);
 	SetCommonData("Stage_06Blue",false);
 	if(GetCommonData("isPracticing", false)==true)
@@ -87,10 +88,10 @@ task StartStage
 		ObjEnemyBossScene_Regist(Boss);	
 		while(!Obj_IsDeleted(Boss)) { yield; }
 		EndStageHistoryRecord();
-		wait(120);
-		MusicVolumeChange(GetBGMVolume, 0, 90);
-		BGTransition(0, 255, 91);
-		wait(90);
+		wait(150);
+		MusicVolumeChange(GetBGMVolume, 0, 60*5);
+		BGTransition(0, 255, 60*5+1);
+		wait(60*5);
 		DeleteMusicObj();
 		CloseStgScene;
 	}
