@@ -842,7 +842,7 @@ task end
 		DeleteShotAll(TYPE_ALL, TYPE_ITEM);
 		yield;
 	}
-	wait(100);
+	wait(150);
 	
 	CloseScript(GetOwnScriptID());
 	return;

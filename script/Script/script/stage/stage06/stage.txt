@@ -90,7 +90,7 @@ task StartStage
 		EndStageHistoryRecord();
 		wait(150);
 		MusicVolumeChange(GetBGMVolume, 0, 60*5);
-		BGTransition(0, 255, 60*5+1);
+		BGTransition(0, 255, 60*5+1, 100);
 		wait(60*5);
 		DeleteMusicObj();
 		CloseStgScene;
