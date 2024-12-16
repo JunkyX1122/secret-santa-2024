@@ -23,7 +23,8 @@ let IMG_MSD=GetCurrentScriptDirectory~"./img/MSDEffect.png";
 let IMG_CLIMAX=GetCurrentScriptDirectory~"./img/ClimaxRing.png";
 let IMG_BACKGROUND=GetCurrentScriptDirectory~"./img/mask_ball.png";
 let IMG_PIXEL=GetCurrentScriptDirectory~"./img/pixel.png";
-
+let IMG_EFFECT_LINE=GetCurrentScriptDirectory~"./img/pl00e.png";
+let IMG_EFFECT_LEAF=GetCurrentScriptDirectory~"./img/eff_leaf.png";
 let IMG_WOOSH=GetCurrentScriptDirectory~"./img/weatherCall001.png";
 
 let IMG_GIANTBALL=GetCurrentScriptDirectory~"./img/flashAuraY000.png";

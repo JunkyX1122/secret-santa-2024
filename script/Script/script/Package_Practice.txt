@@ -213,6 +213,15 @@ function PracticeScreen_Attacks(stageID)
 				SetCommonData("isPracticing", true);
 				currentPracticePath = GetCurrentScriptDirectory() ~ "stage/prac_stage.txt";
 				isPracticingWholeStage = false;
+				
+				if(selectedPracticeStage < 3)
+				{
+					SetCommonData("IsStage1", true);
+				}
+				else
+				{
+					SetCommonData("IsStage1", false);
+				}
 				if(selectedPracticeAttack == practiceWholeStageID)
 				{
 					isPracticingWholeStage = true;

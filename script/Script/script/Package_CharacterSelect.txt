@@ -54,20 +54,21 @@ task TeamTalk(teamID)
 {
 	wait(10);
 	let talkDel = 5;
+	let voiceVolume = 65;
 	ascent(i in 0..5)
 	{
 		alternative(teamID)
 		case(PLAYERTEAM_A)
 		{
-			SE_PlayLen(TALK_GATO,100, rand(0.95, 1.05));
+			SE_PlayLen(TALK_GATO,voiceVolume, rand(0.95, 1.05));
 		}
 		case(PLAYERTEAM_B)
 		{
-			SE_PlayLen(TALK_SULLEN,100, rand(0.95, 1.05));
+			SE_PlayLen(TALK_SULLEN,voiceVolume, rand(0.95, 1.05));
 		}
 		case(PLAYERTEAM_C)
 		{
-			SE_PlayLen(TALK_VIIVI,100, rand(0.95, 1.05));
+			SE_PlayLen(TALK_VIIVI,voiceVolume, rand(0.95, 1.05));
 		}
 		wait(talkDel);
 	}
@@ -77,15 +78,15 @@ task TeamTalk(teamID)
 		alternative(teamID)
 		case(PLAYERTEAM_A)
 		{
-			SE_PlayLen(TALK_ANUBIS,100, rand(0.95, 1.05));
+			SE_PlayLen(TALK_ANUBIS,voiceVolume, rand(0.95, 1.05));
 		}
 		case(PLAYERTEAM_B)
 		{
-			SE_PlayLen(TALK_DAISUKE,100, rand(0.95, 1.05));
+			SE_PlayLen(TALK_DAISUKE,voiceVolume, rand(0.95, 1.05));
 		}
 		case(PLAYERTEAM_C)
 		{
-			SE_PlayLen(TALK_GRANDIS,100, rand(0.95, 1.05));
+			SE_PlayLen(TALK_GRANDIS,voiceVolume, rand(0.95, 1.05));
 		}
 		wait(talkDel);
 	}

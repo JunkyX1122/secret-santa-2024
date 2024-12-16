@@ -48,7 +48,7 @@ let TIME = 60*60;
 	HitCirc(objEnemy2);
 	end;
 	SetCommonData("SpellCardBG1",false);
-	
+	SetCommonData("IsStage1", true);
 }
 @MainLoop
 {
@@ -100,6 +100,11 @@ task Fire
 {
 	
 	DPS("Damage per Second: ",5,60);
+	while(true)
+	{
+		let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 2,90, 89, 420, 20, 2, BLEND_ALPHA, false);
+		yield;
+	}
 }
 task DPS(text,y,repet)
 {

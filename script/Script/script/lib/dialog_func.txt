@@ -37,7 +37,7 @@ let enemyscales = []; //scales for enemy potraits
 const DEFAULT_DIALOGUE_TEXTSIZE = 16;
 let textSize = 16;
 
-let voiceVolume = 75;
+let voiceVolume = 55;
 function SetDialogueTextSize(t)
 {
 	textSize = t;

@@ -661,7 +661,7 @@ function Stage01BPreBattle()
 						"", "", mouth_null, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
 	SlideInEnemy(40, id_dandara, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	
-	NameDisplay(portraitXRight+50-75, portraitYOffset + 50, DIALOGUE_ID_DANDARA);
+	NameDisplay(portraitXRight+80-75, portraitYOffset + 50, DIALOGUE_ID_DANDARA);
 	
 	SetDialogueTextA3("Dandara", "What brings you all the way out here?", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 

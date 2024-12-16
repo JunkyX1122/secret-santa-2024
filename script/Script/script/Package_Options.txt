@@ -131,11 +131,11 @@ task OptionsMenu_RandomTalk(id)
 	{
 		if(id==-1)
 		{
-			SE_PlayLen(TALK_DEFAULT, 75, round(rand(0.95, 0.05)));
+			SE_PlayLen(TALK_DEFAULT, 65, round(rand(0.95, 0.05)));
 		}
 		else
 		{
-			SE_PlayLen(TEAM_TALK_RANDOM[id], 75, round(rand(0.95, 0.05)));
+			SE_PlayLen(TEAM_TALK_RANDOM[id], 65, round(rand(0.95, 0.05)));
 		}
 		
 		wait(talkDel);

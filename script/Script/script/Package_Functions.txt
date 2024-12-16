@@ -76,6 +76,7 @@ function StartStageProgression()
 	
 	if(carryOn==true)
 	{
+		SetCommonData("IsStage1", true);
 		alternative(activeTeam)
 		case(PLAYERTEAM_A)
 		{
@@ -90,7 +91,7 @@ function StartStageProgression()
 			TStageScene(STAGE_1c,WAITER);
 		}
 	}
-	
+	SetCommonData("IsStage1", false);
 	
 	if(carryOn==true)
 	{

@@ -5,15 +5,23 @@ task TSpell
 	
 	let objManage = GetSpellManageObject();
 	Obj_Delete(objManage);
-	if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
+	if(GetCommonData("IsStage1", false))
 	{
-		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Thievery &quot;Pilfer&quot;", [128,0,0]);
-		SpellViiviFocus;
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Nullify", [128,0,0]);
+		SpellBasic;
 	}
 	else
 	{
-		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Dark Blade &quot;Death Dagger&quot;", [128,0,0]);
-		SpellViiviUnfocus;
+		if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
+		{
+			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Thievery &quot;Pilfer&quot;", [128,0,0]);
+			SpellViiviFocus;
+		}
+		else
+		{
+			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Dark Blade &quot;Death Dagger&quot;", [128,0,0]);
+			SpellViiviUnfocus;
+		}
 	}
 	let amount = 3;
 	loop(30)
@@ -53,6 +61,341 @@ task FLASH
 	}
 	Obj_Delete(obj);
 }
+
+task SpellBasic()
+{
+	OnSpell = true;
+	SetPlayerInvincibilityFrame_Special(180);
+	ClimaxCircle(GetPlayerX,GetPlayerY,4,0.05,80,0,0,0,rand(0,360),255);
+	DARKNESS(0,0,0,BLEND_ALPHA,128,4,180);
+	SpellcardBomb_th10();
+	wait(180);
+	SE_PlayLen(BARRIERON);
+	OnSpell=false;
+}
+
+task SpellcardBomb_th10
+{
+	let objManage = GetSpellManageObject;
+	let spellTime = 0;
+	let spellHitSize = 0;
+	
+	let spellX = GetPlayerX;
+	let spellY = GetPlayerY;
+	
+	let mainAlpha = 255;
+	
+	let spellRise = 1;      //Reimu - 1    Marisa - 1.5
+	let spellSize = 75;    //Reimu - 180  Marisa - 130
+	let maxSpellTime = 90;
+	
+	let objSpell = ObjSpell_Create();
+	ObjSpell_Regist(objSpell);
+	ObjSpell_SetDamage(objSpell, 10);
+	ObjSpell_SetEraseShot(objSpell, true);
+	
+	function CreateRing(x, y, vertexCount, width, maxRadius)
+	{
+		let loc_obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+		ObjPrim_SetTexture(loc_obj, IMG_EFFECT_LINE);
+		ObjPrim_SetPrimitiveType(loc_obj, PRIMITIVE_TRIANGLESTRIP);
+		ObjPrim_SetVertexCount(loc_obj, vertexCount+2);
+		ObjRender_SetBlendType(loc_obj, BLEND_ADD_ARGB);
+		Obj_SetRenderPriorityI(loc_obj, 70);
+		
+		Obj_SetValue(loc_obj, "a", 0);
+		Obj_SetValue(loc_obj, "b", 0);
+		Obj_SetValue(loc_obj, "c", 0);
+		
+		task ManageRing()
+		{
+			let calcAngle = 0;
+			let calcUVT = 384/(vertexCount/2);
+			ascent(i in 0..(vertexCount/2) + 2)
+			{
+				ObjPrim_SetVertexUVT(loc_obj, 0 + i*2, 0, 0 + calcUVT*i);
+				ObjPrim_SetVertexUVT(loc_obj, 1 + i*2, 32, 0 + calcUVT*i);
+			}
+			
+			while(!Obj_IsDeleted(loc_obj))
+			{
+				ascent(i in 0..(vertexCount/2) + 2)
+				{
+					calcAngle = i * (360/(vertexCount/2));
+					ObjPrim_SetVertexPosition(loc_obj, 0 + i*2, 
+					0 + (Obj_GetValue(loc_obj, "b") * cos(calcAngle + Obj_GetValue(loc_obj, "a"))), 
+					0 + (Obj_GetValue(loc_obj, "b") * sin(calcAngle + Obj_GetValue(loc_obj, "a"))), 1);
+					
+					ObjPrim_SetVertexPosition(loc_obj, 1 + i*2, 
+					0 + ((Obj_GetValue(loc_obj, "b") - Obj_GetValue(loc_obj, "c")) * cos(calcAngle + Obj_GetValue(loc_obj, "a"))), 
+					0 + ((Obj_GetValue(loc_obj, "b") - Obj_GetValue(loc_obj, "c")) * sin(calcAngle + Obj_GetValue(loc_obj, "a"))), 1);
+				}
+				yield;
+			}
+		}
+		ObjRender_SetPosition(loc_obj, 100, 100, 1);
+		ManageRing();
+		return loc_obj;
+	}
+	
+	task CreateMoFBombRing(obj, type, width, maxRadius)
+	{
+		let ring = CreateRing(GetPlayerX, spellY, 128, 18, 50);
+		
+		let spellRadiusSpeed = 2.5;
+		let spellRadiusWeight = 8;
+		let spellMaxMaxRadius = 150;
+		let spellMaxRadius = maxRadius;
+		let spellDistance = spellMaxMaxRadius - spellMaxRadius;
+		
+		let spellWidth = width;
+		let spellRad = spellSize;
+		let spellAlpha = 255;
+		let spellAngleZ = 0;
+	
+		alternative(type)
+		case(0) //Main Ring
+		{
+			spellRadiusSpeed = 2.5;
+			spellRadiusWeight = 8;
+			spellMaxMaxRadius = spellRad;
+			spellDistance = spellMaxMaxRadius - spellMaxRadius;
+		}
+		case(1) //Sub Ring
+		{
+			spellRadiusSpeed = 2;
+			spellRadiusWeight = 8;
+			spellMaxMaxRadius = spellRad - 8;
+			spellDistance = spellMaxMaxRadius - spellMaxRadius;
+		}
+		case(2) //Purple Ring A
+		{
+			spellRadiusSpeed = 2;
+			spellRadiusWeight = 22;
+			spellDistance = spellMaxMaxRadius - spellMaxRadius;
+		}
+		case(3) //Purple Ring B
+		{
+			spellRadiusSpeed = 2;
+			spellRadiusWeight = 22;
+			spellMaxMaxRadius = spellRad + 30;
+	
+			spellDistance = spellMaxMaxRadius - spellMaxRadius;
+		}
+		
+		while(!Obj_IsDeleted(ring))
+		{
+			Obj_SetValue(ring, "a", spellAngleZ);
+			Obj_SetValue(ring, "b", spellMaxRadius);
+			Obj_SetValue(ring, "c", spellWidth);
+			ObjRender_SetPosition(ring, spellX, spellY, 1);
+				
+			alternative(type)
+			case(0) //Main Ring
+			{
+				ObjRender_SetAlpha(ring, mainAlpha);
+				
+				
+				if(spellDistance > 1)
+				{
+					spellDistance = spellMaxMaxRadius - spellMaxRadius;
+					let spellRadiusSpeed = spellDistance / spellRadiusWeight;
+					
+					if(spellRadiusSpeed > 5)
+					{
+						spellRadiusSpeed = 5;
+					}
+					spellMaxRadius += spellRadiusSpeed;
+				}
+				
+				if(mainAlpha <= 0)
+				{
+					Obj_Delete(ring);
+				}
+				spellHitSize = spellMaxRadius - 8;
+				spellAngleZ += 32;
+			}
+			case(1) //Sub Ring
+			{
+				ObjRender_SetAlpha(ring, mainAlpha);
+				
+				
+				if(spellDistance > 1)
+				{
+					spellDistance = spellMaxMaxRadius - spellMaxRadius;
+					let spellRadiusSpeed = spellDistance / spellRadiusWeight;
+					
+					if(spellRadiusSpeed > 4)
+					{
+						spellRadiusSpeed = 4;
+					}
+					spellMaxRadius += spellRadiusSpeed;
+				}
+				
+				if(mainAlpha <= 0)
+				{
+					Obj_Delete(ring);
+				}
+				
+				spellAngleZ -= 13;
+			}
+			case(2) //Purple Ring A
+			{
+				ObjRender_SetColor(ring, 255, 0, 255);
+				ObjRender_SetAlpha(ring, spellAlpha);
+				
+				
+				if(spellDistance > 1)
+				{
+					spellDistance = spellMaxMaxRadius - spellMaxRadius;
+					let spellRadiusSpeed = spellDistance / spellRadiusWeight;
+					
+					if(spellRadiusSpeed > 5)
+					{
+						spellRadiusSpeed = 5;
+					}
+					spellMaxRadius += spellRadiusSpeed;
+				}
+				if(spellDistance < 20)
+				{
+					if(spellAlpha <= 0)
+					{
+						Obj_Delete(ring);
+					}
+					else
+					{
+						spellAlpha -= 10;
+					}
+				}
+				spellAngleZ += 7;
+			}
+			case(3) //Purple Ring B
+			{
+				ObjRender_SetColor(ring, 255, 0, 255);
+				ObjRender_SetAlpha(ring, spellAlpha);
+				
+				
+				if(spellDistance > 1)
+				{
+					spellDistance = spellMaxMaxRadius - spellMaxRadius;
+					let spellRadiusSpeed = spellDistance / spellRadiusWeight;
+					
+					if(spellRadiusSpeed > 5)
+					{
+						spellRadiusSpeed = 5;
+					}
+					spellMaxRadius += spellRadiusSpeed;
+				}
+				if(spellDistance < 20)
+				{
+					if(spellAlpha <= 0)
+					{
+						Obj_Delete(ring);
+					}
+					else
+					{
+						spellAlpha -= 10;
+					}
+				}
+				spellAngleZ -= 7;
+			}
+			yield;
+		}
+	}
+	
+	task ManageHitBox()
+	{
+		while(spellTime < maxSpellTime)
+		{
+			ObjSpell_SetIntersectionCircle(objSpell, spellX, spellY, spellHitSize);
+			yield;
+		}
+		Obj_Delete(objSpell);
+	}
+	
+	task ManageParticles()
+	{
+		task CreateEffectParticle(speed, angle, type)
+		{
+			let loc_x = spellX + ((spellSize - 18) * cos(angle));
+			let loc_y = spellY + ((spellSize - 18) * sin(angle));
+			let loc_scale = rand(0.75, 1.5);
+			let loc_scaleMod = loc_scale/20;
+			let loc_angle = rand(0, 360);
+			let loc_angMod = rand(-5, 5);
+			
+			let x_vel = speed * cos(angle);
+			let y_vel = speed * sin(angle);
+
+			let col = [255,0,0];
+			alternative(type)
+			case(0)
+			{
+				col = [255, 0, 0];
+			}
+			case(1)
+			{
+				col = [0, 0, 255];
+			}
+			
+			while(loc_scale > 0)
+			{
+				ObjParticleList_SetAlpha(leafArray,255);
+				ObjParticleList_SetScale(leafArray,loc_scale,loc_scale,0);
+				ObjParticleList_SetPosition(leafArray,loc_x, loc_y,0);
+				ObjParticleList_SetColor(leafArray,col[0],col[1],col[2]);
+				ObjParticleList_SetAngleZ(leafArray,loc_angle);
+				ObjParticleList_AddInstance(leafArray);
+
+				loc_x += x_vel;
+				loc_y += y_vel - spellRise;
+				loc_scale -= loc_scaleMod;
+				loc_angle += loc_angMod;
+				yield;
+			}
+		}
+		
+		loop(30){yield;}
+		loop(maxSpellTime)
+		{
+			CreateEffectParticle(2.75, rand(0, 360), 0);
+			CreateEffectParticle(2.75, rand(0, 360), 0);
+			CreateEffectParticle(-2.75, rand(0, 360), 1);
+			CreateEffectParticle(-2.75, rand(0, 360), 1);
+			yield;
+		}
+	}
+	
+	//PlaySE(se_slash);
+	//SetPlayerInvincibilityFrame(300);
+	ManageHitBox();
+	ManageParticles();
+	CreateMoFBombRing(objManage, 0, 28, 50);
+	CreateMoFBombRing(objManage, 1, 18, 50);
+	
+	CreateMoFBombRing(objManage, 2, 20, 50);
+	loop(12){spellY -= spellRise;yield;}
+	CreateMoFBombRing(objManage, 3, 20, 50);
+	loop(12){spellY -= spellRise;yield;}
+	CreateMoFBombRing(objManage, 2, 20, 50);
+	loop(12){spellY -= spellRise;yield;}
+	CreateMoFBombRing(objManage, 3, 20, 50);
+	
+	while(mainAlpha > 0)
+	{
+		if(spellTime > maxSpellTime)
+		{
+			mainAlpha -= 15;
+			spellRise -= 0.1;
+		}
+		spellY -= spellRise;
+		spellTime++;
+		yield;
+	}
+	Obj_Delete(objManage);
+}
+
+
 
 task SpellViiviUnfocus
 {
@@ -114,11 +457,13 @@ task KnifeShot(x,y,speed,ang)
 let wooshArray;
 let wooshArray2;
 let shineArray;
+let leafArray;
 task InitialiseSpellArray
 {
 	wooshArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_WOOSH, [1,1,127,127], BLEND_ADD_ARGB, 0.28);
 	wooshArray2 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_WOOSH, [1,1,127,127], BLEND_SUBTRACT, 0.29);
 	shineArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_GIANTBALLGLOW, [0,0,256,256], BLEND_ADD_ARGB, 0.4);
+	leafArray = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_EFFECT_LEAF, [0,0,32,32], BLEND_ADD_ARGB, 0.7);
 }
 
 task CutEnemy(Color,AlphaSlash,scaleplus,angle,XX,YY)
