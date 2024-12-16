@@ -91,7 +91,7 @@ const DIALOGUE_NAMES =	[
 							"Hiroyuki",
 							"Redrin Lightclaw"
 						];
-
+let nameSkip = false;
 task NameDisplay(x,y,id)
 {
 	let objUnder = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -155,8 +155,11 @@ task NameDisplay(x,y,id)
 		ObjRender_SetAlpha(objName, 255 * scl);
 		yield;
 	}
-	wait(60*4);
-
+	ascent(i in 0..60*4)
+	{
+		if(!nameSkip) { yield; }
+	}
+	if(nameSkip) { t = 30; }
 	ascent(i in 0..t)
 	{
 		let scl = 1 - 1 * sin(90/(t-1)*i);
@@ -235,8 +238,11 @@ task NameDisplay(x,y,id,title,name)
 		ObjRender_SetAlpha(objName, 255 * scl);
 		yield;
 	}
-	wait(60*4);
-
+	ascent(i in 0..60*4)
+	{
+		if(!nameSkip) { yield; }
+	}
+	if(nameSkip) { t = 30; }
 	ascent(i in 0..t)
 	{
 		let scl = 1 - 1 * sin(90/(t-1)*i);
@@ -255,6 +261,7 @@ task NameDisplay(x,y,id,title,name)
 
 function PreBossDialogue(stageID)
 {
+	nameSkip = false;
 	forceStop = false;
 	if(GetCommonData("isPracticing", false)==true)
 	{
@@ -303,6 +310,7 @@ function PreBossDialogue(stageID)
 		case("ID_Viivi") 	{ Stage06CPreBattle(); }
 	}
 	
+	nameSkip = true;
 	while(forceStop){yield;}
 	if(!Obj_IsDeleted(objDummy)) 	{ Obj_Delete(objDummy); }
 	if(!Obj_IsDeleted(objDummy2)) 	{ Obj_Delete(objDummy2); }
@@ -315,6 +323,7 @@ function PreBossDialogue(stageID)
 
 function PostBossDialogue(stageID)
 {
+	nameSkip = false;
 	forceStop = false;
 	if(GetCommonData("isPracticing", false)==true)
 	{
@@ -357,6 +366,7 @@ function PostBossDialogue(stageID)
 	}
 	//case(DIALOGUE_STAGE06) 	{  }
 	
+	nameSkip = true;
 	while(forceStop){yield;}
 	SetCommonData("IsDialogueSequenceActive", false);
 	EndDialogueSequence;
