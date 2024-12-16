@@ -15,6 +15,7 @@ let OptionX = [
     GetStgFrameWidth / 2, GetStgFrameWidth / 2, GetStgFrameWidth / 2,
     GetStgFrameWidth / 2
 ];
+let DeathBombTime = 10;
 let OptionY = [ 416, 416, 416, 416 ];
 let RodFlag = false;
 let RodFlag2 = false;
@@ -131,7 +132,7 @@ let PLAYERSPEED = [4.25, 1.5];
     // 低速魔方陣エフェクト用タスク
     InvincibleSystemTask;
     // 特殊無敵用タスク
-    SetPlayerRebirthFrame(18);
+    SetPlayerRebirthFrame(DeathBombTime);
     SetPlayerRebirthLossFrame(0);
     SetPlayerDownStateFrame(40);
     //SetPlayerStateEndEnable(true);

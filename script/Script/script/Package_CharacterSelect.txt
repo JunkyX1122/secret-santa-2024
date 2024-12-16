@@ -148,16 +148,17 @@ let charSelectX = GetScreenWidth/2 - 192;
 
 let selectedTeam = PLAYERTEAM_A;
 const teamNames 	= ["Team Terra", "Team Paladin", "Team Granini"];
-const statNames 	= ["Speed", "Shot Power", "Range", "Spell Power", "Spell Capacity"];
+const statNames 	= ["Speed", "Shot Power", "Range", "Spell Power", "Spell Capacity", "Dth. Bomb Frames"];
 const statValues	= [
 						[[6, 3]		 , 	[4.25, 1.5], 	[5, 2.25]		], // Speed
 						[[23.2, 23.2], 	[ 15, 26.6], 	[24, 24] 		], // Shot Power
 						[[100,100],	   	[50, 20],    	[60, 85]		], // Range
 						[[28.3, 32.3], 	[6, 24.9],   	[55.5, 38.4]	], // Spell Power
-						[[3,3],			[4,4],			[2,2]]			   // Spell Capacity
+						[[3,3],			[4,4],			[2,2]			], // Spell Capacity
+						[[25,25],		[10, 10],		[18,18]			]  // Death Bomb Time 
 						];
 						
-const statMaxValues = [8, 40, 100, 75, 8];
+const statMaxValues = [8, 40, 100, 75, 8, 30];
 
 const tabTitles 	= ["Weapons", "Shot", "Spells"];
 const tabInfoText 	= [
@@ -242,7 +243,7 @@ task Char_BoxDetails()
 	ObjRender_SetColor(objNBG,NAME_BG_COLOURS[selectedTeam][0],NAME_BG_COLOURS[selectedTeam][1],NAME_BG_COLOURS[selectedTeam][2]);
 	
 	Previews();
-	ascent(i in 0..5)
+	ascent(i in 0..6)
 	{
 		StatIcons(charSelectX - 165 + 121 * (i%3), GetScreenHeight/2 + 25 + 26 * floor(i/3),i);
 	}
@@ -517,7 +518,7 @@ task Char_BoxDetails()
 			ObjRender_SetPosition(objBar, x + 8, y + 5, 0);
 			let col = 255 - 128*o;
 			ObjRender_SetColor(objBar, col, col, col);
-			if(id==4)
+			if(id==4 || id == 5)
 			{	
 				ObjRender_SetColor(objBar, 255, 255, 255);
 			}
@@ -546,11 +547,11 @@ task Char_BoxDetails()
 			ObjRender_SetAlpha(objStatTitle, 255*characterSelect_AlphaScl);
 			ObjRender_SetAlpha(objStatText, 255*characterSelect_AlphaScl);
 			let textt = "";
-			if(id == 4){ textt = textt~"[r]"; }
+			if(id==4 || id==5){ textt = textt~"[r]"; }
 			ascent(o in 0..2)
 			{
 				statValueSet[o] = statValueSet[o] * 0.8 + statValues[id][selectedTeam][o] * 0.2;
-				if((id==4 && o==0) || id < 4)
+				if(((id==4 || id==5) && o==0) || id < 4)
 				{
 					textt = textt~rtos("00.0",statValues[id][selectedTeam][o]);
 					if(id < 4){ textt = textt~"[r]"; }

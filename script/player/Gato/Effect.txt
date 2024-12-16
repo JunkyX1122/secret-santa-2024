@@ -315,7 +315,7 @@ task TShake(tim, am) {
 task TExplosion {  // 被弾エフェクト
     let XXX = GetPlayerX;
     let YYY = GetPlayerY;
-    TShake(15, 3);
+    TShake(DeathBombTime, 3);
     while (GetPlayerState == STATE_HIT) {  // 喰らいボム可能時のエフェクト
         yield;
     }
