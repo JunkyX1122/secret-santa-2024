@@ -7,19 +7,19 @@ task TSpell
 	Obj_Delete(objManage);
 	if(GetCommonData("IsStage1", false))
 	{
-		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Nullify", [0,0,0]);
+		NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Nullify", [0,0,0],90);
 		SpellBasic;
 	}
 	else
 	{
 		if(GetVirtualKeyState(VK_SLOWMOVE)!=KEY_FREE)
 		{
-			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "-Ruin-", [0,0,0]);
+			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "-Ruin-", [0,0,0],90);
 			SpellGatoFocus;
 		}
 		else
 		{
-			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "-Nova-", [0,0,0]);
+			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "-Nova-", [0,0,0],90);
 			SpellGatoUnfocus;
 		}
 	}

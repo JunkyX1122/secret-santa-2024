@@ -82,6 +82,14 @@ task StartStage
 		while(!Obj_IsDeleted(Boss)) { yield; }
 		EndStageHistoryRecord();	
 		PostBossDialogue(DIALOGUE_STAGE01A);
+		if(GetCommonData("isPracticing", false)==false)
+		{
+			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "Anubis has joined the party!", [0,0,0],120);
+			SE_PlayLen(extend, 80);
+			wait(60);
+			NotifyEventAll(EV_USER_PLAYER_BOMB_DISPLAY, "New bomb replacements!", [0,0,0],120);
+			SE_PlayLen(extend, 80);
+		}
 		wait(120);
 		MusicVolumeChange(GetBGMVolume, 0, 90);
 		BGTransition(0, 255, 91);
