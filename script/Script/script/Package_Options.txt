@@ -535,7 +535,7 @@ task Options_CreateOptions()
 			}
 			if(id==OPTIONSMENUSTATE_EFFECTCUT)
 			{
-				RenameRecenterText(objOptionsInputText, "Not Implement", x, opY);
+				RenameRecenterText(objOptionsInputText, "Not Implemented", x, opY);
 			}
 			if(id==OPTIONSMENUSTATE_TALKSOUNDS)
 			{
@@ -559,7 +559,7 @@ task Options_CreateOptions()
 				}
 				if(id==OPTIONSMENUSTATE_EFFECTCUT)
 				{
-					theText = "Not Implement";
+					theText = "Not Implemented";
 				}
 				if(id==OPTIONSMENUSTATE_TALKSOUNDS)
 				{
