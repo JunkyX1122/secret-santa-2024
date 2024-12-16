@@ -4327,42 +4327,42 @@ function Stage06APreBattle()
 	
 	SetDialogueTextA3("Anubis", "(That actually yielded some results. I'm surprised.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_03, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1.2, 0.05, 2);					
 	SetDialogueTextA3("Anubis", "(Though it feels like you're getting the same vibe over and over.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Anubis", "(Evidently it's impossible to find someone as skeptical as you.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_04, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Something tells me we're about one person away from finding out|the truth.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(Well, It would be lame if the climax happened after the last stage of|the main plot.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Ever heard of 'acts'?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Anubis", "(There's no time for anything Extra, it's almost Christmas. The due|date is almost here as we speak.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_05, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Wellllll, we have one account of family and friends, one account of|generosity, and another of 'flying reindeer'.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "Oh and sales! Can't forget the sales!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "Kind of reminds me of all the schemes back home.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "Now we just need the final person to show up and tie all these|things together!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	InitialiseDummies();
 	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
@@ -4378,128 +4378,132 @@ function Stage06APreBattle()
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
 						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	
-	SetDialogueTextA3("Tarkik", "There he is! The savior of this little conundr--um.", 
+	SetDialogueTextA3("Tarkik", "There he is! The savior of this little conundr--", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
+						
+	SetDialogueTextA3("Tarkik", "um.", 
+						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.7, 0.05, 2);
 	SetDialogueTextSize(14);
 	SetDialogueTextA3("Tarkik", "Anpu-kun that is the herald", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.5, 0.05, 2);
 	SetDialogueTextSize(16);
 	
 	SetDialogueTextA3("Anubis", "(What?)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_02, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.8, 0.05, 2);					
 	
 	SetDialogueTextSize(14);
 	SetDialogueTextA3("Tarkik", "just looks less spiky", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_06, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.4, 0.05, 2);
 	SetDialogueTextSize(16);
 	
 	SetDialogueTextA3("Anubis", "(Pick your next words very carefully.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_05, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Redrin", "?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_01, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Redrin", "Uh. Not expecting me?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_01, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "N--Yes! You are exactly who I am looking for.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Hah, then why are you so surprised, stranger? Go on, spit it out, you|wanted t' say something.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_06, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "&quot;What do you know about Christmas?&quot;", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "What? Christmas?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_04, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Christmas.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Christmas. Riiiight. That thing that will be here in a few days.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_03, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1.1, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Yes, what do you know about it?!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "You were lookin' for me specifically, to ask what I know about|Christmas. Not somethin' else I'm known for.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_03, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Tarkik", "Hey, what do I know?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Tarkik", "You don't usually meet orange cats around, much less what they got|beneath the BFS.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "So now you're askin' about me. That I can actually tell you about. But|first I gotta know...", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_06, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	SetDialogueTextA3("Redrin", "Who are you?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_08, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Hephaestus", "Hephaestus, the god of the Forge.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "...Bullshit.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_04, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.6, 0.05, 2);					
 	
 	SetDialogueTextA3("Hephaestus", "See this blade? Made it myself.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Hephaestus", "See that blade? Made it... by proxy. Yes.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_01, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Should I put your sword to th' test then? Surely, it'll be an even|match against mine if you're th' real deal.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_07, IMGAR_PORTRAIT_REDRIN_MOUTH_04, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Hephaestus", "Short and sweet, hmm?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_6);
 	
 	SetDialogueTextA3("Hephaestus", "(Neb Tawy Anpu), We're going to save Christmas.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1.2, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Yeah, I'm just going t' cut through whatever delusion you're under,|even if this ain't that one sword.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_01, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.8, 0.05, 2);					
 	
 	SetDialogueTextA3("Anubis", "(Two minutes twenty, Not bad.)", 
 						DIALOGUE_COLOUR_ANUBIS, id_anubis, id_null, 
-						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_00, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 1, 0.05, 2);					
+						IMG_PORTRAIT_ANUBIS_STAND_BASE, IMG_PORTRAIT_ANUBIS_STAND_EYES_04, IMGAR_PORTRAIT_ANUBIS_STAND_MOUTH_00, id_anubis, portraitXLeft, portraitYOffset, TALK_ANUBIS, 0.7, 0.05, 2);					
 	
 	SetDialogueTextA3("Hephaestus", "Hear me, Herald of the Stars.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_02, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Hephaestus", "Once I'm done with you (again), You shall return from where you|came from, and I will get all the cool gifts!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_02, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Hephaestus", "Specially the gift of a safe, brighter world!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
-						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_00, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
+						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
 }
 
