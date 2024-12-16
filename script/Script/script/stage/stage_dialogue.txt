@@ -4509,6 +4509,229 @@ function Stage06BPreBattle()
 
 function Stage06CPreBattle()
 {
+	SetPortraitData([[50,0],[-125,0],[0,0]], [[65,0],[0,0],[0,0]], 
+					 [1,1,1], [1,1,1], 
+					 [grandisFaceOffsetData,viiviFaceOffsetData,tazueFaceOffsetData], [redrinFaceOffsetData,[0,0],[0,0]]);
+	let id_grandis = 0;
+	let id_viivi = 1;
+	let id_tazue = 2;
+	let id_redrin = 0;
+	
+	SetNewPlayerPort(IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00[0], id_grandis, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00[0], id_viivi, 0,0, 0, 0, 1);
+	SetNewPlayerPort(IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00[0], id_tazue, 0,0, 0, 0, 1);
+	SlideInPlayer(40, id_grandis, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(40, id_viivi, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	SlideInPlayer(40, id_tazue, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	SetDialogueTextA3("Grandis", "Well, we're almost at the village now. Are you feeling any better?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+
+	SetDialogueTextA3("Viivi", "Yup. Now I'm just regular cold rather than eyes-watering body-aching|cold.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "By the way, thanks for letting Zuzu hide in your coat back there.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Like she gave me a choice.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	SetDialogueTextA3("Grandis", "She should stick to digging into the ground rather than into people's|clothing.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+
+	SetDialogueTextA3("Tazue", "*meow*",
+						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Aw, I'm happy to let you hide in my coat Zuzu. ...Once I get one.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "I guess you know what you want to get then, a coat big enough for|both you and her.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "But it can't be too heavy that it stops me from bein' agile.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "If you have a cat-dragon clinging to you, you'll have troubling|moving no matter what kind of coat you get.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	SetDialogueTextA3("Grandis", "Won't even work at all if you go too light.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Hmm. Well we'll see what's available when we get where we're goin'.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "...Speakin' of...Which store d'ya recommend?", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "Um... Dunno.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "What do you mean &quot;dunno&quot;? You had to get your fit from somwhere.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "You know my thing, right? Portals?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	SetDialogueTextA3("Grandis", "You think a guy like me, who has access to anywhere, would pick a|store here when there's any number I could go to?", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Wow. Looking down on local Gensouykou businesses much?", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "It's not that I specifically chose not to buy here, it's just simple|probability. Local is subjective to me anyway.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Either way, ugh. Which places sell winter wear here? We're so close|and yet so far from the getting this done.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "Hey there you two.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						"", "", mouth_null, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	InitialiseDummies();
+	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
+	renderBossUnanimated(objDummy, IMG_BOSS_REDRIN, 20);
+	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 110, 60);
+	
+	SlideInEnemy(40, id_redrin, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	SetNewEnemyPort(IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00[0], id_redrin, 0,0, 0, 0, 1);
+	
+	SetDialogueTextA3("Redrin", "Been a hot minute since I seen ya around.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Viivi", "Would ya look at that, it's Tiger Bread!", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "The fu-", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Viivi", "Right! It's been a while. ", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Grandis", "This is good timing. You missed the opprotunity with his bandmates|earlier.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "Oh, yeah! We were just talking about gettin' me some winter wear.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "Makes sense, you look pretty underdressed.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	SetDialogueTextA3("Redrin", "I actually have some spare fur coats. They're pretty toasty.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Viivi", "Well, one thought waaaas a big coat for me that Zuzu could hide|inside, but I'd need to test that out.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "Might slow me down too much, like your over-the-top sword there.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	MusicFade(DEFAULT_MUSIC_FADE);
+	
+	SetDialogueTextA3("Redrin", "You're still picking at that, ain't'cha? ", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	SetDialogueTextA3("Redrin", "Don't poke at me with that little stick of yours. It's not wide enough|if I just step out of the way.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Viivi", "...See, we've been over this before. You're so big it's easier to hit you.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	SetDialogueTextA3("Viivi", "Bigger isn't always better. Go on, sell me on how your oversized coat|won't hold me back. I'm waiting.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "*snort*. My clothing fits me just fine, and even if you do move faster|my sword covers more area.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	SetDialogueTextA3("Redrin", "Also don't go pretendin' like you didn't draw first blood just now,|pipsqueak.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Viivi", "Us &quot;pipqueaks&quot; are clearly faster on the draw, like I've been saying.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "A'ight, let's settle this finally, then.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Grandis", "Hmm, do I go with team Agile, or team Bulk...", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	SetDialogueTextA3("Grandis", "This is just a coin toss with heads and tails both saying they're more|likely than the other, but I have to pick.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	SetDialogueTextA3("Grandis", "Well, she already made that argument about my jacket...and won, so I|guess that settles that. I'm with her.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Viivi", "He learned the hard way, now it's your turn, Tiger Bread.", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	BossMusicChange(ID_BOSSBGM_6);
+	
+	SetDialogueTextA3("Redrin", "Two versus one? That's fi-", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetBGMVolume(0);
+	SkipMusicDisplay();
+	SetDialogueTextA3("Tazue", "*meows in part of the team*",
+						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
+						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_00, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "Sorry. Three versus one.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	BossMusicChange(ID_BOSSBGM_6);
+	
+	SetDialogueTextA3("Redrin", "As I was saying, that's fine! I can cleave through all you in one|swipe!", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Grandis", "Dang, that's a good point, but I'm sticking to my call.", 
+						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
+						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_00, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 1, 0.05, 2);
+	
+	SetDialogueTextA3("Redrin", "Doesn't matter if you're a smidge faster, I can take a hit if I fail a|dodge roll. Can you?", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	SetDialogueTextA3("Redrin", "If you slacked on learnin' any Danmaku since last time, then you're|in big trouble.", 
+						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+	
+	SetDialogueTextA3("Viivi", "Haha! Little do you know how much I've learned just today!", 
+						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
+						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_00, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	
 }
 
 

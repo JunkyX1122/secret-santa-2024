@@ -20,6 +20,12 @@ task StageMusicChange(id)
 	}
 }
 
+let skipMusicDisplay = false;
+
+task SkipMusicDisplay()
+{
+	skipMusicDisplay = true;
+}
 task StageNameShow(text)
 {
 	let yPos = 50;
@@ -83,7 +89,18 @@ task StageNameShow(text)
 		}
 		yield;
 	}
-	wait(180);
+	ascent(i in 0..180)
+	{
+		if(!skipMusicDisplay)
+		{
+			yield;
+		}
+	}
+	if(skipMusicDisplay)
+	{
+		t = 20;
+		skipMusicDisplay = false;
+	}
 	ascent(i in 0..t)
 	{
 		let scl = 1 - 1 * sin(90/(t-1)*i);
