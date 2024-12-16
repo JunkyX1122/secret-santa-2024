@@ -175,6 +175,7 @@ task TazueHandle(bit)
 	let startX = GetStgFrameWidth/2 - 200*bit;
 	let desX = GetStgFrameWidth/2 + 200*bit;
 	let t = 40*3;
+	let hasMeowed = false;
 	ascent(i in 0..60*3)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -189,6 +190,11 @@ task TazueHandle(bit)
 				let ang = 90 - am*bit + (am*2)*bit/(t/tDiv)*a;
 				SE_PlayLen(spawnfm1,60);
 				NukeShot(objTazue,ang,bit);
+			}
+			if(!hasMeowed && (ObjMove_GetX(objTazue) > 0 && ObjMove_GetX(objTazue) < GetStgFrameWidth))
+			{
+				SE_PlayLen(tazueMeow, 100);
+				hasMeowed = true;
 			}
 			yield;
 		}

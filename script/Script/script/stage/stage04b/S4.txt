@@ -136,6 +136,7 @@ task Fire
 	PortalSlash(GetStgFrameWidth/2, GetStgFrameHeight/2, 90 , 60*2, 3.5, 3.5/2);
 	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, GetStgFrameHeight/2, 60);
 	TazueHandle();
+	SE_PlayLen(tazueMeow, 100);
 	wait(60*2-1);
 	globalBit = GetPlayerX < GetStgFrameWidth/2 ? 1 : -1;
 	yield;
@@ -143,6 +144,7 @@ task Fire
 	let cc = 0;
 	let hasFired = true;
 	let addPortalRot = false;
+	
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		if(cc == 60*3)

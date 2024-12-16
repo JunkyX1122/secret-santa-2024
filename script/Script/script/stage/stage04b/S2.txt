@@ -112,6 +112,7 @@ task Fire
 		tazueRotateSpeed = 2;
 		tazueRadius = 175;
 		let t = 110*5;
+		SE_PlayLen(tazueMeow, 100);
 		ascent(i in 0..t)
 		{
 			if(!Obj_IsDeleted(objEnemy))

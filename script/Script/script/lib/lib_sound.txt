@@ -183,6 +183,7 @@ const charge5 = GetCurrentScriptDirectory~"./../../se2/Charge2.wav";
 const spawnfm1 = GetCurrentScriptDirectory~"./../../se2/fam.wav";
 const spawnfm2 = GetCurrentScriptDirectory~"./../../se2/Weird1.wav";
 const spawnfm3 = GetCurrentScriptDirectory~"./../../se2/se_water.wav";
+const tazueMeow = GetCurrentScriptDirectory~"./../../se3/se_zuzu.wav";
 
 //======================================================
 //===================Other Sounds=======================
@@ -424,7 +425,8 @@ TALK_SCYLLA, TALK_KIERAN,
 TALK_KAIRYU,
 TALK_HIROYUKI,
 TALK_REDRIN,
-title_cursor, title_ok, title_cancel
+title_cursor, title_ok, title_cancel,
+tazueMeow
 ];
 
 
