@@ -47,7 +47,7 @@ let objEnemy2 = CreateFamiliar;
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, GetStgFrameHeight/2, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
-	renderBossUnanimated(objEnemy, IMG_BOSS_KEIRAN, 10);
+	renderBossUnanimated(objEnemy, IMG_BOSS_KIERAN, 10);
 	magiccircle(objEnemy,1);
 		
 	ObjMove_SetPosition(objEnemy2, GetCommonData("BossX", 0), GetCommonData("BossY", 0));

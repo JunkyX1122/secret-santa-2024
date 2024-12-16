@@ -64,6 +64,11 @@ task LoadThings
 		LoadTexture(System_ImgArray[i]);
 		yield;
 	}
+	ascent(i in 0..length(Icon_ImgArray))
+	{
+		LoadTexture(Icon_ImgArray[i]);
+		yield;
+	}
 	
 	ascent(i in 0..length(Team1PortraitImg_ImgArray))
 	{

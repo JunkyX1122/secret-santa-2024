@@ -53,7 +53,7 @@ let objEnemy2 = CreateFamiliar;
 	
 	ObjMove_SetPosition(objEnemy2, GetCommonData("objEnemy2_Position", [0,0])[0], GetCommonData("objEnemy2_Position", [0,0])[1]);
 	//ObjMove_SetPosition(objEnemy3, GetCommonData("objEnemy3_Position", [0,0])[0], GetCommonData("objEnemy3_Position", [0,0])[1]);
-	renderBossUnanimated(objEnemy2, IMG_BOSS_KEIRAN, 10);
+	renderBossUnanimated(objEnemy2, IMG_BOSS_KIERAN, 10);
 	//renderYuuma(objEnemy3);
 	HitCirc(objEnemy2);
 	//HitCirc(objEnemy3);

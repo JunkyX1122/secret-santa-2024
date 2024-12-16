@@ -206,7 +206,7 @@ const IMG_BOSS_ANUBIS   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/spr
 const IMG_BOSS_DAISUKE  =	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01b.png";
 const IMG_BOSS_GRANDIS  = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_01c.png";
 const IMG_BOSS_SCYLLA   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_02a.png";
-const IMG_BOSS_KEIRAN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_02b.png";
+const IMG_BOSS_KIERAN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_02b.png";
 const IMG_BOSS_KAIRYU   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_03.png";
 const IMG_BOSS_SULLEN   = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_04a.png";
 const IMG_BOSS_VIIVI    = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/sprite_b_04b.png";
@@ -232,7 +232,7 @@ const IMG_COIN = 	GetCurrentScriptDirectory()  ~ "./../../img/enemy/coin.png";
 
 const BossSprite_ImgArray = [IMG_FAMILIAR,IMG_WING,IMG_SWORD,IMG_DRAGONMAW,IMG_REDRINSHIELD,IMG_SCYLLASTAFF, IMG_GRANDISPORTAL, IMG_GRANDISPORTALCRACK, IMG_GATOWIND,IMG_GATOSWORD,
 IMG_BOSS_ANUBIS, IMG_BOSS_DAISUKE, IMG_BOSS_GRANDIS,
-IMG_BOSS_SCYLLA, IMG_BOSS_KEIRAN,
+IMG_BOSS_SCYLLA, IMG_BOSS_KIERAN,
 IMG_BOSS_KAIRYU,
 IMG_BOSS_SULLEN, IMG_BOSS_VIIVI, IMG_BOSS_GATO, IMG_BOSS_ANUGATO, 
 IMG_BOSS_HIROYUKI,
@@ -244,6 +244,42 @@ IMG_BOSS_TAZUE_BODY_BACK,
 IMG_BOSS_GYRO_BLAST, IMG_BOSS_GYRO_FUNCTION, IMG_BOSS_GYRO_SHRED, IMG_BOSS_GYRO_SNEAK,
 IMG_BOSS_SHIELD0, IMG_BOSS_SHIELD1,
 IMG_COIN
+];
+
+//---------------------------------------
+//--------------ICON IMAGES--------------
+//---------------------------------------
+
+const IMG_ICON_GATO   			= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_gato.png";
+const IMG_ICON_ANUBIS   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_anubis.png";
+const IMG_ICON_SULLEN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_sullen.png";
+const IMG_ICON_DAISUKE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_daisuke.png";
+const IMG_ICON_DANDARA   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_dandara.png";
+const IMG_ICON_VIIVI   			= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_viivi.png";
+const IMG_ICON_TAZUE   			= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_tazue.png";
+const IMG_ICON_GRANDIS   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_grandis.png";
+const IMG_ICON_SCYLLA   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_scylla.png";
+const IMG_ICON_KIERAN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_kieran.png";
+const IMG_ICON_KAIRYU   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_kairyu.png";
+const IMG_ICON_HIROYUKI   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_hiroyuki.png";
+const IMG_ICON_REDRIN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_redrin.png";
+const IMG_ICON_BACKDROP  		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/card_backdrop_backdrop.png";
+
+const Icon_ImgArray = [
+IMG_ICON_GATO,
+IMG_ICON_ANUBIS,
+IMG_ICON_SULLEN,
+IMG_ICON_DAISUKE,
+IMG_ICON_DANDARA,
+IMG_ICON_VIIVI,
+IMG_ICON_TAZUE,
+IMG_ICON_GRANDIS,
+IMG_ICON_SCYLLA,
+IMG_ICON_KIERAN,
+IMG_ICON_KAIRYU,
+IMG_ICON_HIROYUKI,
+IMG_ICON_REDRIN,
+IMG_ICON_BACKDROP
 ];
 
 //---------------------------------------

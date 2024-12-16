@@ -58,7 +58,7 @@ let objEnemy3 = CreateFamiliar;
 	ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2, GetStgFrameHeight/2, 60);
 
 	ObjMove_SetPosition(objEnemy3, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
-	renderBossUnanimated(objEnemy3, IMG_BOSS_KEIRAN, 10);
+	renderBossUnanimated(objEnemy3, IMG_BOSS_KIERAN, 10);
 	HitCirc(objEnemy3);
 	ObjMove_SetDestAtFrameWeight(objEnemy3, GetStgFrameWidth/2, 100, 60);
 	RecordAttackHistory("02", "S3", DIFFICULTY_NAMES[DIFFICULTY]);

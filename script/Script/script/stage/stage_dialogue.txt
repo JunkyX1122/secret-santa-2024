@@ -9,6 +9,20 @@ const DIALOGUE_STAGE04C = 7;
 const DIALOGUE_STAGE05 	= 8;
 const DIALOGUE_STAGE06 	= 9;
 
+const DIALOGUE_ID_GATO 			= 0;
+const DIALOGUE_ID_ANUBIS		= 1;
+const DIALOGUE_ID_SULLEN 		= 2;
+const DIALOGUE_ID_DAISUKE 		= 3;
+const DIALOGUE_ID_DANDARA 		= 4;
+const DIALOGUE_ID_VIIVI 		= 5;
+const DIALOGUE_ID_TAZUE 		= 6;
+const DIALOGUE_ID_GRANDIS		= 7;
+const DIALOGUE_ID_SCYLLA		= 8;
+const DIALOGUE_ID_KIERAN		= 9;
+const DIALOGUE_ID_KAIRYU		= 10;
+const DIALOGUE_ID_HIROYUKI		= 11;
+const DIALOGUE_ID_REDRIN		= 12;
+
 const DIALOGUE_COLOUR_GATO 			= [128,128,128];
 const DIALOGUE_COLOUR_ANUBIS		= [0,0,0];
 const DIALOGUE_COLOUR_SULLEN 		= [64,64,64];
@@ -22,12 +36,222 @@ const DIALOGUE_COLOUR_KIERAN		= [128,255,128];
 const DIALOGUE_COLOUR_KAIRYU		= [0,0,255];
 const DIALOGUE_COLOUR_HIROYUKI		= [0,145,255];
 const DIALOGUE_COLOUR_REDRIN		= [255,0,0];
+
+const DIALOGUE_COLOURS = 	[
+								DIALOGUE_COLOUR_GATO,
+								DIALOGUE_COLOUR_ANUBIS,
+								DIALOGUE_COLOUR_SULLEN,
+								DIALOGUE_COLOUR_DAISUKE,
+								DIALOGUE_COLOUR_DANDARA,
+								DIALOGUE_COLOUR_VIIVI,
+								DIALOGUE_COLOUR_TAZUE,
+								DIALOGUE_COLOUR_GRANDIS,
+								DIALOGUE_COLOUR_SCYLLA,
+								DIALOGUE_COLOUR_KIERAN,
+								DIALOGUE_COLOUR_KAIRYU,
+								DIALOGUE_COLOUR_HIROYUKI,
+								DIALOGUE_COLOUR_REDRIN
+							];
+
 const id_null = -1;
 let portraitY = GetScreenHeight;
 
 let portraitXLeft = 	GetScreenWidth/2 - 150;
 let portraitXRight = 	GetScreenWidth/2 + 150;
 let portraitYOffset = 	256;
+
+const DIALOGUE_TITLES = [
+							"Tundra Traveller", // Fake Title for Stage 4
+							"Ruler of[r]the Underworld",
+							"Gensokyo’s Messenger[r]of the Lord",
+							"Grass Hero",
+							"Eternal Loving[r]Stand-In",
+							"Avatar of the[r]Dragon-Slaying Hero",
+							"Cat Dragon of[r]the Mine Tunnels",
+							"The Dagger Cutting[r]Through Space",
+							"Hearty Daredevil",
+							"Kinetic Savant",
+							"Leviathan Paladin",
+							"Shinobi of Kalos",
+							"Blazing Dragonhunter"
+						];
+
+const DIALOGUE_NAMES =	[
+							"Erlendur Mjaldr", // Fake Name for Stage 4
+							"Anubis",
+							"Sullen",
+							"Daisuke",
+							"Dandara",
+							"Viivi von Xanten",
+							"Tazue Teidarou",
+							"Grandis Ezekiel",
+							"Scylla Stargazer",
+							"Kieran Lightspeed",
+							"Hatsudzuki no Kairyu",
+							"Hiroyuki",
+							"Redrin Lightclaw"
+						];
+
+task NameDisplay(x,y,id)
+{
+	let objUnder = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objUnder, IMG_ICON_BACKDROP);
+	ObjSprite2D_SetSourceRect(objUnder,0, 0, 256, 256);
+	ObjSprite2D_SetDestRect(objUnder,0, 0, 256, 256);
+	ObjSprite2D_SetDestCenter(objUnder);
+	Obj_SetRenderPriorityI(objUnder, 76+10);
+	ObjRender_SetPosition(objUnder, x,y, 0);
+	
+	
+	let objBox = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objBox, Icon_ImgArray[id]);
+	ObjSprite2D_SetSourceRect(objBox,0, 0, 128, 128);
+	ObjSprite2D_SetDestRect(objBox,0, 0, 128, 128);
+	ObjSprite2D_SetDestCenter(objBox);
+	Obj_SetRenderPriorityI(objBox, 77+10);
+	ObjRender_SetPosition(objBox, x,y, 0);
+	let colorOffset = 0;
+	ObjRender_SetColor(objBox, DIALOGUE_COLOURS[id][0]+colorOffset, DIALOGUE_COLOURS[id][1]+colorOffset, DIALOGUE_COLOURS[id][2]+colorOffset); 
+	
+	let titleColor = [DIALOGUE_COLOURS[id][0] + 64,DIALOGUE_COLOURS[id][1] + 64,DIALOGUE_COLOURS[id][2] + 64];
+	let objTitle = ObjText_Create();
+	ObjText_SetFontType(objTitle, "Lucida Fax Demibold");
+	ObjText_SetFontSize(objTitle, 16);
+	ObjText_SetFontColorTop(objTitle, titleColor[0], titleColor[1], titleColor[2]);
+	ObjText_SetFontColorBottom(objTitle, titleColor[0], titleColor[1], titleColor[2]);	
+	ObjText_SetFontBorderType(objTitle, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objTitle, 2);
+	ObjText_SetFontBorderColor(objTitle, 0,0,0);
+	Obj_SetRenderPriorityI(objTitle, 77+10);
+	ObjText_SetText(objTitle, DIALOGUE_TITLES[id]);
+	ObjText_SetSidePitch(objTitle, -1);
+	ObjText_SetMaxWidth(objTitle, GetScreenWidth);
+	ObjText_SetHorizontalAlignment(objTitle, ALIGNMENT_CENTER);
+	ObjRender_SetPosition(objTitle,round(x-GetScreenWidth/2),round(y-20 - ObjText_GetTotalHeight(objTitle)/2),0);
+	
+	let objName = ObjText_Create();
+	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontSize(objName, 26);
+	ObjText_SetFontColorTop(objName, 255, 255, 255);
+	ObjText_SetFontColorBottom(objName, 255,255,255);	
+	ObjText_SetFontBorderType(objName, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objName, 1);
+	ObjText_SetFontBorderColor(objName, 0, 0, 0);
+	Obj_SetRenderPriorityI(objName, 77+10);
+	ObjText_SetText(objName, DIALOGUE_NAMES[id]);
+	//ObjText_SetSidePitch(objName, -1);
+	ObjText_SetMaxWidth(objName, GetScreenWidth);
+	ObjText_SetHorizontalAlignment(objName, ALIGNMENT_CENTER);
+	ObjRender_SetPosition(objName,round(x-GetScreenWidth/2),round(y+5),0);
+	
+	let scrollDis = 25;
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		let scl = 1 * sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objUnder, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objBox, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objTitle, 255 * scl);
+		ObjRender_SetAlpha(objName, 255 * scl);
+		yield;
+	}
+	wait(60*4);
+
+	ascent(i in 0..t)
+	{
+		let scl = 1 - 1 * sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objUnder, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objBox, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objTitle, 255 * scl);
+		ObjRender_SetAlpha(objName, 255 * scl);
+		
+		yield;
+	}
+	Obj_Delete(objUnder);
+	Obj_Delete(objBox);
+	Obj_Delete(objTitle);
+	Obj_Delete(objName);
+}
+
+task NameDisplay(x,y,id,title,name)
+{
+	let objUnder = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objUnder, IMG_ICON_BACKDROP);
+	ObjSprite2D_SetSourceRect(objUnder,0, 0, 256, 256);
+	ObjSprite2D_SetDestRect(objUnder,0, 0, 256, 256);
+	ObjSprite2D_SetDestCenter(objUnder);
+	Obj_SetRenderPriorityI(objUnder, 76+10);
+	ObjRender_SetPosition(objUnder, x,y, 0);
+	
+	let objBox = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objBox, Icon_ImgArray[id]);
+	ObjSprite2D_SetSourceRect(objBox,0, 0, 128, 128);
+	ObjSprite2D_SetDestRect(objBox,0, 0, 128, 128);
+	ObjSprite2D_SetDestCenter(objBox);
+	Obj_SetRenderPriorityI(objBox, 77+10);
+	ObjRender_SetPosition(objBox, x,y, 0);
+	let colorOffset = 0;
+	ObjRender_SetColor(objBox, DIALOGUE_COLOURS[id][0]+colorOffset, DIALOGUE_COLOURS[id][1]+colorOffset, DIALOGUE_COLOURS[id][2]+colorOffset); 
+	
+	let titleColor = [DIALOGUE_COLOURS[id][0] + 64,DIALOGUE_COLOURS[id][1] + 64,DIALOGUE_COLOURS[id][2] + 64];
+	let objTitle = ObjText_Create();
+	ObjText_SetFontType(objTitle, "Lucida Fax Demibold");
+	ObjText_SetFontSize(objTitle, 16);
+	ObjText_SetFontColorTop(objTitle, titleColor[0], titleColor[1], titleColor[2]);
+	ObjText_SetFontColorBottom(objTitle, titleColor[0], titleColor[1], titleColor[2]);	
+	ObjText_SetFontBorderType(objTitle, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objTitle, 2);
+	ObjText_SetFontBorderColor(objTitle, 0,0,0);
+	Obj_SetRenderPriorityI(objTitle, 77+10);
+	ObjText_SetText(objTitle, title);
+	ObjText_SetSidePitch(objTitle, -1);
+	ObjText_SetMaxWidth(objTitle, GetScreenWidth);
+	ObjText_SetHorizontalAlignment(objTitle, ALIGNMENT_CENTER);
+	ObjRender_SetPosition(objTitle,round(x-GetScreenWidth/2),round(y-20 - ObjText_GetTotalHeight(objTitle)/2),0);
+	
+	let objName = ObjText_Create();
+	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontSize(objName, 26);
+	ObjText_SetFontColorTop(objName, 255, 255, 255);
+	ObjText_SetFontColorBottom(objName, 255,255,255);	
+	ObjText_SetFontBorderType(objName, BORDER_FULL);
+	ObjText_SetFontBorderWidth(objName, 1);
+	ObjText_SetFontBorderColor(objName, 0, 0, 0);
+	Obj_SetRenderPriorityI(objName, 77+10);
+	ObjText_SetText(objName, name);
+	//ObjText_SetSidePitch(objName, -1);
+	ObjText_SetMaxWidth(objName, GetScreenWidth);
+	ObjText_SetHorizontalAlignment(objName, ALIGNMENT_CENTER);
+	ObjRender_SetPosition(objName,round(x-GetScreenWidth/2),round(y+5),0);
+	
+	let scrollDis = 25;
+	let t = 60;
+	ascent(i in 0..t)
+	{
+		let scl = 1 * sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objUnder, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objBox, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objTitle, 255 * scl);
+		ObjRender_SetAlpha(objName, 255 * scl);
+		yield;
+	}
+	wait(60*4);
+
+	ascent(i in 0..t)
+	{
+		let scl = 1 - 1 * sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objUnder, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objBox, 255 * scl * 0.85);
+		ObjRender_SetAlpha(objTitle, 255 * scl);
+		ObjRender_SetAlpha(objName, 255 * scl);
+		
+		yield;
+	}
+	Obj_Delete(objUnder);
+	Obj_Delete(objBox);
+	Obj_Delete(objTitle);
+	Obj_Delete(objName);
+}
 
 function PreBossDialogue(stageID)
 {
@@ -231,7 +455,7 @@ task ObjMove_SetDestAtFrameWeightForceStop(obj, x, y, t)
 
 function Stage01APreBattle()
 {
-	SetPortraitData([[0,0],[0,0],[0,0]], [[0,0],[0,0],[0,0]], 
+	SetPortraitData([[-75,0],[0,0],[0,0]], [[75,0],[0,0],[0,0]], 
 					 [1,1,1], [1,1,1], 
 					 [gatoFaceOffsetData,[0,0],[0,0]], [anubisFaceOffsetData,[0,0],[0,0]]);
 	let id_gato = 0;
@@ -249,6 +473,8 @@ function Stage01APreBattle()
 	ObjMove_SetPosition(objDummy, GetStgFrameWidth/2, -100);
 	renderBossUnanimated(objDummy, IMG_BOSS_ANUBIS, 5);
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 140, 60);
+	
+	NameDisplay(portraitXRight, portraitYOffset + 50, DIALOGUE_ID_ANUBIS);
 	
 	SetDialogueTextA3("Anubis", "Research really.", 
 						DIALOGUE_COLOUR_ANUBIS, id_null, 0, 
@@ -378,6 +604,8 @@ function Stage01BPreBattle()
 	
 	SlideInPlayer(40, id_sullen, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
 	
+	NameDisplay(portraitXLeft-50+75, portraitYOffset + 50, DIALOGUE_ID_SULLEN);
+	
 	SetDialogueTextA3("Sullen", "Oh goodness, I perhaps should have brought something warmer to|clothe myself with.", 
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
@@ -408,6 +636,8 @@ function Stage01BPreBattle()
 						DIALOGUE_COLOUR_SULLEN, 0, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
+	NameDisplay(portraitXRight-50-75, portraitYOffset + 50, DIALOGUE_ID_DAISUKE);
+	
 	SetDialogueTextA4("Daisuke", "Yeah! Uh, wow, when was the last time I've seen you around here?", 
 						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
@@ -420,6 +650,9 @@ function Stage01BPreBattle()
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
 						"", "", mouth_null, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1, 0.05, 2);
 	SlideInEnemy(40, id_dandara, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
+	
+	NameDisplay(portraitXRight+50-75, portraitYOffset + 50, DIALOGUE_ID_DANDARA);
+	
 	SetDialogueTextA3("Dandara", "What brings you all the way out here?", 
 						DIALOGUE_COLOUR_DANDARA, id_null, 1, 
 						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_02, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 0.9, 0.05, 2);
@@ -533,11 +766,17 @@ function Stage01CPreBattle()
 	let id_grandis = 0;
 	
 	SlideInPlayer(40, id_viivi, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	NameDisplay(portraitXLeft-75-75, portraitYOffset + 50, DIALOGUE_ID_VIIVI);
+	
 	SetDialogueTextA3("Viivi", "Okay. Everythin' here's almost ready? What do you think?", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
 	
 	SlideInPlayer(40, id_tazue, portraitXLeft-100, portraitXLeft, portraitYOffset, portraitYOffset, 1);
+	
+	NameDisplay(portraitXLeft+150-75, portraitYOffset - 50, DIALOGUE_ID_TAZUE);
+	
 	SetDialogueTextA3("Tazue", "Mao.", 
 						DIALOGUE_COLOUR_TAZUE, id_tazue, id_null, 
 						IMG_PORTRAIT_TAZUE_BASE, IMG_PORTRAIT_TAZUE_EYES_01, IMGAR_PORTRAIT_TAZUE_MOUTH_00, id_tazue, portraitXLeft, portraitYOffset, TALK_TAZUE, 1, 0.05, 2);
@@ -567,6 +806,9 @@ function Stage01CPreBattle()
 	SetDialogueTextA3("Viivi", "Oh. Hey. It's been a while huh?", 
 						DIALOGUE_COLOUR_VIIVI, 0, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_02, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1, 0.05, 2);
+	
+	NameDisplay(portraitXRight+50-75, portraitYOffset + 50, DIALOGUE_ID_GRANDIS);
+	
 	
 	SetDialogueTextA4("Grandis", "Just a bit. Yeah.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, 0, 
@@ -773,7 +1015,7 @@ function Stage02APreBattle()
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2-100,100+100, 60);
 	
 	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
-	renderBossUnanimated(objDummy2, IMG_BOSS_KEIRAN, 10);
+	renderBossUnanimated(objDummy2, IMG_BOSS_KIERAN, 10);
 	Obj_SetRenderPriority(objDummy2, 0.29);
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
 	
@@ -784,7 +1026,10 @@ function Stage02APreBattle()
 	SetDialogueTextA3("Gato", "Actually I'm not fully sure what I'm looking at.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 0.8, 0.05, 2);					
-
+	
+	NameDisplay(portraitXRight-50-75, portraitYOffset - 15, DIALOGUE_ID_SCYLLA);
+	NameDisplay(portraitXRight+150-75, portraitYOffset + 50, DIALOGUE_ID_KIERAN);
+	
 	SetDialogueTextA3("Scylla", "Excuse me?", 
 						DIALOGUE_COLOUR_SCYLLA, id_null, id_scylla, 
 						IMG_PORTRAIT_SCYLLA_BASE, IMG_PORTRAIT_SCYLLA_EYES_02, IMGAR_PORTRAIT_SCYLLA_MOUTH_00, id_scylla, portraitXRight, portraitYOffset, TALK_SCYLLA, 0.8, 0.05, 2);
@@ -799,6 +1044,8 @@ function Stage02APreBattle()
 	SetDialogueTextA3("Kieran", "...And you are?", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
 						IMG_PORTRAIT_KIERAN_BASE, IMG_PORTRAIT_KIERAN_EYES_01, mouth_null, id_kieran, portraitXRight, portraitYOffset, TALK_KIERAN, 0.9, 0.05, 2);
+	
+	NameDisplay(portraitXLeft-50+75, portraitYOffset + 50, 0, "Cold Survivor", "Uki");
 	
 	SetDialogueTextA3("Uki", "Uki. Cold survivor.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
@@ -967,13 +1214,16 @@ function Stage02BPreBattle()
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2-100,100+100, 60);
 	
 	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
-	renderBossUnanimated(objDummy2, IMG_BOSS_KEIRAN, 10);
+	renderBossUnanimated(objDummy2, IMG_BOSS_KIERAN, 10);
 	Obj_SetRenderPriority(objDummy2, 0.29);
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
 	
 	SetDialogueTextA3("Sullen", "Ah, greetings.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	
+	NameDisplay(portraitXRight-50-75, portraitYOffset - 15, DIALOGUE_ID_SCYLLA);
+	NameDisplay(portraitXRight+150-75, portraitYOffset + 50, DIALOGUE_ID_KIERAN);
 	
 	SetDialogueTextA3("Kieran", "Greetings to you too sir.", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
@@ -1165,7 +1415,7 @@ function Stage02CPreBattle()
 	InitialiseDummies();
 	
 	ObjMove_SetPosition(objDummy2, GetStgFrameWidth/2, -100);
-	renderBossUnanimated(objDummy2, IMG_BOSS_KEIRAN, 10);
+	renderBossUnanimated(objDummy2, IMG_BOSS_KIERAN, 10);
 	Obj_SetRenderPriority(objDummy2, 0.29);
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy2, GetStgFrameWidth/2, 100, 60);
 	
@@ -1199,6 +1449,9 @@ function Stage02CPreBattle()
 	SetDialogueTextA3("Grandis", "Who are these guys again?", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
+	
+	NameDisplay(portraitXRight-50-75, portraitYOffset - 15, DIALOGUE_ID_SCYLLA);
+	NameDisplay(portraitXRight+150-75, portraitYOffset + 50, DIALOGUE_ID_KIERAN);
 	
 	SetDialogueTextA3("Kieran", "Tiger Bread?", 
 						DIALOGUE_COLOUR_KIERAN, id_null, id_kieran, 
@@ -1405,6 +1658,7 @@ function Stage03APreBattle()
 	renderBossUnanimated(objDummy, IMG_BOSS_KAIRYU, 7);
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 150, 60);
 	
+	NameDisplay(portraitXRight+25-75, portraitYOffset + 50, DIALOGUE_ID_KAIRYU);
 	
 	SetDialogueTextA3("Kairyu", "You appear to be talking to yourself quite a bit.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
@@ -1421,6 +1675,9 @@ function Stage03APreBattle()
 	SetDialogueTextA3("Uki", "Say kind stranger, what do you know about the meaning of|Christmas?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
+	
+	NameDisplay(portraitXLeft-50+75, portraitYOffset + 50, 0, "The Wandering[r]Inuit", "Iqaluk");
+	
 	SetDialogueTextA3("Iqaluk", "The name's Iqaluk by the way. Just a friendly Inuit passing through.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
@@ -1652,6 +1909,8 @@ function Stage03BPreBattle()
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
+	NameDisplay(portraitXRight+25-75, portraitYOffset + 50, DIALOGUE_ID_KAIRYU);
+	
 	SetDialogueTextA3("Kairyu", "I am Hatsudzuki no Kairyu, Lunarian Knight.", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
 						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 1, 0.05, 2);					
@@ -1874,6 +2133,8 @@ function Stage03CPreBattle()
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_06, IMGAR_PORTRAIT_VIIVI_MOUTH_04, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 0.9, 0.05, 2);
 	
+	NameDisplay(portraitXRight+25-75, portraitYOffset + 50, DIALOGUE_ID_KAIRYU);
+	
 	SetDialogueTextA3("Kairyu", "An acquaintance offered to have it thoroughly cleaned and polished. ", 
 						DIALOGUE_COLOUR_KAIRYU, id_null, id_kairyu, 
 						IMG_PORTRAIT_KAIRYU_BASE, IMG_PORTRAIT_KAIRYU_EYES_05, IMGAR_PORTRAIT_KAIRYU_MOUTH_00, id_kairyu, portraitXRight, portraitYOffset, TALK_KAIRYU, 0.9, 0.05, 2);					
@@ -2087,12 +2348,17 @@ function Stage04APreBattle()
 	SetDialogueTextA3("Iqaluk", "Do not fret my friends, you two are very lucky!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
+	
+	NameDisplay(portraitXLeft-50+75, portraitYOffset + 50, 0, "The Tiger of[r]White Snow", "Xue");
+	
 	SetDialogueTextA3("Xue", "For I, Xue the Tiger of White Snow, know the routes of this forest|like the back of my hand~", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
 	SetDialogueTextA3("Xue", "Who will I be escorting today?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1.1, 0.05, 2);
+	
+	NameDisplay(portraitXRight-25-75, portraitYOffset + 50, DIALOGUE_ID_SULLEN);
 	
 	SetDialogueTextA4("Sullen", "My name is Sullen, a priest working for the Lord above.", 
 						DIALOGUE_COLOUR_SULLEN, id_null, id_sullen, 
@@ -2111,6 +2377,9 @@ function Stage04APreBattle()
 	SetDialogueTextA4("Daisuke", "Negative!", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);					
+	
+	NameDisplay(portraitXRight+125-75, portraitYOffset + 50, DIALOGUE_ID_DAISUKE);
+	
 	SetDialogueTextA4("Daisuke", "Daisuke, Hero of Grass! Nice to meet you.", 
 						DIALOGUE_COLOUR_DAISUKE, id_null, id_daisuke, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXRight, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);					
@@ -2522,6 +2791,8 @@ function Stage04BPreBattle()
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	
+	NameDisplay(portraitXRight+-65+(225+65)/2-75, portraitYOffset -150, DIALOGUE_ID_GRANDIS);
+	
 	SetDialogueTextA4("Grandis", "Long time no see.", 
 						DIALOGUE_COLOUR_GRANDIS, id_null, id_grandis, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_01, IMGAR_PORTRAIT_GRANDIS_MOUTH_00, id_grandis, portraitXRight, portraitYOffset, TALK_GRANDIS, 1.1, 0.05, 2, -1);	
@@ -2534,9 +2805,13 @@ function Stage04BPreBattle()
 						DIALOGUE_COLOUR_VIIVI, id_null, id_viivi, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_09, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXRight, portraitYOffset, TALK_VIIVI, 1, 0.05, 2, -1);	
 	
+	NameDisplay(portraitXRight+225-75, portraitYOffset + 50, DIALOGUE_ID_VIIVI);
+	
 	SetDialogueTextA4("Viivi", "Name's Viivi by the way. This guy with me's Grandis and this is my|companion Tazue.", 
 						DIALOGUE_COLOUR_VIIVI, id_null, id_viivi, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_00, id_viivi, portraitXRight, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2, -1);	
+	
+	NameDisplay(portraitXRight-65-75, portraitYOffset + 50, DIALOGUE_ID_TAZUE);
 	
 	SetDialogueTextA4("Tazue", "*mrow*", 
 						DIALOGUE_COLOUR_TAZUE, id_null, id_tazue, 
@@ -2891,6 +3166,9 @@ function Stage04CPreBattle()
 	SetDialogueTextA3("???", "Besides, who would want to steal from a missus with a spear in her|hand and a man by her side.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_07, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 0.9, 0.05, 2);					
+	
+	NameDisplay(portraitXRight+50-75, portraitYOffset + 50, DIALOGUE_ID_GATO);
+	
 	SetDialogueTextA3("Erlendur", "The name's Erlendur, just a humble, currently lost, traveller.", 
 						DIALOGUE_COLOUR_GATO, id_null, id_gato, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_05, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXRight, portraitYOffset, TALK_GATO, 1, 0.05, 2);					
@@ -3538,9 +3816,14 @@ function Stage05APreBattle()
 	SetDialogueTextA3("Hiroyuki", "By their classifications, I'm considered a warrior, so it seems I'm an|honored guest. ", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_09, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+	
+	NameDisplay(portraitXRight+25-75, portraitYOffset + 50, DIALOGUE_ID_HIROYUKI);
+	
 	SetDialogueTextA3("Hiroyuki", "My name is Hiroyuki. And you are?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_03, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
+	
+	NameDisplay(portraitXLeft-50+75, portraitYOffset + 50, 0, "Festive Seeker", "Tarkik");
 	
 	SetDialogueTextA3("Tarkik", "You can call me Tarkik.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
@@ -3833,6 +4116,8 @@ function Stage05BPreBattle()
 	SetDialogueTextA3("Sullen", "Hiroyuki. My, it has been a long time since we have last met.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
+	
+	NameDisplay(portraitXRight+25-75, portraitYOffset + 50, DIALOGUE_ID_HIROYUKI);
 	
 	SetDialogueTextA3("Hiroyuki", "Is a couple of years still considered a long time for someone of your|age?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
@@ -4149,6 +4434,8 @@ function Stage05CPreBattle()
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_01, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
 	
+	NameDisplay(portraitXRight+25-75, portraitYOffset + 50, DIALOGUE_ID_HIROYUKI);
+	
 	SetDialogueTextA3("Hiroyuki", "Greetings Grandis, and... was it Viivi?", 
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_09, IMGAR_PORTRAIT_HIROYUKI_MOUTH_00, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 1, 0.05, 2);					
@@ -4458,6 +4745,8 @@ function Stage06APreBattle()
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
 						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_08, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
+	NameDisplay(portraitXLeft-50+75, portraitYOffset + 50, 0, "The God of[r]the Forge", "Hephaestus");
+	
 	SetDialogueTextA3("Hephaestus", "Hephaestus, the god of the Forge.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
@@ -4614,6 +4903,8 @@ function Stage06CPreBattle()
 	
 	SlideInEnemy(40, id_redrin, portraitXRight+100, portraitXRight, portraitYOffset, portraitYOffset, 1);
 	SetNewEnemyPort(IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00[0], id_redrin, 0,0, 0, 0, 1);
+	
+	NameDisplay(portraitXRight+65-75, portraitYOffset + 50, DIALOGUE_ID_REDRIN);
 	
 	SetDialogueTextA3("Redrin", "Been a hot minute since I seen ya around.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
