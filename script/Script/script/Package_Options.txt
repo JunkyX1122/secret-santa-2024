@@ -3,17 +3,19 @@ let options_AlphaScl = 1;
 let option_MusicVolume = 1;
 let option_SFXVolume = 1;
 let OPTIONSMENU_TRANSITION = 30;
+let option_TalkSound = 0;
 
 let OPTIONSMENUSTATE_MUSICVOL 		= 0;
 let OPTIONSMENUSTATE_SOUNDVOL 		= 1;
 let OPTIONSMENUSTATE_STARTINGLIVES 	= 2;
-let OPTIONSMENUSTATE_EFFECTCUT 		= 3;
-let OPTIONSMENUSTATE_BACK	 		= 4;
+let OPTIONSMENUSTATE_TALKSOUNDS		= 3;
+let OPTIONSMENUSTATE_EFFECTCUT 		= 4;
+let OPTIONSMENUSTATE_BACK	 		= 5;
 
-const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Effect Cut", "Back"];
+const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Talk Sounds", "Effect Cut", "Back"];
 
 let selectedOption = 0;
-const OPTIONSMENU_MAXOPTIONS = 5;
+const OPTIONSMENU_MAXOPTIONS = length(OPTIONS_NAMES);
 
 function OptionsScreen()
 {
@@ -60,6 +62,24 @@ function OptionsScreen()
 				SE_PlayLen(title_cursor, 60);
 			}
 		}
+		case(OPTIONSMENUSTATE_TALKSOUNDS)
+		{
+			let saved_option_TalkSound = option_TalkSound;
+			option_TalkSound = OptionsMenuSlider(option_TalkSound, 1, 0, 2, true, 6);
+			if(saved_option_TalkSound!=option_TalkSound)
+			{
+				if(option_TalkSound == 0)
+				{
+					let randTalkID = round(rand(-0.49, length(TEAM_TALK_RANDOM)-1 + 0.49));
+					OptionsMenu_RandomTalk(randTalkID);
+				}
+				if(option_TalkSound == 1)
+				{
+					OptionsMenu_RandomTalk(-1);
+				}
+				SE_PlayLen(title_cursor, 60);
+			}
+		}
 		case(OPTIONSMENUSTATE_BACK)
 		{
 			if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH || GetVirtualKeyState(VK_OK) == KEY_PUSH)
@@ -87,10 +107,12 @@ function OptionsScreen()
 	
 	SetCommonData("SFXVolume", option_SFXVolume);
 	SetCommonData("MusicVolume", option_MusicVolume);
+	SetCommonData("TalkSound", option_TalkSound);
 	
 	SetAreaCommonData("Setting", "SFXVolume", option_SFXVolume);
 	SetAreaCommonData("Setting", "MusicVolume", option_MusicVolume);
 	SetAreaCommonData("Setting", "StartingLives", startingLives);
+	SetAreaCommonData("Setting", "TalkSound", option_TalkSound);
 	
 	
 	
@@ -100,6 +122,25 @@ function OptionsScreen()
 		options_AlphaScl = 1 - 1/29*i;
 		SkippableWait(1);
 	}
+}
+
+task OptionsMenu_RandomTalk(id)
+{
+	let talkDel = 5;
+	ascent(i in 0..5)
+	{
+		if(id==-1)
+		{
+			SE_PlayLen(TALK_DEFAULT, 75, round(rand(0.95, 0.05)));
+		}
+		else
+		{
+			SE_PlayLen(TEAM_TALK_RANDOM[id], 75, round(rand(0.95, 0.05)));
+		}
+		
+		wait(talkDel);
+	}
+
 }
 
 let optionMenuHoldCounter = 0;
@@ -483,10 +524,22 @@ task Options_CreateOptions()
 			ObjText_SetFontBorderWidth(objOptionsInputText, 1);
 			ObjText_SetFontBorderType(objOptionsInputText, BORDER_FULL);
 			ObjText_SetSidePitch(objOptionsInputText, -1);
-			RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? "< " ~ IntToString(startingLives) ~ " >" : "Not Implement", x, opY);
-			if(startingLives == 9)
+			
+			if(id==OPTIONSMENUSTATE_STARTINGLIVES)
 			{
-				RenameRecenterText(objOptionsInputText, id==OPTIONSMENUSTATE_STARTINGLIVES ? "< Infinite >" : "Not Implement", x, opY);
+				RenameRecenterText(objOptionsInputText, "< " ~ IntToString(startingLives) ~ " >", x, opY);
+				if(startingLives == 9)
+				{
+					RenameRecenterText(objOptionsInputText, "< Infinite >", x, opY);
+				}
+			}
+			if(id==OPTIONSMENUSTATE_EFFECTCUT)
+			{
+				RenameRecenterText(objOptionsInputText, "Not Implement", x, opY);
+			}
+			if(id==OPTIONSMENUSTATE_TALKSOUNDS)
+			{
+				RenameRecenterText(objOptionsInputText, "< " ~ IntToString(option_TalkSound) ~ " >", x, opY);
 			}
 			let t = OPTIONSMENU_TRANSITION;
 			ascent(i in 0..t)
@@ -507,6 +560,25 @@ task Options_CreateOptions()
 				if(id==OPTIONSMENUSTATE_EFFECTCUT)
 				{
 					theText = "Not Implement";
+				}
+				if(id==OPTIONSMENUSTATE_TALKSOUNDS)
+				{
+					let ttt = "";
+					alternative(option_TalkSound)
+					case(0)
+					{
+						ttt = "Unique";
+					}
+					case(1)
+					{
+						ttt = "Generic";
+					}
+					others
+					{
+						ttt = "None";
+					}
+				
+					theText = "< " ~ ttt ~ " >";
 				}
 				RenameRecenterText(objOptionsInputText, theText, x, opY);
 

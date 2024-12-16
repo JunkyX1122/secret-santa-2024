@@ -116,9 +116,11 @@ task LoadSaveDataStuff()
 	option_SFXVolume = GetAreaCommonData("Setting", "SFXVolume", 1);
 	option_MusicVolume = GetAreaCommonData("Setting", "MusicVolume", 1);
 	startingLives = GetAreaCommonData("Setting", "StartingLives", 2);
+	option_TalkSound = GetAreaCommonData("Setting", "TalkSound", 0);
 	
 	SetCommonData("SFXVolume", option_SFXVolume);
 	SetCommonData("MusicVolume", option_MusicVolume);
+	SetCommonData("TalkSound", option_TalkSound);
 	SetCommonData("isPracticing", false);
 }
 

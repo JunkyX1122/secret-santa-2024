@@ -185,6 +185,22 @@ task StartDialog()
 	}
 }
 
+task SE_PlayTalkSound(s, p)
+{
+	let soundType = GetCommonData("TalkSound", 0);
+	let vMult = 1;
+	if(soundType == 1)
+	{
+		s = TALK_DEFAULT;
+		
+	}
+	if(soundType == 2)
+	{
+		vMult = 0;
+	}
+	SE_PlayLen(s, voiceVolume * vMult, p);
+}
+
 function SetDialogueTextA2(	speaker, text, color , spkP, spkE, imgS, imgE, imgM, iS, xm, ym,textScrollSound)
 { //event will advance only upon button press
 	SetDialogueTextA3(		speaker, text, color , spkP, spkE, imgS, imgE, imgM, iS, xm, ym,textScrollSound, 1, 0, 2);
@@ -261,17 +277,17 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			}
 			else if([stringThing[j][i]]=="." || [stringThing[j][i]]=="!" || [stringThing[j][i]]=="!")
 			{
-				SE_PlayLen(textScrollSound, voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+				SE_PlayTalkSound(textScrollSound, basePitch + rand(-randPitchRange, randPitchRange));
 				modiWait = 12;
 			}
 			else if([stringThing[j][i]]==",")
 			{
-				SE_PlayLen(textScrollSound, voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+				SE_PlayTalkSound(textScrollSound, basePitch + rand(-randPitchRange, randPitchRange));
 				modiWait = 6;
 			}
 			else
 			{
-				SE_PlayLen(textScrollSound, voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+				SE_PlayTalkSound(textScrollSound, basePitch + rand(-randPitchRange, randPitchRange));
 			}
 			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
 			if([stringThing[j][i]]==";"){textSkips = false;}
@@ -411,7 +427,7 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				ascent(p in 0..length(textScrollSounds))
 				{
-					SE_PlayLen(textScrollSounds[p], voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+					SE_PlayTalkSound(textScrollSounds[p], basePitch + rand(-randPitchRange, randPitchRange));
 				}
 				modiWait = 12;
 			}
@@ -419,7 +435,7 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				ascent(p in 0..length(textScrollSounds))
 				{
-					SE_PlayLen(textScrollSounds[p], voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+					SE_PlayTalkSound(textScrollSounds[p], basePitch + rand(-randPitchRange, randPitchRange));
 				}
 				modiWait = 6;
 			}
@@ -427,7 +443,7 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				ascent(p in 0..length(textScrollSounds))
 				{
-					SE_PlayLen(textScrollSounds[p], voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+					SE_PlayTalkSound(textScrollSounds[p], basePitch + rand(-randPitchRange, randPitchRange));
 				}
 			}
 			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
@@ -568,7 +584,7 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				ascent(p in 0..length(textScrollSounds))
 				{
-					SE_PlayLen(textScrollSounds[p], voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+					SE_PlayTalkSound(textScrollSounds[p], basePitch + rand(-randPitchRange, randPitchRange));
 				}
 				modiWait = 12;
 			}
@@ -576,7 +592,7 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				ascent(p in 0..length(textScrollSounds))
 				{
-					SE_PlayLen(textScrollSounds[p], voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+					SE_PlayTalkSound(textScrollSounds[p], basePitch + rand(-randPitchRange, randPitchRange));
 				}
 				modiWait = 6;
 			}
@@ -584,7 +600,7 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			{
 				ascent(p in 0..length(textScrollSounds))
 				{
-					SE_PlayLen(textScrollSounds[p], voiceVolume, basePitch + rand(-randPitchRange, randPitchRange));
+					SE_PlayTalkSound(textScrollSounds[p], basePitch + rand(-randPitchRange, randPitchRange));
 				}
 			}
 			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
