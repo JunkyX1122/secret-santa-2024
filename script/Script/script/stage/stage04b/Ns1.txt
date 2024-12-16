@@ -45,7 +45,7 @@ let TIME = 60*60;
 
 	renderBossUnanimated(objEnemy2, IMG_BOSS_VIIVI, 30);
 	
-	if(GetCommonData("isPracticing", true)==true)
+	if(GetCommonData("isPracticing", true)==false)
 	{
 		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,120 );
 		

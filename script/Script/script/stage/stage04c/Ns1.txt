@@ -40,7 +40,7 @@ let HEALTH_MAX = 220 * 3;
 	ObjEnemy_Regist(objEnemy);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
-	if(GetCommonData("isPracticing", true)==true)
+	if(GetCommonData("isPracticing", true)==false)
 	{
 		ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,125 );
 	}
