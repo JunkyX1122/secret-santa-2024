@@ -22,9 +22,9 @@ task StageMusicChange(id)
 
 let skipMusicDisplay = false;
 
-task SkipMusicDisplay()
+task SkipMusicDisplay(t)
 {
-	skipMusicDisplay = true;
+	skipMusicDisplay = t;
 }
 task StageNameShow(text)
 {
