@@ -63,7 +63,7 @@ let portraitYOffset = 	256;
 const DIALOGUE_TITLES = [
 							"Tundra Traveller", // Fake Title for Stage 4
 							"Ruler of[r]the Underworld",
-							"Gensokyo’s Messenger[r]of the Lord",
+							"Blessing in Disguise",
 							"Grass Hero",
 							"Eternal Loving[r]Stand-In",
 							"Avatar of the[r]Dragon-Slaying Hero",
@@ -4813,6 +4813,7 @@ function Stage06BPreBattle()
 					 [daisukeFaceOffsetData,sullenFaceOffsetData,[0,0]], [redrinFaceOffsetData,[0,0],[0,0]]);
 	let id_daisuke = 0;
 	let id_sullen = 1;
+	let id_narrirator = 2;
 	let id_redrin = 0;
 	
 	SetNewPlayerPort(IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00[0], id_daisuke, 0,0, 0, 0, 1);
@@ -4822,73 +4823,73 @@ function Stage06BPreBattle()
 	
 	SetDialogueTextA3("Daisuke", "I can see the village! We made it!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Almost, my child. We still have yet to meet those who requested our assistance.", 
+	SetDialogueTextA3("Sullen", "Almost, my child. We still have yet to meet those who requested our|assistance.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
-	SetDialogueTextA3("Sullen", "We need to make haste to get to the meeting spot within the time range we were given.", 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+	SetDialogueTextA3("Sullen", "We need to make haste to get to the meeting spot within the time|range we were given.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "&quot;Godspeed&quot;, right? How's this?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Hoho, that's a new way to use that expression. Yes. We will be able to make it at this pace.", 
+	SetDialogueTextA3("Sullen", "Hoho, that's a new way to use that expression. Yes. We will be able to|make it at this pace.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "&quot;The heroes arrive just in the nick of time&quot;, a classic!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
-	SetDialogueTextA3("Daisuke", "What's the task? Gotta know what it is we'll be doing when we arrive on the scene to jump into action.", 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+	SetDialogueTextA3("Daisuke", "What's the task? Gotta know what it is we'll be doing when we arrive|on the scene to jump into action.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "The action will not be so immediate. We've been requested to bless their residence.", 
+	SetDialogueTextA3("Sullen", "The action will not be so immediate. We've been requested to bless|their residence.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
-	SetDialogueTextA3("Sullen", "It seems an entity has decided to make itself at home, and is causing them great distress.", 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
+	SetDialogueTextA3("Sullen", "It seems an entity has decided to make itself at home, and is|causing them great distress.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "An entity?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "A supernatural force such as a demon or spirit making its presence known from the shadows. ", 
+	SetDialogueTextA3("Sullen", "A supernatural force such as a demon or spirit making its presence|known from the shadows.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
-	SetDialogueTextA3("Sullen", "We're expecting resistance to the cleansing attempt. This is why my unique set of skills is needed.", 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
+	SetDialogueTextA3("Sullen", "We're expecting resistance to the cleansing attempt. This is why my|unique set of skills is needed.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Since you're a priest who can fight, right.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "...", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Is something wrong, Daisuke?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
-	SetDialogueTextA3("Daisuke", "No, just, I don't think I have the best matchup against that kind of thing.", 
+	SetDialogueTextA3("Daisuke", "No, just, I don't think I have the best matchup against that kind of|thing.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
-	SetDialogueTextA3("Daisuke", "And I have no idea what goes into blessing a house, but...I'll do whatever you need me to!", 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_09, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
+	SetDialogueTextA3("Daisuke", "And I have no idea what goes into blessing a house, but...I'll do|whatever you need me to!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Any help you can give is appreciated, my child, even the smallest gesture doesn't go unnoticed.", 
+	SetDialogueTextA3("Sullen", "Any help you can give is appreciated, my child, even the smallest|gesture doesn't go unnoticed.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "I-I know, I'd... just like to do more than that.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Well, look who it is.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
@@ -4906,181 +4907,185 @@ function Stage06BPreBattle()
 	
 	SetDialogueTextA3("Redrin", "Haven't seen ya in a while, Mr. Priest.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_01, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "Pardon? Do I know you? You do look familiar...", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
 	
-	SetDialogueTextA3("Redrin", "Ah, yeah, guess we both keep changin' our looks. We last met when that idiot bear attacked the village.", 
+	SetDialogueTextA3("Redrin", "Ah, yeah, guess we both keep changin' our looks. We last met when|that idiot bear attacked the village.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_06, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "...Then are you the one who took me into the alleyway?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	SetDialogueTextA3("Sullen", "Ah, that's it! Lightclaw!", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	NameDisplay(portraitXRight+65-75, portraitYOffset + 50, DIALOGUE_ID_REDRIN);
 	
 	SetDialogueTextA3("Redrin", "Yeah, that was me. You can call me Redrin if you like.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_07, IMGAR_PORTRAIT_REDRIN_MOUTH_01, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	
-	SetDialogueTextA3("Sullen", "My apologies, I didn't recognize you without your mask or human appearance.", 
+	SetDialogueTextA3("Sullen", "My apologies, I didn't recognize you without your mask or human|appearance.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
-	SetDialogueTextA3("Sullen", "Thanks to your quick actions, my standing with the townspeople remained relatively unharmed.", 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
+	SetDialogueTextA3("Sullen", "Thanks to your quick actions, my standing with the townspeople|remained relatively unharmed.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Whoa, another hero! Thanks for helping Sullen, Mr. Lightclaw!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
-	SetDialogueTextA3("Daisuke", "Actually, wasn't that the name of the guy those other two were looking for?", 
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
+	SetDialogueTextA3("Daisuke", "Actually, wasn't that the name of the guy those other two were|looking for?", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Yes, that's right, a few of your bandmates were out searching for you.", 
+	SetDialogueTextA3("Sullen", "Yes, that's right, a few of your bandmates were out searching for|you.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Redrin", "Ah, them. Geez, I was just takin' care of some business in town. ", 
+	SetDialogueTextA3("Redrin", "Ah, them. Geez, I was just takin' care of some business in town.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	SetDialogueTextA3("Redrin", "Anyway, who's this with ya?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_01, IMGAR_PORTRAIT_REDRIN_MOUTH_01, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "This is Daisuke, the ever-helpful son of a good friend of mine.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Yup, that's me!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Babysitting, huh?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_02, IMGAR_PORTRAIT_REDRIN_MOUTH_02, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1.1, 0.05, 2);					
 	
 	SetDialogueTextA3("Daisuke", "HUH?!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_08, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.3, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Ahaha, no, no, nothing of the sort. Daisuke is quite capable. He is helping me with my duties.", 
+	SetDialogueTextA3("Sullen", "Ahaha, no, no, nothing of the sort. Daisuke is quite capable. He is|helping me with my duties.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
-	SetDialogueTextA3("Sullen", "As it would happen, the circumstances of our meeting here are rather similar, just much less dire.", 
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
+	SetDialogueTextA3("Sullen", "As it would happen, the circumstances of our meeting here are|rather similar, just much less dire.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Another demon attack?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
-	SetDialogueTextA3("Sullen", "Isolated to a single household, and more of a disturbance than an attack...for the time being.", 
+	SetDialogueTextA3("Sullen", "Isolated to a single household, and more of a disturbance than an|attack...for the time being.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_04, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Yeah, we're gonna put a stop to it before it even happens!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Uh... I think...", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_06, IMGAR_PORTRAIT_REDRIN_MOUTH_03, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.8, 0.05, 2);					
 	
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA3("Redrin", "I kinda already fixed the problem you guys were comin' to fix then.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_03, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "Oh?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_02, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Aw, no way!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.8, 0.05, 2);
 	
-	SetDialogueTextA3("Redrin", "I tracked it down since it was coming in from outside, then beat the ever-livin' crap outta 'em. ", 
+	SetDialogueTextA3("Redrin", "I tracked it down since it was coming in from outside, then beat the|ever-livin' crap outta 'em.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_06, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 	SetDialogueTextA3("Redrin", "Won't be shaking their beds at night anymore.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_06, IMGAR_PORTRAIT_REDRIN_MOUTH_02, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1.1, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "I suppose not! You have my thanks for helping them out.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Daisuke", "Hey, but... that was our job!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_01, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.7, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Now, now, those that were in need were given help, isn't that all that matters?", 
+	SetDialogueTextA3("Sullen", "Now, now, those that were in need were given help, isn't that all that|matters?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Daisuke", "...You're right. I'm just feeling like we came out here for no reason now.", 
+	SetDialogueTextA3("Daisuke", "...You're right. I'm just feeling like we came out here for no reason|now.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_06, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.8, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "Them's the breaks, kid.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_08, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
-	SetDialogueTextA3("Daisuke", "That's the second time! Stop calling me a child you... weird-looking Incineroar! I'm nearly as tall as you!", 
+	SetDialogueTextA3("Daisuke", "That's the second time! Stop calling me a child you... weird-looking|Incineroar! I'm nearly as tall as you!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
+	
+	SetDialogueTextA3("", "(Junky's Note: I may have drawn Daisuke a bit too small and had only|discovered he was 2m tall much later. Oops.)", 
+						[255,255,255], id_narrirator, id_null, 
+						"", "", mouth_null, id_narrirator, portraitXLeft, portraitYOffset, TALK_DEFAULT, 1, 0, 2);
 	
 	SetDialogueTextA3("Redrin", "...The hell's an &quot;Inch in a roar&quot;?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_01, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.9, 0.05, 2);					
 	
 	SetDialogueTextA3("Sullen", "Oh dear...", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	BossMusicChange(ID_BOSSBGM_6);
 	
-	SetDialogueTextA3("Daisuke", "You know what? If we beat you, it'll prove to everyone that we could have done the job. ", 
+	SetDialogueTextA3("Daisuke", "You know what? If we beat you, it'll prove to everyone that we could|have done the job.", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_04, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2);
 	
-	SetDialogueTextA3("Redrin", "Hah! Pretty sure I'm several stages up from th' troublemaker, you sure you want t' try me?", 
+	SetDialogueTextA3("Redrin", "Hah! Pretty sure I'm several stages up from th' troublemaker, you|sure you want t' try me?", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_08, IMGAR_PORTRAIT_REDRIN_MOUTH_02, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1.2, 0.05, 2);					
 	
 	SetDialogueTextA3("Daisuke", "100% sure. I'll bet Sullen is stronger than when you last met too!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	
 	SetDialogueTextA3("Sullen", "Hmm. It's true we gained experience during our travels today.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_07, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Daisuke", "Sullen, I found the real reason we came all this way, it was actually to face all these strong opponents!", 
+	SetDialogueTextA3("Daisuke", "Sullen, I found the real reason we came all this way, it was actually|to face all these strong opponents!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2);
 	SetDialogueTextA3("Daisuke", "And now we arrive at the final challenge!", 
 						DIALOGUE_COLOUR_DAISUKE, id_daisuke, id_null, 
-						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_00, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1, 0.05, 2);
+						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke, portraitXLeft, portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2);
 	
-	SetDialogueTextA3("Sullen", "Hoho, I'm pleased you were able to find this blessing in disguise, Daisuke.", 
+	SetDialogueTextA3("Sullen", "Hoho, I'm pleased you were able to find this blessing in disguise,|Daisuke.", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	SetDialogueTextA3("Sullen", "Well, Redrin? Would you grant us this favor?", 
 						DIALOGUE_COLOUR_SULLEN, id_sullen, id_null, 
-						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
+						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_06, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen, portraitXLeft, portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA3("Redrin", "No need to ask twice! Bring it!", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
-						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_00, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
+						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_02, IMGAR_PORTRAIT_REDRIN_MOUTH_02, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 1, 0.05, 2);					
 }
 
 function Stage06CPreBattle()
