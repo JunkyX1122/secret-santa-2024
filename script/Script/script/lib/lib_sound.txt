@@ -207,7 +207,7 @@ const gap = GetCurrentScriptDirectory~"./../../se2/gap.wav";
 
 const extend = GetCurrentScriptDirectory~"./../../se2/extend.wav";
 const extend2 = GetCurrentScriptDirectory~"./../../se2/se_extend2.wav";
-
+const page = GetCurrentScriptDirectory~"./../../se2/isaacpageturn.wav";
 
 //======================================================
 //===================Character Talk=====================
@@ -439,7 +439,8 @@ TALK_KAIRYU,
 TALK_HIROYUKI,
 TALK_REDRIN,
 title_cursor, title_ok, title_cancel,
-tazueMeow
+tazueMeow,
+page
 ];
 
 

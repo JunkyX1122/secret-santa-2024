@@ -120,6 +120,11 @@ function CreatePortrait
 
 task StartDialog()
 {
+	StartDialog(false);
+}
+
+task StartDialog(isNameless)
+{
 	SetDialogueTextSize(DEFAULT_DIALOGUE_TEXTSIZE);
 	let y = GetScreenHeight - 50;
 	let width = 240/2;
@@ -156,7 +161,7 @@ task StartDialog()
 		ObjRender_SetAlpha(dialogBoxObj, a*0.85);
 		ascent(i in 0..2)
 		{
-			ObjRender_SetAlpha(objArrows[i], a);
+			ObjRender_SetAlpha(objArrows[i], isNameless ? 0 : a);
 		}
 		ObjRender_SetColor(objArrows[0], speakerColor[0]/2, speakerColor[1]/2, speakerColor[2]/2);
 		yield;
@@ -173,7 +178,7 @@ task StartDialog()
 		ObjRender_SetAlpha(dialogBoxObj, a*0.85);
 		ascent(i in 0..2)
 		{
-			ObjRender_SetAlpha(objArrows[i], a);
+			ObjRender_SetAlpha(objArrows[i], isNameless ? 0 : a);
 		}
 		ObjRender_SetColor(objArrows[0], speakerColor[0]/2, speakerColor[1]/2, speakerColor[2]/2);
 		yield;

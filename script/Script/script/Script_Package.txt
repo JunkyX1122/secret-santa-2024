@@ -6,13 +6,13 @@
 #include "./lib/lib_sound.txt"
 #include "./lib/lib_event.txt"
 #include "./lib/lib_data.txt"
+#include "./lib/dialog_func.txt"
 #include "./Loading.txt"
 #include "./Package_Functions.txt"
 #include "./Package_MainMenu.txt"
 #include "./Package_CharacterSelect.txt"
 #include "./Package_Practice.txt"
 #include "./Package_Options.txt"
-#include "./Package_Outro.txt"
 #include "./Package_Ending.txt"
 let skipIntro = false;
 const BMG_TITLE_VOLUME = 75;

@@ -766,6 +766,7 @@ RedrinPortrait_ImgArray];
 //---------------------------------------
 //--------------TEXT IMAGES--------------
 //---------------------------------------
+
 const IMG_TALK_BOX   				= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_box.png";
 const IMG_TALK_NAMEARROW_TOP   		= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_namearrow1.png";
 const IMG_TALK_NAMEARROW_BOTTOM   	= 	GetCurrentScriptDirectory()  ~ "./../../img/talk/talk_namearrow2.png";
@@ -955,11 +956,26 @@ IMG_SYSTEM_CLOCK, IMG_SYSTEM_CLOCKHAND,
 IMG_SYSTEM_BOSS_HEALTHBAR, IMG_SYSTEM_BOSS_NAMEBAR,
 IMG_SYSTEM_BORDER, IMG_SYSTEM_SPELL_DISPLAY];
 
+//---------------------------------------
+//--------------ENDING IMAGES-------------
+//---------------------------------------
 
+const IMG_ENDING_A_00 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_a_00.png";
+const IMG_ENDING_A_01 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_a_01.png";
+const IMG_ENDING_A_02 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_a_02.png";
 
+const IMG_ENDING_B_00 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_b_00.png";
+const IMG_ENDING_B_01 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_b_01.png";
+const IMG_ENDING_B_02 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_b_02.png";
 
+const IMG_ENDING_C_00 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_c_00.png";
+const IMG_ENDING_C_01 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_c_01.png";
+const IMG_ENDING_C_02 =  			GetCurrentScriptDirectory()~"./../../img/ending/ending_c_02.png";
 
-
-
+const Ending_ImgArray = [
+IMG_ENDING_A_00, IMG_ENDING_A_01, IMG_ENDING_A_02,
+IMG_ENDING_B_00, IMG_ENDING_B_01, IMG_ENDING_B_02,
+IMG_ENDING_C_00, IMG_ENDING_C_01, IMG_ENDING_C_02
+];
 
 

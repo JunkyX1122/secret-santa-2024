@@ -1,0 +1,175 @@
+
+const DIALOGUE_COLOUR_GATO 			= [128,128,128];
+const DIALOGUE_COLOUR_ANUBIS		= [0,0,0];
+const DIALOGUE_COLOUR_SULLEN 		= [64,64,64];
+const DIALOGUE_COLOUR_DAISUKE 		= [128,255,128];
+const DIALOGUE_COLOUR_DANDARA 		= [128,64,64];
+const DIALOGUE_COLOUR_VIIVI 		= [163,43,255];
+const DIALOGUE_COLOUR_TAZUE 		= [116,158,108];
+const DIALOGUE_COLOUR_GRANDIS		= [128,0,0];
+const DIALOGUE_COLOUR_SCYLLA		= [128,255,255];
+const DIALOGUE_COLOUR_KIERAN		= [128,255,128];
+const DIALOGUE_COLOUR_KAIRYU		= [0,0,255];
+const DIALOGUE_COLOUR_HIROYUKI		= [0,145,255];
+const DIALOGUE_COLOUR_REDRIN		= [255,0,0];
+const DIALOGUE_COLOUR_DEFAULT		= [0,0,0];
+const DIALOGUE_COLOUR_RIELLA		= [233,137,120];
+				
+let currentPage = 0;
+let forceStop = false;
+
+task AdvancePage()
+{
+	currentPage++;
+}
+
+task TEnding(teamEnding)
+{
+	currentPage = 0;
+	
+	ManagePages(teamEnding);
+	wait(60);
+	SetCommonData("IsDialogueSequenceActive", true);
+	SetPortraitNumber(0, 0);
+	StartDialog();
+	
+	alternative(teamEnding)
+	case(PLAYERTEAM_A)
+	{
+		TEnding_A();
+	}
+	while(forceStop){yield;}
+	SetCommonData("IsDialogueSequenceActive", false);
+	EndDialogueSequence;
+	//TTitleScene();
+}
+
+function TEnding_A()
+{
+	SetDialogueTextA3("Gato", "Hey, Hold up a second.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Gato", "This ain't the Herald, the Herald is purple, and spikier, and got weird|(and slightly pretty) crystal star powers???", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Gato", "Also goes on about fate more than me, and that's saying something.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+
+	SetDialogueTextA3("Redrin", "I have no idea what you're goin' on about.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Gato", "Let's just say there's some guy out there that we had to beat up that|looks a lot like ya.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Gato", "Down to the eyes, and weird stripes.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "Why do I get the feelin' this is a common occurance for me|specifically?", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Redrin", "Anyway, beat it. Ya totally &quot;Saved Christmas&quot; or whatever. I don't|have time for your crazy.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Gato", "It makes a lot more sense in context, don't worry.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+	SetDialogueTextA3("", "LATER", 
+						DIALOGUE_COLOUR_DEFAULT, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "I didn't expect something like this from you! First you try to save|Christmas, and now you replicate it?", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Gato", "Well, The whole god thing is stupid, but there's something there that|I really liked, the cliché of &quot;spend time with those you care about&quot;!", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Gato", "Soooo, How about a lot of the latter and none of the former! It'll be|my own little Christmas, It'll be... Katmas.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "You've come up with so many names recently that you've run out of|creativity, huh?", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Riella", "How about you say &quot;Thank you?&quot; instead? He went on your weirdo|mission and got us all gifts!", 
+						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+	
+	SetDialogueTextA3("Riella", "Thaaaaaaaaank you!", 
+						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "...Haah... Thanks. I... Really appriciate it. Merry Katmas.", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Gato", "Hah, I can see that smile, don't need to hide it.~", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "Gods of death don't smile. ...But... we do remember moments like|this.", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Gato", "I can **literally** see your mouth rising up at the edges.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "Fuck off. You made me happy, so don't ruin it.", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Riella", "I'm happy too. You went through all this trouble to bring a bit of|Christmas here... Really, thank you.", 
+						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Riella", "It brings back a lot of cherished memories from the many|Christmases with my own family, even if they're a little painful now.", 
+						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "A lot of... Memories.", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Riella", "Yeah. Things like hot cocoa... Picking out a tree... Stockings over the|fireplace... But ultimately, family, just like this.", 
+						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Anubis", "And this is the part where you realize that you should've asked her.", 
+						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextSize(14);
+	SetDialogueTextA3("Gato", "Waaaaaaaaaaaaa.", 
+						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextSize(16);
+	AdvancePage();
+}
+
+task ManagePages(teamEnding)
+{
+	let TOTAL_IMAGES = 3;
+	let pages = [];
+	ascent(i in 0..TOTAL_IMAGES)
+	{
+		pages = pages ~ [ObjPrim_Create(OBJ_SPRITE_2D)];
+		ObjPrim_SetTexture(pages[i],Ending_ImgArray[i + teamEnding * 3]);
+		Obj_SetRenderPriorityI(pages[i], 74-i);
+		ObjSprite2D_SetSourceRect(pages[i], 0, 0, 1024, 512);
+		ObjSprite2D_SetDestRect(pages[i], 0, 0, GetScreenWidth, GetScreenHeight);
+		ObjSprite2D_SetDestCenter(pages[i]);
+		ObjRender_SetPosition(pages[i],GetScreenWidth/2,GetScreenHeight/2,0);
+		ObjRender_SetColor(pages[i],0,0,0);
+	}
+	let t = 90;
+	ascent(o in 0..t)
+	{
+		ascent(i in 0..TOTAL_IMAGES)
+		{
+			ObjRender_SetColor(pages[i],255/(t-1)*o,255/(t-1)*o,255/(t-1)*o);
+		}
+		yield;
+	}
+	ascent(i in 0..TOTAL_IMAGES-1)
+	{
+		while(currentPage==i) {yield;}
+		SE_PlayLen(page,60);
+		ascent(o in 0..60)
+		{
+			forceStop = true;
+			ObjRender_SetY(pages[i],GetScreenHeight/2+(GetScreenHeight/2-GetScreenHeight/2*cos(180/59*o)));
+			yield;
+		}
+		forceStop = false;
+		Obj_Delete(pages[i]);
+	}
+	while(currentPage==TOTAL_IMAGES-1) {yield;}
+	descent(o in 0..180)
+	{
+		ObjRender_SetColor(pages[TOTAL_IMAGES-1],255/180*o,255/180*o,255/180*o);
+		yield;
+	}
+	Obj_Delete(pages[TOTAL_IMAGES-1]);
+}
