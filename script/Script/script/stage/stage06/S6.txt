@@ -42,6 +42,7 @@ let MAX_HEALTH = 300/3;
 	
 	objEnemy = ObjEnemy_Create(OBJ_ENEMY_BOSS);
 	ObjEnemy_Regist(objEnemy);
+	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2, -100);
 	ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 100, 40);
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	
