@@ -13,6 +13,7 @@
 #include "./Package_Practice.txt"
 #include "./Package_Options.txt"
 #include "./Package_Outro.txt"
+#include "./Package_Ending.txt"
 let skipIntro = false;
 const BMG_TITLE_VOLUME = 75;
 @Initialize
