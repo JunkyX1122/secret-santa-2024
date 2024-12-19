@@ -20,6 +20,8 @@ let SELECTED_WAIT = 20;
 let firstTimeBoot = true; // Prevents calling everything more than once.
 task Title_Display()
 {
+	isCreditsAvailable = GetAreaCommonData("History", "CreditsAvailable", false);
+	mainMenu_Selectable = [   true,       true,      true,     false,     isCreditsAvailable,   true];
 	menuState = MENUSTATE_MAIN;
 	mainMenu_AlphaScl = 1;
 	background_AlphaScl = 1;
@@ -97,7 +99,7 @@ task Title_Display()
 		{
 			TFlash(50);
 			wait(50);
-			MusicVolumeChange(100, 0, 170);
+			MusicVolumeChange(BMG_TITLE_VOLUME, 0, 170);
 			TDarkTransition(0, 1, 120);
 			ascent(i in 0..180)
 			{
@@ -136,6 +138,22 @@ task Title_Display()
 			SkippableWait(1);
 		}
 		OptionsScreen();
+		Title_Display();
+	}
+	case(MAINMENUSTATE_CREDITS)
+	{
+		MusicVolumeChange(BMG_TITLE_VOLUME, 0, 170);
+		TDarkTransition(0, 1, 120);
+		ascent(i in 0..180)
+		{
+			yield;
+		}
+		DeleteMusicObj();
+		totalDarkness = 0;
+		menuState = MENUSTATE_UNACTIVE;
+		firstTimeBoot = true;
+		
+		Credits();
 		Title_Display();
 	}
 	case(MAINMENUSTATE_EXIT)

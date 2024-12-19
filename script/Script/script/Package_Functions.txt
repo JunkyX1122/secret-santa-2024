@@ -95,10 +95,9 @@ function StartStageProgression()
 	
 	if(carryOn==true)
 	{
-		//TStageScene(STAGE_2,WAITER);
+		TStageScene(STAGE_2,WAITER);
 	}
 	SetCommonData("GatoPlayerSprite", 0);
-	/*
 	if(carryOn==true)
 	{
 		TStageScene(STAGE_3,WAITER);
@@ -127,7 +126,6 @@ function StartStageProgression()
 	{
 		TStageScene(STAGE_6,WAITER);
 	}
-	*/
 	if(carryOn==true)
 	{
 		TEnding(activeTeam);

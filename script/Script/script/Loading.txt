@@ -112,6 +112,11 @@ task LoadThings
 		LoadSound(LoadAllSoundsArray[i]);
 		yield;
 	}
+	ascent(i in 0..length(LoadAllMusicArray))
+	{
+		LoadSound(LoadAllMusicArray[i]);
+		yield;
+	}
 	loop(120){yield;}
 	mainLoadBool=true;
 }

@@ -1,3 +1,6 @@
+let isCreditsAvailable = false;
+
+const BGM_CREDITS_VOLUME = 75;
 
 const DIALOGUE_COLOUR_GATO 			= [128,128,128];
 const DIALOGUE_COLOUR_ANUBIS		= [0,0,0];
@@ -25,6 +28,9 @@ task AdvancePage()
 
 task TEnding(teamEnding)
 {
+	SetAreaCommonData("History", "CreditsAvailable", true);
+	SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	
 	currentPage = 0;
 	
 	ManagePages(teamEnding);
@@ -177,11 +183,134 @@ task ManagePages(teamEnding)
 	Obj_Delete(pages[TOTAL_IMAGES-1]);
 }
 
-
+const CREDITS_X_POS = GetScreenWidth/2 - (200-15);
 function Credits()
 {
-}
+	let totalToDisplay = 0;
+	ascent(i in 0..length(CREDITS_ALL))
+	{
+		totalToDisplay++;
+		ascent(o in 0..length(CREDITS_ALL[i]))
+		{
+			totalToDisplay += length(CREDITS_ALL[i][o]);
+		}
+		totalToDisplay++;
+	}
+	let timeToScroll = 60*12;
+	let totalFramesToPlay = 60*60 * 4;
+	let timePerRow = floor(totalFramesToPlay / totalToDisplay);
+	
+	WriteLog(timePerRow);
+	MusicChange(BGM_CREDITS, BGM_CREDITS_VOLUME, -1, -1);
+	
+	CreateCreditSection("Credits", 20);
+	wait(timePerRow);
+	wait(timePerRow);
+	ascent(i in 0..length(CREDITS_ALL))
+	{
+		CreateCreditSection(CREDITS_SECTIONS[i], 18);
+		wait(timePerRow);
+		ascent(o in 0..length(CREDITS_ALL[i]))
+		{
+			let currentRow = CREDITS_ALL[i][o];
+			CreateCreditRow(currentRow[0], currentRow[1]);
+			wait(timePerRow);
+		}
+		wait(timePerRow);
+	}
+	wait(timePerRow);
+	CreateCreditSection("Thank yous to all of the members of[r]Shrines and Youkai.", 16);
+	wait(timePerRow);
+	wait(timePerRow);
+	CreateCreditSection("Thank YOU for playing this 2 month time commitment.", 16);
+	wait(timePerRow);
+	wait(timePerRow);
+	CreateCreditSection("And thank you especially to Redrin, my Secret Santa[r]recipiant for this year, for being a cool friend.", 16);
+	wait(timePerRow);
+	wait(timePerRow);
+	wait(timePerRow);
+	wait(timePerRow);
+	wait(timePerRow);
+	CreateCreditSection("Guil this is a reminder to finish Bug Fables :)", 16);
+	wait(timeToScroll);
+	MusicVolumeChange(BGM_CREDITS_VOLUME, 0, 60*4);
+	wait(60*4);
+	
+	
+	
+	/*
+	["Being a set of cool friends", 	"The Shrines and Youkai Server"],
+	["Secret Santa Recipiant",			"Redrin"],
+	["Being a really cool friend",		"Redrin"]
+	*/
+	
+	
+	task CreateCreditSection(text1, tS)
+	{
+		let objCatag = ObjText_Create;
+		ObjText_SetText(objCatag,text1);
+		ObjText_SetFontType(objCatag, "Lucida Fax Demibold");
 
+		ObjText_SetHorizontalAlignment(objCatag, ALIGNMENT_CENTER);
+		ObjText_SetMaxWidth(objCatag, GetScreenWidth-24);
+		
+		ObjText_SetFontSize(objCatag,tS);
+		ObjText_SetFontColorTop(objCatag,255,255,255);
+		ObjText_SetFontColorBottom(objCatag, 255, 255, 255);
+		ObjRender_SetX(objCatag, round(CREDITS_X_POS-(GetScreenWidth-24)/2));
+		
+		ascent(i in 0..timeToScroll)
+		{
+			let y = floor(GetScreenHeight + 50 - (GetScreenHeight + 50*2) / (timeToScroll-1) * i);
+			ObjRender_SetY(objCatag, y);
+			yield;
+		}
+		Obj_Delete(objCatag);
+	}
+	
+	task CreateCreditRow(text1, text2)
+	{
+		let credits_row_gap = 25;
+		let objCatag = ObjText_Create;
+		ObjText_SetText(objCatag,text1);
+		ObjText_SetFontType(objCatag, "Lucida Fax Demibold");
+		ObjText_SetFontSize(objCatag,16);
+		ObjText_SetFontColorTop(objCatag,255,255,255);
+		ObjText_SetFontColorBottom(objCatag, 255, 255, 255);
+		ObjText_SetSidePitch(objCatag, -1);
+		ObjRender_SetX(objCatag, round(CREDITS_X_POS - credits_row_gap - textCentreX(objCatag)*2));
+
+		let objName = ObjText_Create;
+		ObjText_SetText(objName,text2);
+		ObjText_SetFontType(objName, "Lucida Fax Demibold");
+		ObjText_SetFontSize(objName,16);
+		ObjText_SetFontColorTop(objName,255,255,255);
+		ObjText_SetFontColorBottom(objName, 255, 255, 255);
+		ObjText_SetSidePitch(objName, -1);
+		ObjRender_SetX(objName, round(CREDITS_X_POS + credits_row_gap));
+		ascent(i in 0..timeToScroll)
+		{
+			let y = floor(GetScreenHeight + 50 - (GetScreenHeight + 50*2) / (timeToScroll-1) * i);
+			ObjRender_SetY(objCatag, y);
+			ObjRender_SetY(objName, y);
+			yield;
+		}
+		Obj_Delete(objCatag);
+		Obj_Delete(objName);
+	}
+}
+const CREDITS_SECTIONS = 
+[
+	"Programming",
+	"Writing",
+	"Art / Design",
+	"Backgrounds",
+	"Playtesting",
+	"Music / Sound",
+	"Programmes Used",
+	"Character Ownership",
+	"Special Thanks"
+];
 const CREDITS_DATA_PROGRAMMING = 
 [
 	["Overall Pattern Design",			"Junky"],
@@ -249,30 +378,30 @@ const CREDITS_DATA_PLAYTESTING =
 const CREDITS_DATA_SOUND = 
 [
 	["Sound Effects",					"ZUN, jynx, tasofro, Python"],
-	["Title Menu",						"Trials of Mana - Main Menu Music"],
-	["Stage 1A",						"Touhou 3: Phantasmagoria of Dim. Dream - Phantasmagoria (Egyptian Remix by Jesselejohn)"],
-	["Stage 1A Boss",					"Pokémon Sun & Moon - Rival Gladion Battle Music"],
-	["Stage 1B",						"Touhou 10.5: Scarlet Weather Rhapsody - Fuukou Meibi"],
-	["Stage 1B Boss",					"Pokémon Masters EX - Battle Vs. Kalos Friends"],
-	["Stage 1C",						"Touhou 15.5: Antinomy of Common Flowers - Mushroom Waltz"],
-	["Stage 1C Boss",					"Pokémon Black 2 & White 2 - Rival Battle Music"],
-	["Stage 2",							"Chrono Trigger - Corridors of Time (Pontus Hultgren Music Arrangement)"],
-	["Stage 2 Boss",					"Chrono Trigger - Battle Theme (Pontus Hultgren Music Arrangement)"],
-	["Stage 3",							"One Step From Eden - The Arctic"],
-	["Stage 3 Boss",					"The Binding of Isaac: Antibirth - Gloria Filio"],
-	["Stage 4",							"Rivals of Aether - Luna Ascension EX"],
-	["Stage 4A Boss",					"Bug Fables - Team, This One's Stronger (Gabocarina96 Rock Cover)"],
-	["Stage 4B Boss",					"Digimon ReArise - Normal Battle"],
-	["Stage 4C Boss",					"Touhou: Hollow Song of Birds - Tyrant of the Scorching Sun ~ Violent General"],
-	["Stage 5",							"Rabbit & Steel - Kingdom Outskirts (Action)"],
-	["Stage 5 Boss",					"Pokémon Omega Ruby & Alpha Sapphire - Vs. Zinnia (Traditional Japanese Version)"],
-	["Stage 6",							"Trials of Mana Remake - 51 Religion Thunder"],
-	["Stage 6 Boss",					"Seiken Densetsu 3 - The Final Sacrifice (Sacrifice Part Three Remix)"],
+	["Title Menu",						"Trials of Mana[r]Main Menu Music"],
+	["Stage 1A",						"Touhou 3: Phantasmagoria of Dim. Dream[r]Phantasmagoria (Egyptian Remix byJesselejohn)"],
+	["Stage 1A Boss",					"Pokémon Sun & Moon[r]Rival Gladion Battle Music"],
+	["Stage 1B",						"Touhou 10.5: Scarlet Weather Rhapsody[r]Fuukou Meibi"],
+	["Stage 1B Boss",					"Pokémon Masters EX[r]Battle Vs. Kalos Friends"],
+	["Stage 1C",						"Touhou 15.5: Antinomy of Common Flowers[r]Mushroom Waltz"],
+	["Stage 1C Boss",					"Pokémon Black 2 & White 2[r]Rival Battle Music"],
+	["Stage 2",							"Chrono Trigger[r]Corridors of Time (Pontus Hultgren Music Arrangement)"],
+	["Stage 2 Boss",					"Chrono Trigger[r]Battle Theme (Pontus Hultgren Music Arrangement)"],
+	["Stage 3",							"One Step From Eden[r]The Arctic"],
+	["Stage 3 Boss",					"The Binding of Isaac: Antibirth[r]Gloria Filio"],
+	["Stage 4",							"Rivals of Aether[r]Luna Ascension EX"],
+	["Stage 4A Boss",					"Bug Fables[r]Team, This One's Stronger (Gabocarina96 Rock Cover)"],
+	["Stage 4B Boss",					"Digimon ReArise[r]Normal Battle"],
+	["Stage 4C Boss",					"Touhou: Hollow Song of Birds[r]Tyrant of the Scorching Sun ~ Violent General"],
+	["Stage 5",							"Rabbit & Steel[r]Kingdom Outskirts (Action)"],
+	["Stage 5 Boss",					"Pokémon Omega Ruby & Alpha Sapphire[r]Vs. Zinnia (Traditional Japanese Version)"],
+	["Stage 6",							"Trials of Mana Remake[r]51 Religion Thunder"],
+	["Stage 6 Boss",					"Seiken Densetsu 3[r]The Final Sacrifice (Sacrifice Part Three Remix)"],
 	["Ending",							" "],
-	["Credits",							" "]
+	["Credits",							"Pokemon Mystery Dungeon Rescue Team DX[r]Staff Roll"]
 ];
 
-const CREDITS_DATA_PROGRAMS =
+const CREDITS_DATA_PROGRAMMES =
 [
 	["Game Engine",						"Danmakufu"],
 	["Text Editor",						"Notepad++"],
@@ -305,19 +434,14 @@ const CREDITS_DATA_CHARACTERS =
 
 const CREDITS_DATA_SPECIAL = 
 [
+	["DNH",								"mkm"],
 	["DNH ph3sx",						"Natashi"],
 	["let ph3sx build",					"Wish"],
 	["Secret Santa Host",				"Banana"],
 	["Support and Motivation",			"Meowstic, Achy, GCP"],
 	["Idea Bouncing",					"Meowstic, Achy, GCP"],
 	["Void Messenger",					"Banana"],
-	["Streaming this probably",			"Wish"],
-
-	["Playing this",					"You"],
-
-	["Being a set of cool friends", 	"The Shrines and Youkai Server"],
-	["Secret Santa Recipiant",			"Redrin"],
-	["Being a really cool friend",		"Redrin"]
+	["Streaming this probably",			"Wish"]
 ];
 
 const CREDITS_ALL = 
@@ -328,7 +452,7 @@ const CREDITS_ALL =
 	CREDITS_DATA_BACKGROUNDS,
 	CREDITS_DATA_PLAYTESTING,
 	CREDITS_DATA_SOUND,
-	CREDITS_DATA_PROGRAMS,
+	CREDITS_DATA_PROGRAMMES,
 	CREDITS_DATA_CHARACTERS,
 	CREDITS_DATA_SPECIAL
 ];

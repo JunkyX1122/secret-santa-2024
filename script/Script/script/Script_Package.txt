@@ -80,6 +80,7 @@ const MENUSTATE_MAIN 					= 1;
 const MENUSTATE_CHARACTER_SELECT 		= 2;
 const MENUSTATE_PRACTICE				= 3;
 const MENUSTATE_OPTIONS					= 4;
+const MENUSTATE_CREDITS					= 5;
 
 
 let menuState = MENUSTATE_UNACTIVE;
@@ -118,6 +119,7 @@ task LoadSaveDataStuff()
 	option_MusicVolume = GetAreaCommonData("Setting", "MusicVolume", 1);
 	startingLives = GetAreaCommonData("Setting", "StartingLives", 2);
 	option_TalkSound = GetAreaCommonData("Setting", "TalkSound", 0);
+	isCreditsAvailable = GetAreaCommonData("History", "CreditsAvailable", false);
 	
 	SetCommonData("SFXVolume", option_SFXVolume);
 	SetCommonData("MusicVolume", option_MusicVolume);

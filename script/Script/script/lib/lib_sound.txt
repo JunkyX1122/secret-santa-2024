@@ -258,6 +258,7 @@ const title_cancel = GetCurrentScriptDirectory~"./../../se3/title_cancel.wav";
 //======================================================
 
 const BGM_TITLE  = GetCurrentScriptDirectory~"./../../bgm/title.ogg";// 738849 6695592
+const BGM_CREDITS  = GetCurrentScriptDirectory~"./../../bgm/credits.ogg";
 
 const BGM_STAGE_01A = GetCurrentScriptDirectory~"./../../bgm/stage_01a.ogg";
 const BGM_STAGE_01B = GetCurrentScriptDirectory~"./../../bgm/stage_01b.ogg";
@@ -345,7 +346,7 @@ const BOSS_MUSIC_PATHS = [
 							BGM_BOSS_04B,
 							BGM_BOSS_04C,
 							BGM_BOSS_05,
-							BGM_BOSS_06,
+							BGM_BOSS_06
 						];
 const BOSS_MUSIC_DATA  = [
 							[ 	60, 	16550, 		6337369],
@@ -373,6 +374,30 @@ const BOSS_MUSIC_NAMES = [
 							"Seiken Densetsu 3 - The Final Sacrifice (Sacrifice Part Three Remix)"
 						 ];
 
+const LoadAllMusicArray = 
+[
+	BGM_TITLE,
+	BGM_CREDITS,
+	BGM_STAGE_01A,
+	BGM_STAGE_01B,
+	BGM_STAGE_01C,
+	BGM_STAGE_02,
+	BGM_STAGE_03,
+	BGM_STAGE_04,
+	BGM_STAGE_05,
+	BGM_STAGE_06,
+	BGM_BOSS_01A,
+	BGM_BOSS_01B,
+	BGM_BOSS_01C,
+	BGM_BOSS_02,
+	BGM_BOSS_03,
+	BGM_BOSS_04A,
+	BGM_BOSS_04B,
+	BGM_BOSS_04C,
+	BGM_BOSS_05,
+	BGM_BOSS_06
+	
+];
 let seobj = ObjSound_Create;
 //======================================================
 task SE_PlayLen(let path, let vl)
