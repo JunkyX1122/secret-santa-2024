@@ -48,6 +48,10 @@ task TEnding(teamEnding)
 	{
 		FEnding_B();
 	}
+	case(PLAYERTEAM_C)
+	{
+		FEnding_C();
+	}
 	while(forceStop){yield;}
 	SetCommonData("IsDialogueSequenceActive", false);
 	EndDialogueSequence;
@@ -259,6 +263,77 @@ function FEnding_B()
 	AdvancePage();
 }
 
+function FEnding_C()
+{
+	SetDialogueTextA3("Viivi", "Yeah, no. This isn't going to work, Tiger Bread.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+						
+	SetDialogueTextA3("Redrin", "Hah, I'm just pullin' yer leg. That's my current one and I don't plan|on givin' it up, I just had to get back at ya for beatin' me!", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Grr...", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+						
+	SetDialogueTextA3("Redrin", "I have a couple from when I was younger, let's try one of those. If ya|don't mind hand-me-downs.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Well... ya can't beat free.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+	
+	SetDialogueTextA3("Viivi", "Not bad, but I still think it's a little restrictive 'cause of the|looseness.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Grandis", "How's it feel though?", 
+						DIALOGUE_COLOUR_GRANDIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Honestly? It feels great. Doesn't look half bad neither.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "Well, you wanted me t' sell you on it, yeah? How this? The strongest|battle tactic, the element of surprise.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Redrin", "Who would be expectin' two speed demons to come flyin' out of a|more bulky figure?", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Hmm... Tazue rocking out from a sleeve... Yeah. You know what? I|think I can work with this.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Viivi", "I might need to make some changes so I can jump out of it like that|too, that a'ite?", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "Be my guest, it would be yours.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Then you have yourself a deal, Tiger Bread!", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+	SetDialogueTextA3("", "LATER", 
+						DIALOGUE_COLOUR_DEFAULT, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Aaaaaaaa~", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Grandis", "You're welcome.", 
+						DIALOGUE_COLOUR_GRANDIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "Thanks for convincing me to do this.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Grandis", "Heh, I guess we were all able to see eye-to-eye in the end.", 
+						DIALOGUE_COLOUR_GRANDIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Grandis", "That seems in line with the holidays.", 
+						DIALOGUE_COLOUR_GRANDIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Viivi", "...You'll help me modify this coat right? I'll bet ya could do some|neat portal stuff on it.", 
+						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Grandis", "Wha- That's what you had in mind? Do I look like a seamstress to|you?", 
+						DIALOGUE_COLOUR_GRANDIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+	
+}
 task ManagePages(teamEnding)
 {
 	let TOTAL_IMAGES = 3;
