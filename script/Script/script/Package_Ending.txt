@@ -42,7 +42,11 @@ task TEnding(teamEnding)
 	alternative(teamEnding)
 	case(PLAYERTEAM_A)
 	{
-		TEnding_A();
+		FEnding_B();
+	}
+	case(PLAYERTEAM_B)
+	{
+		FEnding_B();
 	}
 	while(forceStop){yield;}
 	SetCommonData("IsDialogueSequenceActive", false);
@@ -53,7 +57,7 @@ task TEnding(teamEnding)
 	TTitleScene();
 }
 
-function TEnding_A()
+function FEnding_A()
 {
 	SetDialogueTextA3("Gato", "Hey, Hold up a second.", 
 						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
@@ -81,7 +85,7 @@ function TEnding_A()
 	AdvancePage();
 	SetDialogueTextA3("", "LATER", 
 						DIALOGUE_COLOUR_DEFAULT, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
-	
+
 	SetDialogueTextA3("Anubis", "I didn't expect something like this from you! First you try to save|Christmas, and now you replicate it?", 
 						DIALOGUE_COLOUR_ANUBIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
@@ -97,7 +101,7 @@ function TEnding_A()
 						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
 	AdvancePage();
-	
+
 	SetDialogueTextA3("Riella", "Thaaaaaaaaank you!", 
 						DIALOGUE_COLOUR_RIELLA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
@@ -137,6 +141,124 @@ function TEnding_A()
 	AdvancePage();
 }
 
+function FEnding_B()
+{
+	SetDialogueTextA3("Redrin", "Not too shabby, Daisuke.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Likewise! That was... something else! I definitely went up a level!", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "Indeed, I'm quite exausted...", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "I am the leader of a warband after all, I have t' be some kind of|somethin'.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Actually, we took them on earlier too. Do you think I could be ready|for a role like that?", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "I don't think you're anywhere near as jaded as ya need to be.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "I'll take that as a compliment.", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "I'd say it is a good thing, we could all use a bit of wonder in our|lives.", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "Heh, maybe you're right. It's the season t' be cheerful or somethin'.|I'll try it out this year.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "You might want to check out that warrior festival going on by the|lake, might be you guys' thing.", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "Warrior festival? Hmm. Sounds like a good place t' get some gifts.|Thanks for the tip, I'll check it out later.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "Then it's about time we return home. May you and your family have|a blessed holiday.", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Redrin", "See ya around.", 
+						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+	SetDialogueTextA3("", "LATER", 
+						DIALOGUE_COLOUR_DEFAULT, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+
+	SetDialogueTextA3("Hiroyuki", "So just today, you managed to fight me, Kairyu, and Redrin. Funny|enough, it's not uncommon for the three of us to train together.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "How did you get so many training buddies? Man, I've fallen so far|behind you!  ", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Hiroyuki", "I'm not sure why you think that. Didn't you just go through a 'boss|rush'?", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "I guess...I'm just worried about us drifting apart or something. When|was the last time we just hung out?", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Hiroyuki", "...Maybe I could see if they're interested in adding a fourth person|to our dynamic.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Would they have me? I don't want to intrude on your friend group if|none of you want that.", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Hiroyuki", "Well, you've already met them and proven your skills. Won't hurt to|ask.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Thanks, Bro. ...Hey, why don't you come home with me? We're having a Christmas get-together over this week. Mom would love to see you|I'm sure.", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Hiroyuki", "I... don't know.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "I know things aren't perfect, but we're all trying, aren't we?", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "...You know, Daisuke, I believe Redrin was mistaken about your lack|of leader qualities. In fact, I think you taught him something.", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Huh? What'd I do?", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "Surely, part of leading a warband is making sure the connections in|your found family remain strong and healthy.", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Sullen", "Isn't that exactly what you're trying to do right now?", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Hiroyuki", "...", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Hiroyuki", "Daisuke... What you want is something that rings true to what I|believe in, I've just... been too afraid to actually deal with the rift|that formed and put in the effort I should be to be as close again.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Hiroyuki", "But...We really are brothers. That couldn't be clearer. ...and I really do|want to see mom. ", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Hiroyuki", "You're both really important to me. So, I'll be there.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Hiroyuki...!", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Daisuke", "You too Sullen! I'm not going to let you just slink away into the|darkness alone!", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "Oh, my, an invitation? I don't have any other plans for tonight, I'll|gladly accept.", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Daisuke", "Great! Mom was hoping y- Erm... Never mind!", 
+						DIALOGUE_COLOUR_DAISUKE, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Sullen", "?", 
+						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("", "Later Again", 
+						DIALOGUE_COLOUR_DEFAULT, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	SetDialogueTextA3("Dandara", "(Thank you for the best Christmas present ever, Daisuke...)", 
+						DIALOGUE_COLOUR_DANDARA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	
+	AdvancePage();
+}
+
 task ManagePages(teamEnding)
 {
 	let TOTAL_IMAGES = 3;
@@ -144,7 +266,7 @@ task ManagePages(teamEnding)
 	ascent(i in 0..TOTAL_IMAGES)
 	{
 		pages = pages ~ [ObjPrim_Create(OBJ_SPRITE_2D)];
-		ObjPrim_SetTexture(pages[i],Ending_ImgArray[i + teamEnding * 3]);
+		ObjPrim_SetTexture(pages[i],Ending_ImgArray[i + teamEnding * TOTAL_IMAGES]);
 		Obj_SetRenderPriorityI(pages[i], 74-i);
 		ObjSprite2D_SetSourceRect(pages[i], 0, 0, 1024, 512);
 		ObjSprite2D_SetDestRect(pages[i], 0, 0, GetScreenWidth, GetScreenHeight);
@@ -183,7 +305,7 @@ task ManagePages(teamEnding)
 	Obj_Delete(pages[TOTAL_IMAGES-1]);
 }
 
-const CREDITS_X_POS = GetScreenWidth/2 - (200-15);
+const CREDITS_X_POS = GetScreenWidth/2 - (200);
 function Credits()
 {
 	let totalToDisplay = 0;
@@ -270,7 +392,7 @@ function Credits()
 	
 	task CreateCreditRow(text1, text2)
 	{
-		let credits_row_gap = 25;
+		let credits_row_gap = 15;
 		let objCatag = ObjText_Create;
 		ObjText_SetText(objCatag,text1);
 		ObjText_SetFontType(objCatag, "Lucida Fax Demibold");

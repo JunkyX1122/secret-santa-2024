@@ -73,58 +73,61 @@ function StartStageProgression()
     DeleteCommonData("PlayerSpell");
 	let WAITER = 0;
 	
-	
-	if(carryOn==true)
+	if(GetKeyState(KEY_6) == KEY_FREE)
 	{
-		SetCommonData("IsStage1", true);
-		alternative(activeTeam)
-		case(PLAYERTEAM_A)
+		
+		if(carryOn==true)
 		{
-			TStageScene(STAGE_1a,WAITER);
+			SetCommonData("IsStage1", true);
+			alternative(activeTeam)
+			case(PLAYERTEAM_A)
+			{
+				TStageScene(STAGE_1a,WAITER);
+			}
+			case(PLAYERTEAM_B)
+			{
+				TStageScene(STAGE_1b,WAITER);
+			}
+			case(PLAYERTEAM_C)
+			{
+				TStageScene(STAGE_1c,WAITER);
+			}
 		}
-		case(PLAYERTEAM_B)
+		SetCommonData("IsStage1", false);
+		
+		if(carryOn==true)
 		{
-			TStageScene(STAGE_1b,WAITER);
+			TStageScene(STAGE_2,WAITER);
 		}
-		case(PLAYERTEAM_C)
+		SetCommonData("GatoPlayerSprite", 0);
+		if(carryOn==true)
 		{
-			TStageScene(STAGE_1c,WAITER);
+			TStageScene(STAGE_3,WAITER);
 		}
-	}
-	SetCommonData("IsStage1", false);
-	
-	if(carryOn==true)
-	{
-		TStageScene(STAGE_2,WAITER);
-	}
-	SetCommonData("GatoPlayerSprite", 0);
-	if(carryOn==true)
-	{
-		TStageScene(STAGE_3,WAITER);
-	}
-	if(carryOn==true)
-	{
-		alternative(activeTeam)
-		case(PLAYERTEAM_A)
+		if(carryOn==true)
 		{
-			TStageScene(STAGE_4a,WAITER);
+			alternative(activeTeam)
+			case(PLAYERTEAM_A)
+			{
+				TStageScene(STAGE_4a,WAITER);
+			}
+			case(PLAYERTEAM_B)
+			{
+				TStageScene(STAGE_4b,WAITER);
+			}
+			case(PLAYERTEAM_C)
+			{
+				TStageScene(STAGE_4c,WAITER);
+			}
 		}
-		case(PLAYERTEAM_B)
+		if(carryOn==true)
 		{
-			TStageScene(STAGE_4b,WAITER);
+			TStageScene(STAGE_5,WAITER);
 		}
-		case(PLAYERTEAM_C)
+		if(carryOn==true)
 		{
-			TStageScene(STAGE_4c,WAITER);
+			TStageScene(STAGE_6,WAITER);
 		}
-	}
-	if(carryOn==true)
-	{
-		TStageScene(STAGE_5,WAITER);
-	}
-	if(carryOn==true)
-	{
-		TStageScene(STAGE_6,WAITER);
 	}
 	if(carryOn==true)
 	{
