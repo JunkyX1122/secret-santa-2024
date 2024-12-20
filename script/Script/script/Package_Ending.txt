@@ -1,5 +1,6 @@
 let isCreditsAvailable = false;
 
+const BGM_ENDING_VOLUME = 100;
 const BGM_CREDITS_VOLUME = 75;
 
 const DIALOGUE_COLOUR_GATO 			= [128,128,128];
@@ -35,6 +36,7 @@ task TEnding(teamEnding)
 	
 	ManagePages(teamEnding);
 	wait(60);
+	MusicChange(BGM_ENDING, BGM_ENDING_VOLUME, 987303, 6825557);
 	SetCommonData("IsDialogueSequenceActive", true);
 	SetPortraitNumber(0, 0);
 	StartDialog();
@@ -596,7 +598,7 @@ const CREDITS_DATA_SOUND =
 	["Stage 5 Boss",					"Pokémon Omega Ruby & Alpha Sapphire[r]Vs. Zinnia (Traditional Japanese Version)"],
 	["Stage 6",							"Trials of Mana Remake[r]51 Religion Thunder"],
 	["Stage 6 Boss",					"Seiken Densetsu 3[r]The Final Sacrifice (Sacrifice Part Three Remix)"],
-	["Ending",							" "],
+	["Ending",							"Celeste[r]Exhale"],
 	["Credits",							"Pokemon Mystery Dungeon Rescue Team DX[r]Staff Roll"]
 ];
 
