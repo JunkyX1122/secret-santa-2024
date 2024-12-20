@@ -42,7 +42,7 @@ task TEnding(teamEnding)
 	alternative(teamEnding)
 	case(PLAYERTEAM_A)
 	{
-		FEnding_B();
+		FEnding_A();
 	}
 	case(PLAYERTEAM_B)
 	{
@@ -55,7 +55,8 @@ task TEnding(teamEnding)
 	while(forceStop){yield;}
 	SetCommonData("IsDialogueSequenceActive", false);
 	EndDialogueSequence;
-	
+	wait(60*2);
+	AdvancePage();
 	wait(200);
 	Credits();
 	TTitleScene();
@@ -142,7 +143,7 @@ function FEnding_A()
 	SetDialogueTextA3("Gato", "Waaaaaaaaaaaaa.", 
 						DIALOGUE_COLOUR_GATO, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	SetDialogueTextSize(16);
-	AdvancePage();
+	
 }
 
 function FEnding_B()
@@ -254,13 +255,14 @@ function FEnding_B()
 	SetDialogueTextA3("Sullen", "?", 
 						DIALOGUE_COLOUR_SULLEN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
+	AdvancePage();
 	SetDialogueTextA3("", "Later Again", 
 						DIALOGUE_COLOUR_DEFAULT, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
 	SetDialogueTextA3("Dandara", "(Thank you for the best Christmas present ever, Daisuke...)", 
 						DIALOGUE_COLOUR_DANDARA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
-	AdvancePage();
+	
 }
 
 function FEnding_C()
@@ -331,7 +333,7 @@ function FEnding_C()
 	SetDialogueTextA3("Grandis", "Wha- That's what you had in mind? Do I look like a seamstress to|you?", 
 						DIALOGUE_COLOUR_GRANDIS, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
-	AdvancePage();
+
 	
 }
 task ManagePages(teamEnding)
@@ -399,7 +401,7 @@ function Credits()
 	
 	WriteLog(timePerRow);
 	MusicChange(BGM_CREDITS, BGM_CREDITS_VOLUME, -1, -1);
-	
+	ObjSound_SetLoopEnable(objPackageBGM, false);
 	CreateCreditSection("Credits", 20);
 	wait(timePerRow);
 	wait(timePerRow);
@@ -574,7 +576,7 @@ const CREDITS_DATA_PLAYTESTING =
 
 const CREDITS_DATA_SOUND = 
 [
-	["Sound Effects",					"ZUN, jynx, tasofro, Python"],
+	["Sound Effects",					"ZUN, jynx, tasofro, Toby Fox, Python"],
 	["Title Menu",						"Trials of Mana[r]Main Menu Music"],
 	["Stage 1A",						"Touhou 3: Phantasmagoria of Dim. Dream[r]Phantasmagoria (Egyptian Remix byJesselejohn)"],
 	["Stage 1A Boss",					"Pokémon Sun & Moon[r]Rival Gladion Battle Music"],
