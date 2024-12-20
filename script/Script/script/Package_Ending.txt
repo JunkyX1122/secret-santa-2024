@@ -57,8 +57,10 @@ task TEnding(teamEnding)
 	while(forceStop){yield;}
 	SetCommonData("IsDialogueSequenceActive", false);
 	EndDialogueSequence;
+	MusicVolumeChange(BGM_ENDING_VOLUME, 0, 200+60*2);
 	wait(60*2);
 	AdvancePage();
+	
 	wait(200);
 	Credits();
 	TTitleScene();
