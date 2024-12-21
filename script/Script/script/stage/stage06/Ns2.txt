@@ -111,7 +111,7 @@ task Fire
 				if(!Obj_IsDeleted(objEnemy))
 				{
 					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.5,1, -90+20*bit,270,-bit,0,10,7);
-					wait(70);
+					wait([85,70][DIFFICULTY]);
 					bit*=-1;
 				}
 			}
@@ -138,14 +138,14 @@ task SplitHalf
 {
 	let x = ObjMove_GetX(objEnemy);
 	let y = GetStgFrameHeight;
-	let t = 25;
+	let t = [18,25][DIFFICULTY];
 	ascent(i in 0..t)
 	{
 		SE_PlayLen(shot1,60);
 		let bit = 1;
 		ascent(o in 0..2)
 		{
-			ascent(p in 0..5)
+			ascent(p in 0..[4,5][DIFFICULTY])
 			{
 				let id = [55,56][p%2];
 				let ispd = 0.5;
@@ -160,7 +160,7 @@ task SplitHalf
 }
 task WingFire()
 {
-	let t = 20;
+	let t = [16,20][DIFFICULTY];
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		let bit = 1;
@@ -178,7 +178,7 @@ task WingFire()
 					bit*=-1;
 				}
 			}
-			wait(45);
+			wait([50,45][DIFFICULTY]);
 		}
 		else
 		{
@@ -198,8 +198,8 @@ task Spin(x,y,bit)
 			Trailing(x,y,ang);
 			ang+=360/2;
 		}	
-		ang+=29.43242*bit;
-		wait(20);
+		ang+=29.43242*bit*[1.3,1][DIFFICULTY];
+		wait([25,20][DIFFICULTY]);
 	}
 }
 task Trailing(xs,ys,ang)

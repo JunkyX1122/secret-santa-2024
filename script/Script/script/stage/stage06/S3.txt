@@ -223,16 +223,17 @@ function SpawnWallBite(bit)
 		wait(10);
 		let ccc = 0;
 		let shtType = 0;
+		let spd = [1.5,2][DIFFICULTY];
 		while(!Obj_IsDeleted(objShot))
 		{
 			if(ccc%3==0)
 			{
 				SE_PlayLen(Shot1,30);
-				if(shtType%6==5)
+				if(shtType%[9,6][DIFFICULTY]==5)
 				{
 					ascent(i in 0..4)
 					{
-						let obj = ShotA2(ObjMove_GetX(objShot), ObjMove_GetY(objShot),0,ObjMove_GetAngle(objShot)+90*bit-180/3*i,2/120,2,80,80,20,2,BLEND_ALPHA,false);
+						let obj = ShotA2(ObjMove_GetX(objShot), ObjMove_GetY(objShot),0,ObjMove_GetAngle(objShot)+90*bit-180/3*i,spd/120,spd,80,80,20,2,BLEND_ALPHA,false);
 					}
 				}
 				else
@@ -262,9 +263,10 @@ function SpawnProviBites(bit)
 			
 			let spd = 5-3/60*i;
 			let iniSpd = 1;
-			ascent(o in 0..18)
+			let tot = [16,18][DIFFICULTY];
+			ascent(o in 0..tot)
 			{
-				let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),iniSpd,ang+360/18*o,spd/90,spd+iniSpd,427,427,20,2,BLEND_ADD_ARGB,true);
+				let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),iniSpd,ang+360/tot*o,spd/90,spd+iniSpd,427,427,20,2,BLEND_ADD_ARGB,true);
 				ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 			}
 			yield;
@@ -290,14 +292,15 @@ function SpawnProviBites(bit)
 				//ang-=12.213*bit;
 				ascent(o in 0..15)
 				{
-					if(ccc%8==0)
+					if(ccc%[12,8][DIFFICULTY]==0)
 					{
 						SE_PlayLen(shot1,60);
 						let iniSpd = 1;
-						let spd = 2;
-						ascent(o in 0..9)
+						let spd = [1.6,2][DIFFICULTY];
+						let tot = [7,9][DIFFICULTY];
+						ascent(o in 0..tot)
 						{
-							let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),iniSpd,ang+360/9*o,spd/90,spd+iniSpd,427,427,20,2,BLEND_ADD_ARGB,true);
+							let obj = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),iniSpd,ang+360/tot*o,spd/90,spd+iniSpd,427,427,20,2,BLEND_ADD_ARGB,true);
 							ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 						}
 						ang+=12.123*bit;
@@ -591,7 +594,7 @@ task CreateMaw(x,y,ang,teethNum,rowID,handleType,openTime,waitBite,bit)
 			let centerX = x;
 			let centerY = y;
 			let rad = 100;
-			let ringAm = 25;
+			let ringAm = [[16,9][handleType],25][DIFFICULTY];
 			if(shootBullets)
 			{
 				let total = handleType==1 ? 0 : 2;

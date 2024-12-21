@@ -124,7 +124,8 @@ task Fire
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2, 150, 60*4-1);
 		let ang = -90;
 		let srp = 7;
-		let tot = (60*4)/5;
+		let waittr = [7,5][DIFFICULTY];
+		let tot = round((60*4)/waittr);
 		ascent(i in 0..tot)
 		{
 			if(!Obj_IsDeleted(objEnemy))
@@ -133,9 +134,9 @@ task Fire
 				ang = -90+270*bit-270*cos(90/tot*i)*bit;
 				ascent(o in 0..srp)
 				{
-					let objShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy), 4,ang-90*bit+180/(srp-1)*o*bit,331,331,10,2,BLEND_ALPHA,true);
+					let objShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy), [3,4][DIFFICULTY],ang-90*bit+180/(srp-1)*o*bit,331,331,10,2,BLEND_ALPHA,true);
 				}
-				wait(5);
+				wait(waittr);
 			}
 		}
 		ObjEnemy_SetDamageRate(objEnemy, (0.09/3)/1.5, (0.09/3)/3);
@@ -149,16 +150,16 @@ task Fire
 		targetAreas[1] = [GetStgFrameWidth/2-200*bit,75];
 		targetAreas[2] = [GetStgFrameWidth/2+200*bit,175];
 		wait(30);
-		let spnAm = 360/7+13.24321;
+		let spnAm = 360/7+13.24321*[1.1,1][DIFFICULTY];
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			TargetPassiveAttack(0,-1*bit,30+30+10,7,spnAm,4);
-			TargetPassiveAttack(1,1*bit, 30+30+10,7,spnAm,4);
-			TargetPassiveAttack(2,-1*bit,30+30+10,7,spnAm,4);
+			TargetPassiveAttack(0,-1*bit,30+30+10,[5,7][DIFFICULTY],spnAm,[5,4][DIFFICULTY]);
+			TargetPassiveAttack(1,1*bit, 30+30+10,[5,7][DIFFICULTY],spnAm,[5,4][DIFFICULTY]);
+			TargetPassiveAttack(2,-1*bit,30+30+10,[5,7][DIFFICULTY],spnAm,[5,4][DIFFICULTY]);
 		}
 		wait(30*4);
 		let attackOrder = [2,0,1];
-		let waitOrder = [60,0,0];
+		let waitOrder = [[90,60][DIFFICULTY],0,0];
 		let amSpnOrder = [2.21321,0,4.2131];
 		ascent(tt in 0..3)
 		{
@@ -187,14 +188,15 @@ task Fire
 				targetAreas[i] = [UNACTIVE_FIRE,UNACTIVE_FIRE];
 				
 				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.5,0.5, -90,360,-bit,0,20,4);
-				let am = 30;
+				let am = [24,30][DIFFICULTY];
 				let ang = rand(0,360);
 				ascent(o in 0..7)
 				{
 					ascent(p in 0..am)
 					{
-						let objShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy), 1+o*0.3,ang+360/am*p,425,418,10,2,BLEND_ADD_ARGB,false);
-						let objShot2= ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy), 1+o*0.3,ang+360/am*p,425,418,10,2,BLEND_ADD_ARGB,false);
+						let spdd = 1+o*[0.2,0.3][DIFFICULTY];
+						let objShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy), spdd, ang+360/am*p,425,418,10,2,BLEND_ADD_ARGB,false);
+						let objShot2= ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy), spdd, ang+360/am*p,425,418,10,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(objShot2,BLEND_ADD_ARGB);
 						Obj_SetRenderPriorityI(objShot2,51);
 						ObjRender_SetColor(objShot,255,128+128/7*o,255/7*o);
@@ -274,7 +276,7 @@ task TargetPassiveAttack(i,bit,t,amount,spn,w)
 			SE_PlayLen(shot1,60);
 			let x = targetAreas[i][0];
 			let y = targetAreas[i][1];
-			let mspd = 3-2/t*o;
+			let mspd = (3-2/t*o)*[0.8,1][DIFFICULTY];
 			ascent(p in 0..amount)
 			{
 				

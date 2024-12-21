@@ -119,6 +119,8 @@ task Fire
 		}
 		if(hasShouted)
 		{
+			let totalRenderBetween = [4,6][DIFFICULTY];
+			let totalSpd = [0.175,0.2][DIFFICULTY];
 			if(!hasVampired)
 			{
 				timeSlash = 200;
@@ -126,13 +128,13 @@ task Fire
 			if(cc%timeSlash==(tDelay))
 			{
 				TeleportWithBuff(bit);
-				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.25,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,7,-bit,1);
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),totalSpd,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,totalRenderBetween,-bit,1);
 				bit*=-1;
 			}
 			if(cc%timeSlash==(tDelay*2))
 			{
 				TeleportWithBuff(bit);
-				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.25,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,7,-bit,1);
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),totalSpd,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,totalRenderBetween,-bit,1);
 				bit*=-1;
 			}
 			if(cc%timeSlash==(tDelay*3))
@@ -141,19 +143,19 @@ task Fire
 				{
 					ObjMove_SetPosition(objEnemy,GetStgFrameWidth/2+rand(-10,10),rand(90,110));
 				}
-				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),1,0.25, -90+20*bit,0+tiltAngle,10,2,-bit,1);
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),1,totalSpd, -90+20*bit,0+tiltAngle,10,[1,2][DIFFICULTY],-bit,1);
 				bit*=-1;
 			}
 			if(cc%timeSlash==(tDelay*4))
 			{
 				TeleportWithBuff(bit);
-				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.25,1, -90+20*bit,-(-90+60*bit)+tiltAngle,10,7,-bit,1);
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),totalSpd,1, -90+20*bit,-(-90+60*bit)+tiltAngle,10,totalRenderBetween,-bit,1);
 				bit*=-1;
 			}
 			if(cc%timeSlash==(tDelay*5))
 			{
 				TeleportWithBuff(bit);
-				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.25,1, -90+20*bit,-(-90+60*bit)+tiltAngle,10,7,-bit,1);
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),totalSpd,1, -90+20*bit,-(-90+60*bit)+tiltAngle,10,totalRenderBetween,-bit,1);
 				bit*=-1;
 			}
 			if(hasVampired)
@@ -161,13 +163,13 @@ task Fire
 				if(cc%timeSlash==(tDelay*6))
 				{
 					ObjMove_SetPosition(objEnemy,GetStgFrameWidth/2+rand(50,90)*bit,rand(90,110));
-					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.25,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,7,-bit,1);
+					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),totalSpd,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,totalRenderBetween,-bit,1);
 					bit*=-1;
 				}
 				if(cc%timeSlash==(tDelay*7))
 				{
 					ObjMove_SetPosition(objEnemy,GetStgFrameWidth/2+rand(50,90)*bit,rand(90,110));
-					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.25,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,7,-bit,1);
+					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),totalSpd,1, -90+20*bit,-(-90+20*bit)+tiltAngle,10,totalRenderBetween,-bit,1);
 					bit*=-1;
 				}
 			}
@@ -181,7 +183,7 @@ task Fire
 				ScreenShake(10*3,6);
 				loop(2)
 				{
-					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.5,1, -90,-(-90+20*bit)+tiltAngle,hasBuffed ? 12 : 14,7,-bit,0);
+					SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),[0.3,0.35][DIFFICULTY],1, -90,-(-90+20*bit)+tiltAngle,hasBuffed ? 12 : 14,totalRenderBetween,-bit,0);
 					bit*=-1;
 				}
 				tiltAngle = rand(5,-5);
@@ -197,7 +199,7 @@ task Fire
 			{
 				SE_PlayLen(drum,60);
 				ScreenShake(10*3,3);
-				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.5,1, -90+20*bit,-(-90+20*bit),10,7,-bit,0);
+				SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy),0.5,1, -90+20*bit,-(-90+20*bit),10,[5,7][DIFFICULTY],-bit,0);
 				bit*=-1;
 			}
 		}
@@ -277,12 +279,12 @@ task FirePassive()
 				
 				ascent(o in 0..2)
 				{
-					
+					let tot = [8,10][DIFFICULTY];
 					let angS = GetAngleToPlayer(shields[2])+rand(4,-4);
-					ascent(i in 0..10)
+					ascent(i in 0..tot)
 					{
-						let ang = angS - 80+160/9*i;
-						let objShot = ShotA2(ObjRender_GetX(shields[o]), ObjRender_GetY(shields[o]),10,ang,-8/30,1.5,shtID,delID,10,2,BLEND_ADD_ARGB,false);
+						let ang = angS - 80+160/(tot-1)*i;
+						let objShot = ShotA2(ObjRender_GetX(shields[o]), ObjRender_GetY(shields[o]),10,ang,-8/30,[1.25,1.5][DIFFICULTY],shtID,delID,10,2,BLEND_ADD_ARGB,false);
 					}
 				}
 			}
@@ -590,14 +592,15 @@ task BuffShoot()
 	let fc = 0;
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		if(fc%24==0)
+		if(fc%[30,24][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
 			let angS = GetAngleToPlayer(shields[2])+rand(4,-4);
-			ascent(i in 0..10)
+			let tot = [8,10][DIFFICULTY];
+			ascent(i in 0..tot)
 			{
-				let ang = angS - 80+160/9*i;
-				let objShot = ShotA2(ObjRender_GetX(shields[2]), ObjRender_GetY(shields[2]),10,ang,-8/30,2,shtID,delID,10,2,BLEND_ADD_ARGB,false);
+				let ang = angS - 80+160/(tot-1)*i;
+				let objShot = ShotA2(ObjRender_GetX(shields[2]), ObjRender_GetY(shields[2]),10,ang,-8/[20,30][DIFFICULTY],[1.5,1.75][DIFFICULTY],shtID,delID,10,2,BLEND_ADD_ARGB,false);
 				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 			}
 		}

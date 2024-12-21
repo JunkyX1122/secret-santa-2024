@@ -200,7 +200,7 @@ task BigSwipe(ang,bit)
 	let ySin = sin(ang)*spd;
 	let spnAng = -90;
 	let ccc = 0;
-	let rad = 100;
+	let rad = [80,100][DIFFICULTY];
 	let id = 425;
 	while(!Obj_IsDeleted(objEnemy)&&x>0&&y>0&&x<GetStgFrameWidth&&y<GetStgFrameHeight)
 	{
@@ -242,8 +242,8 @@ task SwordTrail(bit)
 	let ang = 0;
 	while(!Obj_IsDeleted(objEnemy)&&keepFiring)
 	{
-		
-		loop(6)
+		let tot = [5,6][DIFFICULTY];
+		loop(tot)
 		{
 			SE_PlayLen(shot1,60);
 			if(ang%360 > 0 && ang%360 < 180)
@@ -251,8 +251,8 @@ task SwordTrail(bit)
 				WarningLaser(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang);
 				CreateSwordTrail(ang);
 			}
-			ang+=360/6*bit;
-			ang+=33.12312/5*bit;
+			ang+=360/tot*bit;
+			ang+=33.12312/(5)*bit;
 			wait(8);
 		}
 	}
@@ -273,9 +273,10 @@ task SwordTrail(bit)
 				x = ObjMove_GetX(objEnemy)+dis*cos(ang);
 				y = ObjMove_GetY(objEnemy)+dis*sin(ang);
 				let rang = rand(0,45)*bit;
-				let totScl = 0.25;
+				let totalSclOver = [0.65,1][DIFFICULTY];
+				let totScl = 0.25 * totalSclOver;
 				SwordPath(x, y, 1*totScl, 0.5*totScl, -90,rang,360,bit,0,5,3,[255,165,0]);
-				totScl = 0.3;
+				totScl = 0.3 * totalSclOver;
 				SwordPath(x, y, 1*totScl, 0.5*totScl, -90,rang,360,bit,0,5,3,[255,0,0]);
 				bit*=-1;
 				wait(8);
@@ -292,7 +293,7 @@ task WarningLaser(x,y,ang)
 	{
 		if(!Obj_IsDeleted(objEnemy)) 
 		{
-			let sideDis = 30*sin(90/(t-1)*i);
+			let sideDis = 30*sin(90/(t-1)*i) * [0.65,1][DIFFICULTY];
 			ascent(o in 0..2)
 			{
 				if(i>0||o==0)
@@ -360,8 +361,8 @@ task Arrowheads(bit)
 				
 				let ringScl = 0.6;
 				
-				let spd = 8;
-				let sps = 0.5;
+				let spd = [6,8][DIFFICULTY];
+				let sps = [0.3,0.5][DIFFICULTY];
 				DelayedSound();
 				ascent(o in 0..5)
 				{
@@ -397,7 +398,7 @@ task Tornado(bit)
 	
 	let centerX = ObjMove_GetX(objEnemy);
 	let centerY = ObjMove_GetY(objEnemy);
-	let ringAm = 5;
+	let ringAm = [5,5][DIFFICULTY];
 	let ang = 0;
 	let rad = 100;
 	
@@ -409,7 +410,7 @@ task Tornado(bit)
 		centerX = ObjMove_GetX(objEnemy);
 		centerY = ObjMove_GetY(objEnemy);
 		ang+=3.123*bit;
-		if(cc%3==0)
+		if(cc%[4,3][DIFFICULTY]==0)
 		{
 			SE_PlayLen(Shot1,30);
 			ascent(i in 0..ringAm)

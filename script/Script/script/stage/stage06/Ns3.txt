@@ -98,14 +98,16 @@ task Fire
 				if(i==2)
 				{
 					SE_PlayLen(boon1,60);
-					ascent(o in 0..24)
+					let tott = [19,24][DIFFICULTY];
+					ascent(o in 0..tott)
 					{
-						Trailing(ang+360/24*o);
+						Trailing(ang+360/tott*o);
 					}
 				}
-				ascent(o in 0..8)
+				let tot = [6,8][DIFFICULTY];
+				ascent(o in 0..tot)
 				{
-					KnifeFire(ang+360/8*o*bit,bit2[i]*bit);
+					KnifeFire(ang+360/tot*o*bit,bit2[i]*bit);
 				}
 				wait(60*2.5);
 			}
@@ -166,13 +168,13 @@ task KnifeFire(ang,bit)
 	let am = 6;
 	while(!Obj_IsDeleted(objShot)&&!Obj_IsDeleted(objEnemy))
 	{
-		if(ccc%4==0)
+		if(ccc%[5,4][DIFFICULTY]==0)
 		{
 			SE_PlayLen(Shot1,30);
-			if(shtType%5==4)
+			if(shtType%[7,5][DIFFICULTY]==4)
 			{
 				SE_PlayLen(chime1,30);
-				let spd = 1.5;
+				let spd = [1.15,1.5][DIFFICULTY];
 				ascent(i in 0..am)
 				{
 					let obj = ShotA2(ObjMove_GetX(objShot), ObjMove_GetY(objShot),0,ObjMove_GetAngle(objShot)+180/am+360/am*i,spd/120,spd,crcID[flipper%2],delID[flipper%2],20,2,BLEND_ALPHA,false);

@@ -194,11 +194,12 @@ task Fire
 			if(!Obj_IsDeleted(objEnemy))
 			{
 				SE_PlayLen(shot1,60);
-				ascent(i in 0..12)
+				let ttot = [8,12][DIFFICULTY];
+				ascent(i in 0..ttot)
 				{
-					Trailing(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang+360/12*i);
+					Trailing(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang+360/ttot*i);
 				}
-				ang+=(180/12+2.213123)*bit;
+				//ang+=(180/ttot+2.213123*[0.5,1][DIFFICULTY])*bit;
 				
 				if(o<moveAmount-1)
 				{
@@ -215,16 +216,17 @@ task Fire
 					if(!Obj_IsDeleted(objEnemy))
 					{
 						SE_PlayLen(shot1,40);
-						ascent(i in 0..30)
+						let tot = [22,30][DIFFICULTY];
+						ascent(i in 0..tot)
 						{
-							let objShot = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),6,ang+360/30*i,-4/30,2,331,418,10,2,BLEND_ALPHA,true);
+							let objShot = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),6,ang+360/tot*i,-4/30,2,331,418,10,2,BLEND_ALPHA,true);
 						}
-						ang+=180/30;
-						ascent(i in 0..30)
+						ang+=180/tot;
+						ascent(i in 0..tot)
 						{
-							let objShot = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),6,ang+360/30*i,-5/30,1,325,418,10,2,BLEND_ALPHA,true);
+							let objShot = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),6,ang+360/tot*i,-5/30,1,325,418,10,2,BLEND_ALPHA,true);
 						}
-						ang+=180/30;
+						ang+=180/tot;
 						wait(20);
 					}
 				}
@@ -278,7 +280,7 @@ task Fire
 task Trailing(xs,ys,ang)
 {
 	
-	let t = 40;
+	let t = [50,40][DIFFICULTY];
 	let xIn = xs;
 	let yIn = ys;
 	let cosAng = cos(ang);
@@ -296,7 +298,7 @@ task Trailing(xs,ys,ang)
 			let x = 500*cosAng*scl+randX;
 			let y = 500*sinAng*scl+randY;
 			let id = [293,299][round(rand(0,1))];
-			let objShot = ShotA2(xIn+x, yIn+y,2,ang,0.02,10,id,id,10,2,BLEND_ADD_ARGB,true);
+			let objShot = ShotA2(xIn+x, yIn+y,2,ang,0.02,[7,10][DIFFICULTY],id,id,10,2,BLEND_ADD_ARGB,true);
 			ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 			wait(4);
 		}
@@ -306,7 +308,7 @@ task SplitHalf(p,spreadOut)
 {
 	let x = ObjMove_GetX(objEnemy);
 	let y = ObjMove_GetY(objEnemy);
-	let t = 30;
+	let t = [18,30][DIFFICULTY];
 	
 	ascent(i in 0..t)
 	{
@@ -328,7 +330,7 @@ task SplitHalf(p,spreadOut)
 				let x2 = x + d * cos(ang) + ds*cos(ang+90+180*o);
 				let y2 = y + d * sin(ang) + ds*sin(ang+90+180*o);
 				let accelT = 180;
-				let ang2 = ang+(spreadAng*bit-spreadAng/(t-1)*i*bit)*1/spreadOut*p;
+				let ang2 = ang+(spreadAng*bit-spreadAng/(t-1)*i*bit)*1/spreadOut*p*[1.2,1][DIFFICULTY];
 				let maxSpd = 3/t*i;
 				if(Get_Distance(x2,y2,GetPlayerX,GetPlayerY)>75)
 				{

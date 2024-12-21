@@ -121,11 +121,11 @@ task Fire
 	wait(60);
 	
 	ManageSpearCharge(bit,BOSS_UP);
-	wait(60*12);
+	wait(60*13);
 	ManageSpearCharge(bit,bit==1 ? BOSS_LEFT : BOSS_RIGHT);
-	wait(60*12);
+	wait(60*13);
 	ManageSpearCharge(bit,bit==-1 ? BOSS_LEFT : BOSS_RIGHT);
-	wait(60*12);
+	wait(60*13);
 	ManageSpearCharge(bit,BOSS_DOWN);
 }
 
@@ -157,7 +157,7 @@ task ManageSpearCharge(bit,mainAng)
 		{
 			SE_PlayLen(charge0,60);
 		}
-		if(ccc%8==0)
+		if(ccc%[13,8][DIFFICULTY]==0)
 		{
 			SE_PlayLen(chime1,60);
 			ascent(i in 0..30)
@@ -165,12 +165,12 @@ task ManageSpearCharge(bit,mainAng)
 				let ang = mainAng+360/30*i+ccc*2.321*bit;
 				let x = ObjMove_GetX(objEnemy) + disTotal * cos (ang+180);
 				let y = ObjMove_GetY(objEnemy) + disTotal * sin (ang+180);
-				let objShot = ShotA2(x, y,2,ang,5/200,10,298,298,10,2,BLEND_ADD_ARGB,true);
+				let objShot = ShotA2(x, y,[1.5,2][DIFFICULTY],ang,5/200,10,298,298,10,2,BLEND_ADD_ARGB,true);
 				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 			}
 		}
 		
-		if(ccc%30==0)
+		if(ccc%[40,30][DIFFICULTY]==0)
 		{
 			SE_PlayLen(chime1,60);
 			ascent(i in 0..40)
@@ -178,13 +178,13 @@ task ManageSpearCharge(bit,mainAng)
 				let ang = mainAng+360/40*i+ccc*9.321*bit;
 				let x = ObjMove_GetX(objEnemy) + disTotal * cos (ang+180);
 				let y = ObjMove_GetY(objEnemy) + disTotal * sin (ang+180);
-				let objShot = ShotA2(x, y,1,ang,6/200,10,338,338,10,2,BLEND_ADD_ARGB,true);
+				let objShot = ShotA2(x, y,[0.8,1][DIFFICULTY],ang,6/200,10,338,338,10,2,BLEND_ADD_ARGB,true);
 				ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 			}
 		}
 		ascent(o in 0..8)
 		{
-			if(ccc%20==(o*2))
+			if(ccc%[30,20][DIFFICULTY]==(o*2))
 			{
 				SE_PlayLen(Shot1,60);
 				ascent(i in 0..24)
@@ -192,7 +192,7 @@ task ManageSpearCharge(bit,mainAng)
 					let ang = mainAng+360/24*i+laneAngAdd;
 					let x = ObjMove_GetX(objEnemy) + disTotal * cos (ang+180);
 					let y = ObjMove_GetY(objEnemy) + disTotal * sin (ang+180);
-					let objShot = ShotA2(x, y,1,ang,4/200,10,71,71,10,2,BLEND_ADD_ARGB,true);
+					let objShot = ShotA2(x, y, [0.8,1][DIFFICULTY],ang,4/200,10,71,71,10,2,BLEND_ADD_ARGB,true);
 					ObjRender_SetBlendType(objShot,BLEND_ADD_ARGB);
 				}
 				if(o==7)
@@ -237,6 +237,7 @@ task SpawnCage(bit)
 		WarningLaser(x,y,ang,35);
 	}
 }
+
 task ShootSpear(x,y,angle,mainAng)
 {
 	let wallOffset = 0;
@@ -311,7 +312,7 @@ task ShootSpear(x,y,angle,mainAng)
 		ObjMove_SetPosition(objSpearParts[i], spearCentreX + xyOffset[i][0], spearCentreY + xyOffset[i][1]);
 	}
 	let d = 80;
-	let angP = 15;
+	let angP = [20,15][DIFFICULTY];
 	ascent(i in 1..6)
 	{
 		LaserNormal(spearCentreX,spearCentreY,angle+180,angP*i,20,13,d);
@@ -332,7 +333,7 @@ task ShootSpear(x,y,angle,mainAng)
 		let rockThrowSpdY = rockThrowSpeed*sin(angg);
 		ascent(i in 0..30)
 		{
-			let rockDis = rand(0,10)+40/30*i;
+			let rockDis = rand(0,10)+40/30*i*[0.75,1][DIFFICULTY];
 			let rockAng = rand(0,360);
 			let rockX = spearCentreX + rockDis * cos(rockAng);
 			let rockY = spearCentreY + rockDis * sin(rockAng);
@@ -343,7 +344,7 @@ task ShootSpear(x,y,angle,mainAng)
 	ascent(spd in 0..6)
 	{
 		
-		let sprd = 10+5*spd;
+		let sprd = [3,10][DIFFICULTY]+5*spd;
 		ascent(p in 0..sprd)
 		{
 			let rockThrowSpeed = (1+spd/2)*rand(0.95,1);
@@ -356,7 +357,7 @@ task ShootSpear(x,y,angle,mainAng)
 			let objS = ShotB2(rockX,rockY,rockThrowSpdX,rockThrowSpdY,0,0.02,0,10,shtID,shtID,5,1,BLEND_ADD_ARGB,false);
 			
 		}
-		sprd = 10+6*spd;
+		sprd = [3,10][DIFFICULTY]+6*spd;
 		ascent(p in 0..sprd)
 		{
 			let rockThrowSpeed = (1+spd/2)*rand(0.95,1);
@@ -500,7 +501,7 @@ task WarningLaser(x,y,ang,slashWidth)
 				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
 				ObjShot_SetAutoDelete(laser,false);
 				ObjStLaser_SetSource(laser,false);
-				LaserGrowFade(laser,dis,128-128/t*i);
+				LaserGrowFade(laser,dis,255-255/t*i);
 			}
 		}
 		yield;

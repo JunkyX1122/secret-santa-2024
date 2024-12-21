@@ -123,7 +123,7 @@ task Fire
 				bit*=-1;
 			}
 		}
-		wait(120);
+		wait(70);
 		ObjEnemy_SetDamageRate(objEnemy, (0.09/3)/1.5, (0.09/3)/3);
 	}
 }
@@ -138,7 +138,7 @@ task Binding(bit)
 		SwordPath(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), -90+20*bit,-bit,0,0);
 		
 		
-		let t = 10;
+		let t = [7,10][DIFFICULTY];
 		let d = 300;
 		ascent(i in 0..t)
 		{
@@ -175,7 +175,7 @@ task WarningLaser(x,y,ang)
 				ObjRender_SetBlendType(laser,BLEND_ADD_ARGB);
 				ObjShot_SetAutoDelete(laser,false);
 				ObjStLaser_SetSource(laser,false);
-				LaserGrowFade(laser,dis,64-64/t*i);
+				LaserGrowFade(laser,dis,128-128/t*i);
 			}
 		}
 		yield;
@@ -241,7 +241,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type,shoottype)
 {
 	SE_PlayLen(drum,80);
 	SE_PlayLen(slash,80);
-	let renderBetween = 7;
+	let renderBetween = [5,7][DIFFICULTY];
 	let renderTime = 10;
 	let cc = 0;
 	let swordScl = 1;
@@ -307,7 +307,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type,shoottype)
 				
 				if(i>=renderBetween*(o))
 				{
-					let numT = [6,3][shoottype];
+					let numT = [6,3][shoottype]-[1,0][DIFFICULTY];
 					ascent(p in 0..numT)
 					{
 						

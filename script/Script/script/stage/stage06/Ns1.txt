@@ -114,18 +114,18 @@ task Fire
 		let randStart = -90+rand(-45,45);
 		let ang = randStart;
 		let ang2 = randStart;
-		loop(12)
+		loop([10,12][DIFFICULTY])
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
 				Trailing(ang);
 				Trailing(ang2);
-				ang+=31.123*bit;
-				ang2-=31.123*bit;
-				wait(10);
+				ang+=31.123*bit * [1.2,1][DIFFICULTY];
+				ang2-=31.123*bit * [1.2,1][DIFFICULTY];
+				wait([12,10][DIFFICULTY]);
 			}
 		}
-		wait(90);
+		wait(40);
 		ObjEnemy_SetDamageRate(objEnemy, (0.09)/1.5, (0.09)/3);
 	}
 	
@@ -160,7 +160,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type)
 {
 	SE_PlayLen(drum,80);
 	SE_PlayLen(slash,80);
-	let renderBetween = 7;
+	let renderBetween = [5,7][DIFFICULTY];
 	let renderTime = 10;
 	let cc = 0;
 	let swordScl = 1;
