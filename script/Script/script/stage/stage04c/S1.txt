@@ -140,14 +140,14 @@ task Fire
 task PassiveFire(bit)
 {
 	let cc = 0;
-	let waiter = 15;
-	let tot = 6;
+	let waiter = [23,15][DIFFICULTY];
+	let tot = [5,6][DIFFICULTY];
 	while(!Obj_IsDeleted(objEnemy) && !resetPassive)
 	{
 		if(cc%waiter==0)
 		{
 			SE_PlayLen(Shot1,60);
-			let ang = cc/waiter*3.92321 *bit;
+			let ang = cc/15*3.92321 *bit;
 			let scl = 0.75+0.4*sin(cc*4.12312);
 			
 			ascent(i in 0..tot)
@@ -163,7 +163,7 @@ task PassiveFire(bit)
 			
 			
 		}
-		if(cc%3==0 && cc%30<10)
+		if(cc%3==0 && cc%30<[9,10][DIFFICULTY])
 		{
 			SE_PlayLen(Shot1,60);
 			let ang = -cc/waiter*3.92321 *bit;
@@ -207,7 +207,7 @@ task Population(xS, yS, bit)
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			let dis = 50+50*i;
-			let amount = 14 + i*2;
+			let amount = [7,14][DIFFICULTY] + i*2;
 			SE_PlayLen(shot1,60);
 			SE_PlayLen(chime1,60);
 			ascent(o in 0..amount)
@@ -283,7 +283,7 @@ task BulletInfect(obj)
 		let a = GetAngleToPlayer(obj);
 		Infect(x, y, 50);
 		let am = 1;
-		let spd = 4;
+		let spd = [3.5,4][DIFFICULTY];
 		ascent(i in 0..am)
 		{
 			let shot = ShotA1(x, y, spd, a + 360/am*i, 140, 140, 10, 2, BLEND_ADD_ARGB, false);

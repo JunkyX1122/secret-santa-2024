@@ -166,7 +166,7 @@ task PagodaFire(bit)
 			PagodaLaser(STAR_X,STAR_Y,0,0,0.5,ang2,0,0,20,[255,64,128],40,20,40);
 		}
 		ang+=30.2131*bit;
-		wait(40);
+		wait([55,40][DIFFICULTY]);
 	}
 }
 
@@ -178,7 +178,7 @@ task OrbFire(bit)
 		SE_PlayLen(Shot1,60);
 		let x = STAR_X;
 		let y = STAR_Y;
-		let spd = 8;
+		let spd = [6,8][DIFFICULTY];
 		let ang2 = ang;
 		let obj = CreateShotA1(x, y, 0, ang2, 400, 0);
 		ObjRender_SetScale(obj, 1.2);
@@ -197,7 +197,7 @@ task OrbFire(bit)
 			ObjMove_AddPatternA2(objs[o], 0, 0, NO_CHANGE, spd/180, spd, 0.3*bit);
 		}
 		ang+=(360/7+14.123)*bit;
-		wait(3);
+		wait([5,3][DIFFICULTY]);
 		
 	
 	}
@@ -214,7 +214,7 @@ task BloodFire(bit)
 		let x = STAR_X;
 		let y = STAR_Y;
 		
-		if(cc%4==0)
+		if(cc%[7,4][DIFFICULTY]==0)
 		{
 			SE_PlayLen(Shot2,60);
 			ascent(i in 0..2)
@@ -246,7 +246,7 @@ task BloodFire(bit)
 				}
 			}
 		}
-		if(cc%3==0)
+		if(cc%[5,3][DIFFICULTY]==0)
 		{
 			SE_PlayLen(Shot1,60);
 			ascent(i in 0..2)
@@ -277,7 +277,7 @@ task BloodFire(bit)
 				
 			}
 		}
-		if(cc%12==0)
+		if(cc%[17,12][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
 			ascent(i in 0..4)
@@ -303,7 +303,7 @@ task BloodFire(bit)
 				let objs = [obj,obj2];
 				ascent(o in 0..2)
 				{
-					ObjMove_AddPatternA2(objs[o], 0  , 0, NO_CHANGE, spd/100, spd, -0.7*bit);
+					ObjMove_AddPatternA2(objs[o], 0  , 0, NO_CHANGE, spd/100, spd, -[0.4,0.7][DIFFICULTY]*bit);
 					ObjMove_AddPatternA2(objs[o], 200, NO_CHANGE, NO_CHANGE, -spd/100, 1, 0*bit);
 				}
 				

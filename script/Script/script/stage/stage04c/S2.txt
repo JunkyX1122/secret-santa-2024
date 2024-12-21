@@ -221,9 +221,15 @@ function SwordBeamFire(bit)
 							Occ(intXYP[0], intXYP[1] + 300, PUTRID_WARNING, PUTRID_STAY, bit);
 						}
 						
-						ascent(o in 0..4)
+						if(totalCounter%[2,1][DIFFICULTY]==0)
 						{
-							let obj = BloodShotB2(intXYP[0], intXYP[1], 0, -(0.5+0.5*o)*rand(0.7,1)*0.5, 0, 0, 0, 10, 0.4, 30, false);
+							ascent(o in 0..[3,4][DIFFICULTY])
+							{
+								loop(2)
+								{
+									let obj = BloodShotB2(intXYP[0], intXYP[1], rand(0.1,-0.1)/2, -(0.5+0.5*o)*rand(0.7,1)*0.5, 0, 0, 0, 10, 0.4, 30, false);
+								}
+							}
 						}
 					}
 					if(totalCounter == 0)
@@ -535,7 +541,7 @@ task BloodShotPillar(x,bit)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			if((i)%10==0)
+			if((i)%[15,10][DIFFICULTY]==0)
 			{
 				SE_PlayLen(Shot1,60);
 				ascent(o in 0..3)

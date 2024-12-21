@@ -128,7 +128,7 @@ task NecroPassive(bit)
 		}
 		ang+=14.34523*bit;
 		cc++;
-		wait(10);
+		wait([15,10][DIFFICULTY]);
 	}
 }
 
@@ -187,7 +187,7 @@ task CurvePassive(bit)
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(LaserDelShort, 50);
-		let am = 23;
+		let am = [17,23][DIFFICULTY];
 		ascent(i in 0..am)
 		{
 			CurveLaserFire(ang+360/am*i, bitIni);
