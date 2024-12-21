@@ -126,9 +126,10 @@ task BeamFire(bit)
 		{
 			SE_PlayLen(shot1,60);
 			SE_PlayLen(chime1,60);
-			ascent(o in 0..20)
+			let tot = [13,20][DIFFICULTY];
+			ascent(o in 0..tot)
 			{
-				let ang2 = ang + 360/20*o*bit;
+				let ang2 = ang + 360/tot*o*bit;
 				let x = ObjMove_GetX(objEnemy) + 60 * cos(ang2);
 				let y = ObjMove_GetY(objEnemy) + 60 * sin(ang2);
 				let spd = 2;
@@ -141,7 +142,7 @@ task BeamFire(bit)
 		yield;
 	}
 	let purpleFireAm = 6;
-	let spreadOut = 80;
+	let spreadOut = [90,80][DIFFICULTY];
 	let fireAng = GetAngleToPlayer(objEnemy);
 	if(!Obj_IsDeleted(objEnemy))
 	{
@@ -159,7 +160,7 @@ task BeamFire(bit)
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			let dis = 150*sin(min(90/(60*0.5-1)*i, 90));
-			if(i%4==0)
+			if(i%[6,4][DIFFICULTY]==0)
 			{
 				SE_PlayLen(shot1,60);
 				ascent(o in 0..6)
@@ -172,7 +173,7 @@ task BeamFire(bit)
 					let y=(xx)*sin(ovalAng) + (yy)*cos(ovalAng);
 		
 					let ang3 = fireAng + spreadOut*sin(ang2*2);
-					let obj = ShotA1(ObjMove_GetX(objEnemy) + x, ObjMove_GetY(objEnemy) + y, 3, ang3, 429, 429, 20, 2, BLEND_ADD_ARGB, false);
+					let obj = ShotA1(ObjMove_GetX(objEnemy) + x, ObjMove_GetY(objEnemy) + y, [2.8,3][DIFFICULTY], ang3, 429, 429, 20, 2, BLEND_ADD_ARGB, false);
 					ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
 				}
 			}

@@ -132,7 +132,7 @@ task AmuletFire(bit)
 	}
 	task AmuletSide(bit)
 	{
-		let tot = 20;
+		let tot = [15,20][DIFFICULTY];
 		let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+rand(0,30))*bit;
 		ascent(i in 0..tot)
 		{
@@ -141,7 +141,7 @@ task AmuletFire(bit)
 				SE_PlayLen(Shot1,60);
 				let x2 = x - (GetStgFrameWidth + 60)/ (tot-1) * i *bit;
 				let obj = ShotA1(x2, 0, 1.5, 90, 167, 167, 20, 2, BLEND_ALPHA, false);
-				wait(2);
+				wait([3,2][DIFFICULTY]);
 			}
 		}
 	}
@@ -161,7 +161,7 @@ task CreateAnkh(x, y, ang, bit)
 	}
 	
 	wait(140);
-	let sclTotal = 0.7;
+	let sclTotal = [0.6,0.7][DIFFICULTY];
 	let mxSpd = 1;
 	let accel = mxSpd/120;
 	let moveDelay = 120;

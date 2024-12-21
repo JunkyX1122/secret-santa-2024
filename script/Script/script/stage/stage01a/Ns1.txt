@@ -109,7 +109,7 @@ task Fire
 			let ang = -cc*3.92321 *bit;
 			ascent(o in 0..2)
 			{
-				let tot = [99, 40][o];
+				let tot = [[66,30][o],[99, 40][o]][DIFFICULTY];
 				let spd = [4,7][o];
 				ascent(i in 0..tot)
 				{
@@ -138,7 +138,7 @@ task Fire
 task OrbRing(cc,bit)
 {
 	let ang = -90+rand(45,-45);
-	let tot = 10;
+	let tot = [6,10][DIFFICULTY];
 	ascent(i in 0..tot)
 	{
 		let ang2 = ang + 360/tot*i*bit;
@@ -148,7 +148,7 @@ task OrbRing(cc,bit)
 		let obj = BloodShot(x, y, speed, ang2, 1.5, 60, [255,64,64], true);
 		ObjMove_AddPatternA2(obj, 0,   speed, NO_CHANGE, -speed/60, 0, 0);
 		ObjMove_AddPatternA2(obj, 110, 0,     NO_CHANGE,  2/50,     2, 0);
-		Homing(obj, 2, 110, 50);
+		Homing(obj, [1.5,2][DIFFICULTY], 110, 50);
 	}
 	
 	ascent(i in 0..tot)
