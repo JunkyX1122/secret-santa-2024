@@ -1,0 +1,242 @@
+const PACKAGE_DIFFICULTY_NAMES = ["Easy", "Normal", "Hard", "Lunatic"];
+const DIFFICULTY_DISPLAY_NAMES = ["Standard", "Original"];
+let activeDifficulty = 0;
+let selectedDifficulty = 0;
+let difficultyFrameKeyHold = 0;
+let DIFFICULTY_TRANSITION = 30;
+let difficulty_AlphaScl = 1;
+
+let diffBoxX = GetScreenWidth/2;
+let diffBoxY = GetScreenHeight/2;
+function DifficultySelect()
+{
+	difficulty_AlphaScl = 1;
+	menuState = MENUSTATE_DIFFICULTY;
+	
+	DifficultyBoxRender();
+	ascent(i in 0..length(DIFFICULTY_DISPLAY_NAMES))
+	{
+		CreateDifficultyOption(i);
+	}
+	
+	SkippableWait(DIFFICULTY_TRANSITION);
+	yield;
+	let RESULT_REPLAY = 20;
+	let hasCanceled = false;
+	let hasSelectedDifficulty = false;
+	while(menuState==MENUSTATE_DIFFICULTY && !hasSelectedDifficulty && !hasCanceled)
+	{
+		ManageInput();
+		if(GetVirtualKeyState(VK_OK) == KEY_PUSH)
+		{
+			hasSelectedDifficulty = true;
+			SE_PlayLen(title_ok, 60);
+		}
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+		{
+			hasCanceled = true;
+			SE_PlayLen(title_cancel, 60);
+		}
+		yield;
+	}
+	ascent(i in 0..30)
+	{
+		difficulty_AlphaScl = 1 - 1/29*i;
+		SkippableWait(1);
+	}
+	activeDifficulty = selectedDifficulty;
+	SetCommonData("Difficulty",activeDifficulty);
+	return hasCanceled;
+}
+
+function ManageInput()
+{
+	if(GetVirtualKeyState(VK_UP) == KEY_PUSH){
+		selectedDifficulty--;
+		SE_PlayLen(title_cursor, 60);
+	}
+	
+	else if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH){
+		selectedDifficulty++;
+		SE_PlayLen(title_cursor, 60);
+	}
+	
+	else if(GetVirtualKeyState(VK_UP) == KEY_HOLD){
+		difficultyFrameKeyHold++;
+		if(difficultyFrameKeyHold == 25 || (difficultyFrameKeyHold > 25 && (difficultyFrameKeyHold % 10 == 0))){
+			selectedDifficulty--;
+			SE_PlayLen(title_cursor, 60);
+		}
+	}
+	else if(GetVirtualKeyState(VK_DOWN) == KEY_HOLD){
+		difficultyFrameKeyHold++;
+		if(difficultyFrameKeyHold == 25 || (difficultyFrameKeyHold > 25 && (difficultyFrameKeyHold % 10 == 0))){
+			selectedDifficulty++;
+			SE_PlayLen(title_cursor, 60);
+		}
+	}
+	else{
+		difficultyFrameKeyHold = 0;
+	}
+
+	if(selectedDifficulty < 0){
+		selectedDifficulty = length(DIFFICULTY_DISPLAY_NAMES) - 1;
+	}
+	else{
+		selectedDifficulty %= length(DIFFICULTY_DISPLAY_NAMES);
+	}
+}
+
+
+task DifficultyBoxRender()
+{
+	let objMMB = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMMB, IMG_TITLE_MAINMENU_BOX);
+	Obj_SetRenderPriorityI(objMMB, BASE_RENDERI+6);
+	ObjSprite2D_SetSourceRect(objMMB,0, 0, 512, 256);
+	ObjSprite2D_SetDestRect(objMMB,0, 0, 512, 256);
+	ObjSprite2D_SetDestCenter(objMMB);
+	ObjRender_SetPosition(objMMB,diffBoxX, diffBoxY,0);
+	ObjRender_SetBlendType(objMMB, BLEND_SHADOW);
+	ObjRender_SetScaleY(objMMB, 1.1);
+	let objMMLs = [];
+	ascent(i in 0..2)
+	{
+		ascent(o in 0..2)
+		{
+			let objMML = ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjPrim_SetTexture(objMML, IMG_TITLE_MAINMENU_LINES);
+			Obj_SetRenderPriorityI(objMML, BASE_RENDERI+7);
+			ObjSprite2D_SetDestCenter(objMML);
+			ObjRender_SetPosition(objMML,diffBoxX, diffBoxY+ 75*(1-2*i),0);
+			ObjSprite2D_SetSourceRect(objMML,0, 0, 0, 32);
+			ObjRender_SetScaleX(objMML, 1-2*o);
+			ObjRender_SetScaleY(objMML, 1-2*i);
+			objMMLs ~= [objMML];
+		}
+	}
+	let t = DIFFICULTY_TRANSITION;
+	ascent(i in 0..t)
+	{	
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetColor(objMMB, 255*scl, 255*scl, 255*scl);
+		let scl2 =  Interpolate_Decelerate(0,1,1/(t-1)*i);
+		ascent(o in 0..4)
+		{
+			ObjSprite2D_SetSourceRect(objMMLs[o],0, 0, 256*scl2, 32);
+			ObjSprite2D_SetDestRect(objMMLs[o],0, 0, 256*scl2, 32);
+		}
+		SkippableWait(1);
+	}
+	yield;
+	while(menuState==MENUSTATE_DIFFICULTY)
+	{
+		ObjRender_SetColor(objMMB, 255*difficulty_AlphaScl, 255*difficulty_AlphaScl, 255*difficulty_AlphaScl);
+		ascent(o in 0..4)
+		{
+			ObjRender_SetAlpha(objMMLs[o],255*difficulty_AlphaScl);
+		}
+		yield;
+	}
+	Obj_Delete(objMMB);
+	ascent(i in 0..4)
+	{
+		Obj_Delete(objMMLs[i]);
+	}
+}
+
+task CreateDifficultyOption(id)
+{
+	let h = 35;
+	let y  = diffBoxY - h + (h*2)/(length(DIFFICULTY_DISPLAY_NAMES)-1)*id;
+	let obj = CreateText(
+		DIFFICULTY_DISPLAY_NAMES[id],
+		20,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		diffBoxX,
+		y,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
+	let coll = 140;
+	ObjRender_SetColor(obj, coll,coll,coll);
+	
+	
+	ascent(i in 0..DIFFICULTY_TRANSITION)
+	{
+		ObjRender_SetAlpha(obj, 255*sin(90/(DIFFICULTY_TRANSITION-1)*i));
+		SkippableWait(1);
+	}
+	yield;
+	
+	let objMMBS = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objMMBS, IMG_TITLE_MAINMENU_SELECTBOX);
+	Obj_SetRenderPriorityI(objMMBS, BASE_RENDERI+7);
+	ObjSprite2D_SetSourceRect(objMMBS,0, 0, 512, 32);
+	ObjSprite2D_SetDestRect(objMMBS,0, 0, 512, 32);
+	ObjSprite2D_SetDestCenter(objMMBS);
+	ObjRender_SetPosition(objMMBS,GetScreenWidth/2,y,0);
+	ObjRender_SetBlendType(objMMBS, BLEND_ADD_ARGB);
+	
+	let objArrows = [];
+	
+	ascent(i in 0..2)
+	{
+		let objAr = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objAr, IMG_TITLE_MAINMENU_SELECTARROW);
+		Obj_SetRenderPriorityI(objAr, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objAr,0, 0, 64, 32);
+		ObjSprite2D_SetDestRect(objAr,0, 0, 64, 32);
+		ObjSprite2D_SetDestCenter(objAr);
+		ObjRender_SetScaleX(objAr, 1-2*i);
+		ObjRender_SetBlendType(objAr, BLEND_ADD_ARGB);
+		objArrows ~= [objAr];
+	}
+
+	let boxAlph = 0;
+	let arrowAlph = 0;
+	let c = 0;
+	let SELECTED_WAIT = 30;
+	let selectedTimer = SELECTED_WAIT;
+	while(menuState==MENUSTATE_DIFFICULTY)
+	{
+		let selectAlpha = 1/(SELECTED_WAIT) * selectedTimer;
+		let colTarg = 140;
+		let boxTarg = 0;
+		let scll = cos(c*3);
+		let scll2 = cos(c*3*2);
+		let arrowTarg = 0;
+		if(selectedDifficulty==id)
+		{
+			colTarg = 255;
+			boxTarg = 220 + 35 * scll;
+			arrowTarg = 255;
+		}
+		coll = coll * 0.9 + colTarg * 0.1;
+		boxAlph = boxAlph * 0.8 + boxTarg * 0.2;
+		arrowAlph = arrowAlph * 0.7 + arrowTarg * 0.3;
+		
+		ObjRender_SetAlpha(obj, 255 * selectAlpha * difficulty_AlphaScl);
+		ObjRender_SetColor(obj, coll * difficulty_AlphaScl, coll * difficulty_AlphaScl, coll * difficulty_AlphaScl);
+		ObjRender_SetAlpha(objMMBS, boxAlph * difficulty_AlphaScl * selectAlpha);
+		ObjRender_SetScaleXYZ(objMMBS, 0.95 + 0.05 * scll);
+		ascent(i in 0..2)
+		{
+			let bb = [1,-1][i];
+			ObjRender_SetPosition(objArrows[i],GetScreenWidth/2 - 130*bb + 1 * scll2 * bb,y,0);
+			ObjRender_SetAlpha(objArrows[i], arrowAlph * difficulty_AlphaScl * selectAlpha);
+		}
+		c++;
+		yield;
+	}
+
+	Obj_Delete(obj);
+	Obj_Delete(objMMBS);
+	ascent(i in 0..2)
+	{
+		Obj_Delete(objArrows[i]);
+	}
+}
+		

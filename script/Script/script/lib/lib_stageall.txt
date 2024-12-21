@@ -20,5 +20,5 @@ const DIFF_LUNA = 3;
 
 const DIFFICULTY_NAMES = ["Easy", "Normal", "Hard", "Lunatic"];
 
-SetCommonData("Difficulty",2);
+
 let DIFFICULTY = GetCommonData("Difficulty",0);

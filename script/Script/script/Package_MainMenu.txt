@@ -89,27 +89,41 @@ task Title_Display()
 			mainMenu_AlphaScl = 1 - 1/(t-1)*i;
 			SkippableWait(1);
 		}
-		
-		let hasCanceled = CharacterSelectScreen();
-		if(hasCanceled)
+		let isLooping = true;
+		yield;
+		while(isLooping)
 		{
-			Title_Display();
-		}
-		else
-		{
-			TFlash(50);
-			wait(50);
-			MusicVolumeChange(BMG_TITLE_VOLUME, 0, 170);
-			TDarkTransition(0, 1, 120);
-			ascent(i in 0..180)
+			let hasCanceledDiff = DifficultySelect();
+			if(hasCanceledDiff)
 			{
-				yield;
+				isLooping = false;
+				Title_Display();
 			}
-			DeleteMusicObj();
-			totalDarkness = 0;
-			menuState = MENUSTATE_UNACTIVE;
-			firstTimeBoot = true;
-			StartStageProgression();
+			else
+			{
+				let hasCanceledChar = CharacterSelectScreen();
+				if(hasCanceledChar)
+				{
+					isLooping = true;
+				}
+				else
+				{
+					isLooping = false;
+					TFlash(50);
+					wait(50);
+					MusicVolumeChange(BMG_TITLE_VOLUME, 0, 170);
+					TDarkTransition(0, 1, 120);
+					ascent(i in 0..180)
+					{
+						yield;
+					}
+					DeleteMusicObj();
+					totalDarkness = 0;
+					menuState = MENUSTATE_UNACTIVE;
+					firstTimeBoot = true;
+					StartStageProgression();
+				}
+			}
 		}
 	}
 	case(MAINMENUSTATE_PRACTICE)
@@ -120,13 +134,25 @@ task Title_Display()
 			mainMenu_AlphaScl = 1 - 1/(t-1)*i;
 			SkippableWait(1);
 		}
-		let hasCanceled = PracticeScreen();
-		if(hasCanceled)
+		let isLooping = true;
+		while(isLooping)
 		{
-			Title_Display();
-		}
-		else
-		{
+			let hasCanceledDiff = DifficultySelect();
+			if(hasCanceledDiff)
+			{
+				isLooping = false;
+				Title_Display();
+			}
+			else
+			{
+				let hasCanceledPractice = PracticeScreen();
+				if(hasCanceledPractice)
+				{
+					isLooping = false;
+					Title_Display();
+				}
+				isLooping = false;
+			}
 		}
 	}
 	case(MAINMENUSTATE_OPTIONS)

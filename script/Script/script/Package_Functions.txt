@@ -1,4 +1,5 @@
 
+
 let activeTeam = 0;
 let startingLives = 2;
 const PLAYERTEAM_A = 0;

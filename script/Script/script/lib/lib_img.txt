@@ -792,6 +792,7 @@ const IMG_SMOKE = GetCurrentScriptDirectory()~"./../../img/effect/smoke_00.png";
 
 const IMG_WARINING = GetCurrentScriptDirectory()~"./../../img/effect/auraWarining.png";
 const IMG_PIXEL = GetCurrentScriptDirectory()~"./../../img/effect/pixel.png";
+const IMG_EMPTYPIXEL = GetCurrentScriptDirectory()~"./../../img/effect/emptyPixel.png";
 const IMG_AURA = GetCurrentScriptDirectory()~"./../../img/effect/aura.png";
 const IMG_LEFTEYE = GetCurrentScriptDirectory()~"./../../img/effect/eyes.png";
 
@@ -840,7 +841,8 @@ const Effects_ImgArray = [IMG_SHOT,IMG_ENEMY_DEL0,IMG_ENEMY_DEL1,IMG_BULLET_DEL,
 IMG_WARINING,IMG_AURA,IMG_LEFTEYE,IMG_FADERING,IMG_SUN1,IMG_SUN2,IMG_SUN3,IMG_SUN4,IMG_MASTER_SPARK,IMG_PAGODA1,IMG_PAGODA2,IMG_BOTTOMWARNING,
 IMG_GUARDRING,IMG_FLASHEFF,IMG_CHARGEEFF,IMG_STAR,IMG_GRADIENT,IMG_MAGICCIRCLE,IMG_FDFCHARGE,IMG_FDFBURST,IMG_FDFLINES,
 IMG_SAURA,IMG_SAURA2,IMG_SWITCHAURA,IMG_FADEBALL,
-IMG_SLASH,IMG_FIRERING, IMG_NOISE, IMG_AURA_LOOP,IMG_WIND, IMG_THROW,IMG_MAGICWARNING];
+IMG_SLASH,IMG_FIRERING, IMG_NOISE, IMG_AURA_LOOP,IMG_WIND, IMG_THROW,IMG_MAGICWARNING,
+IMG_PIXEL,IMG_EMPTYPIXEL];
 
 //---------------------------------------
 //---------------CARDS EF----------------

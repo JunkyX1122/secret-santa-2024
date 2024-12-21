@@ -745,7 +745,7 @@ function Practice_AttackOptions(stageID)
 				savedPlayerTeam = selectedTeam;
 				let player = PLAYER_IDS[selectedTeam];
 				let pattern = GetFileNameWithoutExtension(stage_attack_array[stageID][id]);
-				let diff = "Hard";
+				let diff = PACKAGE_DIFFICULTY_NAMES[activeDifficulty];
 
 				let sp_id = (AVAILABLE_STAGES[stageID]) ~ "|" ~ (pattern) ~ "|" ~ (diff);
 				let SpellDataAttempt = sp_id ~ "|" ~ player ~ "|Attempt";

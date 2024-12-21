@@ -14,6 +14,7 @@
 #include "./Package_Practice.txt"
 #include "./Package_Options.txt"
 #include "./Package_Ending.txt"
+#include "./Package_Difficulty.txt"
 let skipIntro = false;
 const BMG_TITLE_VOLUME = 75;
 @Initialize
@@ -81,6 +82,7 @@ const MENUSTATE_CHARACTER_SELECT 		= 2;
 const MENUSTATE_PRACTICE				= 3;
 const MENUSTATE_OPTIONS					= 4;
 const MENUSTATE_CREDITS					= 5;
+const MENUSTATE_DIFFICULTY				= 6;
 
 
 let menuState = MENUSTATE_UNACTIVE;
