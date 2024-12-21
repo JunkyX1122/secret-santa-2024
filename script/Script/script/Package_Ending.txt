@@ -238,11 +238,13 @@ function FEnding_B()
 	
 	SetDialogueTextA3("Hiroyuki", "...", 
 						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
-	SetDialogueTextA3("Hiroyuki", "Daisuke... What you want is something that rings true to what I|believe in, I've just... been too afraid to actually deal with the rift|that formed and put in the effort I should be to be as close again.", 
+	SetDialogueTextA3("Hiroyuki", "Daisuke...", 
 						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
-	SetDialogueTextA3("Hiroyuki", "But...We really are brothers. That couldn't be clearer. ...and I really do|want to see mom. ", 
+	SetDialogueTextA3("Hiroyuki", "Family is something I value deeply... I've just... been too afraid, or|maybe ashamed of the rift that formed to put in the effort needed to|be as close again.", 
 						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
-	SetDialogueTextA3("Hiroyuki", "You're both really important to me. So, I'll be there.", 
+	SetDialogueTextA3("Hiroyuki", "But...We really are brothers. That couldn't be clearer from our|beliefs. ...and I really do want to see mom.", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
+	SetDialogueTextA3("Hiroyuki", "You're both very important to me. So, I'll be there.", 
 						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
 	SetDialogueTextA3("Daisuke", "Hiroyuki...!", 
@@ -266,6 +268,8 @@ function FEnding_B()
 	SetDialogueTextA3("Dandara", "(Thank you for the best Christmas present ever, Daisuke...)", 
 						DIALOGUE_COLOUR_DANDARA, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
+	SetDialogueTextA3("Hiroyuki", "(Daisuke... Thank you for helping me.)", 
+						DIALOGUE_COLOUR_HIROYUKI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
 }
 
