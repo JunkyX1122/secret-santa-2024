@@ -106,7 +106,7 @@ task Fire
 	
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		let tot = 8;
+		let tot = [6,8][DIFFICULTY];
 		ascent(o in 0..2)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
@@ -128,7 +128,7 @@ task Fire
 		}
 		wait(10);
 		let angS = GetAngleToPlayer(objEnemy)+180;
-		tot = 12;
+		tot = [10,12][DIFFICULTY];
 		ascent(i in 0..tot+1)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
@@ -141,7 +141,7 @@ task Fire
 				let x=ObjMove_GetX(objEnemy) + (xx)*cos(ovalAng) - (yy)*sin(ovalAng);
 				let y=ObjMove_GetY(objEnemy) + (xx)*sin(ovalAng) + (yy)*cos(ovalAng);
 				AuraSphere(x,y,ang2,bit,false);
-				wait(10);
+				wait([15,10][DIFFICULTY]);
 			}
 		}
 		wait(60);

@@ -109,7 +109,7 @@ task Fire
 		SE_PlayLen(drum,70);
 		ScreenShake(120,4);
 		
-		ascent(i in 0..4)
+		ascent(i in [1,0][DIFFICULTY]..4)
 		{
 			ascent(o in 0..2)
 			{
@@ -119,7 +119,7 @@ task Fire
 				let ang = Get_PointAngle(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), x, y);
 				CreateVine(x, y, ang + 5*i*innerBit*bit, bit);
 				
-				SpikeFire(x, y, ang, bit, 1, 7, 0);
+				SpikeFire(x, y, ang, bit, 1, [5,7][DIFFICULTY], 0);
 			}
 		}
 		wait(100);
@@ -142,9 +142,10 @@ task PassiveFire(bit)
 		let ang = rand(0,360);
 		SE_PlayLen(shot1,60);
 		let mspd = 2.5;
-		ascent(i in 0..30)
+		let tot = [22,30][DIFFICULTY];
+		ascent(i in 0..tot)
 		{
-			let ang2 = ang+360/30*i*bit;
+			let ang2 = ang+360/tot*i*bit;
 			if(ang2%360<=180)
 			{
 				let x = ObjMove_GetX(objEnemy) + 60*cos(ang2);
@@ -155,7 +156,7 @@ task PassiveFire(bit)
 			}
 		}
 		bit*=-1;
-		wait(96);
+		wait([126,96][DIFFICULTY]);
 	}
 }
 
@@ -200,13 +201,14 @@ task CreateVine(x,y,ang,bit)
 	let randThorn = round(rand(0,0));
 	while(x>-16 && x<GetStgFrameWidth+16 && y>-16 && y<GetStgFrameHeight+16 && !Obj_IsDeleted(objEnemy))
 	{
-		if(cc%8==randThorn)
+		if(cc%[10,8][DIFFICULTY]==randThorn)
 		{
 			ascent(i in 0..2)
 			{
 				SE_PlayLen(shot1,60);
 				let obj = ShotA2(x,y,3,ang+90*bit-180*bit*i,-3/10,0,56,56,20,2,BLEND_ALPHA,false);
-				ObjMove_AddPatternA2(obj,20+60,0,NO_CHANGE,2/180,2,0);
+				let mspd = [1.75,2][DIFFICULTY];
+				ObjMove_AddPatternA2(obj,20+60,0,NO_CHANGE,mspd/180,mspd,0);
 			}
 			angChange--;
 		}

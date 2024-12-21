@@ -132,12 +132,12 @@ task Fire
 				}
 			}
 		}
-		let tot = 6;
+		let tot = [4,6][DIFFICULTY];
 		ascent(i in 0..5)
 		{
 			ascent(o in 0..tot)
 			{
-				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.8/(tot-1)*o ,7,  0, 3-1.4/(tot-1)*o);
+				SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 1 - 0.8/(tot-1)*o ,[5,7][DIFFICULTY],  0, 3-1.4/(tot-1)*o);
 			}
 			SpikeFire(ang - 90*bit + 180/4*i*bit, bit, 2,12, 1, 3);
 		}
@@ -146,7 +146,7 @@ task Fire
 		{
 			SE_PlayLen(chime1,60);
 		}
-		wait(50);
+		wait([60,50][DIFFICULTY]);
 		ObjEnemy_SetDamageRate(objEnemy, (0.075)/1.5, (0.075)/3);
 		bit*=-1;
 	}
@@ -155,7 +155,7 @@ task Fire
 task SpikeFire(ang, bit, spdScl, am, type, mspd2)
 {
 
-	let sprd = 38;
+	let sprd = [[50,28][type],38][DIFFICULTY];
 	ascent(i in 0..am-2)
 	{
 		ascent(o in 0..2)
