@@ -105,9 +105,10 @@ task BookOpen(x,y,bit)
 {
 	let ang = 90;
 	let isBookFiring = true;
-	ascent(i in 0..50)
+	let tott = [37,50][DIFFICULTY];
+	ascent(i in 0..tott)
 	{
-		ang = 90+360/50*i*bit;
+		ang = 90+360/tott*i*bit;
 		if(ang%360>0 && ang%360<180)
 		{
 			let obj = ShotB1(x+130*cos(ang),y-30*sin(ang)-10,3*cos(ang),1,295,295,160,2,BLEND_ADD_ARGB,false);
@@ -139,7 +140,7 @@ task BookOpen(x,y,bit)
 		let ang = -90 + 90*bit + rand(10,-10);
 		while(isBookFiring&&!Obj_IsDeleted(objEnemy))
 		{
-			ascent(o in 0..3)
+			ascent(o in 0..[2,3][DIFFICULTY])
 			{
 				ascent(i in 0..7)
 				{
@@ -148,13 +149,13 @@ task BookOpen(x,y,bit)
 					{
 						let xs = 4*cos(angP);
 						let ys = 2*sin(angP);
-						let objS = ShotB2(x+130*cos(angP),y+30*sin(angP)-10,xs,ys,0,0.02,0,10,427,420,5,3,BLEND_ADD_ARGB,false);
+						let objS = ShotB2(x+130*cos(angP),y+30*sin(angP)-10,xs,ys,0,0.02,0,[6,10][DIFFICULTY],427,420,5,3,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
 					}
 				}
 			}
 			ang-=9.123*bit;
-			wait(3);
+			wait([4,3][DIFFICULTY]);
 		}
 	}
 	

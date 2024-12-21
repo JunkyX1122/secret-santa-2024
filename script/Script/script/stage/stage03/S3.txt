@@ -253,13 +253,13 @@ task RotateAroundOrbPos(ang,bit)
 			}
 			if(i > timeToExplode/4 * 0 && i < timeToExplode/4 * 2)
 			{
-				if(i%5==0)
+				if(i%[8,5][DIFFICULTY]==0)
 				{
 					SE_PlayLen(shot1,60);
 					ascent(o in 0..3)
 					{
 						let ang2 = ang - 90+180/2*o;
-						let objS = ShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),spd,ang2,54,54,20,3,BLEND_ADD_ARGB,true);
+						let objS = ShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),spd*[0.8,1][DIFFICULTY],ang2,54,54,20,3,BLEND_ADD_ARGB,true);
 						ObjRender_SetBlendType(objS,BLEND_ADD_ARGB);
 					}
 					ascent(o in 0..3)
@@ -294,7 +294,7 @@ task RotateAroundOrbPos(ang,bit)
 
 task LaserSweep(x,bit)
 {
-	let adder = 50*bit;
+	let adder = [80,50][DIFFICULTY]*bit;
 	let angP = 0.8*bit;
 	let ang = -90;
 	if(bit==1)
@@ -314,13 +314,13 @@ task LaserSweep(x,bit)
 
 task BulletSweep(x,bit,cc)
 {
-	let adder = 3.5*bit;
+	let adder = [5,3.5][DIFFICULTY]*bit;
 	let angP = 0.8*bit;
 	let ang = -90;
 
 	while(x > -16 && x < GetStgFrameWidth + 16 && !Obj_IsDeleted(objEnemy))
 	{
-		if(cc%9==0)
+		if(cc%[10,9][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
 			let obj = CreateShotA2(x,GetStgFrameHeight + 31,1,ang,0.03,10,432,0);

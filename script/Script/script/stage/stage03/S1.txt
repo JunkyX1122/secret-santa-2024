@@ -106,6 +106,7 @@ task DamageDelay()
 }
 task Fire
 {
+	yield;
 	let bit = 1-2*round(rand(0,1));
 	let cc = 0;
 	let cc2 = 0;
@@ -121,7 +122,7 @@ task Fire
 		{
 			ObjMove_SetPosition(GetPlayerObjectID,x+150*cos(pAng),y+150*sin(pAng));
 		}
-		if(cc%66==0)
+		if(cc%[99,66][DIFFICULTY]==0)
 		{
 			let dis = 50;
 			ascent(i in 0..20)
@@ -130,7 +131,7 @@ task Fire
 				let obj = ShotA1(x+dis*cos(ang),y+dis*sin(ang),2,ang,356,356,100,3,BLEND_ADD_ARGB,true);
 			}
 		}
-		if(cc%7==0)
+		if(cc%[10,7][DIFFICULTY]==0)
 		{
 			let dis = 150;
 			SE_PlayLen(Shot1,60);
@@ -160,13 +161,13 @@ task Fire
 				}
 			}
 		}
-		if(cc%6==0)
+		if(cc%[7,6][DIFFICULTY]==0)
 		{
 			ascent(i in 0..2)
 			{
 				ascent(o in 0..1)
 				{
-					let ang = (cc/8)*8.1233*bit*[1,-1][o] + 360/2*i;
+					let ang = (cc/8)*8.2233*bit*[1,-1][o] + 360/2*i;
 					if(ang%360 > 180+30 && ang%360 < 360 - 30 && absolute(ang%360 - 270) <= 15)
 					{
 						SE_PlayLen(Shot2,60);
@@ -183,7 +184,7 @@ task Fire
 			{
 				ascent(o in 0..2)
 				{
-					let ang = (cc/8)*8.1233*bit*[1,-1][o] + 360/2*i;
+					let ang = (cc/8)*8.2233*bit*[1,-1][o] + 360/2*i;
 					if(ang%360 > 180+30 && ang%360 < 360 - 30 && absolute(ang%360 - 270) > 15)
 					{
 						SE_PlayLen(Shot2,60);

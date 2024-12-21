@@ -120,9 +120,10 @@ task Fire
 task BookOpen(x,y,bit)
 {
 	let ang = 90;
-	ascent(i in 0..50)
+	let tot = [35,50][DIFFICULTY];
+	ascent(i in 0..tot)
 	{
-		ang = 90+360/50*i*bit;
+		ang = 90+360/tot*i*bit;
 		if(ang%360>0 && ang%360<180)
 		{
 			let obj = ShotB1(x+130*cos(ang),y-30*sin(ang)-10,3*cos(ang),1,79,420,80,2,BLEND_ALPHA,false);
@@ -190,12 +191,12 @@ task LaserSweep(xs,ys,bit,starter)
 				ObjMove_SetPosition(sourcess[obj],x,y);
 				ObjRender_SetBlendType(sourcess[obj],BLEND_ADD_ARGB);
 				ObjRender_SetScale(sourcess[obj],1*sin(180/(t-1)*i));
-				if((i+starter)%3==0 && obj == 1)
+				if((i+starter)%[4,3][DIFFICULTY]==0 && obj == 1)
 				{
 					SE_PlayLen(Shot1,40);
 					let xs = 4*cos(mAng2);
 					let ys = 4*sin(mAng2);
-					let objS = ShotB2(x,y,xs,ys,0,0.1,0,10-6*sin(180/(t-1)*i),96,420,5,3,BLEND_ALPHA,false);
+					let objS = ShotB2(x,y,xs,ys,0,0.1,0,10-[6.75,6][DIFFICULTY]*sin(180/(t-1)*i),96,420,5,3,BLEND_ALPHA,false);
 				}
 				
 			}
