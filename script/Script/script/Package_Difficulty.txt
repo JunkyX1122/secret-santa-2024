@@ -87,9 +87,48 @@ function ManageInput()
 	}
 }
 
+const DIFFICULTY_DESCRIPTIONS =
+[
+	"A less intense difficulty.",
+	"The original 'Junky-brand' balancing."
+];
 
 task DifficultyBoxRender()
 {
+	
+	let objDiffTitle = CreateText(
+		"Difficulty Select",
+		22,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		diffBoxX,
+		diffBoxY-65,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
+	let objDiffSub = CreateText(
+		DIFFICULTY_DESCRIPTIONS[selectedDifficulty],
+		15,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		diffBoxX,
+		diffBoxY-40,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
+	let objDiffSub2 = CreateText(
+		["(Normal)", "(Hard-Lunatic)"][selectedDifficulty],
+		15,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		diffBoxX,
+		diffBoxY-28,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+8);
+		
 	let objMMB = ObjPrim_Create(OBJ_SPRITE_2D);
 	ObjPrim_SetTexture(objMMB, IMG_TITLE_MAINMENU_BOX);
 	Obj_SetRenderPriorityI(objMMB, BASE_RENDERI+6);
@@ -119,6 +158,9 @@ task DifficultyBoxRender()
 	ascent(i in 0..t)
 	{	
 		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(objDiffTitle, 255*scl);
+		ObjRender_SetAlpha(objDiffSub, 255*scl);
+		ObjRender_SetAlpha(objDiffSub2, 255*scl);
 		ObjRender_SetColor(objMMB, 255*scl, 255*scl, 255*scl);
 		let scl2 =  Interpolate_Decelerate(0,1,1/(t-1)*i);
 		ascent(o in 0..4)
@@ -131,6 +173,14 @@ task DifficultyBoxRender()
 	yield;
 	while(menuState==MENUSTATE_DIFFICULTY)
 	{
+		RenameRecenterText(objDiffSub, DIFFICULTY_DESCRIPTIONS[selectedDifficulty], diffBoxX, diffBoxY-40);
+		ObjRender_SetAlpha(objDiffSub,255*difficulty_AlphaScl);
+		
+		RenameRecenterText(objDiffSub2, ["(Normal)", "(Hard-Lunatic)"][selectedDifficulty], diffBoxX, diffBoxY-28);
+		ObjRender_SetAlpha(objDiffSub2,255*difficulty_AlphaScl);
+		
+		ObjRender_SetAlpha(objDiffTitle,255*difficulty_AlphaScl);
+		
 		ObjRender_SetColor(objMMB, 255*difficulty_AlphaScl, 255*difficulty_AlphaScl, 255*difficulty_AlphaScl);
 		ascent(o in 0..4)
 		{
@@ -138,6 +188,9 @@ task DifficultyBoxRender()
 		}
 		yield;
 	}
+	Obj_Delete(objDiffTitle);
+	Obj_Delete(objDiffSub);
+	Obj_Delete(objDiffSub2);
 	Obj_Delete(objMMB);
 	ascent(i in 0..4)
 	{
@@ -147,8 +200,8 @@ task DifficultyBoxRender()
 
 task CreateDifficultyOption(id)
 {
-	let h = 35;
-	let y  = diffBoxY - h + (h*2)/(length(DIFFICULTY_DISPLAY_NAMES)-1)*id;
+	let h = 25;
+	let y  = diffBoxY +28 - h + (h*2)/(length(DIFFICULTY_DISPLAY_NAMES)-1)*id;
 	let obj = CreateText(
 		DIFFICULTY_DISPLAY_NAMES[id],
 		20,
