@@ -111,7 +111,7 @@ task Fire
 			ascent(p in 0..2)
 			{
 				bit*=-1;
-				let wai = 10+50*p;
+				let wai = 10+[50,50][DIFFICULTY]*p;
 				ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2 + 200*bit, GetStgFrameHeight/2, 40);
 				ascent(i in 0..8)
 				{
@@ -141,7 +141,7 @@ task Fire
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
-				if(i%2==0&&i%20<8)
+				if(i%[4,2][DIFFICULTY]==0&&i%20<8)
 				{
 					SE_PlayLen(Shot1,60);
 					ascent(o in 0..4)
@@ -149,11 +149,11 @@ task Fire
 						let ang = i*-5.231*bit+360/4*o*bit;
 						let spd1 = 5;
 						let objW = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd1,ang,-spd1/30,0,57,417,10,2,BLEND_ALPHA,false);
-						ObjMove_AddPatternA2(objW,60,0,NO_CHANGE,3/60,3,0);
+						ObjMove_AddPatternA2(objW,60,0,NO_CHANGE,3/60,[2,3][DIFFICULTY],0);
 						Obj_SetRenderPriority(objW,0.49);
 					}
 				}
-				if(i%1==0&&i%30<9)
+				if(i%[2,1][DIFFICULTY]==0&&i%30<9)
 				{
 					SE_PlayLen(shot1,60);
 					ascent(o in 0..4)
@@ -161,7 +161,7 @@ task Fire
 						let ang = i*4.231*bit+360/4*o*bit;
 						let spd1 = 5;
 						let objW = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),spd1,ang,-spd1/50,0,137,417,10,2,BLEND_ALPHA,false);
-						ObjMove_AddPatternA2(objW,60,0,NO_CHANGE,1.5/60,1.5,0);
+						ObjMove_AddPatternA2(objW,60,0,NO_CHANGE,1.5/60,[1,1.5][DIFFICULTY],0);
 						Obj_SetRenderPriority(objW,0.49);
 					}
 				}
@@ -199,7 +199,7 @@ task Slash(x,y,angleT,id,waiter,waiter2,type)
 		ascent(i in 0..tot)
 		{
 			//SE_PlayLen(chime1,60);
-			let dis = -400 + 800/(tot-1)*i;
+			let dis = -400 + ([1800,800][DIFFICULTY])/(tot-1)*i;
 			ascent(o in 0..2)
 			{
 				let id = 270 + shid%14; 
@@ -208,7 +208,7 @@ task Slash(x,y,angleT,id,waiter,waiter2,type)
 				let ang = angleT - 10 +  (180+20) / (tot-1) * i * [1,-1][o%2];
 				let ang2 = angleT - 90 + 180*o;
 				
-				if(i%2==0&&type==0)
+				if(i%[4,2][DIFFICULTY]==0&&type==0)
 				{
 					let objW = ShotA2(X+dis*cos(angleT),Y+dis*sin(angleT),spd2,ang2,-spd2/30,0,id,id,10,2,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
@@ -218,13 +218,15 @@ task Slash(x,y,angleT,id,waiter,waiter2,type)
 				{
 					let objW2 = ShotA2(X+dis*cos(angleT),Y+dis*sin(angleT),spd,ang2,-spd/30,0,id2,id2,10,2,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objW2,BLEND_ADD_ARGB);
-					ObjMove_AddPatternA2(objW2,waiter2,0,NO_CHANGE,2.5/80,2.5,0);
+					let spdd = [2.0,2.5][DIFFICULTY];
+					ObjMove_AddPatternA2(objW2,waiter2,0,NO_CHANGE,spdd/80,spdd,0);
 				}
 				else
 				{
 					let objW2 = ShotA2(X+dis*cos(angleT),Y+dis*sin(angleT),spd,ang2,-spd/30,0,id2,id2,10,2,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objW2,BLEND_ADD_ARGB);
-					ObjMove_AddPatternA2(objW2,waiter2,0,NO_CHANGE,2/130,2,0);
+					let spdd = [1.9,2][DIFFICULTY];
+					ObjMove_AddPatternA2(objW2,waiter2,0,NO_CHANGE,spdd/130,spdd,0);
 				}
 			}
 

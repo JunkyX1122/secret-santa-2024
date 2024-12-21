@@ -164,7 +164,7 @@ task HandleSlash()
 	
 				angleT+=90+10.10123*bit;
 
-				wait(80);
+				wait([85,80][DIFFICULTY]);
 			}
 		}
 		wait(40);
@@ -194,19 +194,20 @@ task HandleSlash()
 					{
 						KunaiWall(GetAngleToPlayer(objEnemy));
 					}
-					if(ccc%10==0)
+					if(ccc%[12,10][DIFFICULTY]==0)
 					{
 						let dis = 20;
 						let spd = 0.7;
 						SE_PlayLen(shot1,60);
-						loop(4)
+						let tott = [3,4][DIFFICULTY];
+						loop(tott)
 						{
 							let objW = ShotA1(ObjMove_GetX(objEnemy)+dis*cos(angleT),ObjMove_GetY(objEnemy)+dis*sin(angleT),spd,angleT,122,122,10,2,BLEND_ALPHA,true);
 							Obj_SetRenderPriority(objW,0.49);
 							ObjShot_SetDeleteFrameA6(objW,60*4,0.5);
-							angleT+=360/4;
+							angleT+=360/tott;
 						}
-						angleT-=10.32432*bit;
+						angleT-=10.32432*bit*[1.3,1][DIFFICULTY];
 					}
 					ccc++;
 					yield;
@@ -232,7 +233,7 @@ task KunaiWall(ang)
 			{
 				if(i>0||o==0)
 				{
-					let angleT = ang+14/6*i*(1-2*o);
+					let angleT = ang+[10,14][DIFFICULTY]/6*i*(1-2*o);
 					let spd = 0.8-0.4/6*i;
 					let objW = ShotA1(ObjMove_GetX(objEnemy)+dis*cos(angleT),ObjMove_GetY(objEnemy)+dis*sin(angleT),spd,angleT,122,122,10,2,BLEND_ALPHA,true);
 					Obj_SetRenderPriority(objW,0.49);
@@ -304,7 +305,7 @@ task Slash(x,y,angleT,waiter)
 	{
 		ascent(i in 0..tot)
 		{
-			let dis = -400 + 800/(tot-1)*i;
+			let dis = -400 + ([1400,800][DIFFICULTY])/(tot-1)*i;
 			ascent(o in 0..2)
 			{
 				let ang = angleT + 90 + 180*o;

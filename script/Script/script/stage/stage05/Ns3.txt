@@ -141,7 +141,7 @@ task PassiveFire(bit)
 			let y2 = dis * 2 * sin(ang) * size;
 			
 			let angS = Get_PointAngle(x2,y2,x1,y1);
-			let pAm = 4;
+			let pAm = [3,4][DIFFICULTY];
 			ascent(p in 0..pAm)
 			{
 				if(p<pAm-1||o==1)
@@ -163,7 +163,7 @@ task PassiveFire(bit)
 	{
 		ascent(i in 0..10)
 		{
-			if(!Obj_IsDeleted(objEnemy)&&keepFiring)
+			if(!Obj_IsDeleted(objEnemy)&&keepFiring && i < [7,10][DIFFICULTY])
 			{
 				SE_PlayLen(shot1,60);
 				ascent(p in 0..length(positions))
@@ -181,9 +181,11 @@ task PassiveFire(bit)
 					let objS = ShotA1(xy[0],xy[1],spd,ang,277,420,10,2,BLEND_ADD_ARGB,false);
 					
 				}
-				startAng-=0.42321*bit;
-				wait(3);
+				
 			}
+			startAng-=0.42321*bit;
+			wait(3);
+				
 		}
 		startAng+=9.12321*bit;
 		wait(5);
@@ -204,7 +206,7 @@ task AquaJet(x,y,xI,yI,d,t,bit)
 		}
 	}
 	wait(d);
-	let shur = 6;
+	let shur = [5,6][DIFFICULTY];
 	if(!Obj_IsDeleted(objEnemy)) 
 	{
 		loop(shur)
@@ -363,7 +365,7 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit)
 				{
 					let objW = ShotA2(ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot),0,ObjMove_GetAngle(objSourceShot)-180+(20-40*o),spdd/120,spdd,id,id,5,2,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
-					if(cc%(3*11)>0)
+					if(cc%(3*[12,11][DIFFICULTY])>0)
 					{
 						ObjShot_SetDeleteFrameA6(objW,40,1);
 					}

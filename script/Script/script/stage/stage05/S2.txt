@@ -126,18 +126,19 @@ task Fire
 				{
 					SE_PlayLen(shot1,60);
 					let ang2 = GetAngleToPlayer(objEnemy)-sprd*bit+(sprd*2)/4*bit*i+angP;
-					CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,ang2,4,0.4,-6*bit,bit,TYPE_QUICK);
+					CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,ang2,4,[0.25,0.4][DIFFICULTY],-6*bit,bit,TYPE_QUICK);
 				}
 				loop(2)
 				{
 					if(!Obj_IsDeleted(objEnemy))
 					{
 						SE_PlayLen(chime1,30);
-						ascent(i in 0..20)
+						let tott = [17,20][DIFFICULTY];
+						ascent(i in 0..tott)
 						{
 							let objW = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),totSpd,ang,286,286,10,2,BLEND_ADD_ARGB,true);
 							ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
-							ang+=360/20;
+							ang+=360/tott;
 						}
 						totSpd -= 3 / 15;
 						ang+=13.23*bit;
@@ -150,7 +151,7 @@ task Fire
 		ang = 90+45*bit;
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),2,ang,11,1.2,6.324324*bit,bit,TYPE_BIG);
+			CreateShuriken(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),2,ang,11,[0.9,1.2][DIFFICULTY],6.324324*bit,bit,TYPE_BIG);
 		}
 		wait(80);
 		if(!Obj_IsDeleted(objEnemy))
@@ -183,11 +184,11 @@ task Fire
 			if(!Obj_IsDeleted(objEnemy))
 			{
 				SE_PlayLen(shot1,60);
-				ascent(o in 0..11)
+				let tott = [7,11][DIFFICULTY];
+				ascent(o in 0..tott)
 				{
-					let ang = GetAngleToPlayer(objEnemy)-80*bit+(80*2)/10*o*bit;
+					let ang = GetAngleToPlayer(objEnemy)-80*bit+(80*2)/(tott-1)*o*bit;
 					let objW = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),2,ang,128,420,10,2,BLEND_ALPHA,true);
-					ang+=360/20;
 				}
 				wait(30);
 			}
@@ -300,7 +301,7 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit,type)
 		alternative(type)
 		case(TYPE_BIG)
 		{
-			if(cc%4==0)
+			if(cc%[6,4][DIFFICULTY]==0)
 			{
 				SE_PlayLen(Shot1,60);
 				ascent(i in 0..length(tips))
@@ -374,14 +375,14 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit,type)
 		case(TYPE_BIG)
 		{
 			SE_PlayLen(drum,60);
-			let tott = 90;
+			let tott = [55,90][DIFFICULTY];
 			ascent(i in 0..tott)
 			{
 				let id = 293 + shid % 7;
 				
 				ascent(o in 0..4)
 				{
-					let spdd = 10-8/(tott-1)*i;
+					let spdd = (10-8/(tott-1)*i)*[0.75,1][DIFFICULTY];
 					let objW = ShotA2(ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot),spdd,ang,-spdd/80,spdd/4,id,id,5,2,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
 					ang+=360/4;
@@ -393,13 +394,14 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit,type)
 		}
 		case(TYPE_SEEKING)
 		{
-			ascent(i in 0..20)
+			let tottt = [15,20][DIFFICULTY];
+			ascent(i in 0..tottt)
 			{
 				let id = 270 + shid % 14;
 				
 				ascent(o in 0..4)
 				{
-					let spdd = 4-3/19*i;
+					let spdd = 4-3/tottt*i;
 					let objW = ShotA2(ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot),spdd,ang,-spdd/30,spdd/4,id,id,5,2,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objW,BLEND_ADD_ARGB);
 					ang+=360/4;

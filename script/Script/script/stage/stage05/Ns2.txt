@@ -108,7 +108,7 @@ task Fire
 			}
 		}
 	
-		wait(50*3);
+		wait(50*[3.5,3][DIFFICULTY]);
 		globalAng = -90+rand(20,-20);
 		globalBit*=-1;
 		if(!Obj_IsDeleted(objEnemy))
@@ -133,13 +133,13 @@ task KnifeFire(bit)
 					if(o==0||(i>0))
 					{
 						let ang = globalAng+4*i*globalBit*(1-2*o) + 360/3*p*globalBit;
-						let objSourceShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4-i,ang,328,328,20,2,BLEND_ALPHA,true);
+						let objSourceShot = ShotA1(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),(4-i)*[0.8,1][DIFFICULTY],ang,328,328,20,2,BLEND_ALPHA,true);
 					}
 				}
 			}
 		}
 		globalAng+=(180/3+19.332/2)*bit;
-		wait(16);
+		wait([24,16][DIFFICULTY]);
 	}
 }
 task CreateShurikenLine(x,y,bit,ang,maxSpd)
@@ -150,7 +150,7 @@ task CreateShurikenLine(x,y,bit,ang,maxSpd)
 	ascent(i in 0..t)
 	{
 		let dis = -(GetStgFrameWidth/2+100) * (-1+2/(t-1)*i);
-		if((i+ini)%2==0&&(i+ini)%20<10)
+		if((i+ini)%2==0&&(i+ini)%20<[8,10][DIFFICULTY])
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
@@ -169,7 +169,7 @@ task CreateShurikenSmall(x,y,speed,ang,accell,maxSpd,spinAmount,bit)
 	Obj_SetRenderPriority(objSourceShot,0.49);
 	ObjRender_SetBlendType(objSourceShot,BLEND_ALPHA);
 	let shurikenPoints = [];
-	let dis = 13;
+	let dis = [10,13][DIFFICULTY];
 	let centreScale = 0.75;
 	let spdBt = 1;
 	if(speed>maxSpd){spdBt = -1;}

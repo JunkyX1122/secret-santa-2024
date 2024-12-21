@@ -117,7 +117,7 @@ task StraightShurikanFire(bit)
 						WarningLaser(x,y,ang2,10);
 					}
 				}
-				wait(2);
+				wait([6,2][DIFFICULTY]);
 			}
 		}
 		wait(10);
@@ -134,7 +134,7 @@ task StraightShurikanFire(bit)
 						CreateShuriken(x,y,7,ang2,3,0.3,6*bit,bit);
 					}
 				}
-				wait(2);
+				wait([6,2][DIFFICULTY]);
 			}
 		}
 		bit*=-1;
@@ -182,12 +182,13 @@ task CurveShurikanFire(bit)
 	{
 		ang = rand(0,360);
 		SE_PlayLen(shot1,60);
-		ascent(i in 0..15)
+		let tot = [12,15][DIFFICULTY];
+		ascent(i in 0..tot)
 		{
-			CreateShurikenSmall(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,ang+360/15*i*bit,1*bit,6*bit,bit);
+			CreateShurikenSmall(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1.5,ang+360/tot*i*bit,1*bit,6*bit,bit);
 		}
 		bit*=-1;
-		wait(80);
+		wait([90,80][DIFFICULTY]);
 	}
 }
 task WallFire(bit)
@@ -202,7 +203,7 @@ task WallFire(bit)
 		}
 		idd++;
 		ang+=(180/4+12.2131)*bit;
-		wait(50);
+		wait([55,50][DIFFICULTY]);
 	}
 }
 task CreateShurikenSmall(x,y,speed,ang,angVel,spinAmount,bit)
@@ -342,7 +343,7 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit)
 }
 task CreateWall(ang,id,bit)
 {
-	ascent(i in 0..28)
+	ascent(i in 0..[22,28][DIFFICULTY])
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{

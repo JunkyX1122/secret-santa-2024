@@ -118,11 +118,11 @@ task Fire
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		
-		if(ccc%40==0)
+		if(ccc%[55,40][DIFFICULTY]==0)
 		{
 			CreateWindArrow(ccc);
 		}
-		if(ccc%9==0)
+		if(ccc%[12,9][DIFFICULTY]==0)
 		{
 			ascent(i in 0..5)
 			{
@@ -142,7 +142,7 @@ task Fire
 			{
 				SE_PlayLen(charge0,60);
 			}
-			if(ccc%12==0)
+			if(ccc%[18,12][DIFFICULTY]==0)
 			{
 				ascent(o in 0..3)
 				{
@@ -156,7 +156,7 @@ task Fire
 					}
 				}
 			}
-			if(ccc%50==0)
+			if(ccc%[80,50][DIFFICULTY]==0)
 			{
 				CreateCelebrationLine(ccc);
 			}
