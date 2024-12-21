@@ -407,12 +407,29 @@ task Practice_BoxRender()
 	ObjText_SetFontBorderType(objPracticeTitle, BORDER_FULL);
 	ObjText_SetSidePitch(objPracticeTitle, -1);
 	
+	
+	let objPracticeDifficulty = CreateText(
+		DIFFICULTY_DISPLAY_NAMES[activeDifficulty],
+		16,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2-250,
+		GetScreenHeight/2-215,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		
+	ObjText_SetFontBorderWidth(objPracticeDifficulty, 2);
+	ObjText_SetFontBorderType(objPracticeDifficulty, BORDER_FULL);
+	ObjText_SetSidePitch(objPracticeDifficulty, -1);
+	
 	let t = TO_CHARSELECT_TRANSITION;
 	ascent(i in 0..t)
 	{	
 		let scl = 1*sin(90/(t-1)*i);
 		ObjRender_SetAlpha(objPB, 255*scl);
 		ObjRender_SetAlpha(objPracticeTitle, 255*scl);
+		ObjRender_SetAlpha(objPracticeDifficulty, 255*scl);
 		SkippableWait(1);
 	}
 	yield;
@@ -420,10 +437,12 @@ task Practice_BoxRender()
 	{
 		ObjRender_SetAlpha(objPB, 255*practice_AlphaScl);
 		ObjRender_SetAlpha(objPracticeTitle, 255*practice_AlphaScl);
+		ObjRender_SetAlpha(objPracticeDifficulty, 255*practice_AlphaScl);
 		yield;
 	}
 	Obj_Delete(objPB);
 	Obj_Delete(objPracticeTitle);
+	Obj_Delete(objPracticeDifficulty);
 }
 
 task Practice_PlayerIcons()
