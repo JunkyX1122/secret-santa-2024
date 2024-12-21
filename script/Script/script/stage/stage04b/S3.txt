@@ -227,18 +227,19 @@ task CrossSlashHorizontal(y, extraDelay, bit)
 	let t = round(20 / waiter);
 	ascent(i in 0..t)
 	{
-		
-		ascent(o in 0..5)
+		let tott = [2,5][DIFFICULTY];
+		ascent(o in 0..tott)
 		{
-			let spd = (0.5+o*1.5)/3;
-			let sprd = 20+70/4*o;
+			let spd = ([0.6,0.5][DIFFICULTY]+o*1.5*[1.1,1][DIFFICULTY])/3;
+			let sprd = [40,20][DIFFICULTY]+70/(tott-1)*o;
 			let acclTime = 120;
 			let id = SHTID[(i/2)%2];
-			ascent(p in 0..5)
+			let tott2 = [4,5][DIFFICULTY];
+			ascent(p in 0..tott2)
 			{
 				ascent(j in 0..2)
 				{
-					let ang = 90 - sprd*bit + (sprd*2*bit)/4*p + 180*j;
+					let ang = 90 - sprd*bit + (sprd*2*bit)/(tott2-1)*p + 180*j;
 					let obj = ShotA2(ObjMove_GetX(objEnemy2), ObjMove_GetY(objEnemy2), 0, ang, spd/acclTime, spd, id, id, 20, 2, BLEND_ADD_ARGB, false);
 					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 				}
@@ -269,7 +270,7 @@ task MegaSlash(xS,bit,waiter)
 				randY = rand(-10, 10);		
 				ascent(p in 0..2)
 				{
-					let xB = xS+4.5*(i*(i+0.1))*[1,-1][p];
+					let xB = xS+[8,4.5][DIFFICULTY]*(i*(i+0.1))*[1,-1][p];
 					if(xB > -20 && xB < GetStgFrameWidth + 20)
 					{
 						if(o>0)
@@ -298,17 +299,17 @@ task MegaSlash(xS,bit,waiter)
 	}
 	task BulletBeams(x, y, angle)
 	{
-		let sprd = 75;
+		let sprd = [100,75][DIFFICULTY];
 		ascent(h in 0..12)
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
 				let obj2 = ShotA2(x, y+h*sprd*-bit, 0.2-0.05, angle-1, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
-				ObjMove_AddPatternA2(obj2, 45, NO_CHANGE, NO_CHANGE, 0.02, 2, 0);
+				ObjMove_AddPatternA2(obj2, 45, NO_CHANGE, NO_CHANGE, 0.02, [1.5,2][DIFFICULTY], 0);
 				ascent(i in -2..1)
 				{
 					let obj = ShotA2(x, y+h*sprd*-bit, 0.2+0.05*sin(180+i*90), angle+i, 0, 2, 144, 144, 10, 2, BLEND_ADD_ARGB, false);
-					ObjMove_AddPatternA2(obj, 45, NO_CHANGE, NO_CHANGE, 0.02, 2, 0);
+					ObjMove_AddPatternA2(obj, 45, NO_CHANGE, NO_CHANGE, 0.02, [1.5,2][DIFFICULTY], 0);
 				}
 				yield;
 			}

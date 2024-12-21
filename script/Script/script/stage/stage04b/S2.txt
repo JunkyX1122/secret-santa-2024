@@ -127,7 +127,7 @@ task Fire
 					SE_PlayLen(charge0,60);
 					ScreenShake(110+30,1.5+0.3*i/110);
 				}
-				if(i%3==0)
+				if(i%[6,3][DIFFICULTY]==0)
 				{
 					let ang = tazueAng;
 					ascent(i in 0..3)
@@ -136,14 +136,15 @@ task Fire
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
 				}
-				if(i%5==0)
+				if(i%[7,5][DIFFICULTY]==0)
 				{
 					SE_PlayLen(Shot1,60);
 					
 					let dis = 50;
-					ascent(o in 0..4)
+					let tot = [3,4][DIFFICULTY];
+					ascent(o in 0..tot)
 					{
-						let ang = tazueAng+360/4*o;
+						let ang = tazueAng+360/tot*o;
 						let obj = ShotA1(tazueX, tazueY,2,ang,66,66,5,2,BLEND_ADD_ARGB,false);
 						ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 					}
@@ -182,7 +183,7 @@ task Fire
 		{
 			nukeScale = nukeScale * 0.97 + (0.1) * 0.03;
 			nukeY+=spd;
-			spd+=0.03;
+			spd+=[0.02,0.03][DIFFICULTY];
 			yield;
 		}
 		nukeY = GetStgFrameHeight;
@@ -212,7 +213,7 @@ task Fire
 				{
 					
 					let dis = 13*nukeScale;
-					let sprd = 40;
+					let sprd = [25,40][DIFFICULTY];
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 0.1231 * internalBit +360/sprd*o;
@@ -225,7 +226,7 @@ task Fire
 				{
 					
 					let dis = 13*nukeScale;
-					let sprd = 46;
+					let sprd = [21,46][DIFFICULTY];
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;
@@ -255,7 +256,7 @@ task Fire
 				{
 					
 					let dis = 13*nukeScale;
-					let sprd = 40;
+					let sprd = [25,40][DIFFICULTY];
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 0.1231 * internalBit +360/sprd*o;
@@ -268,7 +269,7 @@ task Fire
 				{
 					
 					let dis = 13*nukeScale;
-					let sprd = 46;
+					let sprd = [21,46][DIFFICULTY];
 					ascent(o in 0..sprd)
 					{
 						let ang = cc/3 * 3.12312 * internalBit +360/sprd*o;

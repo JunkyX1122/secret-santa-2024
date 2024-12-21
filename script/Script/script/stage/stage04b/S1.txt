@@ -124,7 +124,8 @@ task Sweep(bit)
 		SE_PlayLen(charge0,60);
 		PortalSlash(GetStgFrameWidth/2,350,5*bit,120, 60*9, 60*2, 60*2,3, 1);
 	}
-	ascent(i in 0..3)
+	wait([15,0][DIFFICULTY]);
+	ascent(i in 0..[2,3][DIFFICULTY])
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
@@ -132,14 +133,14 @@ task Sweep(bit)
 		}
 		wait(15);
 	}
-	
+	wait([15,0][DIFFICULTY]);
 	wait(90);
 	if(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(charge0,60);
-		PortalSlash(GetStgFrameWidth/2+200*bit,350-250,-70*bit,120, 60*9 -135*1, 60*2, 60*2,1,1);
+		PortalSlash(GetStgFrameWidth/2+([225,200][DIFFICULTY])*bit,350-250,-70*bit,120, 60*9 -135*1, 60*2, 60*2,1,1);
 	}
-	ascent(i in 0..3)
+	ascent(i in 0..[2,3][DIFFICULTY])
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
@@ -147,13 +148,14 @@ task Sweep(bit)
 			wait(15);
 		}
 	}
+	wait([15,0][DIFFICULTY]);
 	wait(90);
 	if(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(charge0,60);
-		PortalSlash(GetStgFrameWidth/2-200*bit,350-125*2,60*bit,120, 60*9 -135*2, 60*2, 60*2,2,1);
+		PortalSlash(GetStgFrameWidth/2-([225,200][DIFFICULTY])*bit,350-125*2,[65,60][DIFFICULTY]*bit,120, 60*9 -135*2, 60*2, 60*2,2,1);
 	}
-	ascent(i in 0..3)
+	ascent(i in 0..[2,3][DIFFICULTY])
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
@@ -162,6 +164,7 @@ task Sweep(bit)
 		}
 		wait(15);
 	}
+	
 }
 
 task KnifeFire(bit)
@@ -170,7 +173,7 @@ task KnifeFire(bit)
 	let cc = 0;
 	let spd = 1;
 	let ang2 = 90;
-	let adder = 25;
+	let adder = [7,25][DIFFICULTY];
 	ascent(i in 0..60*12)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -198,7 +201,7 @@ task KnifeFire(bit)
 			if(i%20==0)
 			{
 				
-				let adder2 = 30;
+				let adder2 = [14,30][DIFFICULTY];
 				//SE_PlayLen(chime1,60);
 				ascent(o in 0..adder2)
 				{
@@ -232,7 +235,7 @@ task SweepDown(bit)
 				SE_PlayLen(shot1,60);
 				let obj = PShotA2(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 7, ang, -5/60, 2, 333, 333,10, 2, BLEND_ALPHA, true, OUT_PORTAL);
 			}
-			if(i%3==0)
+			if(i%[3][DIFFICULTY]==0)
 			{
 				SE_PlayLen(shot1,60);
 			

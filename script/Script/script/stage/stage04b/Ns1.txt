@@ -153,31 +153,32 @@ task GravityShooting(bit)
 	let cc = 0;
 	while(!Obj_IsDeleted(objEnemy)&&cc < 60*10)
 	{
-		if(cc%3==0 && cc%18 < 12)
+		if(cc%3==0 && cc%18 < [3*2,3*4][DIFFICULTY])
 		{
 			SE_PlayLen(shot1,60);
 			let ang = 90 + cc/3 * 1.232 * bit;
 			ascent(i in 0..3)
 			{
-				TriShot(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,ang+360/3*i*bit,333, BLEND_ALPHA);
+				TriShot(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),[3.75,4][DIFFICULTY],ang+360/3*i*bit,333, BLEND_ALPHA);
 			}
 		}
-		if(cc%21==0)
+		if(cc%[27,21][DIFFICULTY]==0)
 		{
 			SE_PlayLen(Shot1,60);
 			let ang = 90 + cc/3 * 1.232 * bit + 180/3*bit;
 			ascent(i in 0..3)
 			{
-				TriShot(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),4,ang+360/3*i*bit,324, BLEND_ALPHA);
+				TriShot(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),[3,4][DIFFICULTY],ang+360/3*i*bit,324, BLEND_ALPHA);
 			}
 		}
-		if(cc%145==0)
+		if(cc%[160,145][DIFFICULTY]==0)
 		{
 			SE_PlayLen(chime1,60);
 			let ang = 90 + cc/3 * 1.232 * bit;
-			ascent(i in 0..20)
+			let tot = [17,20][DIFFICULTY];
+			ascent(i in 0..tot)
 			{
-				let ang2 = ang+360/20*i*bit;
+				let ang2 = ang+360/tot*i*bit;
 				if(ang2%360>180)
 				{
 					TriShot(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),2.5,ang2,360, BLEND_ADD_ARGB);

@@ -133,7 +133,7 @@ task EvacDoom(bit)
 	{
 		let spinner = 70*sin(cc/3 * 1.24);
 		let spacing = 16;
-		if(cc%3==0 && cc%70<30)
+		if(cc%3==0 && cc%[80][DIFFICULTY]<[24,30][DIFFICULTY])
 		{
 			SE_PlayLen(Shot1,60);
 			ascent(i in 0..spacing)
@@ -142,12 +142,12 @@ task EvacDoom(bit)
 				if(ang2%360>90 && ang2%360 < 270)
 				{
 					let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2+200)*sin(ang2);
-					let obj = ShotA1(x, GetStgFrameHeight + 30,2.5, - 90,336,336,0,2,BLEND_ADD_ARGB,false);
+					let obj = ShotA1(x, GetStgFrameHeight + 30,[2,2.5][DIFFICULTY], - 90,336,336,0,2,BLEND_ADD_ARGB,false);
 					ObjShot_SetSpinAngularVelocity(obj, 4*bit);
 				}
 			}
 		}
-		if(cc%28==0)
+		if(cc%[39,28][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
 			ascent(i in 0..spacing)
@@ -159,7 +159,7 @@ task EvacDoom(bit)
 					let spc = 10;
 					ascent(o in 0..3)
 					{
-						let obj = ShotA1(x, -30, 2, 90-spc*bit+(spc*2)/2*o*bit,92,92,0,2,BLEND_ADD_ARGB,false);
+						let obj = ShotA1(x, -30, [1.75,2][DIFFICULTY], 90-spc*bit+(spc*2)/2*o*bit,92,92,0,2,BLEND_ADD_ARGB,false);
 					}
 				}
 			}
@@ -182,7 +182,7 @@ task EvacDoom2(bit)
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetStgFrameWidth/2+50*bit+rX, 150+rY, 60);
 		ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2-50*bit+rX, 150+rY, 60);
 		SE_PlayLen(chime1,60);
-		ascent(i in 0..5)
+		ascent(i in 0..[4,5][DIFFICULTY])
 		{
 			GrandisKnives(-90+15*bit*i,bit);
 		}
@@ -210,7 +210,7 @@ task Stab(ang,bit)
 		let id = i==2 ? 55 : 42;
 		
 		let obj1 = ShotA1(ObjMove_GetX(objEnemy)+cosDis, ObjMove_GetY(objEnemy)+sinDis, (i+5)*spdMult, ang, id, id, 20, 2, BLEND_ALPHA, true);
-		let sprd = 0.7;
+		let sprd = [0.5,0.7][DIFFICULTY];
 		ascent(o in 1..5)
 		{
 			ShotA1(ObjMove_GetX(objEnemy)+cosDis, ObjMove_GetY(objEnemy)+sinDis, (i+5-o/2)*spdMult, ang+o*sprd*bit, id, id, 20, 2, BLEND_ALPHA, true);
@@ -238,7 +238,7 @@ task GrandisKnives(ang,bit)
 		SE_PlayLen(chime1,60);
 		ObjRender_SetAngleZ(obj,0);
 		ObjMove_SetAngle(obj,GetAngleToPlayer(obj));
-		ObjMove_SetMaxSpeed(obj,10);
+		ObjMove_SetMaxSpeed(obj,[6,10][DIFFICULTY]);
 		ObjMove_SetAcceleration(obj,10/120);
 	}
 	while(!Obj_IsDeleted(obj) && !Obj_IsDeleted(objEnemy) )

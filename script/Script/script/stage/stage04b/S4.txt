@@ -180,9 +180,9 @@ task Fire
 		{
 			hasFired = false;
 		}
-		if(cc % 66 == 0)
+		if(cc % [88,66][DIFFICULTY] == 0)
 		{
-			let sprd = 22;
+			let sprd = [17,22][DIFFICULTY];
 			SE_PlayLen(shot1,60);
 			ascent(i in 0..sprd)
 			{
@@ -235,9 +235,9 @@ task TazueHandle()
 			}
 		}
 		
-		if(cc%25==0)
+		if(cc%[30,25][DIFFICULTY]==0)
 		{
-			let sprd = 22;
+			let sprd = [14,22][DIFFICULTY];
 			SE_PlayLen(shot1,60);
 			ascent(i in 0..sprd)
 			{
@@ -247,9 +247,9 @@ task TazueHandle()
 				ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 			}
 		}
-		if(cc%25==0)
+		if(cc%[30,25][DIFFICULTY]==0)
 		{
-			let sprd = 11;
+			let sprd = [7,11][DIFFICULTY];
 			SE_PlayLen(shot1,60);
 			ascent(i in 0..sprd)
 			{
@@ -275,7 +275,7 @@ task AuraSphere(ang)
 	//ObjShot_SetAutoDelete(obj,false);
 	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 	Obj_SetValue(obj, "Leniency", 1.5);
-	let sclMax = 3;
+	let sclMax = [2.75,3][DIFFICULTY];
 	let t = 5;
 	ascent(i in 0..t)
 	{

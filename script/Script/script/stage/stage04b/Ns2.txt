@@ -144,7 +144,7 @@ task Fire
 				let x = 1/(t-1)*i;
 				ObjMove_SetX(objEnemy2,Interpolate_Smooth(startX,desX,x));
 				ObjMove_SetY(objEnemy2, y + 100/(60*3)*i);
-				if(i%(t/10)==0)
+				if(i%round(t/([8,10][DIFFICULTY]))==0)
 				{
 					let ang = GetAngleToPlayer(objEnemy2);
 					Stab(ang);
@@ -182,8 +182,8 @@ task TazueHandle(bit)
 		{
 			SetCommonData("tazuePosition", [ObjMove_GetX(objTazue),ObjMove_GetY(objTazue)]);
 			let x = 1/(t-1)*i;
-			let tDiv = 15;
-			if(i%(t/tDiv)==0)
+			let tDiv = [12,15][DIFFICULTY];
+			if(i%round(t/tDiv)==0)
 			{
 				let a = floor(i/tDiv);
 				let am = 20;
@@ -312,9 +312,9 @@ task Stab(ang)
 
 		ascent(o in 1..5)
 		{
-			
-			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5-o/2)*spdMult, ang+o, id, id, 20, 2, BLEND_ALPHA, true);
-			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5-o/2)*spdMult, ang-o, id, id, 20, 2, BLEND_ALPHA, true);
+			let sss = [0.5,1][DIFFICULTY];
+			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5-o/2)*spdMult, ang+o*sss, id, id, 20, 2, BLEND_ALPHA, true);
+			ShotA1(ObjMove_GetX(objEnemy2)+cosDis, ObjMove_GetY(objEnemy2)+sinDis, (i+5-o/2)*spdMult, ang-o*sss, id, id, 20, 2, BLEND_ALPHA, true);
 		}				
 	}
 
