@@ -206,8 +206,9 @@ task Fire
 task SullenFire(bit,type)
 {
 	wait(60);
-	let adder = type == 0 ? 2.21 : 7.2131;
-	ascent(i in 0..round((60*9)/9))
+	let adder = type == 0 ? 2.21 : [6.4231,7.2131][DIFFICULTY];
+	let waitr = [12,9][DIFFICULTY];
+	ascent(i in 0..round((60*9)/waitr))
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
@@ -215,16 +216,16 @@ task SullenFire(bit,type)
 			ascent(o in 0..12)
 			{
 				let ang = -90 + 360/12*o*bit + i*bit * -adder;
-				let obj = ShotA1(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),type == 0 ? 4 : 2,ang,73,73,10,2,BLEND_ADD_ARGB,false);
+				let obj = ShotA1(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),type == 0 ? [3,4][DIFFICULTY] : 2,ang,73,73,10,2,BLEND_ADD_ARGB,false);
 				if(type==0)
 				{
-					ObjMove_SetAngularVelocityA2(obj,10,0.5*bit,300);
+					ObjMove_SetAngularVelocityA2(obj,10,0.5*bit*[0.75,1][DIFFICULTY],300);
 					let obj2 = ShotA1(ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3),5,ang,73,73,10,2,BLEND_ADD_ARGB,false);
 					ObjMove_SetAngularVelocityA2(obj2,10,3*bit,180/3);
 					ObjShot_SetDeleteFrameA6(obj2,10+180/3,1);
 				}
 			}
-			wait(9);
+			wait(waitr);
 		}
 	}
 }
@@ -344,26 +345,28 @@ task AuraSphere(ang,bit)
 	let cc = 0;
 	while(!Obj_IsDeleted(objEnemy) && IsInScreen(ObjMove_GetX(obj),ObjMove_GetY(obj), -64))
 	{
-		if(cc%2==0)
+		if(cc%[3,2][DIFFICULTY]==0)
 		{
 			SE_PlayLen(Shot1,60);
 			ascent(i in 0..5)
 			{
 				let ang2 = ang+360/5*i;
 				let dis = 50;
-				let shot1 = ShotA2(ObjMove_GetX(obj)+dis*cos(ang2),ObjMove_GetY(obj)+dis*sin(ang2),0,ang2,2/160,2,427,427,20,2,BLEND_ADD_ARGB,false);
+				let shot1 = ShotA2(ObjMove_GetX(obj)+dis*cos(ang2),ObjMove_GetY(obj)+dis*sin(ang2),0,ang2,2/160,[1.85,2][DIFFICULTY],427,427,20,2,BLEND_ADD_ARGB,false);
 				ObjRender_SetBlendType(shot1,BLEND_ADD_ARGB);
 			}
-			ascent(i in 0..5)
+			let tot = [3,5][DIFFICULTY];
+			ascent(i in 0..tot)
 			{
-				let ang2 = ang+360/5*i;
+				let ang2 = ang+360/tot*i;
 				let dis = 25;
 				let spd = 5;
 				let shot1 = ShotA2(ObjMove_GetX(obj)+dis*cos(ang2),ObjMove_GetY(obj)+dis*sin(ang2),spd,ang2,-spd/20,0,80,80,20,2,BLEND_ADD_ARGB,false);
 				ObjRender_SetBlendType(shot1,BLEND_ADD_ARGB);
 			}
-			ang+=13.213*bit;
+			
 		}
+		ang+=13.213/2*bit;
 		Fader(obj,sclMax);
 		cc++;
 		yield;

@@ -129,7 +129,7 @@ task Fire
 		ascent(i in 0..8)
 		{
 			let ang = 90+rand(5,-5);
-			let sprdAm = 20;
+			let sprdAm = [12,20][DIFFICULTY];
 			ascent(o in 0..sprdAm)
 			{
 				let ang2 = ang - 70*bit + 140/(sprdAm-1)*o*bit;
@@ -195,13 +195,13 @@ task CreateVine(x,y,ang,bit)
 	let randThorn = round(rand(0,3));
 	while(x>-16 && x<GetStgFrameWidth+16 && y>-16 && y<GetStgFrameHeight+16 && !Obj_IsDeleted(objEnemy))
 	{
-		if(cc%4==randThorn)
+		if(cc%[6,4][DIFFICULTY]==randThorn)
 		{
 			ascent(i in 0..2)
 			{
 				SE_PlayLen(shot1,60);
 				let obj = ShotA2(x,y,3,ang+90*bit-180*bit*i,-3/10,0,56,56,20,2,BLEND_ALPHA,false);
-				ObjMove_AddPatternA2(obj,20+60,0,NO_CHANGE,2/120,2,0);
+				ObjMove_AddPatternA2(obj,20+60,0,NO_CHANGE,2/120,[1.6,2][DIFFICULTY],0);
 			}
 			angChange--;
 		}

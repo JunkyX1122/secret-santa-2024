@@ -132,7 +132,7 @@ task Fire
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
-				if(i%(i>60*3 ? 1 : 3)==0)
+				if(i%(i>60*3 ? [2,1][DIFFICULTY] : [4,3][DIFFICULTY])==0)
 				{
 					SE_PlayLen(Shot1,60);
 					let obj = ShotA2(ObjMove_GetX(hammerObjects[5]),ObjMove_GetY(hammerObjects[5]),0,hammerAngle,1/120,1,297,297,20,2,BLEND_ADD_ARGB,false);
@@ -174,14 +174,15 @@ task Fire
 			LaserSweep(x,bit);
 			LaserSweep(x,-bit);
 		}
-		ascent(i in 0..40)
+		let stayr = [30,40][DIFFICULTY];
+		ascent(i in 0..stayr)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
 				loop(1)
 				{
-					let x = GetStgFrameWidth/2-105*bit - (GetStgFrameWidth/2+10) * bit + (GetStgFrameWidth+200)/39*i*bit;
-					let y = 255/2 + rand(-122,122) *sin(180/39*i);
+					let x = GetStgFrameWidth/2-105*bit - (GetStgFrameWidth/2+10) * bit + (GetStgFrameWidth+200)/(stayr-1)*i*bit;
+					let y = 255/2 + rand(-122,122) *sin(180/(stayr-1)*i);
 					let obj = ShotA1(x,y,0,90,293,293,20,2,BLEND_ADD_ARGB,false);
 					Obj_SetRenderPriority(obj,0.52);
 					ObjRender_SetColor(obj,255,128,128);
@@ -196,7 +197,7 @@ task Fire
 				yield;
 			}
 		}
-		wait(TREE_STAY-80-40);
+		wait(TREE_STAY-80-stayr);
 		if(!Obj_IsDeleted(objEnemy)) 
 		{
 			SE_PlayLen(Bone,70);
@@ -281,7 +282,7 @@ task LaserSweep(x,bit)
 		ObjLaser_SetInvalidLength(obj,0.2,0.2);
 		Obj_SetRenderPriority(obj,0.51);
 		let dis = 75;
-		if(counter%3==0)
+		if(counter%[5,3][DIFFICULTY]==0)
 		{
 			dis = 250;
 		}
@@ -330,15 +331,15 @@ task CreateVine(x,y,ang,bit,r1,r2)
 	let randThorn = round(rand(0,1));
 	while(x>-16 && x<GetStgFrameWidth+16 && y>-16 && y<GetStgFrameHeight+16 && !Obj_IsDeleted(objEnemy))
 	{
-		if(cc%2==randThorn && cc > 15)
+		if(cc%[4,2][DIFFICULTY]==randThorn && cc > 15)
 		{
 			ascent(i in 0..2)
 			{
 				SE_PlayLen(shot1,60);
 				let obj = ShotA2(x,y,3,ang+90*bit-180*bit*i,-3/10,0,52,52,20,2,BLEND_ALPHA,false);
 				let a = ObjMove_GetAngle(obj);
-				let spdX = 1*cos(a);
-				let spdy = 1*sin(a);
+				let spdX = 1*cos(a)*[0.8,1][DIFFICULTY];
+				let spdy = 1*sin(a)*[0.8,1][DIFFICULTY];
 				ObjMove_AddPatternB2(obj, TREE_STAY, spdX, spdy, 0, 0.015, 0, 10);
 			}
 		}

@@ -132,7 +132,7 @@ task DaisukeFire(bit)
 			{
 				if(i%3==0)
 				{
-					CreateLine(pX,pY,100,60);
+					CreateLine(pX,pY,100,90);
 				}
 				if(i==30)
 				{
@@ -162,9 +162,10 @@ task DaisukeFire(bit)
 					let obj = ShotA2(x,y,spd,ang+360/10*o*bit,-spd/10,0,293,293,5,2,BLEND_ADD_ARGB,false);
 					ObjShot_SetDeleteFrameA6(obj,15,1);
 				}
-				ascent(o in 0..20)
+				let tot = [13,20][DIFFICULTY];
+				ascent(o in 0..tot)
 				{
-					let obj = ShotA2(x,y,spd*1.2,ang+360/20*o*bit,-spd/10,1,140,140,5,2,BLEND_ADD_ARGB,false);
+					let obj = ShotA2(x,y,spd*1.2,ang+360/tot*o*bit,-spd/10,1,140,140,5,2,BLEND_ADD_ARGB,false);
 					//ObjShot_SetDeleteFrameA6(obj,15,1);
 				}
 				wait(5);
@@ -193,7 +194,7 @@ task DaisukeFire(bit)
 					let obj = ShotA2(ObjMove_GetX(objEnemy2)+dis*cos(ang),ObjMove_GetY(objEnemy2)+dis*sin(ang),spd,ang,-spd/10,0.4,293,293,0,2,BLEND_ADD_ARGB,false);
 					ObjMove_AddPatternA2(obj,120,NO_CHANGE,NO_CHANGE,3/100,3,0);
 					ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
-					let scl = 2-1/30*i;
+					let scl = [1.75,2][DIFFICULTY]-[0.75,1][DIFFICULTY]/30*i;
 					ObjShot_SetIntersectionScaleXY(obj,scl,scl);
 					ObjRender_SetScale(obj,scl);
 					
@@ -238,7 +239,7 @@ task CreateLine(x,y,d,t)
 				let ang2 = 360/32*o;
 				ObjPrim_SetVertexPosition(objLine , o, dis*cos(ang2), dis*sin(ang2),0);
 			}
-			ObjRender_SetAlpha(objLine,200-200*scl);
+			ObjRender_SetAlpha(objLine,255-255*scl);
 			
 			yield;
 		}
@@ -274,7 +275,7 @@ task TrinityKnot(sourceX,sourceY,angS,bit)
 		TrinityKnotPoint(angS+360/3*i*bit,dis,bit,103);
 	}
 	dis *= 0.85;
-	let am = 15;
+	let am = [9,15][DIFFICULTY];
 	ascent(i in 0..am)
 	{
 		if(!Obj_IsDeleted(objEnemy))
@@ -300,7 +301,7 @@ task TrinityKnot(sourceX,sourceY,angS,bit)
 	task TrinityKnotPoint(ang,dis,bit,id)
 	{
 
-		let t = 30;
+		let t = [18,30][DIFFICULTY];
 		ascent(i in 0..t)
 		{
 			if(!Obj_IsDeleted(objEnemy))

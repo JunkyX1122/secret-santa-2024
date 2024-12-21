@@ -143,12 +143,13 @@ task SullenFire(bit)
 	{
 		let randAng = 0;
 		let randX = rand(20,-20);
-		ascent(i in 0..7)
+		let tot = [6,7][DIFFICULTY];
+		ascent(i in 0..tot)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
 				let ang = -90+randAng*bit;
-				let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2-70)*bit + (GetStgFrameWidth+140)/6*i*bit + randX;
+				let x = GetStgFrameWidth/2 - (GetStgFrameWidth/2-70)*bit + (GetStgFrameWidth+140)/(tot-1)*i*bit + randX;
 				let y = ObjMove_GetY(objEnemy2)-50-50/6*i;
 				CrossSlash(x,y,ang,bit);
 				loop(5)
@@ -162,7 +163,7 @@ task SullenFire(bit)
 			}
 		}
 		
-		loop(90)
+		loop(90+[5,0][DIFFICULTY])
 		{
 			if(GetPlayerY>150)
 			{
@@ -178,7 +179,7 @@ task DaisukeFire(bit)
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		let randAng = GetAngleToPlayer(objEnemy2) + rand(10,-10);
-		let am = 17;
+		let am = [13,17][DIFFICULTY];
 		SE_PlayLen(LaserDelLong,60);
 		
 		ascent(i in 0..am)
@@ -201,7 +202,7 @@ task DaisukeFire(bit)
 			{
 				SE_PlayLen(shot1,60);
 				let ang = GetAngleToPlayer(objEnemy2)+rand(5,-5);
-				let sprdAm = 13;
+				let sprdAm = [9,13][DIFFICULTY];
 				let sprdder = 80;
 				ascent(o in 0..sprdAm)
 				{
@@ -213,9 +214,9 @@ task DaisukeFire(bit)
 					let y = ObjMove_GetY(objEnemy2) + dis*sin(ang2);
 					let obj = ShotA2(x,y,spd,ang2,-spd/40,0,388,422,20,2,BLEND_ADD_ARGB,false);
 					ObjMove_AddPatternA2(obj,40+60,0,NO_CHANGE,spd2/120,spd2,0);
-					ObjRender_SetScaleX(obj,0.5);
+					ObjRender_SetScaleX(obj,0.5*[0.8,1][DIFFICULTY]);
 					ObjRender_SetScaleY(obj,1);
-					ObjShot_SetIntersectionScaleXY(obj,0.7,0.7);
+					ObjShot_SetIntersectionScaleXY(obj,0.7*[0.8,1][DIFFICULTY],0.7*[0.8,1][DIFFICULTY]);
 				}
 				wait(7);
 			}
@@ -249,7 +250,7 @@ task Slasher(x,y,x2,y2,tim,shootBullets,isWarning,bit)
 	let dis = Get_Distance(x, y, x2, y2);
 	let ang = Get_PointAngle(x2,y2,x,y);
 	let angTot = 5;
-	let sprd = 50;
+	let sprd = [60,50][DIFFICULTY];
 	if(shootBullets==0)
 	{
 		
@@ -258,7 +259,7 @@ task Slasher(x,y,x2,y2,tim,shootBullets,isWarning,bit)
 			let ang2 = ang - sprd*bit + (sprd*2*bit)/(angTot-1)*i;
 			ascent(o in 0..5)
 			{
-				let s = 0.3+0.05/5*o;
+				let s = 0.3+0.05/5*o*[0.5,1][DIFFICULTY];
 				let shot = ShotA2(x,y,4*s,ang2,((6-4)*s)/40,6*s,54,423,10,2,BLEND_ADD_ARGB,false);
 				ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);
 			}
@@ -300,13 +301,13 @@ task Slasher(x,y,x2,y2,tim,shootBullets,isWarning,bit)
 	if(!Obj_IsDeleted(objEnemy))
 	{
 		angTot = 5;
-		sprd = 60;
+		sprd = [70,60][DIFFICULTY];
 		ascent(i in 0..angTot)
 		{
 			let ang2 = ang - sprd*bit + (sprd*2*bit)/(angTot-1)*i;
 			ascent(o in 0..5)
 			{
-				let s = 0.2+0.05/5*o;
+				let s = 0.2+0.05/5*o*[0.5,1][DIFFICULTY];
 				let shot = ShotA2(x2,y2,4*s,ang2,((6-4)*s)/40,6*s,56,423,10,2,BLEND_ADD_ARGB,false);
 				ObjRender_SetBlendType(shot,BLEND_ADD_ARGB);
 			}
