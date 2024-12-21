@@ -105,7 +105,8 @@ task Fire
 	let bit = 1-2*round(rand(0,1));
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		let tot = 20;
+		let waiterr = [4,3][DIFFICULTY];
+		let tot = [15,20][DIFFICULTY];
 		SE_PlayLen(charge0,60);
 		ObjMove_SetDestAtFrame(objEnemy, GetStgFrameWidth/2 - 200*bit + rand(20,-20), 100 + rand(20,-20), 60, LERP_SMOOTH);
 		wait(60);
@@ -120,7 +121,7 @@ task Fire
 			{
 				SE_PlayLen(shot1,60);
 				GrandisKnives(-90 - 90*bit + 180/(tot-1)*i*bit,90 + 20*bit - 40/(tot-1)*i*bit, bit,false);
-				wait(3);
+				wait(waiterr);
 			}
 		}
 		let ang = -90;
@@ -136,7 +137,7 @@ task Fire
 			{
 				SE_PlayLen(shot1,60);
 				GrandisKnives(ang - 360/(tot-1)*i*bit ,ang - 360/(tot-1)*i*bit, bit,false);
-				wait(3);
+				wait(waiterr);
 			}
 		}
 		ang = 90;
@@ -145,7 +146,7 @@ task Fire
 		{
 			SE_PlayLen(charge1,60);
 		}
-		tot = 22;
+		tot = [18,22][DIFFICULTY];
 		ascent(i in 0..tot)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
@@ -156,7 +157,7 @@ task Fire
 				{
 					GrandisKnives(ang +90*bit - 180/(tot-1)*i*bit ,ang +90*bit - (360+180)/(tot-1)*i*bit, bit,true);
 				}
-				wait(3);
+				wait(waiterr);
 			}
 		}
 		wait(240);
@@ -202,13 +203,13 @@ task GrandisKnives(ang,ang2,bit,aimPlayer)
 			let y = ObjMove_GetY(obj);
 			ObjShot_SetDeleteFrameA6(obj, 0, 2);
 			let alph = 128;
-			let tot2 = 3;
+			let tot2 = [2,3][DIFFICULTY];
 			let sprd = 40;
 			ascent(i in 0..5)
 			{
 				let obj = ShotA1(x,y,1,ang2-sprd*bit + (sprd*2)/(tot2-1)*i*bit,459,418,20,2,BLEND_ALPHA,false);
 			}
-			ascent(i in 0..20)
+			ascent(i in 0..[10,20][DIFFICULTY])
 			{
 				if(!Obj_IsDeleted(objEnemy)) 
 				{

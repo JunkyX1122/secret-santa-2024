@@ -129,7 +129,7 @@ task Fire
 		wait(ATTACK_DELAY);
 		ObjMove_SetDestAtFrameWeight(objEnemy, GetPlayerX, 150, 40);
 		bit*=-1;
-		wait(120);
+		wait(140);
 		ObjEnemy_SetDamageRate(objEnemy, (0.13/3)/1.5, (0.13/3)/3);
 	}
 }
@@ -143,7 +143,7 @@ task GrandisDashAttack(y, bit, type, spdScl)
 	}
 	wait(ATTACK_DELAY);
 	
-	let totalT = 10;
+	let totalT = [7,10][DIFFICULTY];
 	let SHTID = [324,325];
 	let waiter = 1;
 	let t = round(totalT / waiter);
@@ -158,9 +158,9 @@ task GrandisDashAttack(y, bit, type, spdScl)
 	{
 		if(!Obj_IsDeleted(objEnemy))
 		{
-			ascent(o in 0..[5, 3][type])
+			ascent(o in 0..[[4,5][DIFFICULTY], [2,3][DIFFICULTY]][type])
 			{
-				let spd = (3+o*[1.5, 0.5][type])*spdScl;
+				let spd = (3+o*[1.5, 0.5][type])*spdScl * [0.8,1][DIFFICULTY];
 				let sprd = 20+70/4*o;
 				let acclTime = 120;
 				let id = SHTID[(i)%2];

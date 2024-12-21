@@ -95,7 +95,7 @@ task Fire
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		LaserSweep(bit);
-		wait(90);
+		wait([132,90][DIFFICULTY]);
 		bit*=-1;
 	}
 }
@@ -104,14 +104,15 @@ task SlashPassive(bit)
 {
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		PortalSlash(GetPlayerX,GetPlayerY,rand(1,15)*bit,120, 1);
-		wait(160);
+		PortalSlash(GetPlayerX,GetPlayerY,rand(1,15)*bit,[160,120][DIFFICULTY], 1);
+		wait([200,160][DIFFICULTY]);
 		bit*=-1;
 	}
 }
 
 task KnifePassive(bit)
 {
+	let tot = [20,30][DIFFICULTY];
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(shot1,60);
@@ -119,9 +120,9 @@ task KnifePassive(bit)
 		let ang = rand(0,360);
 		ascent(o in 0..2)
 		{
-			ascent(i in 0..30)
+			ascent(i in 0..tot)
 			{
-				let ang2 = ang+360/30*i*bit + 180/30*o*bit;
+				let ang2 = ang+360/tot*i*bit + 180/tot*o*bit;
 				let spd = 4-o;
 				let finalSpd = 1.5;
 				let obj = ShotA2(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang2, -(spd-finalSpd)/60, finalSpd, 326, 419, 10, 2, BLEND_ALPHA, true);
@@ -142,7 +143,7 @@ task LaserSweep(bit)
 			let ang = 90-180*bit + 190*bit*sin(90/39*i);
 			let y = ObjMove_GetY(objEnemy);
 			Laser(x,y,0,ang);
-			wait(3);
+			wait([4,3][DIFFICULTY]);
 		}
 	}
 }

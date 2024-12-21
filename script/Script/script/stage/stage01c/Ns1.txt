@@ -106,7 +106,7 @@ task LaserPassive(bit)
 {
 	let ang1 = 0-90*bit;
 	let ang2 = 180-90*bit;
-	let adda = 7.43543;
+	let adda = 7.43543+[4.5,0][DIFFICULTY];
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		Laser(ObjMove_GetX(objEnemy) + 150, ObjMove_GetY(objEnemy), 0,ang1);
@@ -114,7 +114,7 @@ task LaserPassive(bit)
 		
 		ang1-=adda;
 		ang2+=adda;
-		wait(4);
+		wait([7,4][DIFFICULTY]);
 	}
 }
 
@@ -122,18 +122,19 @@ task KnifeBurst(bit)
 {
 	while(!Obj_IsDeleted(objEnemy))
 	{
-		let tot = 12;
+		let tot = [8,12][DIFFICULTY];
 		let ang = GetAngleToPlayer(objEnemy);
 		let minSpd = 1;
-		let adderSpd = 7;
+		let adderSpd = [5,7][DIFFICULTY];
 		SE_PlayLen(charge1,60);
-		ascent(i in 0..20)
+		let tot2 = 20;
+		ascent(i in 0..tot2)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
 				let angP = 360/tot*round(rand(0,20));
 				SE_PlayLen(shot1,60);
-				let spd = minSpd+adderSpd/19*i;
+				let spd = minSpd+adderSpd/(tot2-1)*i;
 				ascent(o in 0..tot)
 				{
 					let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang+360/tot*o*bit+angP, 326, 419, 5, 2, BLEND_ALPHA, true);
@@ -141,13 +142,13 @@ task KnifeBurst(bit)
 				wait(2);
 			}
 		}
-		ascent(i in 0..20)
+		ascent(i in 0..tot2)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
 				let angP = 360/tot*round(rand(0,20)) + 180/tot*bit;
 				SE_PlayLen(shot1,60);
-				let spd = minSpd+adderSpd/19*i;
+				let spd = minSpd+adderSpd/(tot2-1)*i;
 				ascent(o in 0..tot)
 				{
 					let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), spd, ang+360/tot*o*bit+angP, 325, 418, 5, 2, BLEND_ALPHA, true);
@@ -168,14 +169,13 @@ task Laser(x,y,del,angle)
 	if(!Obj_IsDeleted(objEnemy))
 	{
 		SE_PlayLen(laser0,40);
-	
 	//let obj1 = CreateLooseLaserA1(ObjMove_GetX(famz)+20*cos(angleT),ObjMove_GetY(famz)+20*sin(angleT), 4, angleT, 160, 30, 422, 10);
-		let obj2 = CreateLooseLaserA1(x,y, 10, angle, 200, 9, 293, 10);
+		let obj2 = CreateLooseLaserA1(x,y, 10, angle, [150,200][DIFFICULTY], 9, 293, 10);
 		ObjLaser_SetInvalidLength(obj2, 0, 0.2);
 		let obj3 = CreateShotA1(x,y, 10, angle, 436, 12);
 		
-		ObjMove_SetMaxSpeed(obj2,4);
-		ObjMove_SetMaxSpeed(obj3,4);
+		ObjMove_SetMaxSpeed(obj2,[3,4][DIFFICULTY]);
+		ObjMove_SetMaxSpeed(obj3,[3,4][DIFFICULTY]);
 		ObjMove_SetAcceleration(obj2,-0.4);
 		ObjMove_SetAcceleration(obj3,-0.4);
 		ObjRender_SetBlendType(obj3,BLEND_ADD_ARGB);
