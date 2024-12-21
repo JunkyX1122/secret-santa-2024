@@ -132,6 +132,7 @@ task KeiranFire(bit)
 	let y = ObjMove_GetY(objEnemy2);
 	let cc = 0;
 	let pXY = [0,0];
+	let shotDelayy = [9,7][DIFFICULTY];
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		x = x * 0.95 + ObjMove_GetX(objEnemy2) * 0.05;
@@ -144,23 +145,23 @@ task KeiranFire(bit)
 		{
 			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(-50,50), rand(95,110), 90);
 		}
-		if(cc%(7*(5+3))==0)
+		if(cc%(shotDelayy*(5+3))==0)
 		{
 			pXY = [GetPlayerX, GetPlayerY];
 			
 		}
-		if(cc%7==0 && cc%(7*(5+3)) < 7*5)
+		if(cc%shotDelayy==0 && cc%(shotDelayy*(5+3)) < shotDelayy*[4,5][DIFFICULTY])
 		{
 			SE_PlayLen(chime1,30);
 			SE_PlayLen(shot1,60);
-			let sprd = 70;
+			let sprd = [80,70][DIFFICULTY];
 			let sprdCount = 9;
 		
 			ascent(i in 0..sprdCount)
 			{
 				let ang3 = Get_PointAngle(pXY[0],pXY[1],ObjMove_GetX(objGyro),ObjMove_GetY(objGyro));
 				let ang2 = ang3 - sprd * bit + (sprd*2)/(sprdCount-1)*i * bit;
-				let objS = ShotA2(ObjMove_GetX(objGyro),ObjMove_GetY(objGyro),12,ang2,-9/20,3,187,187,5,3,BLEND_ALPHA,true);
+				let objS = ShotA2(ObjMove_GetX(objGyro),ObjMove_GetY(objGyro),12,ang2,-9/[15,20][DIFFICULTY],[2.5,3][DIFFICULTY],187,187,5,3,BLEND_ALPHA,true);
 			}
 		}
 		
@@ -185,11 +186,11 @@ task ScyllaFire(bit)
 			{
 				if(!Obj_IsDeleted(objEnemy)) 
 				{
-					if(i%2==0)
+					if(i%[4,2][DIFFICULTY]==0)
 					{
 						SE_PlayLen(shot1,60);
-						let dis = 30 + (180-30)/(t-1)*i;
-						let spd = 0.5+9/(t-1)*i;
+						let dis = [50,30][DIFFICULTY] + (180-[10,30][DIFFICULTY])/(t-1)*i;
+						let spd = 0.5+[7,9][DIFFICULTY]/(t-1)*i;
 						ascent(o in 0..spread)
 						{
 							
@@ -231,10 +232,10 @@ task ScyllaFire(bit)
 				let newAng = (angTo+180) - diffAbs*bit + diffAbs*bit * Interpolate_Decelerate(0, 1, 1/(t-1)*i); 
 		
 				ObjMove_SetPosition(objEnemy, centrePivot[0] + disTo/2 * cos(newAng), centrePivot[1] + disTo/2 * sin(newAng));
-				if(i%2==0)
+				if(i%[3,2][DIFFICULTY]==0)
 				{
 					SE_PlayLen(shot1,60);
-					let dis = 30 + (180-30)/(t-1)*i;
+					let dis = [50,30][DIFFICULTY] + (180-[10,30][DIFFICULTY])/(t-1)*i;
 					let spd = 0.5+9/(t-1)*i;
 					ascent(o in 0..spread)
 					{

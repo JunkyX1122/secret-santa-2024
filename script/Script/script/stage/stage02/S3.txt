@@ -303,7 +303,7 @@ task ManageBladeGyros(bit)
 	
 		ascent(i in 0..spacing)
 		{
-			let x = 30+(GetStgFrameWidth-30*2)/(spacing-1)*i;
+			let x = [0,30][DIFFICULTY]+(GetStgFrameWidth-[0,30][DIFFICULTY]*2)/(spacing-1)*i;
 			if(i!=randG)
 			{
 				let obj = ShredderGyro(rand(0,360),bit,60);
@@ -321,18 +321,18 @@ task ManageBladeGyros(bit)
 				DelayedAlpha(obj);
 			}
 		}
-		wait(60*1.5);
+		wait(60*[1.8,1.5][DIFFICULTY]);
 		ObjMove_SetDestAtFrameWeight(objEnemy2, ObjMove_GetX(objEnemy2), 50, 29);
 		ascent(i in 0..30)
 		{	
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
-				if(i%2==0)
+				if(i%[3,2][DIFFICULTY]==0)
 				{
 					ascent(o in 0..2)
 					{
 						SE_PlayLen(shot1,60);
-						let objS = ShotA2(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),0,0+180*bit*o,3/60,3,331,331,10,3,BLEND_ALPHA,true);
+						let objS = ShotA2(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),0,0+180*bit*o,3/60,[2.5,3][DIFFICULTY],331,331,10,3,BLEND_ALPHA,true);
 					}
 				}
 				yield;
@@ -341,12 +341,13 @@ task ManageBladeGyros(bit)
 		if(!Obj_IsDeleted(objEnemy)) 
 		{
 			SE_PlayLen(chime1,60);
-			ascent(i in 0..30)
+			let tot = [20,30][DIFFICULTY];
+			ascent(i in 0..tot)
 			{
-				ascent(o in 0..4)
+				ascent(o in 0..[3,4][DIFFICULTY])
 				{
-					let spd = 3+o;
-					let objS = ShotA2(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),0,90+360/30*i*bit,spd/60,spd,130,130,10,3,BLEND_ALPHA,true);
+					let spd = [2,3][DIFFICULTY]+o*[0.7,1][DIFFICULTY];
+					let objS = ShotA2(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),0,90+360/tot*i*bit,spd/60,spd,130,130,10,3,BLEND_ALPHA,true);
 				}
 			}
 			wait(20);
@@ -356,7 +357,7 @@ task ManageBladeGyros(bit)
 		{
 			if(!Obj_IsDeleted(objEnemy)) 
 			{
-				if(i%4==0)
+				if(i%[7,4][DIFFICULTY]==0)
 				{
 					SE_PlayLen(shot1,60);
 					let objS = ShotA2(ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2),0,90,1/60,1,331,331,10,3,BLEND_ALPHA,true);
@@ -436,7 +437,7 @@ task BladeSpin(objGyro,ang,bit)
 		let angTo = Get_PointAngle(x2,y2,x,y);
 		
 		ObjMove_SetPosition(obj,ObjMove_GetX(objGyro)+x,ObjMove_GetY(objGyro)+y);
-		ObjLaser_SetLength(obj,disTo);
+		ObjLaser_SetLength(obj,disTo * [0.9,1][DIFFICULTY]);
 		ObjStLaser_SetAngle(obj,angTo);
 		
 		cc++;

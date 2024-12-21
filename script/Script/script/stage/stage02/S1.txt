@@ -134,13 +134,13 @@ task Fire
 	while(!Obj_IsDeleted(objEnemy))
 	{
 		staffXY = [ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy)];
-		if(cc%18==0)
+		if(cc%[24,18][DIFFICULTY]==0)
 		{
 			ascent(i in 0..angSpn)
 			{
 				let ang = (cc/18)*5.213*bit + 360/angSpn*i;
 				let x = GetStgFrameWidth/2+(GetStgFrameWidth/2+100)*bit * sin(ang);
-				let objS = ShotA2(x,GetStgFrameHeight,0,-90,6/120,6,299,299,20,3,BLEND_ADD_ARGB,false);
+				let objS = ShotA2(x,GetStgFrameHeight,0,-90,6/120,[2,6][DIFFICULTY],299,299,20,3,BLEND_ADD_ARGB,false);
 			}
 		}
 		if(cc%120==119)
@@ -214,24 +214,25 @@ task StaffHandle(bit)
 			playerForce = 10;
 		}
 		playerForce--;
-		if(cc%(3-2*ceil((spnAm-22)/30))==0)
+		if(cc%([4,3][DIFFICULTY]-2*ceil((spnAm-22)/30))==0)
 		{
+			let spdd = [3,4][DIFFICULTY];
 			SE_PlayLen(shot1,60);
 			ascent(o in 0..2)
 			{
-				let objS = ShotA2(staffXY[0]+125*cos(ang), staffXY[1]+125*sin(ang),0,ang,4/60,4,[57,50][o],[57,50][o],20,3,BLEND_ALPHA,false);
+				let objS = ShotA2(staffXY[0]+125*cos(ang), staffXY[1]+125*sin(ang),0,ang,spdd/60,spdd,[57,50][o],[57,50][o],20,3,BLEND_ALPHA,false);
 				ang+=180;
 			}
 		}
 		if(onHit)
 		{
-			let tot = 14;
+			let tot = [8,14][DIFFICULTY];
 			ascent(o in 0..tot)
 			{
 				let objS = ShotA2(staffXY[0]+125*cos(ang), staffXY[1]+125*sin(ang),4,ang-90*bit,-3/60,1,152,152,5,3,BLEND_ALPHA,false);
 				ang+=360/tot;
 			}
-			let tot2 = tot/2;
+			let tot2 = round(tot/2);
 			ascent(o in 0..10)
 			{
 				let ang2 = ang + 180/tot*bit + 360/tot2*o*bit;

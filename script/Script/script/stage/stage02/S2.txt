@@ -123,7 +123,7 @@ let objEnemy2 = CreateFamiliar;
 task Fire
 {
 	let bit = 1-2*round(rand(0,1));
-	let sprd = 20;
+	let sprd = [14,20][DIFFICULTY];
 	
 	while(!Obj_IsDeleted(objEnemy))
 	{
@@ -188,17 +188,18 @@ task Fire
 		{
 			ObjMove_SetY(objEnemy,-800);
 			LasterBlast(x);
-			ascent(i in 0..30)
+			let tot = [20,30][DIFFICULTY];
+			ascent(i in 0..tot)
 			{
 				loop(2)
 				{
-					let angle = -90+ 90/30*i*bit;
-					Laser(x,-100+(GetStgFrameHeight+100)/29*i,0,angle);
+					let angle = -90+ 90/tot*i*bit;
+					Laser(x,-100+(GetStgFrameHeight+100)/(tot-1)*i,0,angle);
 					bit*=-1;
 				}
 			}
 		}
-		ascent(i in 0..4)
+		ascent(i in [1,0][DIFFICULTY]..4)
 		{
 			if(!Obj_IsDeleted(objEnemy))
 			{
@@ -246,20 +247,24 @@ task Fire
 				
 				ascent(o in 0..amountBetween)
 				{
+					
 					let spreader = 40-20/(20*amountBetween)*counter;
-					ascent(xP in 0..3)
+					if(counter%[2,1][DIFFICULTY]==0)
 					{
-						ascent(p in 0..sclAm)
+						ascent(xP in 0..3)
 						{
-							let s = 1/(sclAm-1)*p;
-							let scl = 1.5-0.5*s;
-							let yT = y + ySeg/amountBetween*o;
-							let objS = ShotA1(ObjMove_GetX(objEnemy) - spreader*bit + ((spreader*2)/2)*xP * bit,yT,0,ang+360/3*bit*xP,425,418,0,2,BLEND_ADD_ARGB,false);
-							ObjRender_SetColor(objS,255,255*s*2,255*s);
-							ManualDelay(objS,scl,d);
-							
-							let spd = 5 - 4/(amountTotal*amountBetween)*counter;
-							ObjMove_AddPatternA2(objS, d, 0, NO_CHANGE, spd/120, spd, 0);
+							ascent(p in 0..sclAm)
+							{
+								let s = 1/(sclAm-1)*p;
+								let scl = 1.5-0.5*s;
+								let yT = y + ySeg/amountBetween*o;
+								let objS = ShotA1(ObjMove_GetX(objEnemy) - spreader*bit + ((spreader*2)/2)*xP * bit,yT,0,ang+360/3*bit*xP,425,418,0,2,BLEND_ADD_ARGB,false);
+								ObjRender_SetColor(objS,255,255*s*2,255*s);
+								ManualDelay(objS,scl,d);
+								
+								let spd = (5 - 4/(amountTotal*amountBetween)*counter)*[0.8,1][DIFFICULTY];
+								ObjMove_AddPatternA2(objS, d, 0, NO_CHANGE, spd/120, spd, 0);
+							}
 						}
 					}
 					counter++;
@@ -295,8 +300,8 @@ task Laser(x,y,del,angle)
 		let obj3 = CreateLooseLaserA1(x,y, 20, angle, 26, 26, 438, 9);
 		ObjMove_SetMaxSpeed(obj2,1);
 		ObjMove_SetMaxSpeed(obj3,1);
-		ObjMove_SetAcceleration(obj2,-19/13);
-		ObjMove_SetAcceleration(obj3,-19/13);
+		ObjMove_SetAcceleration(obj2,-19/[10,13][DIFFICULTY]);
+		ObjMove_SetAcceleration(obj3,-19/[10,13][DIFFICULTY]);
 		//ObjRender_SetBlendType(obj1,BLEND_ADD_ARGB);
 		//ObjRender_SetAlpha(obj1,196);
 		//ObjShot_SetIntersectionEnable(obj1, false);
@@ -332,7 +337,7 @@ task BulletSweep(x,bit,cc,sprd)
 
 	while(x > -16 && x < GetStgFrameWidth + 16 && !Obj_IsDeleted(objEnemy))
 	{
-		if(cc%9==0)
+		if(cc%[12,9][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
 			let mspd = (3-1.5/3*sprd) * (1-0.005*cc);
@@ -353,11 +358,11 @@ task BulletSweep2(x,bit,cc)
 
 	while(x > -16 && x < GetStgFrameWidth + 16 && !Obj_IsDeleted(objEnemy))
 	{
-		if(cc%3==0)
+		if(cc%[6,3][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
 			let sclAm = 3;
-			ascent(i in 0..4)
+			ascent(i in 0..[3,4][DIFFICULTY])
 			{
 				ascent(p in 0..sclAm)
 				{

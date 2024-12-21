@@ -129,7 +129,7 @@ task KeiranFire(bit)
 			let ang2 = ang+360/t*i*bit;
 			ShredderGyro(ang2,bit);
 		}
-		wait(60*3);
+		wait(60*[4,3][DIFFICULTY]);
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			ang = GetAngleToPlayer(objEnemy);
@@ -140,7 +140,7 @@ task KeiranFire(bit)
 				let ang2 = ang+360/t*i*bit + 180/t*bit;
 				BlastGyro(ang2,bit);
 			}
-			wait(60*3);
+			wait(60*[3.5,3][DIFFICULTY]);
 		}
 		ObjEnemy_SetDamageRate(objEnemy, (0.07)/1.5, (0.07)/3);
 		bit*=-1;
@@ -151,7 +151,7 @@ task KeiranFire(bit)
 		ObjEnemy_SetAutoDelete(objGyro,true);
 		renderGyro(objGyro,2);
 		ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2));
-		ObjMove_AddPatternA2(objGyro, 0, 2, ang, 0, 0, 0);
+		ObjMove_AddPatternA2(objGyro, 0, [1.7,2][DIFFICULTY], ang, 0, 0, 0);
 		ascent(i in 0..8)
 		{
 			BladeSpin(objGyro,ang+360/8*i,bit);
@@ -174,7 +174,7 @@ task KeiranFire(bit)
 		ObjEnemy_SetAutoDelete(objGyro,true);
 		renderGyro(objGyro,0);
 		ObjMove_SetPosition(objGyro,ObjMove_GetX(objEnemy2),ObjMove_GetY(objEnemy2));
-		ObjMove_AddPatternA2(objGyro, 0, 2, ang, 0, 0, 0);
+		ObjMove_AddPatternA2(objGyro, 0, [1.7,2][DIFFICULTY], ang, 0, 0, 0);
 		BlastHandle(objGyro);
 		return objGyro;
 	}
@@ -219,7 +219,7 @@ task KeiranFire(bit)
 			let angTo = Get_PointAngle(x2,y2,x,y);
 			
 			ObjMove_SetPosition(obj,ObjMove_GetX(objGyro)+x,ObjMove_GetY(objGyro)+y);
-			ObjLaser_SetLength(obj,disTo);
+			ObjLaser_SetLength(obj,disTo * [0.8,1][DIFFICULTY]);
 			ObjStLaser_SetAngle(obj,angTo);
 			
 			cc++;
@@ -249,7 +249,7 @@ task KeiranFire(bit)
 			RenderFlare(obj,IMG_SUN3,512,0.25,10,60,-1,true,0.7,[255,165,64]);
 			RenderFlare(obj,IMG_SUN3,512,0.25,10,60,1,true,0.7,[255,165,64]);
 			Obj_Delete(objGyro);
-			let sprd = 20;
+			let sprd = [15,20][DIFFICULTY];
 			ascent(i in 0..sprd)
 			{
 				let ang2 = ang+360/sprd*i;
@@ -258,7 +258,7 @@ task KeiranFire(bit)
 					let idd = [425,425,430][o];
 					let objS = ShotA2(x,y,5,ang2,-5/20,0,idd,idd,0,3,BLEND_ADD_ARGB,false);
 					ObjRender_SetBlendType(objS,[BLEND_ADD_ARGB,BLEND_ADD_ARGB,BLEND_SUBTRACT][o]);
-					ObjMove_AddPatternA2(objS, 60, 0, NO_CHANGE, 2/180, 2, 0);
+					ObjMove_AddPatternA2(objS, 60, 0, NO_CHANGE, 2/180, [1.6,2][DIFFICULTY], 0);
 					ObjRender_SetScale(objS,[1,1.4,1.2][o]);
 					ObjRender_SetAlpha(objS,200);
 					Obj_SetRenderPriority(objS, [0.5,0.5,0.49][o]);
@@ -287,13 +287,13 @@ task ScyllaFire(bit)
 		let cc = 0;
 		while(isTeleporting&&!Obj_IsDeleted(objEnemy))
 		{
-			if(cc%4==0)
+			if(cc%[7,4][DIFFICULTY]==0)
 			{
 				SE_PlayLen(shot1,60);
 				ascent(i in 0..3)
 				{
-					let ang = 90-20*bit+40/2*i*bit;
-					let objS = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,ang,2/30,3,130,130,10,3,BLEND_ALPHA,false);
+					let ang = 90-[30,20][DIFFICULTY]*bit+[60,40][DIFFICULTY]/2*i*bit;
+					let objS = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),1,ang,2/30,[2.35,3][DIFFICULTY],130,130,10,3,BLEND_ALPHA,false);
 				}
 			}
 			cc++;
@@ -302,9 +302,10 @@ task ScyllaFire(bit)
 		if(!Obj_IsDeleted(objEnemy))
 		{
 			SE_PlayLen(shot1,60);
-			ascent(i in 0..20)
+			let tot = [16,20][DIFFICULTY];
+			ascent(i in 0..tot)
 			{
-				let ang = GetAngleToPlayer(objEnemy)-360/20*i*bit;
+				let ang = GetAngleToPlayer(objEnemy)-360/tot*i*bit;
 				let objS = ShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),16,ang,-14/20,2,331,331,10,3,BLEND_ALPHA,false);
 			}
 			
