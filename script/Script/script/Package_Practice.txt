@@ -483,8 +483,9 @@ task Practice_StageOptions()
 	selectableStageArray = [];
 	ascent(i in 0..length(AVAILABLE_STAGES))
 	{
-		CreateStageOption(i);
+		
 		selectableStageArray ~= [true];
+		CreateStageOption(i);
 	}
 	
 	task CreateStageOption(id)
@@ -526,6 +527,26 @@ task Practice_StageOptions()
 		ObjRender_SetPosition(objPStgSF,GetScreenWidth/2,opY,0);
 		ObjRender_SetAlpha(objPStgSF,0);
 		
+		if(id==STAGE_1a || id==STAGE_4a)
+		{
+			selectableStageArray[id] = selectedTeam == PLAYERTEAM_A;
+		}
+		else if(id==STAGE_1b || id==STAGE_4b)
+		{
+			selectableStageArray[id] = selectedTeam == PLAYERTEAM_B;
+		}
+		else if(id==STAGE_1c || id==STAGE_4c)
+		{
+			selectableStageArray[id] = selectedTeam == PLAYERTEAM_C;
+		}
+		let coll = selectableStageArray[id] ? (140) : 32;
+		
+		
+		
+		
+		
+		ObjRender_SetColor(objStageText,coll,coll,coll);
+		
 		let t = PRACTICEMENU_TRANSITION;
 		ascent(i in 0..t)
 		{	
@@ -556,7 +577,7 @@ task Practice_StageOptions()
 			{
 				selectableStageArray[id] = selectedTeam == PLAYERTEAM_C;
 			}
-			let coll = selectableStageArray[id] ? (selectedPracticeStage == id ? 255 : 140) : 32;
+			coll = selectableStageArray[id] ? (selectedPracticeStage == id ? 255 : 140) : 32;
 			
 			ObjRender_SetColor(objStageText,coll,coll,coll);
 			ObjRender_SetAlpha(objPStgSB,255*selAlph*practice_AlphaScl * (0.7 + 0.3 * scl1) * isStageSelecting);

@@ -146,12 +146,6 @@ task Title_Display()
 			else
 			{
 				let hasCanceledPractice = PracticeScreen();
-				if(hasCanceledPractice)
-				{
-					isLooping = false;
-					Title_Display();
-				}
-				isLooping = false;
 			}
 		}
 	}
