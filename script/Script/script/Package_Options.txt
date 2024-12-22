@@ -259,7 +259,7 @@ task Options_BoxRender()
 		[0,0,0],
 		GetScreenWidth/2,
 		GetScreenHeight/2-215,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	ObjText_SetFontBorderWidth(objOptionsTitle, 2);
@@ -296,7 +296,7 @@ task Options_SubBoxRender()
 		[0,0,0],
 		GetScreenWidth/2-300,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	ObjText_SetFontBorderWidth(objAvOp, 2);
 	ObjText_SetFontBorderType(objAvOp, BORDER_FULL);
@@ -310,7 +310,7 @@ task Options_SubBoxRender()
 		[0,0,0],
 		GetScreenWidth/2 + 190,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	ObjText_SetFontBorderWidth(objOpDat, 2);
 	ObjText_SetFontBorderType(objOpDat, BORDER_FULL);
@@ -366,7 +366,7 @@ task Options_CreateOptions()
 		[0,0,0],
 		GetScreenWidth/2 - 370,
 		opY,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 		
 		ObjText_SetFontBorderWidth(objOptionsText, 1);
@@ -463,7 +463,7 @@ task Options_CreateOptions()
 			[0,0,0],
 			x - 129 + round(129*2 * statScl),
 			opY,
-			"Lucida Fax Demibold",
+			"Lucida Fax",
 			BASE_RENDERI+8);
 
 			let t = OPTIONSMENU_TRANSITION;
@@ -518,7 +518,7 @@ task Options_CreateOptions()
 				[0,0,0],
 				x,
 				opY,
-				"Lucida Fax Demibold",
+				"Lucida Fax",
 				BASE_RENDERI+8);
 				
 			ObjText_SetFontBorderWidth(objOptionsInputText, 1);

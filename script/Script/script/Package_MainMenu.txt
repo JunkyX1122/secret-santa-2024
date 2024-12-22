@@ -278,7 +278,7 @@ task CreateMainMenuOption(id)
 		[0,0,0],
 		GetScreenWidth/2,
 		y,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	let coll = 140;

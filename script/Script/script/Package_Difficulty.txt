@@ -104,7 +104,7 @@ task DifficultyBoxRender()
 		[0,0,0],
 		diffBoxX,
 		diffBoxY-65,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 		
 	let objDiffSub = CreateText(
@@ -115,7 +115,7 @@ task DifficultyBoxRender()
 		[0,0,0],
 		diffBoxX,
 		diffBoxY-40,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 		
 	let objDiffSub2 = CreateText(
@@ -126,7 +126,7 @@ task DifficultyBoxRender()
 		[0,0,0],
 		diffBoxX,
 		diffBoxY-28,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 		
 	let objMMB = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -210,7 +210,7 @@ task CreateDifficultyOption(id)
 		[0,0,0],
 		diffBoxX,
 		y,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 		
 	let coll = 140;

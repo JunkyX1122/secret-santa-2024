@@ -115,7 +115,8 @@ task NameDisplay(x,y,id)
 	
 	let titleColor = [DIALOGUE_COLOURS[id][0] + 64,DIALOGUE_COLOURS[id][1] + 64,DIALOGUE_COLOURS[id][2] + 64];
 	let objTitle = ObjText_Create();
-	ObjText_SetFontType(objTitle, "Lucida Fax Demibold");
+	ObjText_SetFontType(objTitle, "Lucida Fax");
+	ObjText_SetFontBold(objTitle, true);
 	ObjText_SetFontSize(objTitle, 16);
 	ObjText_SetFontColorTop(objTitle, titleColor[0], titleColor[1], titleColor[2]);
 	ObjText_SetFontColorBottom(objTitle, titleColor[0], titleColor[1], titleColor[2]);	
@@ -130,7 +131,8 @@ task NameDisplay(x,y,id)
 	ObjRender_SetPosition(objTitle,round(x-GetScreenWidth/2),round(y-20 - ObjText_GetTotalHeight(objTitle)/2),0);
 	
 	let objName = ObjText_Create();
-	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontType(objName, "Lucida Fax");
+	ObjText_SetFontBold(objName, true);
 	ObjText_SetFontSize(objName, 26);
 	ObjText_SetFontColorTop(objName, 255, 255, 255);
 	ObjText_SetFontColorBottom(objName, 255,255,255);	
@@ -198,7 +200,8 @@ task NameDisplay(x,y,id,title,name)
 	
 	let titleColor = [DIALOGUE_COLOURS[id][0] + 64,DIALOGUE_COLOURS[id][1] + 64,DIALOGUE_COLOURS[id][2] + 64];
 	let objTitle = ObjText_Create();
-	ObjText_SetFontType(objTitle, "Lucida Fax Demibold");
+	ObjText_SetFontType(objTitle, "Lucida Fax");
+	ObjText_SetFontBold(objTitle, true);
 	ObjText_SetFontSize(objTitle, 16);
 	ObjText_SetFontColorTop(objTitle, titleColor[0], titleColor[1], titleColor[2]);
 	ObjText_SetFontColorBottom(objTitle, titleColor[0], titleColor[1], titleColor[2]);	
@@ -213,7 +216,8 @@ task NameDisplay(x,y,id,title,name)
 	ObjRender_SetPosition(objTitle,round(x-GetScreenWidth/2),round(y-20 - ObjText_GetTotalHeight(objTitle)/2),0);
 	
 	let objName = ObjText_Create();
-	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontType(objName, "Lucida Fax");
+	ObjText_SetFontBold(objName, true);
 	ObjText_SetFontSize(objName, 26);
 	ObjText_SetFontColorTop(objName, 255, 255, 255);
 	ObjText_SetFontColorBottom(objName, 255,255,255);	

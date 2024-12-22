@@ -343,7 +343,7 @@ task Gallery_ShowImages()
 		[0,0,0],
 		GetScreenWidth/2,
 		15,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	ObjText_SetFontBorderWidth(objCurrentPage,2);
@@ -355,7 +355,7 @@ task Gallery_ShowImages()
 		[0,0,0],
 		10,
 		GetScreenHeight-113,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	ObjText_SetFontBorderWidth(objInstructions,2);
@@ -375,7 +375,7 @@ task Gallery_ShowImages()
 		[0,0,0],
 		GetScreenWidth/2,
 		GetScreenHeight/2,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	
 	let t = GALLERY_TRANSITION;

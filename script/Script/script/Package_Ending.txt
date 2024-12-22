@@ -132,7 +132,7 @@ task DisplayPlayerSpell(text, y, col, holdTextTime)
 		[0,0,0],
 		GetScreenWidth/2,
 		GetScreenHeight/2,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		85);
 		
 	let heightBar = 10;
@@ -600,7 +600,7 @@ function Credits()
 	{
 		let objCatag = ObjText_Create;
 		ObjText_SetText(objCatag,text1);
-		ObjText_SetFontType(objCatag, "Lucida Fax Demibold");
+		ObjText_SetFontType(objCatag, "Lucida Fax");
 
 		ObjText_SetHorizontalAlignment(objCatag, ALIGNMENT_CENTER);
 		ObjText_SetMaxWidth(objCatag, GetScreenWidth-24);
@@ -624,7 +624,8 @@ function Credits()
 		let credits_row_gap = 15;
 		let objCatag = ObjText_Create;
 		ObjText_SetText(objCatag,text1);
-		ObjText_SetFontType(objCatag, "Lucida Fax Demibold");
+		ObjText_SetFontType(objCatag, "Lucida Fax");
+		ObjText_SetFontBold(objCatag, true);
 		ObjText_SetFontSize(objCatag,16);
 		ObjText_SetFontColorTop(objCatag,255,255,255);
 		ObjText_SetFontColorBottom(objCatag, 255, 255, 255);
@@ -633,7 +634,8 @@ function Credits()
 
 		let objName = ObjText_Create;
 		ObjText_SetText(objName,text2);
-		ObjText_SetFontType(objName, "Lucida Fax Demibold");
+		ObjText_SetFontType(objName, "Lucida Fax");
+		ObjText_SetFontBold(objName, true);
 		ObjText_SetFontSize(objName,16);
 		ObjText_SetFontColorTop(objName,255,255,255);
 		ObjText_SetFontColorBottom(objName, 255, 255, 255);
@@ -723,7 +725,8 @@ const CREDITS_DATA_BACKGROUNDS =
 const CREDITS_DATA_PLAYTESTING = 
 [
 	["Overal Pattern QA",				"GCP"],
-	["Gameplay",						"Gren (thatonefrogxd)"]
+	["Gameplay",						"Gren (thatonefrogxd)"],
+	["Debugging",						"Drek, Lobby, Achy"]
 ];
 
 const CREDITS_DATA_SOUND = 

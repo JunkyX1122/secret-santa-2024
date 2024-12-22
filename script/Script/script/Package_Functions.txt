@@ -599,7 +599,7 @@ function CreateText(text,fontsize,color,bordercolor,xpos,ypos,fontFace,RP)
 	Obj_SetRenderPriorityI(objText,RP);
 	ObjText_SetFontSize(objText, fontsize);
 	ObjText_SetFontType(objText, fontFace);
-	ObjText_SetFontBold(objText, false);
+	ObjText_SetFontBold(objText, true);
 	ObjText_SetFontColorTop(objText, color[0][0], color[0][1], color[0][2]);
 	ObjText_SetFontColorBottom(objText, color[1][0], color[1][1], color[1][2]);
 	ObjText_SetFontBorderType(objText, BORDER_SHADOW);

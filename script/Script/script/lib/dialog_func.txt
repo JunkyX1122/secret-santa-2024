@@ -238,7 +238,8 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	
 	
 	let obj = ObjText_Create();
-	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontType(obj, "Lucida Fax");
+	ObjText_SetFontBold(obj, true);
 	ObjText_SetFontSize(obj, textSize);
 	ObjText_SetFontColorTop(obj, 255, 255, 255);
 	speakerColor = newCol;
@@ -252,7 +253,8 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
 
 	let objName = ObjText_Create();
-	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontType(objName, "Lucida Fax");
+	ObjText_SetFontBold(objName, true);
 	ObjText_SetFontSize(objName, 22);
 	ObjText_SetFontColorTop(objName, 255, 255, 255);
 	speakerColor = newCol;
@@ -386,7 +388,8 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	
 	
 	let obj = ObjText_Create();
-	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontType(obj, "Lucida Fax");
+	ObjText_SetFontBold(obj, true);
 	ObjText_SetFontSize(obj, textSize);
 	ObjText_SetFontColorTop(obj, 255, 255, 255);
 	speakerColor = newCol;
@@ -400,7 +403,8 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
 
 	let objName = ObjText_Create();
-	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontType(objName, "Lucida Fax");
+	ObjText_SetFontBold(objName, true);
 	ObjText_SetFontSize(objName, 22);
 	ObjText_SetFontColorTop(objName, 255, 255, 255);
 	speakerColor = newCol;
@@ -543,7 +547,8 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	
 	
 	let obj = ObjText_Create();
-	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontType(obj, "Lucida Fax");
+	ObjText_SetFontBold(obj, true);
 	ObjText_SetFontSize(obj, textSize);
 	ObjText_SetFontColorTop(obj, 255, 255, 255);
 	speakerColor = newCol;
@@ -557,7 +562,8 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
 
 	let objName = ObjText_Create();
-	ObjText_SetFontType(objName, "Lucida Fax Demibold");
+	ObjText_SetFontType(objName, "Lucida Fax");
+	ObjText_SetFontBold(objName, true);
 	ObjText_SetFontSize(objName, 22);
 	ObjText_SetFontColorTop(objName, 255, 255, 255);
 	speakerColor = newCol;

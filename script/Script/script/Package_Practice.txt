@@ -400,7 +400,7 @@ task Practice_BoxRender()
 		[0,0,0],
 		GetScreenWidth/2,
 		GetScreenHeight/2-215,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	ObjText_SetFontBorderWidth(objPracticeTitle, 2);
@@ -416,7 +416,7 @@ task Practice_BoxRender()
 		[0,0,0],
 		GetScreenWidth/2-250,
 		GetScreenHeight/2-215,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	ObjText_SetFontBorderWidth(objPracticeDifficulty, 2);
@@ -519,7 +519,7 @@ task Practice_StageOptions()
 		[0,0,0],
 		GetScreenWidth/2 - 370,
 		opY,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 		ObjRender_SetColor(objStageText, 140, 140, 140);
 		
@@ -623,7 +623,7 @@ task Practice_SubBoxRender_Stages()
 		[0,0,0],
 		GetScreenWidth/2-300,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objAvAt);
 	
@@ -635,7 +635,7 @@ task Practice_SubBoxRender_Stages()
 		[0,0,0],
 		GetScreenWidth/2,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objTeamText);
 	
@@ -704,7 +704,7 @@ function Practice_AttackOptions(stageID)
 		[0,0,0],
 		GetScreenWidth/2 - 370,
 		opY,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+8);
 
 		
@@ -724,7 +724,7 @@ function Practice_AttackOptions(stageID)
 			[0,0,0],
 			GetScreenWidth/2 + 270 - 30 + 30 * i,
 			opY,
-			"Lucida Fax Demibold",
+			"Lucida Fax",
 			BASE_RENDERI+8);
 			
 			ObjText_SetFontBorderWidth(objStageHistoryText, 1);
@@ -743,7 +743,7 @@ function Practice_AttackOptions(stageID)
 			[0,0,0],
 			GetScreenWidth/2 + 270 - 30 - 120 + 60 * i,
 			opY,
-			"Lucida Fax Demibold",
+			"Lucida Fax",
 			BASE_RENDERI+8);
 			
 			ObjText_SetFontBorderWidth(objWholeStageHistoryText, 1);
@@ -871,7 +871,7 @@ task Practice_SubBoxRender_Attack()
 		[0,0,0],
 		GetScreenWidth/2-300,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objAvAt);
 	
@@ -883,7 +883,7 @@ task Practice_SubBoxRender_Attack()
 		[0,0,0],
 		GetScreenWidth/2 + 270 - 30,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objCaps);
 	
@@ -895,7 +895,7 @@ task Practice_SubBoxRender_Attack()
 		[0,0,0],
 		GetScreenWidth/2 + 270 - 30 + 30*2,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objAtt);
 	
@@ -907,7 +907,7 @@ task Practice_SubBoxRender_Attack()
 		[0,0,0],
 		GetScreenWidth/2 + 270 - 30 - 120,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objDeath);
 	
@@ -919,7 +919,7 @@ task Practice_SubBoxRender_Attack()
 		[0,0,0],
 		GetScreenWidth/2 + 270 - 30 - 120 + 60,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objBomb);
 	
@@ -931,7 +931,7 @@ task Practice_SubBoxRender_Attack()
 		[0,0,0],
 		GetScreenWidth/2,
 		GetScreenHeight/2-193,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	SetTextForm(objTeamText);
 	

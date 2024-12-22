@@ -292,7 +292,7 @@ task Char_BoxDetails()
 		[0,0,0],
 		charSelectX,
 		GetScreenHeight/2-152,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		
 	ObjText_SetFontBorderWidth(objTeamNamesText, 2);
@@ -307,7 +307,7 @@ task Char_BoxDetails()
 		[0,0,0],
 		charSelectX - 176,
 		GetScreenHeight/2 - 130,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 	//ObjText_SetSidePitch(objBioText, -1);
 	ObjText_SetLinePitch(objBioText, -1);
@@ -419,7 +419,7 @@ task Char_BoxDetails()
 		[0,0,0],
 		x,
 		y-1,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		ObjText_SetSidePitch(objTabTitleText, -1);
 		
@@ -431,7 +431,7 @@ task Char_BoxDetails()
 		[0,0,0],
 		x + 45,
 		y-1,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		ObjText_SetText(objTabText, tabInfoText[id][selectedTeam]);
 		
@@ -489,7 +489,7 @@ task Char_BoxDetails()
 		[0,0,0],
 		x + 9,
 		y-12,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		ObjText_SetText(objStatTitle, statNames[id]);
 		ObjText_SetSidePitch(objStatTitle, -1);
@@ -534,7 +534,7 @@ task Char_BoxDetails()
 		[0,0,0],
 		x + 92,
 		y+1,
-		"Lucida Fax Demibold",
+		"Lucida Fax",
 		BASE_RENDERI+7);
 		ObjText_SetLinePitch(objStatText, -1);
 		

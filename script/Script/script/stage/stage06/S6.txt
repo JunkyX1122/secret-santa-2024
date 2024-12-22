@@ -706,6 +706,7 @@ task CreateTempText(x,y,text,time)
 	ObjText_SetFontBorderWidth(objTitleText, 0);
 	Obj_SetRenderPriorityI(objTitleText, 79);
 	ObjText_SetFontType(objTitleText, "Blackadder ITC");
+	ObjText_SetFontBold(objTitleText, true);
 	ObjText_SetSidePitch(objTitleText,3);
 	ObjText_SetText(objTitleText, text);
 	let textX = x-(ObjText_GetTotalWidth(objTitleText)/2);

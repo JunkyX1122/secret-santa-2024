@@ -56,7 +56,8 @@ task StageNameShow(text)
 	}
 	
 	let obj = ObjText_Create();
-	ObjText_SetFontType(obj, "Lucida Fax Demibold");
+	ObjText_SetFontType(obj, "Lucida Fax");
+	ObjText_SetFontBold(obj, true);
 	ObjText_SetFontSize(obj, 15);
 	ObjText_SetFontColorTop(obj, 255, 255, 255);
 	ObjText_SetFontColorBottom(obj, 255,255,255);	

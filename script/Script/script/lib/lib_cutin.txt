@@ -248,7 +248,8 @@ task CutinS3(mimage, difficulty)
 		Obj_SetRenderPriority(SpellText, 0.82+0.01*max(0, 1-num));
 		ObjRender_SetPosition(SpellText, 0, 28+32*num, 0);
 		ObjRender_SetAlpha(SpellText, 0);
-		ObjText_SetFontType(SpellText,"Lucida Fax Demibold");
+		ObjText_SetFontType(SpellText,"Lucida Fax");
+		ObjText_SetFontBold(SpellText, true);
 		
 		
 		let SpellInfo = ObjPrim_Create(OBJ_SPRITE_LIST_2D);

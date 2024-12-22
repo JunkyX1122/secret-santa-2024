@@ -18,15 +18,26 @@
 #include "./Package_Gallery.txt"
 let skipIntro = false;
 const BMG_TITLE_VOLUME = 75;
+
+let FONTS = 
+[
+	GetCurrentScriptDirectory~"lucon.ttf",
+	GetCurrentScriptDirectory~"reve.ttf",
+	GetCurrentScriptDirectory~"ITCBLKAD.TTF",
+	GetCurrentScriptDirectory~"mustica-pro.otf",
+	GetCurrentScriptDirectory~"LFAX.TTF"
+];
 @Initialize
 {
 	//SetSkipModeKey(KEY_INVALID);
 	//InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
-	InstallFont(GetCurrentScriptDirectory~"lucon.ttf");
-	InstallFont(GetCurrentScriptDirectory~"reve.ttf");	
-	InstallFont(GetCurrentScriptDirectory~"ITCBLKAD.ttf");	
-	InstallFont(GetCurrentScriptDirectory~"mustica-pro.otf");	
-	InstallFont(GetCurrentScriptDirectory~"LFAXD.ttf");
+	ascent(i in 0..length(FONTS))
+	{
+		if(!InstallFont(FONTS[i]))
+		{
+			RaiseError("Font Not Installed");
+		}
+	}
 	Loader();
 }
 @MainLoop
