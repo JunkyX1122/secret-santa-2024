@@ -45,12 +45,18 @@ task TEnding(teamEnding)
 		if(activeDifficulty==0) { TeamC_StandardClear = true; }
 		else					{ TeamC_OriginalClear = true; }
 	}
-	
+
 	let teamClearString = GetClearString(teamEnding, activeDifficulty);
 	SetAreaCommonData("History", teamClearString, true);
 	SetAreaCommonData("History", "CreditsAvailable", true);
 	SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
 	
+	let displayNotification = false;
+	if(!isCreditsAvailable)
+	{
+		isCreditsAvailable = true;
+		displayNotification = true;
+	}
 	
 	currentPage = 0;
 	
@@ -83,8 +89,126 @@ task TEnding(teamEnding)
 	
 	wait(200);
 	Credits();
+	
+	if(displayNotification)
+	{
+		SE_PlayLen(extend, 80);
+		DisplayPlayerSpell("Gallery Unlocked!", GetScreenHeight/2-50, [255,255,0], 150);
+		wait(60);
+		SE_PlayLen(extend, 80);
+		DisplayPlayerSpell("Credits Unlocked!", GetScreenHeight/2+50, [255,255,0], 150);
+		wait(180+60);
+		wait(60);
+	}
 	TTitleScene();
 }
+
+task DisplayPlayerSpell(text, y, col, holdTextTime)
+{
+
+	let borders = [];
+	ascent(i in 0..2)
+	{
+		let objBorder = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objBorder, IMG_SYSTEM_SPELL_DISPLAY);
+		Obj_SetRenderPriorityI(objBorder, 86);
+		ObjSprite2D_SetSourceRect(objBorder,0, 0, 16, 32);
+		ObjSprite2D_SetDestRect(objBorder,0, 0, 16, 32);
+		ObjSprite2D_SetDestCenter(objBorder);
+		ObjRender_SetScaleX(objBorder, 1-2*i);
+		ObjRender_SetPosition(objBorder, GetScreenWidth/2, GetScreenHeight/2,0);
+		borders ~= [objBorder];
+	}
+	let objBlack = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objBlack, PRIMITIVE_TRIANGLESTRIP);
+	Obj_SetRenderPriorityI(objBlack,85);
+	ObjPrim_SetVertexCount(objBlack, 8);
+	
+	let objText = CreateText(
+		text,
+		18,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2,
+		GetScreenHeight/2,
+		"Lucida Fax Demibold",
+		85);
+		
+	let heightBar = 10;
+	let t = 30;
+	ascent(i in 0..t)
+	{
+		let scl = sin(90/(t-1)*i);
+		let w = (150 * scl);
+		ObjPrim_SetVertexPosition(objBlack,0, -w-25, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,1, -w-25,  heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,2, -w-00, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,3, -w-00,  heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,4,  w+00, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,5,  w+00,  heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,6,  w+25, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,7,  w+25,  heightBar,0);
+		
+		ascent(o in 0..8)
+		{
+			ObjPrim_SetVertexAlpha(objBlack, o, [0,128,128,0][floor(o/2)%4]);
+			ObjPrim_SetVertexColor(objBlack, o, col[0], col[1], col[2]);
+		}
+		ObjRender_SetPosition(objBlack, GetScreenWidth/2, y,0);
+		ascent(o in 0..2)
+		{
+			ObjRender_SetPosition(borders[o], round(GetScreenWidth/2 - (25 + 150 * scl) * (1-2*o)), y,0);
+			ObjRender_SetAlpha(borders[o], 255/(t-1)*i);
+		}
+		
+		RenameRecenterText(objText, text, GetScreenWidth/2, y);
+		ObjRender_SetAlpha(objText, 255*scl);
+		yield;
+	}
+	ascent(i in 0..holdTextTime)
+	{
+		yield;
+	}
+	t = 45;
+	ascent(i in 0..t)
+	{
+		let scl = 1-sin(90/(t-1)*i);
+		let scl2 = sin(90/(t-1)*i);
+		let w = (150 * scl);
+		ObjPrim_SetVertexPosition(objBlack,0, -w-25, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,1, -w-25,  heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,2, -w-00, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,3, -w-00,  heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,4,  w+00, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,5,  w+00,  heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,6,  w+25, -heightBar,0);
+		ObjPrim_SetVertexPosition(objBlack,7,  w+25,  heightBar,0);
+		
+		ascent(o in 0..8)
+		{
+			ObjPrim_SetVertexAlpha(objBlack, o, [0,128,128,0][floor(o/2)%4]);
+			ObjPrim_SetVertexColor(objBlack, o, col[0], col[1], col[2]);
+		}
+		ObjRender_SetPosition(objBlack, GetScreenWidth/2, y,0);
+		ascent(o in 0..2)
+		{
+			ObjRender_SetPosition(borders[o], round(GetScreenWidth/2 - (25 + 150 * scl) * (1-2*o)), y,0);
+			ObjRender_SetAlpha(borders[o], 255-255/(t-1)*i);
+		}
+		RenameRecenterText(objText, text, GetScreenWidth/2, y);
+		ObjRender_SetAlpha(objText, 255-(255*2)*scl2);
+		yield;
+	}
+
+	ascent(o in 0..2)
+	{
+		Obj_Delete(borders[o]);
+	}
+	Obj_Delete(objText);
+	Obj_Delete(objBlack);
+}
+
 
 function FEnding_A()
 {
