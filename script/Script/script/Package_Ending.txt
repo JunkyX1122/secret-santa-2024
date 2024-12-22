@@ -601,7 +601,7 @@ function Credits()
 		let objCatag = ObjText_Create;
 		ObjText_SetText(objCatag,text1);
 		ObjText_SetFontType(objCatag, "Lucida Fax");
-
+		ObjText_SetFontBold(objCatag, true);
 		ObjText_SetHorizontalAlignment(objCatag, ALIGNMENT_CENTER);
 		ObjText_SetMaxWidth(objCatag, GetScreenWidth-24);
 		
