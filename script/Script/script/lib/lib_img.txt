@@ -877,10 +877,6 @@ const Card_ImgArray = [SpellAttack_img,img_SpellAttack,img_SpellAttack_L,img_cha
 const IMG_SELECTIONS =  		GetCurrentScriptDirectory()~"./../../img/title/img_selections.png";
 const IMG_TITLEBACK =  		GetCurrentScriptDirectory()~"./../../img/title/img_titleback.png";
 
-
-const IMG_TITLESHOW_01 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_01.png";
-const IMG_TITLESHOW_02 =  		GetCurrentScriptDirectory()~"./../../img/title/titleShow_02.png";
-
 const IMG_TITLE_TEXT_00 =  		GetCurrentScriptDirectory()~"./../../img/title/title_text00.png";
 const IMG_TITLE_TEXT_01 =  		GetCurrentScriptDirectory()~"./../../img/title/title_text01.png";
 
@@ -924,7 +920,6 @@ const IMG_TITLE_PRACTICE_BOX 					=  		GetCurrentScriptDirectory()~"./../../img/
 
 const TitleScreen_ImgArray = [
 IMG_SELECTIONS,IMG_TITLEBACK, 
-IMG_TITLESHOW_01, IMG_TITLESHOW_02,
 IMG_TITLE_TEXT_00, IMG_TITLE_TEXT_01,
 IMG_TITLE_MAINMENU_BOX, IMG_TITLE_MAINMENU_LINES, IMG_TITLE_MAINMENU_CHARACTERS, IMG_TITLE_MAINMENU_BOSSES, IMG_TITLE_MAINMENU_SELECTBOX, IMG_TITLE_MAINMENU_SELECTARROW,
 IMG_TITLE_CHARSELECT_BOX, IMG_TITLE_CHARSELECT_TOPLINES, IMG_TITLE_CHARSELECT_BOXLINES, IMG_TITLE_CHARSELECT_NAMEBG, IMG_TITLE_CHARSELECT_STATICONS, IMG_TITLE_CHARSELECT_TAB, IMG_TITLE_CHARSELECT_ARROW, 

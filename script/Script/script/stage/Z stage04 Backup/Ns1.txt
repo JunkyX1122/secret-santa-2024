@@ -48,7 +48,7 @@ let TIME = 60*60;
 	HitCirc(objEnemy2);
 	end;
 	SetCommonData("SpellCardBG1",false);
-	SetCommonData("IsStage1", true);
+	//SetCommonData("IsStage1", true);
 }
 @MainLoop
 {

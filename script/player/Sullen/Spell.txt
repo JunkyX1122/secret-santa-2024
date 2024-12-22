@@ -458,17 +458,63 @@ task Shield()
 		obj2s ~= [obj2];
 	}
 	
+	let vCount = 96*2;
+	let objShieldTimerBack = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objShieldTimerBack,PRIMITIVE_TRIANGLESTRIP);
+	ObjPrim_SetVertexCount(objShieldTimerBack,vCount);
+	Obj_SetRenderPriorityI(objShieldTimerBack,41);
+	ObjRender_SetColor(objShieldTimerBack,0,0,0);
+	
+	let objShieldTimer = ObjPrim_Create(OBJ_PRIMITIVE_2D);
+	ObjPrim_SetPrimitiveType(objShieldTimer,PRIMITIVE_TRIANGLESTRIP);
+	ObjPrim_SetVertexCount(objShieldTimer,vCount);
+	Obj_SetRenderPriorityI(objShieldTimer,41);
+	ObjRender_SetColor(objShieldTimer,128,255,128);
+	
 	let objS = CreatePlayerShotA1(x, y, 0, 0, 3, 1000, 1);
 	ObjShot_SetSpellFactor(objS, true);
 	ObjShot_SetEraseShot(objS, true);
 	
 	let scl = 0;
-	let naturalTimer = 60*8 + 60*(currentActiveCount*2);
+	let scl2 = 0;
+	let timerMax = 60*8 + 60*(currentActiveCount*2);
+	let naturalTimer = timerMax;
+	let rad1W = 50;
+	let rad2W = 52;
+	let radB = 2;
 	while(!Obj_IsDeleted(objS) && naturalTimer > 0 && GetPlayerState == STATE_NORMAL )
 	{
 		scl = scl * 0.9 + (1+currentActiveCount^1.2) * 0.1;
+		scl2 = scl2 * 0.9 + (1) * 0.1;
 		ObjShot_SetIntersectionScaleXY(objS, scl*3);
 		ObjMove_SetPosition(objS, GetPlayerX, GetPlayerY);
+		
+		ObjRender_SetPosition(objShieldTimer, GetPlayerX, GetPlayerY,0);
+		let amount = naturalTimer/timerMax;
+		let angT = 360/(vCount/2-1)*(amount);
+		let angTest = (360/(vCount/2-1));
+		let rad1 = (rad1W + currentActiveCount * 25)*scl2;
+		let rad2 = (rad2W + currentActiveCount * 25)*scl2;
+		ascent(i in 0..vCount/2)
+		{
+			let angTry = -min(angT*(vCount/2), angTest*i);
+			ObjPrim_SetVertexPosition(objShieldTimer,i*2,	rad1*cos(angTry-90),rad1*sin(angTry-90),0);
+			ObjPrim_SetVertexPosition(objShieldTimer,i*2+1,	rad2*cos(angTry-90),rad2*sin(angTry-90),0);
+			ObjPrim_SetVertexAlpha(objShieldTimer, i*2  , 200);
+			ObjPrim_SetVertexAlpha(objShieldTimer, i*2+1, 200);
+		}
+		
+		angT = -(360/(vCount/2-1));
+		ObjRender_SetPosition(objShieldTimerBack, GetPlayerX, GetPlayerY,0);
+		rad1 = (rad1W + currentActiveCount * 25)*scl2 - radB;
+		rad2 = (rad2W + currentActiveCount * 25)*scl2 + radB;
+		ascent(i in 0..vCount/2)
+		{
+			ObjPrim_SetVertexPosition(objShieldTimerBack,i*2,	rad1*cos(angT*i-90),rad1*sin(angT*i-90),0);
+			ObjPrim_SetVertexPosition(objShieldTimerBack,i*2+1,	rad2*cos(angT*i-90),rad2*sin(angT*i-90),0);
+			ObjPrim_SetVertexAlpha(objShieldTimerBack, i*2  , 200);
+			ObjPrim_SetVertexAlpha(objShieldTimerBack, i*2+1, 200);
+		}
 		
 		ascent(o in 0..2)
 		{
@@ -485,6 +531,7 @@ task Shield()
 		naturalTimer--;
 		yield;
 	}
+	Obj_Delete(objShieldTimer);
 	totalSpellsActive = max(1, totalSpellsActive-1);
 	if(!Obj_IsDeleted(objS))
 	{
@@ -494,7 +541,7 @@ task Shield()
 	let objS2 = CreatePlayerShotA1(x, y, 0, 0, 1, 99999, 1);
 	ObjShot_SetSpellFactor(objS2, true);
 	ObjShot_SetEraseShot(objS2, true);
-	
+	let scl3 = scl2;
 	ascent(i in 0..60)
 	{
 		let scl2 = scl - scl/60*i;
@@ -512,9 +559,22 @@ task Shield()
 			ObjRender_SetAngleZ(obj1, ObjRender_GetAngleZ(obj1) + 1);
 			ObjRender_SetAngleZ(obj2, ObjRender_GetAngleZ(obj2) + 2);
 		}
+		
+		let angT = -(360/(vCount/2-1));
+		ObjRender_SetPosition(objShieldTimerBack, GetPlayerX, GetPlayerY,0);
+		let rad1 = (rad1W + currentActiveCount * 25)*scl3 - radB;
+		let rad2 = (rad2W + currentActiveCount * 25)*scl3 + radB;
+		ascent(o in 0..vCount/2)
+		{
+			ObjPrim_SetVertexPosition(objShieldTimerBack,o*2,	rad1*cos(angT*o-90),rad1*sin(angT*o-90),0);
+			ObjPrim_SetVertexPosition(objShieldTimerBack,o*2+1,	rad2*cos(angT*o-90),rad2*sin(angT*o-90),0);
+			ObjPrim_SetVertexAlpha(objShieldTimerBack, o*2  , 200*(1-1*sin(90/59*i)));
+			ObjPrim_SetVertexAlpha(objShieldTimerBack, o*2+1, 200*(1-1*sin(90/59*i)));
+		}
 		yield;
 	}
 	Obj_Delete(objS2);
+	Obj_Delete(objShieldTimerBack);
 	ascent(o in 0..2)
 	{
 		let obj1 = obj1s[o];
