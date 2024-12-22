@@ -18,6 +18,7 @@ let gallery_Width = 0;
 let gallery_Height = 0;
 
 let gallery_toggleInstructions = true;
+let gallery_togglePan = false;
 function GetClearString(team, diff)
 {
 	return  "team" ~ ["A", "B", "C"][team] ~ "_" ~ DIFFICULTY_DISPLAY_NAMES[diff] ~ "Clear"; 
@@ -110,6 +111,7 @@ function GalleryScreen()
 	InitiateGalleryImages();
 	gallery_AlphaScl = 1;
 	gallery_toggleInstructions = true;
+	gallery_togglePan = false;
 	menuState = MENUSTATE_GALLERY;
 	MusicChange(BGM_ENDING, BGM_ENDING_VOLUME, 987303, 6825557);
 	
@@ -121,31 +123,35 @@ function GalleryScreen()
 	let hasCanceled = false;
 	while(menuState == MENUSTATE_GALLERY && !hasCanceled)
 	{
-		let toggleScreen = true;
-		if(GetVirtualKeyState(VK_USER1) != KEY_FREE)
+
+		if(GetVirtualKeyState(VK_USER1) == KEY_PUSH)
 		{
-			toggleScreen = false;
-			let fastMove = (GetVirtualKeyState(VK_SLOWMOVE) == KEY_FREE ? -1 : -4);
-			gallery_X = GalleryImageMove(gallery_X, VK_LEFT, VK_RIGHT, fastMove, GetScreenWidth/2-gallery_Width/2, GetScreenWidth/2+gallery_Width/2, false, 1);
-			gallery_Y = GalleryImageMove(gallery_Y, VK_UP,   VK_DOWN , fastMove, GetScreenHeight/2-gallery_Height/2, GetScreenHeight/2+gallery_Height/2, false, 1);
+			SE_PlayLen(title_cursor, 60);
+			gallery_togglePan = !gallery_togglePan;
 		}
 		if(GetVirtualKeyState(VK_USER2) == KEY_PUSH)
 		{
 			SE_PlayLen(title_cursor, 60);
 			gallery_toggleInstructions = !gallery_toggleInstructions;
 		}
-		if(toggleScreen)
+		if(!gallery_togglePan)
 		{
-			toggleScreen = false;
+
 			let fastMove = (GetVirtualKeyState(VK_SLOWMOVE) == KEY_FREE ? -0.01 : -0.04);
 			gallery_Scale = GalleryImageMove(gallery_Scale, VK_UP,   VK_DOWN , fastMove, 0.5, 2, false, 1);
 			
 			gallery_CurrentImage = GalleryMenuSelect(gallery_CurrentImage, 1, 0, length(GalleryImages) - 1, true, 20);
-			if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
-			{
-				SE_PlayLen(title_cancel, 60);
-				hasCanceled = true;
-			}
+		}
+		else
+		{
+			let fastMove = (GetVirtualKeyState(VK_SLOWMOVE) == KEY_FREE ? -1 : -4);
+			gallery_X = GalleryImageMove(gallery_X, VK_LEFT, VK_RIGHT, fastMove, GetScreenWidth/2-gallery_Width/2, GetScreenWidth/2+gallery_Width/2, false, 1);
+			gallery_Y = GalleryImageMove(gallery_Y, VK_UP,   VK_DOWN , fastMove, GetScreenHeight/2-gallery_Height/2, GetScreenHeight/2+gallery_Height/2, false, 1);
+		}
+		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+		{
+			SE_PlayLen(title_cancel, 60);
+			hasCanceled = true;
 		}
 		yield;
 	}
@@ -156,6 +162,7 @@ function GalleryScreen()
 		gallery_AlphaScl = 1 - 1/(t-1)*i;
 		yield;
 	}
+	wait(10);
 }
 let galleryHoldCounter = 0;
 
@@ -313,6 +320,21 @@ task Gallery_ShowImages()
 		ObjRender_SetPosition(objArPa, GetScreenWidth/2 - (GetScreenWidth/2 - 32 - 16)*[1,-1][i], 20, 0);
 		objArrowsPage ~= [objArPa];
 	}
+	
+	let objArrowsPan = [];
+	ascent(i in 0..4)
+	{
+		let objArPa = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objArPa, IMG_TITLE_CHARSELECT_ARROW);
+		Obj_SetRenderPriorityI(objArPa, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objArPa,0, 0, 64, 64);
+		ObjSprite2D_SetDestRect(objArPa,0, 0, 64, 64);
+		ObjSprite2D_SetDestCenter(objArPa);
+		ObjRender_SetScaleXYZ(objArPa, 1, 1, 0);
+		ObjRender_SetAngleZ(objArPa, [0, 90, 180, 270][i]);
+		//ObjRender_SetBlendType(objArPa, BLEND_ADD_ARGB);
+		objArrowsPan ~= [objArPa];
+	}
 	let objCurrentPage = CreateText(
 		"(" ~ rtos("00", currentImageID+1) ~ "/" ~ IntToString(length(GalleryImages)) ~ ")",
 		18,
@@ -340,7 +362,7 @@ task Gallery_ShowImages()
 	ObjText_SetText(objInstructions, 
 		"Left/Right: Change Image[r]"~
 		"Up/Down: Scale[r]"~
-		"USER_1+Movement: Pan[r]"~
+		"USER_1: Toggle Panning[r]"~
 		"USER_2: Hide Controls[r]"~
 		"Slowmove: Increase Pan/Scale Speed[r]"~
 		"Bomb: Exit");
@@ -373,12 +395,21 @@ task Gallery_ShowImages()
 		ObjRender_SetAlpha(obj, 			 shownAlpha *scl);
 		ObjRender_SetAlpha(objUnknown, 	(255-shownAlpha)*scl);
 		
-		ObjRender_SetAlpha(objCurrentPage, 255 * scl * (gallery_toggleInstructions ? 1 : 0));
+		ObjRender_SetAlpha(objCurrentPage, 255 * scl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 0 : 1));
 		ObjRender_SetAlpha(objInstructions, 255 * scl * (gallery_toggleInstructions ? 1 : 0));
 		ascent(i in 0..2)
 		{
-			ObjRender_SetAlpha(objArrowsPage[i], 255*scl * (gallery_toggleInstructions ? 1 : 0));
+			ObjRender_SetAlpha(objArrowsPage[i], 255*scl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 0 : 1));
 			ObjRender_SetPosition(objArrowsPage[i], round(GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i]), 20, 0);
+		}
+		ascent(i in 0..4)
+		{
+			ObjRender_SetAlpha(objArrowsPan[i], 255*scl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 1 : 0));
+			let pulseDis = - 16 - 8 + 4*sin(c*3);
+			ObjRender_SetPosition(objArrowsPan[i], 
+									round(GetScreenWidth/2  + [(GetScreenWidth/2  + pulseDis) * [1,-1][floor(i/2)], 0][    i%2]), 
+									round(GetScreenHeight/2 + [(GetScreenHeight/2 + pulseDis) * [1,-1][floor(i/2)], 0][(i+1)%2]), 
+									0);
 		}
 		c++;
 		
@@ -416,12 +447,22 @@ task Gallery_ShowImages()
 		ObjRender_SetAlpha(obj, 			 shownAlpha *gallery_AlphaScl);
 		ObjRender_SetAlpha(objUnknown, 	(255-shownAlpha)*gallery_AlphaScl);
 		
-		ObjRender_SetAlpha(objCurrentPage, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
+		ObjRender_SetAlpha(objCurrentPage, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 0 : 1));
 		ObjRender_SetAlpha(objInstructions, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
 		ascent(i in 0..2)
 		{
-			ObjRender_SetAlpha(objArrowsPage[i], 255*characterSelect_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
+			ObjRender_SetAlpha(objArrowsPage[i], 255*gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 0 : 1));
 			ObjRender_SetPosition(objArrowsPage[i], round(GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i]), 20, 0);
+		}
+		
+		ascent(i in 0..4)
+		{
+			ObjRender_SetAlpha(objArrowsPan[i], 255*gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 1 : 0));
+			let pulseDis = - 16 - 8 + 4*sin(c*3);
+			ObjRender_SetPosition(objArrowsPan[i], 
+									round(GetScreenWidth/2  + [(GetScreenWidth/2  + pulseDis) * [1,-1][floor(i/2)], 0][    i%2]), 
+									round(GetScreenHeight/2 + [(GetScreenHeight/2 + pulseDis) * [1,-1][floor(i/2)], 0][(i+1)%2]), 
+									0);
 		}
 		c++;
 		yield;
@@ -433,5 +474,9 @@ task Gallery_ShowImages()
 	ascent(i in 0..2)
 	{
 		Obj_Delete(objArrowsPage[i]);
+	}
+	ascent(i in 0..4)
+	{
+		Obj_Delete(objArrowsPan[i]);
 	}
 }
