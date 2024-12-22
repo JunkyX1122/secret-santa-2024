@@ -21,7 +21,7 @@ let firstTimeBoot = true; // Prevents calling everything more than once.
 task Title_Display()
 {
 	isCreditsAvailable = GetAreaCommonData("History", "CreditsAvailable", false);
-	mainMenu_Selectable = [   true,       true,      true,     false,     isCreditsAvailable,   true];
+	mainMenu_Selectable = [   true,       true,      true,     IsGalleryAvailable(),     isCreditsAvailable,   true];
 	menuState = MENUSTATE_MAIN;
 	mainMenu_AlphaScl = 1;
 	background_AlphaScl = 1;
@@ -160,6 +160,26 @@ task Title_Display()
 		OptionsScreen();
 		Title_Display();
 	}
+	case(MAINMENUSTATE_GALLERY)
+	{
+		let t = 120;
+		MusicVolumeChange(BMG_TITLE_VOLUME, 0, 40);
+		TDarkTransition(0, 1, t);
+		ascent(i in 0..t)
+		{
+			mainMenu_AlphaScl = 1 - 1/(t-1)*i;
+			background_AlphaScl = 1 - 1/(t-1)*i;
+			yield;
+		}
+		DeleteMusicObj();
+		totalDarkness = 0;
+		menuState = MENUSTATE_UNACTIVE;
+		firstTimeBoot = true;
+		yield;
+		GalleryScreen();
+		yield;
+		Title_Display();
+	}
 	case(MAINMENUSTATE_CREDITS)
 	{
 		MusicVolumeChange(BMG_TITLE_VOLUME, 0, 170);
@@ -172,8 +192,9 @@ task Title_Display()
 		totalDarkness = 0;
 		menuState = MENUSTATE_UNACTIVE;
 		firstTimeBoot = true;
-		
+		yield;
 		Credits();
+		yield;
 		Title_Display();
 	}
 	case(MAINMENUSTATE_EXIT)

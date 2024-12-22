@@ -1,0 +1,437 @@
+let TeamA_StandardClear = false;
+let TeamA_OriginalClear = false;
+let TeamB_StandardClear = false;
+let TeamB_OriginalClear = false;
+let TeamC_StandardClear = false;
+let TeamC_OriginalClear = false;
+
+let GALLERY_TRANSITION = 30;
+
+let gallery_AlphaScl = 1;
+
+let gallery_X = GetScreenWidth/2;
+let gallery_Y = GetScreenHeight/2;
+let gallery_Scale = 1;
+let gallery_CurrentImage = 0;
+
+let gallery_Width = 0;
+let gallery_Height = 0;
+
+let gallery_toggleInstructions = true;
+function GetClearString(team, diff)
+{
+	return  "team" ~ ["A", "B", "C"][team] ~ "_" ~ DIFFICULTY_DISPLAY_NAMES[diff] ~ "Clear"; 
+}
+
+function IsGalleryAvailable()
+{
+	return  TeamA_StandardClear || TeamA_OriginalClear ||
+			TeamB_StandardClear || TeamB_OriginalClear ||
+			TeamC_StandardClear || TeamC_OriginalClear;
+}
+
+function HasBeatenWithTeam(teamID)
+{
+	alternative(teamID)
+	case(PLAYERTEAM_A)
+	{
+		return  TeamA_StandardClear || TeamA_OriginalClear;
+	}
+	case(PLAYERTEAM_B)
+	{
+		return  TeamB_StandardClear || TeamB_OriginalClear;
+	}
+	case(PLAYERTEAM_C)
+	{
+		return  TeamC_StandardClear || TeamC_OriginalClear;
+	}
+	return false;
+}
+let GalleryImages = [];
+let GalleryImageAvailable = [];
+task InitiateGalleryImages()
+{
+	GalleryImages = [];
+	GalleryImageAvailable = [];
+	ascent(i in 0..3)
+	{
+		ascent(o in 0..3)
+		{
+			GalleryImages ~= [Ending_ImgArray[o+i*3]];
+			GalleryImageAvailable ~= [HasBeatenWithTeam(i)];
+		}
+	}
+	ascent(i in 0..length(Gallery_ImgArray))
+	{
+		GalleryImages ~= [Gallery_ImgArray[i]];
+		
+		let checkTemp = true;
+		alternative(i)
+		case(1)
+		{
+			checkTemp = HasBeatenWithTeam(PLAYERTEAM_A);
+		}
+		case(5)
+		{
+			checkTemp = HasBeatenWithTeam(PLAYERTEAM_B);
+		}
+		case(12)
+		{
+			checkTemp = HasBeatenWithTeam(PLAYERTEAM_C);
+		}
+		case(16)
+		{
+			checkTemp = HasBeatenWithTeam(PLAYERTEAM_C);
+		}
+		case(18)
+		{
+			checkTemp = HasBeatenWithTeam(PLAYERTEAM_A) && HasBeatenWithTeam(PLAYERTEAM_B) && HasBeatenWithTeam(PLAYERTEAM_C);
+		}
+		others
+		{
+			checkTemp = true;
+		}
+		GalleryImageAvailable ~= [checkTemp];
+	}
+}
+
+task ResetGalleryTransform()
+{
+	gallery_X = GetScreenWidth/2;
+	gallery_Y = GetScreenHeight/2;
+	gallery_Scale = 1;
+	gallery_Width = 0;
+	gallery_Height = 0;
+}
+
+function GalleryScreen()
+{
+	gallery_CurrentImage = 0;
+	InitiateGalleryImages();
+	gallery_AlphaScl = 1;
+	gallery_toggleInstructions = true;
+	menuState = MENUSTATE_GALLERY;
+	MusicChange(BGM_ENDING, BGM_ENDING_VOLUME, 987303, 6825557);
+	
+	
+	ResetGalleryTransform();
+	Gallery_ShowImages();
+	SkippableWait(GALLERY_TRANSITION);
+	yield;
+	let hasCanceled = false;
+	while(menuState == MENUSTATE_GALLERY && !hasCanceled)
+	{
+		let toggleScreen = true;
+		if(GetVirtualKeyState(VK_USER1) != KEY_FREE)
+		{
+			toggleScreen = false;
+			let fastMove = (GetVirtualKeyState(VK_SLOWMOVE) == KEY_FREE ? -1 : -4);
+			gallery_X = GalleryImageMove(gallery_X, VK_LEFT, VK_RIGHT, fastMove, GetScreenWidth/2-gallery_Width/2, GetScreenWidth/2+gallery_Width/2, false, 1);
+			gallery_Y = GalleryImageMove(gallery_Y, VK_UP,   VK_DOWN , fastMove, GetScreenHeight/2-gallery_Height/2, GetScreenHeight/2+gallery_Height/2, false, 1);
+		}
+		if(GetVirtualKeyState(VK_USER2) == KEY_PUSH)
+		{
+			SE_PlayLen(title_cursor, 60);
+			gallery_toggleInstructions = !gallery_toggleInstructions;
+		}
+		if(toggleScreen)
+		{
+			toggleScreen = false;
+			let fastMove = (GetVirtualKeyState(VK_SLOWMOVE) == KEY_FREE ? -0.01 : -0.04);
+			gallery_Scale = GalleryImageMove(gallery_Scale, VK_UP,   VK_DOWN , fastMove, 0.5, 2, false, 1);
+			
+			gallery_CurrentImage = GalleryMenuSelect(gallery_CurrentImage, 1, 0, length(GalleryImages) - 1, true, 20);
+			if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
+			{
+				SE_PlayLen(title_cancel, 60);
+				hasCanceled = true;
+			}
+		}
+		yield;
+	}
+	let t = 120;
+	MusicVolumeChange(BGM_ENDING_VOLUME, 0, 119);
+	ascent(i in 0..t)
+	{
+		gallery_AlphaScl = 1 - 1/(t-1)*i;
+		yield;
+	}
+}
+let galleryHoldCounter = 0;
+
+function GalleryMenuSelect(currentNumber, scl, minV, maxV, willLoop, slideRate)
+{
+	if(currentNumber <= minV || currentNumber >= maxV)
+	{
+		galleryHoldCounter = 0;
+	}
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)  { 
+		MoveOption(1);
+		galleryHoldCounter = 0; 
+	}
+	if(GetVirtualKeyState(VK_LEFT)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		galleryHoldCounter = 0; 
+	}
+	
+	if(GetVirtualKeyState(VK_RIGHT) == KEY_HOLD)  {
+		galleryHoldCounter++;
+		if(galleryHoldCounter > 20 && galleryHoldCounter%slideRate==0)
+		{
+			MoveOption(1);
+		}
+	}
+	if(GetVirtualKeyState(VK_LEFT) == KEY_HOLD)  {
+		galleryHoldCounter++;
+		if(galleryHoldCounter > 20 && galleryHoldCounter%slideRate==0)
+		{
+			MoveOption(-1);
+		}
+	}
+	
+	
+	if((GetVirtualKeyState(VK_RIGHT) == KEY_FREE && GetVirtualKeyState(VK_LEFT) == KEY_FREE) || 
+	   (GetVirtualKeyState(VK_RIGHT) != KEY_FREE && GetVirtualKeyState(VK_LEFT) != KEY_FREE)) {
+		galleryHoldCounter = 0;
+	}
+	return currentNumber;
+	task MoveOption(am)
+	{
+		SE_PlayLen(title_cursor, 60);
+		currentNumber+=am * scl;
+		if(currentNumber > maxV) 
+		{ 
+			currentNumber = willLoop ? minV : maxV; 
+		}
+		if(currentNumber <  minV) 						 
+		{ 
+			currentNumber = willLoop ? maxV : minV; 
+		}
+	}
+}
+
+let galleryMoveCounterX = 0;
+let galleryMoveCounterY = 0;
+function GalleryImageMove(currentNumber, key1, key2, scl, minV, maxV, willLoop, slideRate)
+{
+	let resetCounter = false;
+	if(currentNumber <= minV || currentNumber >= maxV)
+	{
+		resetCounter = true;
+	}
+	if(GetVirtualKeyState(key2) == KEY_PUSH)  { 
+		MoveOption(1);
+		resetCounter = true;
+	}
+	if(GetVirtualKeyState(key1)   == KEY_PUSH)  { 
+		MoveOption(-1);
+		resetCounter = true;
+	}
+	
+	if(resetCounter)
+	{
+		if(key1 == VK_LEFT) { galleryMoveCounterX = 0;}
+		if(key1 == VK_UP)   { galleryMoveCounterY = 0;}
+	}
+	
+	let galleryMoveCounter = 0;
+	if(key1 == VK_LEFT) { galleryMoveCounter = galleryMoveCounterX;}
+	if(key1 == VK_UP)   { galleryMoveCounter = galleryMoveCounterY;}
+		
+	let addToCounter = false;
+	if(GetVirtualKeyState(key2) == KEY_HOLD)  {
+		addToCounter = true;
+		if(galleryMoveCounter > 20 && galleryMoveCounter%slideRate==0)
+		{
+			MoveOption(1);
+		}
+	}
+	if(GetVirtualKeyState(key1) == KEY_HOLD)  {
+		addToCounter = true;
+		if(galleryMoveCounter > 20 && galleryMoveCounter%slideRate==0)
+		{
+			MoveOption(-1);
+		}
+	}
+	
+	if(addToCounter)
+	{
+		if(key1 == VK_LEFT) { galleryMoveCounterX++;}
+		if(key1 == VK_UP)   { galleryMoveCounterY++;}
+	}
+	resetCounter = false;
+	
+	if((GetVirtualKeyState(key2) == KEY_FREE && GetVirtualKeyState(key1) == KEY_FREE) || 
+	   (GetVirtualKeyState(key2) != KEY_FREE && GetVirtualKeyState(key1) != KEY_FREE)) {
+		resetCounter = true;
+	}
+	
+	
+	return currentNumber;
+	task MoveOption(am)
+	{
+		//SE_PlayLen(title_cursor, 60);
+		currentNumber+=am * scl;
+		if(currentNumber > maxV) 
+		{ 
+			currentNumber = willLoop ? minV : maxV; 
+		}
+		if(currentNumber <  minV) 						 
+		{ 
+			currentNumber = willLoop ? maxV : minV; 
+		}
+	}
+}
+
+task Gallery_ShowImages()
+{
+	let currentImageID = gallery_CurrentImage;
+	
+	let currentImagePath = GalleryImages[currentImageID];
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj, currentImagePath);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, GetTextureWidth(currentImagePath), GetTextureHeight(currentImagePath));
+	ObjSprite2D_SetDestCenter(obj);
+	//ObjRender_SetScaleXYZ(obj, 0.5, 0.5, 0);
+	Obj_SetRenderPriorityI(obj, BASE_RENDERI+6);
+	gallery_Width = GetTextureWidth(currentImagePath);
+	gallery_Height = GetTextureHeight(currentImagePath);
+	ObjSprite2D_SetSourceRect(obj, 0, 0, gallery_Width, gallery_Height);
+	
+	
+	let objArrowsPage = [];
+	ascent(i in 0..2)
+	{
+		let objArPa = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objArPa, IMG_TITLE_CHARSELECT_ARROW);
+		Obj_SetRenderPriorityI(objArPa, BASE_RENDERI+7);
+		ObjSprite2D_SetSourceRect(objArPa,0, 0, 64, 64);
+		ObjSprite2D_SetDestRect(objArPa,0, 0, 64, 64);
+		ObjSprite2D_SetDestCenter(objArPa);
+		ObjRender_SetScaleXYZ(objArPa, -(1-2*i), 1, 0);
+		//ObjRender_SetBlendType(objArPa, BLEND_ADD_ARGB);
+		ObjRender_SetPosition(objArPa, GetScreenWidth/2 - (GetScreenWidth/2 - 32 - 16)*[1,-1][i], 20, 0);
+		objArrowsPage ~= [objArPa];
+	}
+	let objCurrentPage = CreateText(
+		"(" ~ rtos("00", currentImageID+1) ~ "/" ~ IntToString(length(GalleryImages)) ~ ")",
+		18,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2,
+		15,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		
+	ObjText_SetFontBorderWidth(objCurrentPage,2);
+	let objInstructions = CreateText(
+		"0",
+		16,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		10,
+		GetScreenHeight-113,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+		
+	ObjText_SetFontBorderWidth(objInstructions,2);
+	ObjText_SetText(objInstructions, 
+		"Left/Right: Change Image[r]"~
+		"Up/Down: Scale[r]"~
+		"USER_1+Movement: Pan[r]"~
+		"USER_2: Hide Controls[r]"~
+		"Slowmove: Increase Pan/Scale Speed[r]"~
+		"Bomb: Exit");
+		
+	let objUnknown = CreateText(
+		"???",
+		40,
+		[[255,255,255],
+		[255,255,200]],
+		[0,0,0],
+		GetScreenWidth/2,
+		GetScreenHeight/2,
+		"Lucida Fax Demibold",
+		BASE_RENDERI+7);
+	
+	let t = GALLERY_TRANSITION;
+	let c = 0;
+	ascent(i in 0..t)
+	{	
+		ObjRender_SetScaleXYZ(obj, gallery_Scale, gallery_Scale, 0);
+		ObjRender_SetPosition(obj, round(gallery_X), round(gallery_Y), 0);
+		
+		let shownAlpha = 255;
+		if(GalleryImageAvailable[currentImageID] == false)
+		{
+			shownAlpha = 0;
+		}
+			
+		let scl = 1*sin(90/(t-1)*i);
+		ObjRender_SetAlpha(obj, 			 shownAlpha *scl);
+		ObjRender_SetAlpha(objUnknown, 	(255-shownAlpha)*scl);
+		
+		ObjRender_SetAlpha(objCurrentPage, 255 * scl * (gallery_toggleInstructions ? 1 : 0));
+		ObjRender_SetAlpha(objInstructions, 255 * scl * (gallery_toggleInstructions ? 1 : 0));
+		ascent(i in 0..2)
+		{
+			ObjRender_SetAlpha(objArrowsPage[i], 255*scl * (gallery_toggleInstructions ? 1 : 0));
+			ObjRender_SetPosition(objArrowsPage[i], round(GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i]), 20, 0);
+		}
+		c++;
+		
+		SkippableWait(1);
+	}
+	yield;
+	
+	while(menuState == MENUSTATE_GALLERY)
+	{
+		let shownAlpha = GalleryImageAvailable[currentImageID] ? 255 : 0;
+		if(currentImageID != gallery_CurrentImage)
+		{
+			ResetGalleryTransform();
+			currentImageID = gallery_CurrentImage;
+			currentImagePath = GalleryImages[currentImageID];
+			ObjPrim_SetTexture(obj, currentImagePath);
+			gallery_Width = GetTextureWidth(currentImagePath);
+			gallery_Height = GetTextureHeight(currentImagePath);
+			ObjSprite2D_SetSourceRect(obj, 0, 0, gallery_Width, gallery_Height);
+			ObjSprite2D_SetDestCenter(obj);
+			
+			
+			if(GalleryImageAvailable[currentImageID] == false)
+			{
+				shownAlpha = 0;
+			}
+			
+			RenameRecenterText(objCurrentPage, 
+								"(" ~ rtos("00", currentImageID+1) ~ "/" ~ IntToString(length(GalleryImages)) ~ ")", 
+								GetScreenWidth/2,
+								15);
+		}
+		ObjRender_SetScaleXYZ(obj, gallery_Scale, gallery_Scale, 0);
+		ObjRender_SetPosition(obj, round(gallery_X), round(gallery_Y), 0);
+		ObjRender_SetAlpha(obj, 			 shownAlpha *gallery_AlphaScl);
+		ObjRender_SetAlpha(objUnknown, 	(255-shownAlpha)*gallery_AlphaScl);
+		
+		ObjRender_SetAlpha(objCurrentPage, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
+		ObjRender_SetAlpha(objInstructions, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
+		ascent(i in 0..2)
+		{
+			ObjRender_SetAlpha(objArrowsPage[i], 255*characterSelect_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
+			ObjRender_SetPosition(objArrowsPage[i], round(GetScreenWidth/2 - (GetScreenWidth/2 - 16 - 8 + 4*sin(c*3))*[1,-1][i]), 20, 0);
+		}
+		c++;
+		yield;
+	}
+	Obj_Delete(obj);
+	Obj_Delete(objUnknown);
+	Obj_Delete(objCurrentPage);
+	Obj_Delete(objInstructions);
+	ascent(i in 0..2)
+	{
+		Obj_Delete(objArrowsPage[i]);
+	}
+}

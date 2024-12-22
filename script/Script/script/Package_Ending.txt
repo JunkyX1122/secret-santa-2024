@@ -29,8 +29,28 @@ task AdvancePage()
 
 task TEnding(teamEnding)
 {
+	alternative(teamEnding)
+	case(PLAYERTEAM_A)
+	{
+		if(activeDifficulty==0) { TeamA_StandardClear = true; }
+		else					{ TeamA_OriginalClear = true; }
+	}
+	case(PLAYERTEAM_B)
+	{
+		if(activeDifficulty==0) { TeamB_StandardClear = true; }
+		else					{ TeamB_OriginalClear = true; }
+	}
+	case(PLAYERTEAM_C)
+	{
+		if(activeDifficulty==0) { TeamC_StandardClear = true; }
+		else					{ TeamC_OriginalClear = true; }
+	}
+	
+	let teamClearString = GetClearString(teamEnding, activeDifficulty);
+	SetAreaCommonData("History", teamClearString, true);
 	SetAreaCommonData("History", "CreditsAvailable", true);
 	SaveCommonDataAreaA2("History", DATA_HISTORY_PATH);
+	
 	
 	currentPage = 0;
 	

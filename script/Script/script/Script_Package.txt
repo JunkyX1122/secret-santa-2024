@@ -15,6 +15,7 @@
 #include "./Package_Options.txt"
 #include "./Package_Ending.txt"
 #include "./Package_Difficulty.txt"
+#include "./Package_Gallery.txt"
 let skipIntro = false;
 const BMG_TITLE_VOLUME = 75;
 @Initialize
@@ -83,6 +84,7 @@ const MENUSTATE_PRACTICE				= 3;
 const MENUSTATE_OPTIONS					= 4;
 const MENUSTATE_CREDITS					= 5;
 const MENUSTATE_DIFFICULTY				= 6;
+const MENUSTATE_GALLERY					= 7;
 
 
 let menuState = MENUSTATE_UNACTIVE;
@@ -122,6 +124,13 @@ task LoadSaveDataStuff()
 	startingLives = GetAreaCommonData("Setting", "StartingLives", 2);
 	option_TalkSound = GetAreaCommonData("Setting", "TalkSound", 0);
 	isCreditsAvailable = GetAreaCommonData("History", "CreditsAvailable", false);
+	
+	TeamA_StandardClear = GetAreaCommonData("History", GetClearString(PLAYERTEAM_A, 0), false);
+	TeamA_OriginalClear = GetAreaCommonData("History", GetClearString(PLAYERTEAM_A, 1), false);
+	TeamB_StandardClear = GetAreaCommonData("History", GetClearString(PLAYERTEAM_B, 0), false);
+	TeamB_OriginalClear = GetAreaCommonData("History", GetClearString(PLAYERTEAM_B, 1), false);
+	TeamC_StandardClear = GetAreaCommonData("History", GetClearString(PLAYERTEAM_C, 0), false);
+	TeamC_OriginalClear = GetAreaCommonData("History", GetClearString(PLAYERTEAM_C, 1), false);
 	
 	SetCommonData("SFXVolume", option_SFXVolume);
 	SetCommonData("MusicVolume", option_MusicVolume);
