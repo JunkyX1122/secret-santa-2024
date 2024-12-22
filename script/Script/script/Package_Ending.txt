@@ -726,7 +726,7 @@ const CREDITS_DATA_PLAYTESTING =
 [
 	["Overal Pattern QA",				"GCP"],
 	["Gameplay",						"Gren (thatonefrogxd)"],
-	["Debugging",						"Drek, Lobby, Achy"]
+	["Debugging",						"Drek, Lobby, Achy, Adam"]
 ];
 
 const CREDITS_DATA_SOUND = 

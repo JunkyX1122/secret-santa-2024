@@ -94,7 +94,7 @@ function CreateParticleListRect(type, path, source, blend,
     return obj;
 }
 
-let PLAYERSPEED = [4.25, 1.5];
+let PLAYERSPEED = [4.25, 2];
 
 @Initialize {
 	let initialPlayerPos = [GetCommonData("PlayerX", GetStgFrameWidth/2), GetCommonData("PlayerY", 416)];

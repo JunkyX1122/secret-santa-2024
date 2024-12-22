@@ -40,7 +40,7 @@ let TIME = 60*60;
 	ObjEnemy_SetDamageRate(objEnemy,0,0);
 	ObjMove_SetPosition(objEnemy, GetStgFrameWidth/2,100+100 );
 	
-	renderYuuma(objEnemy);
+	renderNitoriDS(objEnemy);
 
 	ObjMove_SetPosition(objEnemy2, GetStgFrameWidth/2, 100);
 	ObjMove_SetDestAtFrame(objEnemy2, -100,-100, 120, LERP_SMOOTHER);
@@ -102,7 +102,7 @@ task Fire
 	DPS("Damage per Second: ",5,60);
 	while(true)
 	{
-		let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 2,90, 89, 420, 20, 2, BLEND_ALPHA, false);
+		//let obj = ShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 2,90, 89, 420, 20, 2, BLEND_ALPHA, false);
 		yield;
 	}
 }

@@ -6,7 +6,7 @@ task TShotAll {
 let lightArray;
 let shotEffect1Array;
 
-    let MainDamage = 3.0;
+let MainDamage = 3.5;
 	
 task TShotViivi {
     lightArray =

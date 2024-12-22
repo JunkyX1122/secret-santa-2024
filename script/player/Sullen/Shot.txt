@@ -5,7 +5,7 @@ task TShotAll {
 }
 let lightArray;
 let shotEffect1Array;
-let MainDamage = 2.5;
+let MainDamage = 2.75;
 task TShotSullen {
     lightArray =
         CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_LIGHT,
