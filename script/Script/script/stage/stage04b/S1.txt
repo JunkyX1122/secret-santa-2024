@@ -235,7 +235,7 @@ task SweepDown(bit)
 				SE_PlayLen(shot1,60);
 				let obj = PShotA2(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 7, ang, -5/60, 2, 333, 333,10, 2, BLEND_ALPHA, true, OUT_PORTAL);
 			}
-			if(i%[3][DIFFICULTY]==0)
+			if(i%[4,3][DIFFICULTY]==0)
 			{
 				SE_PlayLen(shot1,60);
 			

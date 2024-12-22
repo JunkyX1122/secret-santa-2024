@@ -450,7 +450,7 @@ function FEnding_C()
 	SetDialogueTextA3("Redrin", "Who would be expectin' two speed demons to come flyin' out of a|more bulky figure?", 
 						DIALOGUE_COLOUR_REDRIN, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	
-	SetDialogueTextA3("Viivi", "Hmm... Tazue rocking out from a sleeve... Yeah. You know what? I|think I can work with this.", 
+	SetDialogueTextA3("Viivi", "Hmm... Tazue rocketing out from a sleeve... Yeah. You know what? I|think I can work with this.", 
 						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
 	SetDialogueTextA3("Viivi", "I might need to make some changes so I can jump out of it like that|too, that a'ite?", 
 						DIALOGUE_COLOUR_VIIVI, 0, 0, "", "", ["",""], 0,   0,  0, "", 1, 0, 0);
@@ -669,6 +669,7 @@ const CREDITS_DATA_PROGRAMMING =
 	["Overall Pattern Design",			"Junky"],
 	["Viivi Pattern Concepts",			"Meowstic"],
 	["Grandis Pattern Concepts",		"Python"],
+	["Redrin Nonspell Concepts",		"Tricky"],
 	["Dialogue System",					"Python"],
 	["Dialogue System Overhaul",		"Junky"],
 	["Cutin Base Code",					"gtbot"],

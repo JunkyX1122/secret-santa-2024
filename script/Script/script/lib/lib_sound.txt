@@ -310,7 +310,7 @@ const STAGE_MUSIC_NAMES = [
 							"One Step From Eden - The Arctic",
 							"Rivals of Aether - Luna Ascension EX",
 							"Rabbit & Steel - Kingdom Outskirts (Action)",
-							"Trials of Mana Remake - 51 Religion Thunder"
+							"Trials of Mana Remake - Religion Thunder"
 						  ];
 						
 const BGM_BOSS_01A = GetCurrentScriptDirectory~"./../../bgm/boss_01a.ogg";

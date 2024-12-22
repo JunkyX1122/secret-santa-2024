@@ -207,6 +207,7 @@ task ManageSpearCharge(bit,mainAng)
 	SE_PlayLen(charge1,60);
 	let ang = GetAngleToPlayer(objEnemy);
 	WarningLaser(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang,60);
+	WarningLaser(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang,60);
 	ShootSpear(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),ang,mainAng);
 	wait(60);
 	

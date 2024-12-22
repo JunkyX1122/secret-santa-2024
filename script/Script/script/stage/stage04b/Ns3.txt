@@ -133,7 +133,7 @@ task EvacDoom(bit)
 	{
 		let spinner = 70*sin(cc/3 * 1.24);
 		let spacing = 16;
-		if(cc%3==0 && cc%[80][DIFFICULTY]<[24,30][DIFFICULTY])
+		if(cc%3==0 && cc%[80,70][DIFFICULTY]<[24,30][DIFFICULTY])
 		{
 			SE_PlayLen(Shot1,60);
 			ascent(i in 0..spacing)

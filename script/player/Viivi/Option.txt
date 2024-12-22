@@ -11,6 +11,7 @@ let OldOffSetX = [];
 let OldOffSetY = [];
 let MAX_SNAKEDIST = 8*1.2;
 let TOTAL_SEGMENTS = 16;
+let TAZUE_HIND_LEGS_ID = 8;
 task OptionMoveViivi {
 	yield;
 	
@@ -136,7 +137,7 @@ task TRenderOptionViivi {
 			path = GetCurrentScriptDirectory() ~"./playersprite/pl_04.png";
 			rp = rp+1;
 		}
-		else if(num==2 || num ==8)
+		else if(num==2 || num ==TAZUE_HIND_LEGS_ID)
 		{
 			path = GetCurrentScriptDirectory() ~"./playersprite/pl_04c.png";
 		}
@@ -144,9 +145,9 @@ task TRenderOptionViivi {
 		{
 			path = GetCurrentScriptDirectory() ~"./playersprite/pl_04a.png";
 		}
-		if(num > 8)
+		if(num > TAZUE_HIND_LEGS_ID)
 		{
-			widthScl = 1 - 1/(TOTAL_SEGMENTS - 8 + 2)*(num-8);
+			widthScl = 1 - 1/(TOTAL_SEGMENTS - TAZUE_HIND_LEGS_ID + 2)*(num-TAZUE_HIND_LEGS_ID);
 		}
 		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
 		objOption=objOption~[obj];
