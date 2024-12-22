@@ -231,7 +231,7 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	{
 		SetNewEnemyPort(imgS, imgE, imgM[0], iS, xm, ym, 0, -1, yFlip);
 	}
-	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+
 	dialogue_text = text;
 	
 	let newCol = [(color[0]), (color[1]), (color[2])];
@@ -379,7 +379,7 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	{
 		SetNewEnemyPort(imgS[1], imgE[1], imgM[1][0], iS[1], xm[1], ym[1], 0, -1, yFlip[1]);
 	}
-	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+
 	dialogue_text = text;
 	
 	let newCol = [(color[0]), (color[1]), (color[2])];
@@ -536,7 +536,7 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 			SetNewEnemyPort(imgS[1][i], imgE[1][i], imgM[1][i][0], iS[1][i], xm[1][i], ym[1][i], 0, -1, yFlip[1][i]);
 		}
 	}
-	InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
+
 	dialogue_text = text;
 	
 	let newCol = [(color[0]), (color[1]), (color[2])];

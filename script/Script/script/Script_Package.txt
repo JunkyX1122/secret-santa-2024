@@ -22,9 +22,11 @@ const BMG_TITLE_VOLUME = 75;
 {
 	//SetSkipModeKey(KEY_INVALID);
 	//InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
-	InstallFont(GetCurrentScriptDirectory~"reve.ttf");
+	InstallFont(GetCurrentScriptDirectory~"lucon.ttf");
+	InstallFont(GetCurrentScriptDirectory~"reve.ttf");	
+	InstallFont(GetCurrentScriptDirectory~"ITCBLKAD.ttf");	
+	InstallFont(GetCurrentScriptDirectory~"mustica-pro.otf");	
 	InstallFont(GetCurrentScriptDirectory~"LFAXD.ttf");
-	
 	Loader();
 }
 @MainLoop
@@ -67,7 +69,7 @@ task Loader
 	skipIntro = false;
 	
 	LoadSaveDataStuff();
-	
+	wait(10);
 	TIntro;
 	TTitleScene;
 }
