@@ -154,7 +154,7 @@ task DisplayPlayerSpell(text, y, col, holdTextTime)
 		
 		ascent(o in 0..8)
 		{
-			ObjPrim_SetVertexAlpha(objBlack, o, [0,128,128,0][floor(o/2)%4]);
+			ObjPrim_SetVertexAlpha(objBlack, o, [0,128,128,0][floor(o/2)%4] * scl);
 			ObjPrim_SetVertexColor(objBlack, o, col[0], col[1], col[2]);
 		}
 		ObjRender_SetPosition(objBlack, GetScreenWidth/2, y,0);
@@ -189,7 +189,7 @@ task DisplayPlayerSpell(text, y, col, holdTextTime)
 		
 		ascent(o in 0..8)
 		{
-			ObjPrim_SetVertexAlpha(objBlack, o, [0,128,128,0][floor(o/2)%4]);
+			ObjPrim_SetVertexAlpha(objBlack, o, [0,128,128,0][floor(o/2)%4] * scl);
 			ObjPrim_SetVertexColor(objBlack, o, col[0], col[1], col[2]);
 		}
 		ObjRender_SetPosition(objBlack, GetScreenWidth/2, y,0);
@@ -210,7 +210,6 @@ task DisplayPlayerSpell(text, y, col, holdTextTime)
 	Obj_Delete(objText);
 	Obj_Delete(objBlack);
 }
-
 
 function FEnding_A()
 {
@@ -490,6 +489,7 @@ function FEnding_C()
 
 	
 }
+
 task ManagePages(teamEnding)
 {
 	let TOTAL_IMAGES = 3;
@@ -630,7 +630,10 @@ function Credits()
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
-	CreateCreditSection("Guil this is a reminder to finish Bug Fables :)", 16);
+	CreateCreditSection("Guil this is a reminder to finish Bug Fables.", 16);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	CreateCreditSection("Also Gren says hi :)", 16);
 	SkippableCreditsWait(timeToScroll);
 	if(!forceCreditsEnd)
 	{
@@ -707,6 +710,7 @@ function Credits()
 		Obj_Delete(objName);
 	}
 }
+
 const CREDITS_SECTIONS = 
 [
 	"Programming",
@@ -719,6 +723,7 @@ const CREDITS_SECTIONS =
 	"Character Ownership",
 	"Special Thanks"
 ];
+
 const CREDITS_DATA_PROGRAMMING = 
 [
 	["Overall Pattern Design",			"Junky"],
