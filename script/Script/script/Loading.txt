@@ -25,6 +25,7 @@ task LoadTally
 	totalThingsToLoad+=length(TitleScreen_ImgArray);
 	totalThingsToLoad+=length(System_ImgArray);
 	totalThingsToLoad+=length(Icon_ImgArray);
+	totalThingsToLoad+=length(CharCutin_ImgArray);
 
 
 	ascent(i in 0..length(Team1PortraitImg_ImgArray)) {
@@ -128,6 +129,11 @@ task LoadThings
 	ascent(i in 0..length(Icon_ImgArray))
 	{
 		LoadTexturePlus(Icon_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(CharCutin_ImgArray))
+	{
+		LoadTexturePlus(CharCutin_ImgArray[i]);
 		yield;
 	}
 	
@@ -282,7 +288,7 @@ task Loading
 		ascent(i in 0..t)
 		{
 			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
-			yield;		
+			SkippableWait(1);	
 		}
 		Obj_Delete(obj);
 	}
@@ -320,7 +326,7 @@ task Loading
 		ascent(i in 0..t)
 		{
 			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
-			yield;		
+			SkippableWait(1);		
 		}
 		Obj_Delete(obj);
 	}
@@ -355,7 +361,7 @@ task Loading
 		ascent(i in 0..t)
 		{
 			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
-			yield;		
+			SkippableWait(1);	
 		}
 		Obj_Delete(obj);
 	}

@@ -1,9 +1,9 @@
 
 let gatoAuraScale = 0.35;
-
+let gatoAuraAlpha = 1;
 task GatoAura(objTarg)
 {
-	
+	gatoAuraAlpha = 1;
 	let dir = GetCurrentScriptDirectory();
 	let path = IMG_GATOAURA;
 
@@ -46,7 +46,7 @@ task GatoAura(objTarg)
 		
 	
 		
-		ObjShader_SetFloat(obj, "globalAlpha", alpha1*3);
+		ObjShader_SetFloat(obj, "globalAlpha", gatoAuraAlpha*3);
 		ObjRender_SetPosition(obj,ObjMove_GetX(objTarg),ObjMove_GetY(objTarg)-35,0);
 
 		//ObjRender_SetAngleZ(obj,ang+0.5);
@@ -55,3 +55,4 @@ task GatoAura(objTarg)
 	}
 	Obj_Delete(obj);
 }
+

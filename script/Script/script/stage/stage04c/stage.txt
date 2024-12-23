@@ -62,7 +62,7 @@ task LoadBoss()
 	ObjEnemyBossScene_LoadInThread(Boss);
 	ObjEnemyBossScene_LoadInThread(Boss2);
 }
-
+let PostTransformWait = round(60*2);
 task StartStage
 {	
 	if(GetCommonData("isPracticing", false)==false)
@@ -93,11 +93,40 @@ task StartStage
 		Stage04CTransform();
 		wait(30);
 		TTransform(objGato);
-		wait(60*4);
+		if(GetCommonData("isPracticing", false)==false)
+		{
+			PreTransformText("Thus, it comes down to this", GetStgFrameHeight/2, 60*2, 30, 3, [255,255,255], title_cursor);
+			wait(60*2);
+			GatoCutin;
+			PreTransformText("The scales of Ma'at are balanced", GetStgFrameHeight/2, 60*3, 30, 4, [255,255,255], title_cursor);
+			wait(60*3);
+			PreTransformText("But soon they must tip", GetStgFrameHeight/4*3, 60*3, 30, 4, [255,255,255], title_cancel);
+			wait(60*3);
+		}
+		else
+		{
+			wait(60*4);
+		}
+		
 		SetCommonData("BossX", ObjMove_GetX(objGato));
 		SetCommonData("BossY", ObjMove_GetY(objGato));
 		Obj_Delete(objGato);
 		ScreenShake(120,6);
+		
+		if(GetCommonData("isPracticing", false)==false)
+		{
+			SE_PlayLen(compositespellcard,75);
+			SE_PlayLen(BossSpell,75);
+			let objGato2 = CreateFamiliar;
+			ObjMove_SetPosition(objGato2, GetCommonData("BossX", 0), GetCommonData("BossY", 0));
+			renderBossUnanimated(objGato2, IMG_BOSS_ANUGATO, 10);
+			
+		
+			PreTransformText("I deem it so", GetStgFrameHeight/4*3, PostTransformWait, 50, 8, [255,0,0], title_ok);
+			wait(PostTransformWait);
+			Obj_Delete(objGato2);
+		}
+		
 		
 		
 		SetCommonData("MaxNumberOfPhases",3);
@@ -114,20 +143,81 @@ task StartStage
 	}
 }
 
+let gatoCutinAuraScale = 1;
+let gatoCutinAuraAlpha = 0;
 
-let objGoop1 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [289,31,321,61], BLEND_ADD_ARGB, 0.78);
-let objGoop2 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [385,31,417,61], BLEND_SUBTRACT, 0.79);
+task GatoAura(objTarg)
+{
+	
+	let dir = GetCurrentScriptDirectory();
+	let path = IMG_GATOAURA;
+
+	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D); //2Dスプライトオブジェクト生成
+	ObjPrim_SetPrimitiveType(obj, PRIMITIVE_TRIANGLEFAN);
+	ObjPrim_SetVertexCount(obj, 4);
+	Obj_SetRenderPriorityI(obj, 59); //描画優先度を設定
+	ObjPrim_SetTexture(obj, path); //テクスチャを設定
+	
+	ObjPrim_SetVertexPosition(obj, 0, -512, -512, 0);
+	ObjPrim_SetVertexPosition(obj, 1, 512, -512, 0); 
+	ObjPrim_SetVertexPosition(obj, 2, 512, 512, 0);
+	ObjPrim_SetVertexPosition(obj, 3, -512, 512, 0);
+	
+	ObjPrim_SetVertexUVT(obj, 0, 0, 0);
+	ObjPrim_SetVertexUVT(obj, 1, 1024, 0);
+	ObjPrim_SetVertexUVT(obj, 2, 1024, 1024);
+	ObjPrim_SetVertexUVT(obj, 3, 0, 1024);
+
+	ObjShader_SetShaderF(obj, GetCurrentScriptDirectory()~"hlslfire.txt");
+	//ObjRender_SetScaleXYZ(obj,0.5,0.5,0);
+	ObjRender_SetPosition(obj,GetStgFrameWidth/2,GetStgFrameHeight/2,0);
+	//LoadTextureEx(IMG_STAGE_06_SPELL_01, false, false);
+	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
+	
+	ObjRender_SetScaleXYZ(obj, gatoCutinAuraScale);
+	let timer = 0;
+	let alpha1 = 1;
+	while(!Obj_IsDeleted(objTarg))
+	{
+		ObjShader_SetFloat(obj, "time", timer*3);
+		ObjShader_SetFloat(obj, "rotation", timer*0.0);
+		ObjShader_SetFloat(obj, "scroll_y", 1);
+
+		ObjShader_SetTexture(obj, "texture_0", path);
+		ObjShader_SetTexture(obj, "texture_1", IMG_STAGE_06_SPELL_02);
+		ObjShader_SetTechnique(obj, "TecFire");
+		let ang = ObjRender_GetAngleZ(obj);
+		
+		
+	
+		
+		ObjShader_SetFloat(obj, "globalAlpha", gatoCutinAuraAlpha*3);
+		ObjRender_SetPosition(obj,ObjRender_GetX(objTarg), ObjRender_GetY(objTarg)-35,0);
+
+		//ObjRender_SetAngleZ(obj,ang+0.5);
+		timer++;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+let objGoop1 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [289,31,321,61], BLEND_ADD_ARGB, 0.58);
+let objGoop2 = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_SHOT, [385,31,417,61], BLEND_SUBTRACT, 0.59);
 task TTransform(objTarget)
 {
 	let xB = ObjMove_GetX(objTarget);
 	let yB = ObjMove_GetY(objTarget);
 	let t = 60*4;
-	Flash(78,t,BLEND_SUBTRACT,128,255,255,0,128);
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		t = 60*8;
+	}
+	Flash(62,t,BLEND_SUBTRACT,128,255,255,0,128);
 	SE_PlayLen(LaserDelLong,80);
 	ScreenShakeReverse(t,4);
 	ascent(i in 0..t)
 	{
-		if(i==60)
+		if(i==(t-60*3))
 		{
 			SE_PlayLen(Charge3,90);
 		}
@@ -136,8 +226,16 @@ task TTransform(objTarget)
 		CreateGoop(rand(0,360),rand(5,-5),round(rand(30,120)),finalScl);
 		yield;
 	}
-	Flash(78,120,BLEND_SUBTRACT,128,255,255,128,0);
-	Flash(79,120,BLEND_ADD_ARGB,255,255,255,200,0);
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		Flash(62,PostTransformWait-30,BLEND_ADD_ARGB,255,255,255,200,0);
+		Flash(61,PostTransformWait-30,BLEND_SUBTRACT,128,255,255,128,0);
+	}
+	else
+	{
+		Flash(62,120,BLEND_ADD_ARGB,255,255,255,200,0);
+		Flash(61,120,BLEND_SUBTRACT,128,255,255,128,0);
+	}
 	SE_PlayLen(Burst1, 80);
 	
 	task CreateGoop(ang,spd,innerT,fscl)
@@ -226,6 +324,107 @@ task TTransform(objTarget)
 		
 	}
 }
+
+task GatoCutin()
+{
+	let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(obj,IMG_CUTIN_GODSWORN);
+	Obj_SetRenderPriorityI(obj,60);
+	ObjSprite2D_SetSourceRect(obj,0,0,512,512);
+	ObjSprite2D_SetDestRect(obj,0,0,512,512);
+	ObjSprite2D_SetDestCenter(obj);
+	ObjRender_SetColor(obj, 0, 0, 0);
+	let t = 60*4;
+	GatoAura(obj);
+	ascent(i in 0..t)
+	{
+		let y = GetStgFrameHeight/2 + (GetStgFrameHeight/2 * (1-1*sin(90/(t-1)*i)));
+		ObjRender_SetPosition(obj, GetStgFrameWidth/2, y, 0);
+		ObjRender_SetAlpha(obj, 255/(t-1)*i);
+		gatoCutinAuraAlpha = 1/(t-1)*i;
+		yield;
+	}
+	wait(60*6-t);
+	t = 30;
+	
+	ascent(i in 0..t)
+	{
+		let coll = 255/(t-1)*i;
+		ObjRender_SetColor(obj, coll,coll,coll);
+		yield;
+	}
+	ObjRender_SetColor(obj, 255,255,255);
+	wait(PostTransformWait-t);
+	t = 30;
+	let bit = 1-2*round(rand(0,1));
+	ascent(i in 0..t)
+	{
+		let x = Interpolate_Accelerate(0, 50*bit, 1/t*i);
+		ObjRender_SetPosition(obj, GetStgFrameWidth/2+x, GetStgFrameHeight/2, 0);
+		ObjRender_SetAlpha(obj, 255-255/(t-1)*i);
+		gatoCutinAuraAlpha = 1-1/(t-1)*i;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+task PreTransformText(text, y, timerr, fs, textDelay, col, talksfx)
+{
+
+	let widthh = GetStgFrameWidth;
+	let obj = ObjText_Create();
+	ObjText_SetFontType(obj, "Lucida Fax");
+	ObjText_SetFontBold(obj, true);
+	ObjText_SetFontSize(obj, fs);
+	ObjText_SetFontColorTop(obj, col[0], col[1], col[2]);
+	ObjText_SetFontColorBottom(obj, 255,255,255);	
+	ObjText_SetFontBorderType(obj, BORDER_FULL);
+	ObjText_SetFontBorderWidth(obj, 2);
+	ObjText_SetFontBorderColor(obj, 0, 0, 0);
+	ObjText_SetLinePitch(obj, 7);
+	ObjText_SetHorizontalAlignment(obj, ALIGNMENT_CENTER);
+	ObjText_SetMaxWidth(obj, widthh*2-20);
+	Obj_SetRenderPriorityI(obj, 63);
+	ObjRender_SetPosition(obj, GetStgFrameWidth/2-widthh+10, y+8, 0);
+	
+	let stringThing = SplitString(text,"|");
+	let scrollT = [];
+	let c = 0;
+	let textSkips = false;
+	ascent(j in 0..length(stringThing))
+	{
+		ascent(i in 0..length(stringThing[j]))
+		{
+			let modiWait = 1;
+			scrollT = scrollT ~ [stringThing[j][i]];
+			if([stringThing[j][i]]==" " || [stringThing[j][i]]==")" || [stringThing[j][i]]=="(") { }
+			if([stringThing[j][i]]=="&" && [stringThing[j][i+1]]=="q"){textSkips = true;}
+			if([stringThing[j][i]]==";"){textSkips = false;}
+			
+			dialogue_text = scrollT;
+			ObjText_SetText(obj, dialogue_text);
+			
+			if((j != length(stringThing)-1 || i != length(stringThing[j])-1) && !textSkips )
+			{
+				SE_PlayLen(talksfx, 70);
+				loop(textDelay)
+				{
+					timerr --;
+					yield;	
+				}
+			}
+			
+		}
+		scrollT =  scrollT ~  "[r]";
+	}
+	while(timerr>0)
+	{
+		timerr--;
+		yield;
+	}
+	Obj_Delete(obj);
+}
+
+
 task Flash(rp,t,bl,r,g,b,a1,a2)
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);

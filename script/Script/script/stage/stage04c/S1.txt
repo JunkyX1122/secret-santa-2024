@@ -62,9 +62,18 @@ let finalSpellBool = false;
 	SetCommonData("BossName", "Erlendur Mjaldr (Godsworn)");
 	
 	GatoAura(objEnemy);
+	AuraScaling();
 }
 
-
+task AuraScaling()
+{
+	ascent(i in 0..30)
+	{
+		gatoAuraAlpha = 1/29*i;
+		yield;
+	}
+	gatoAuraAlpha = 1;
+}
 @MainLoop
 {
 	ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);

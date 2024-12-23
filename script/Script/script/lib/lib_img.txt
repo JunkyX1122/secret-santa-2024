@@ -867,8 +867,49 @@ const img_circle4 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle4.pn
 const img_circle5 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle5.png";
 const img_circle6 =  		GetCurrentScriptDirectory()~"./../../img/cutin/circle6.png";
 
-const Card_ImgArray = [SpellAttack_img,img_SpellAttack,img_SpellAttack_L,img_chains,img_card1,img_card2,img_card3,img_card4,img_card5,img_card6,img_card7,img_card8,img_circle1,img_circle2,img_circle3,img_circle4,img_circle5,img_circle6];
+const Card_ImgArray = [
+	SpellAttack_img,img_SpellAttack,img_SpellAttack_L,img_chains,
+	img_card1,img_card2,img_card3,img_card4,img_card5,img_card6,img_card7,img_card8,img_circle1,img_circle2,img_circle3,img_circle4,img_circle5,img_circle6];
 
+//---------------------------------------
+//---------------CARDS EF----------------
+//---------------------------------------
+
+const IMG_CUTIN_GATO   			= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_gato.png";
+const IMG_CUTIN_GATO2   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_gato2.png";
+const IMG_CUTIN_ANUBIS   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_anubis.png";
+const IMG_CUTIN_ANUBISSTAND 	= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_anubisstand.png";
+const IMG_CUTIN_SULLEN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_sullen.png";
+const IMG_CUTIN_DAISUKE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_daisuke.png";
+const IMG_CUTIN_DANDARA   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_dandara.png";
+const IMG_CUTIN_VIIVI   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_viivi.png";
+const IMG_CUTIN_TAZUE   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_tazue.png";
+const IMG_CUTIN_GRANDIS   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_grandis.png";
+const IMG_CUTIN_SCYLLA   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_scylla.png";
+const IMG_CUTIN_KIERAN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_kieran.png";
+const IMG_CUTIN_KAIRYU   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_kairyu.png";
+const IMG_CUTIN_GODSWORN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_godsworn.png";
+const IMG_CUTIN_HIROYUKI   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_hiroyuki.png";
+const IMG_CUTIN_REDRIN   		= 	GetCurrentScriptDirectory()  ~ "./../../img/cutin/cutin_redrin.png";
+
+const CharCutin_ImgArray = [
+IMG_CUTIN_GATO,
+IMG_CUTIN_GATO2,
+IMG_CUTIN_ANUBIS,
+IMG_CUTIN_ANUBISSTAND,
+IMG_CUTIN_SULLEN,
+IMG_CUTIN_DAISUKE,
+IMG_CUTIN_DANDARA,
+IMG_CUTIN_VIIVI,
+IMG_CUTIN_TAZUE,
+IMG_CUTIN_GRANDIS,
+IMG_CUTIN_SCYLLA,
+IMG_CUTIN_KIERAN,
+IMG_CUTIN_KAIRYU,
+IMG_CUTIN_GODSWORN,
+IMG_CUTIN_HIROYUKI,
+IMG_CUTIN_REDRIN
+];
 
 //---------------------------------------
 //-------------TITLE SCREEN--------------
