@@ -62,28 +62,38 @@ task InitiateGalleryImages()
 			GalleryImageAvailable ~= [HasBeatenWithTeam(i)];
 		}
 	}
+	ascent(i in 0..length(CharCutin_ImgArray))
+	{
+		GalleryImages ~= [CharCutin_ImgArray[i]];
+		let checkTemp = true;
+		alternative(i)
+		case(1) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_A); }
+		case(2) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_A); }
+		case(5) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_B); }
+		case(6) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_B); }
+		case(13) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_C); }
+		others
+		{
+			checkTemp = true;
+		}
+		GalleryImageAvailable ~= [checkTemp];
+		
+		if(i == 0)
+		{
+			GalleryImages ~= [IMG_PORTRAIT_GATO_SHIVER];
+			GalleryImageAvailable ~= [HasBeatenWithTeam(PLAYERTEAM_A)];
+		}
+	}
 	ascent(i in 0..length(Gallery_ImgArray))
 	{
 		GalleryImages ~= [Gallery_ImgArray[i]];
 		
 		let checkTemp = true;
 		alternative(i)
-		case(1)
-		{
-			checkTemp = HasBeatenWithTeam(PLAYERTEAM_A);
-		}
-		case(5)
-		{
-			checkTemp = HasBeatenWithTeam(PLAYERTEAM_B);
-		}
-		case(12)
-		{
-			checkTemp = HasBeatenWithTeam(PLAYERTEAM_C);
-		}
-		case(16)
-		{
-			checkTemp = HasBeatenWithTeam(PLAYERTEAM_C);
-		}
+		case(1) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_A); }
+		case(5) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_B); }
+		case(12) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_C); }
+		case(16) 	{ checkTemp = HasBeatenWithTeam(PLAYERTEAM_C); }
 		case(18)
 		{
 			checkTemp = HasBeatenWithTeam(PLAYERTEAM_A) && HasBeatenWithTeam(PLAYERTEAM_B) && HasBeatenWithTeam(PLAYERTEAM_C);
@@ -292,6 +302,15 @@ function GalleryImageMove(currentNumber, key1, key2, scl, minV, maxV, willLoop, 
 
 task Gallery_ShowImages()
 {
+	let objBack = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objBack, IMG_PIXEL);
+	Obj_SetRenderPriorityI(objBack, BASE_RENDERI+5);
+	ObjSprite2D_SetSourceRect(objBack,0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestRect(objBack,0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestCenter(objBack);
+	ObjRender_SetPosition(objBack, GetScreenWidth/2, GetScreenHeight/2, 0);
+	ObjRender_SetColor(objBack, 200,200,200);
+	
 	let currentImageID = gallery_CurrentImage;
 	
 	let currentImagePath = GalleryImages[currentImageID];
@@ -395,6 +414,8 @@ task Gallery_ShowImages()
 		ObjRender_SetAlpha(obj, 			 shownAlpha *scl);
 		ObjRender_SetAlpha(objUnknown, 	(255-shownAlpha)*scl);
 		
+		ObjRender_SetAlpha(objBack, 255 *scl);
+		
 		ObjRender_SetAlpha(objCurrentPage, 255 * scl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 0 : 1));
 		ObjRender_SetAlpha(objInstructions, 255 * scl * (gallery_toggleInstructions ? 1 : 0));
 		ascent(i in 0..2)
@@ -446,7 +467,7 @@ task Gallery_ShowImages()
 		ObjRender_SetPosition(obj, round(gallery_X), round(gallery_Y), 0);
 		ObjRender_SetAlpha(obj, 			 shownAlpha *gallery_AlphaScl);
 		ObjRender_SetAlpha(objUnknown, 	(255-shownAlpha)*gallery_AlphaScl);
-		
+		ObjRender_SetAlpha(objBack, 255 * gallery_AlphaScl);
 		ObjRender_SetAlpha(objCurrentPage, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0) * (gallery_togglePan ? 0 : 1));
 		ObjRender_SetAlpha(objInstructions, 255 * gallery_AlphaScl * (gallery_toggleInstructions ? 1 : 0));
 		ascent(i in 0..2)
@@ -471,6 +492,7 @@ task Gallery_ShowImages()
 	Obj_Delete(objUnknown);
 	Obj_Delete(objCurrentPage);
 	Obj_Delete(objInstructions);
+	Obj_Delete(objBack);
 	ascent(i in 0..2)
 	{
 		Obj_Delete(objArrowsPage[i]);
