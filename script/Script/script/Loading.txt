@@ -322,6 +322,7 @@ task Loading
 			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
 			yield;		
 		}
+		Obj_Delete(obj);
 	}
 	task Black()
 	{
