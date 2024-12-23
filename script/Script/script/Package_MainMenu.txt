@@ -29,7 +29,7 @@ task Title_Display()
 	TitleRender(!firstTimeBoot);
 	if(firstTimeBoot)
 	{
-		RenderMenuBackground(false);
+		RenderMenuBackground(true);
 	}
 	ascent(i in 0..140*2+60)
 	{
@@ -553,8 +553,12 @@ task RenderMenuBackground(skipTransition)
 
 let alphaScaleSnowstorm = 1;
 let isRenderingBackground = true;
+
+let hasSnowStarted = false;
 task SnowProgram(skipTransition)
 {
+	if(hasSnowStarted) { return; }
+	hasSnowStarted = true;
 	let angSand = 90;
 	
 	let objCloudParticle = CreateParticleListRect(OBJ_PARTICLE_LIST_2D, IMG_STAGE_06_SNOW, [0,0,128,128], BLEND_ALPHA, BASE_RENDER+0.01);
@@ -580,7 +584,7 @@ task SnowProgram(skipTransition)
 		yield;
 		
 	}
-	
+	hasSnowStarted = false;
 	Obj_Delete(objCloudParticle);
 	
 	task WindCloud(spd)
@@ -641,8 +645,12 @@ task SkyRender(skipTransition)
 	}
 	Obj_Delete(objSky);
 }
+
+let hasCloudsStarted = false;
 task CloudRendering(skipTransition)
 {
+	if(hasCloudsStarted) { return; }
+	hasCloudsStarted = true;
 	let objClouds = [];
 	let randStarts = [];
 	ascent(i in 0..3)
@@ -687,6 +695,7 @@ task CloudRendering(skipTransition)
 		mc++;
 		yield;
 	}
+	hasCloudsStarted = false;
 	ascent(i in 0..3)
 	{
 		Obj_Delete(objClouds[i]);

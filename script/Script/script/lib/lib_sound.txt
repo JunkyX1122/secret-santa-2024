@@ -257,6 +257,7 @@ const title_cancel = GetCurrentScriptDirectory~"./../../se3/title_cancel.wav";
 //=======================BGM============================
 //======================================================
 
+const BGM_WIND  = GetCurrentScriptDirectory~"./../../bgm/wind.ogg";// 
 const BGM_TITLE  = GetCurrentScriptDirectory~"./../../bgm/title.ogg";// 738849 6695592
 const BGM_ENDING  = GetCurrentScriptDirectory~"./../../bgm/ending.ogg"; //987303 6825557
 const BGM_CREDITS  = GetCurrentScriptDirectory~"./../../bgm/credits.ogg";
@@ -378,6 +379,7 @@ const BOSS_MUSIC_NAMES = [
 const LoadAllMusicArray = 
 [
 	BGM_TITLE,
+	BGM_ENDING,
 	BGM_CREDITS,
 	BGM_STAGE_01A,
 	BGM_STAGE_01B,

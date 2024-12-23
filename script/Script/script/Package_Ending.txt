@@ -673,6 +673,7 @@ const CREDITS_DATA_PROGRAMMING =
 	["Dialogue System",					"Python"],
 	["Dialogue System Overhaul",		"Junky"],
 	["Cutin Base Code",					"gtbot"],
+	["Mountain of Faith Bomb",			"Frenticpony"],
 	["System",							"Junky"],
 	["Menus",							"Junky"],
 	["Credits",							"Junky"]

@@ -29,7 +29,7 @@ let FONTS =
 ];
 @Initialize
 {
-	//SetSkipModeKey(KEY_INVALID);
+	SetSkipModeKey(KEY_INVALID);
 	//InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
 	ascent(i in 0..length(FONTS))
 	{
@@ -76,13 +76,15 @@ task Loader
 	LoadThings;
 	while(mainLoadBool==false){yield;}
 	InitialisePracticeAttackPaths();
-	LoadingBool = true;
+	
 	skipIntro = false;
 	
 	LoadSaveDataStuff();
 	wait(10);
 	TIntro;
-	TTitleScene;
+	menuState = MENUSTATE_MAIN;
+	TDarkManager();
+	Title_Display();
 }
 let carryOn = true;
 let titleFocusX = 0;

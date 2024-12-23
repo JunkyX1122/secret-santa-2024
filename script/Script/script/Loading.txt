@@ -1,72 +1,133 @@
 let mainLoadBool = false;
-let LoadBool = false;
+let hasEverythingLoaded = false;
 let LoadingBool = false;
+
+
+let totalThingsToLoad = 0;
+let thingsLoaded = 0;
+task LoadTally
+{
+	totalThingsToLoad = 0;
+	thingsLoaded = 0;
+	totalThingsToLoad+=length(StageSystem_ImgArray);
+	totalThingsToLoad+=length(StageSystem_ImgArray);
+	totalThingsToLoad+=length(Enemy_ImgArray);
+	totalThingsToLoad+=length(Effects_ImgArray);
+	totalThingsToLoad+=length(Card_ImgArray);
+	totalThingsToLoad+=length(BossSprite_ImgArray);
+	totalThingsToLoad+=length(TalkImg_ImgArray);
+	totalThingsToLoad+=length(System_ImgArray);
+
+	ascent(i in 0..length(AllStageBackground_ImgArray)) {
+		ascent(o in 0..length(AllStageBackground_ImgArray[i])){ totalThingsToLoad+=1; }
+	}
+	
+	totalThingsToLoad+=length(TitleScreen_ImgArray);
+	totalThingsToLoad+=length(System_ImgArray);
+	totalThingsToLoad+=length(Icon_ImgArray);
+
+
+	ascent(i in 0..length(Team1PortraitImg_ImgArray)) {
+		ascent(o in 0..length(Team1PortraitImg_ImgArray[i])) { totalThingsToLoad+=1; }	
+	}
+	
+	ascent(i in 0..length(Team2PortraitImg_ImgArray)) {
+		ascent(o in 0..length(Team2PortraitImg_ImgArray[i])) { totalThingsToLoad+=1; }
+	}
+	
+	ascent(i in 0..length(Team3PortraitImg_ImgArray)) {
+		ascent(o in 0..length(Team3PortraitImg_ImgArray[i])) { totalThingsToLoad+=1; }
+	}
+	
+	ascent(i in 0..length(BossPortraitImg_ImgArray)) {
+		ascent(o in 0..length(BossPortraitImg_ImgArray[i])) { totalThingsToLoad+=1; }	
+	}
+	
+	//-----------------Load Sound-----------------
+	totalThingsToLoad+=length(LoadAllSoundsArray);
+	totalThingsToLoad+=length(LoadAllMusicArray);
+	WriteLog(totalThingsToLoad);
+}
+
+task LoadTexturePlus(id)
+{
+	LoadTexture(id);
+	thingsLoaded++;
+}
+
 task LoadThings
 {
+	
+	SE_PlayLen(title_cursor, 40);
+	PostLoadingText("Remember to turn down your volume~", 20);
+	wait(180);
+	
 	Loading;
+	LoadTally;
+	
 	//-----------------Load Images-----------------
 	ascent(i in 0..length(StageSystem_ImgArray))
 	{
-		LoadTexture(StageSystem_ImgArray[i]);
+		LoadTexturePlus(StageSystem_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(StageSystem_ImgArray))
 	{
-		LoadTexture(StageSystem_ImgArray[i]);
+		LoadTexturePlus(StageSystem_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(Enemy_ImgArray))
 	{
-		LoadTexture(Enemy_ImgArray[i]);
+		LoadTexturePlus(Enemy_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(Effects_ImgArray))
 	{
-		LoadTexture(Effects_ImgArray[i]);
+		LoadTexturePlus(Effects_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(Card_ImgArray))
 	{
-		LoadTexture(Card_ImgArray[i]);
+		LoadTexturePlus(Card_ImgArray[i]);
 		yield;
 	}
 
 	ascent(i in 0..length(BossSprite_ImgArray))
 	{
-		LoadTexture(BossSprite_ImgArray[i]);
+		LoadTexturePlus(BossSprite_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(TalkImg_ImgArray))
 	{
-		LoadTexture(TalkImg_ImgArray[i]);
+		LoadTexturePlus(TalkImg_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(System_ImgArray))
 	{
-		LoadTexture(System_ImgArray[i]);
+		LoadTexturePlus(System_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(AllStageBackground_ImgArray))
 	{
 		ascent(o in 0..length(AllStageBackground_ImgArray[i]))
 		{
-			LoadTexture(AllStageBackground_ImgArray[i][o]);
+			LoadTexturePlus(AllStageBackground_ImgArray[i][o]);
 			yield;
 		}
 	}
 	ascent(i in 0..length(TitleScreen_ImgArray))
 	{
-		LoadTexture(TitleScreen_ImgArray[i]);
+		LoadTexturePlus(TitleScreen_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(System_ImgArray))
 	{
-		LoadTexture(System_ImgArray[i]);
+		LoadTexturePlus(System_ImgArray[i]);
 		yield;
 	}
 	ascent(i in 0..length(Icon_ImgArray))
 	{
-		LoadTexture(Icon_ImgArray[i]);
+		LoadTexturePlus(Icon_ImgArray[i]);
 		yield;
 	}
 	
@@ -74,7 +135,7 @@ task LoadThings
 	{
 		ascent(o in 0..length(Team1PortraitImg_ImgArray[i]))
 		{
-			LoadTexture(Team1PortraitImg_ImgArray[i][o]);
+			LoadTexturePlus(Team1PortraitImg_ImgArray[i][o]);
 		}
 		yield;
 	}
@@ -83,7 +144,7 @@ task LoadThings
 	{
 		ascent(o in 0..length(Team2PortraitImg_ImgArray[i]))
 		{
-			LoadTexture(Team2PortraitImg_ImgArray[i][o]);
+			LoadTexturePlus(Team2PortraitImg_ImgArray[i][o]);
 		}
 		yield;
 	}
@@ -92,7 +153,7 @@ task LoadThings
 	{
 		ascent(o in 0..length(Team3PortraitImg_ImgArray[i]))
 		{
-			LoadTexture(Team3PortraitImg_ImgArray[i][o]);
+			LoadTexturePlus(Team3PortraitImg_ImgArray[i][o]);
 		}
 		yield;
 	}
@@ -101,7 +162,7 @@ task LoadThings
 	{
 		ascent(o in 0..length(BossPortraitImg_ImgArray[i]))
 		{
-			LoadTexture(BossPortraitImg_ImgArray[i][o]);
+			LoadTexturePlus(BossPortraitImg_ImgArray[i][o]);
 		}
 		yield;
 	}
@@ -110,114 +171,191 @@ task LoadThings
 	ascent(i in 0..length(LoadAllSoundsArray))
 	{
 		LoadSound(LoadAllSoundsArray[i]);
+		thingsLoaded++;
 		yield;
 	}
 	ascent(i in 0..length(LoadAllMusicArray))
 	{
 		LoadSound(LoadAllMusicArray[i]);
+		thingsLoaded++;
 		yield;
 	}
-	loop(120){yield;}
-	mainLoadBool=true;
+	hasEverythingLoaded = true;
+	while(!LoadingBool){yield;}
+	
+	mainLoadBool = true;
+	WriteLog(totalThingsToLoad);
 }
+
+task PostLoadingText(texx, s)
+{
+	let obj = ObjText_Create;
+	ObjText_SetText(obj, texx );
+	ObjText_SetFontType(obj, "Lucida Fax");
+	ObjText_SetFontBold(obj, true);
+	ObjText_SetHorizontalAlignment(obj, ALIGNMENT_CENTER);
+	ObjText_SetMaxWidth(obj, GetScreenWidth-24);
+	Obj_SetRenderPriorityI(obj,BASE_RENDERI+11);
+	
+	ObjText_SetFontSize(obj,s);
+	ObjText_SetFontColorTop(obj,255,255,255);
+	ObjText_SetFontColorBottom(obj, 255, 255, 255);
+	
+	ObjRender_SetPosition(obj, round(GetScreenWidth/2-(GetScreenWidth-24)/2), GetScreenHeight/2 - ObjText_GetTotalHeight(obj)/2, 0);
+	let ALF = 255;
+	let t = 30;
+	ascent(i in 0..t)
+	{
+		ALF = 255/(t-1)*i;
+		ObjRender_SetAlpha(obj,ALF);
+		SkippableWait(1);
+	}
+	SkippableWait(120);
+	ascent(i in 0..t)
+	{
+		ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
+		SkippableWait(1);	
+	}
+	Obj_Delete(obj);
+}
+
+let WIND_VOLUME = 50;
 task Loading
 {
+	MusicChange(BGM_WIND, 80, -1, -1);
+	MusicVolumeChange(0, WIND_VOLUME, 180);
+	menuState = MENUSTATE_MAIN;
+	CloudRendering(false);
+	SnowProgram(false);
 	Black();
-	Logo();
-	LoadIcon;
-	Orb;
+	TitleScreenText();
+	LoadingPercent();
+	while(!hasEverythingLoaded){ yield; }
+	
+	wait(60);
+	PostLoadingText("Presented by Joonkeh", 40);
+	SkippableWait(180);
+	PostLoadingText("A gift for Redrin", 40);
+	SkippableWait(180);
+	
+	ascent(i in 0..200)
+	{
+		SetBGMVolume(WIND_VOLUME-WIND_VOLUME/199*i);
+		SkippableWait(1);
+	}
+
+	yield;
+	LoadingBool = true;
+	
+	//Logo();
+	//LoadIcon;
+	//Orb;
+	
+	task TitleScreenText()
+	{
+		let obj = ObjText_Create;
+		ObjText_SetText(obj,
+			"This game is part of the annual Shrines and Youkai Secret Santa.[r]" ~
+			"This is a derivative work of fiction.[r]"~
+			"All characters that appear in this work are a part of the S&Y universe."
+			);
+		ObjText_SetFontType(obj, "Lucida Fax");
+		ObjText_SetFontBold(obj, true);
+		ObjText_SetHorizontalAlignment(obj, ALIGNMENT_CENTER);
+		ObjText_SetMaxWidth(obj, GetScreenWidth-24);
+		Obj_SetRenderPriorityI(obj,BASE_RENDERI+11);
+		
+		ObjText_SetFontSize(obj,20);
+		ObjText_SetFontColorTop(obj,255,255,255);
+		ObjText_SetFontColorBottom(obj, 255, 255, 255);
+		
+		ObjRender_SetPosition(obj, round(GetScreenWidth/2-(GetScreenWidth-24)/2), GetScreenHeight/2 - ObjText_GetTotalHeight(obj)/2, 0);
+		let ALF = 0;
+		let t = 60;
+		ascent(i in 0..t)
+		{
+			ALF = 255/(t-1)*i;
+			ObjRender_SetAlpha(obj,ALF);
+			yield;
+		}
+		while(hasEverythingLoaded==false){yield;}
+		ascent(i in 0..t)
+		{
+			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
+			yield;		
+		}
+		Obj_Delete(obj);
+	}
+	task LoadingPercent()
+	{
+		let obj = ObjText_Create;
+		ObjText_SetText(obj, "0%");
+		ObjText_SetFontType(obj, "Lucida Fax");
+		ObjText_SetFontBold(obj, true);
+		ObjText_SetHorizontalAlignment(obj, ALIGNMENT_CENTER);
+		ObjText_SetMaxWidth(obj, GetScreenWidth);
+		Obj_SetRenderPriorityI(obj,BASE_RENDERI+11);
+		
+		ObjText_SetFontSize(obj,30);
+		ObjText_SetFontColorTop(obj,255,255,255);
+		ObjText_SetFontColorBottom(obj, 255, 255, 255);
+		
+		ObjRender_SetPosition(obj, round(GetScreenWidth-75-(GetScreenWidth)/2), GetScreenHeight - 50 - ObjText_GetTotalHeight(obj)/2, 0);
+		let ALF = 0;
+		ascent(i in 0..60)
+		{
+			let loadPercent = floor(100 * thingsLoaded / totalThingsToLoad);
+			ObjText_SetText(obj, IntToString(loadPercent) ~ "%");
+			ALF = 255/59*i;
+			ObjRender_SetAlpha(obj,ALF);
+			yield;
+		}
+		while(hasEverythingLoaded==false)
+		{
+			let loadPercent = floor(100 * thingsLoaded / totalThingsToLoad);
+			ObjText_SetText(obj, IntToString(loadPercent) ~ "%");
+			yield;
+		}
+		let t = 140;
+		ascent(i in 0..t)
+		{
+			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
+			yield;		
+		}
+	}
 	task Black()
 	{
 		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
-		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_black.png");
-		Obj_SetRenderPriorityI(obj,99);
+		ObjPrim_SetTexture(obj,IMG_PIXEL);
+		Obj_SetRenderPriorityI(obj,BASE_RENDERI+11);
 		ObjRender_SetAngleZ(obj,0);		
 		let ALF=255;
 		ObjRender_SetAlpha(obj,ALF);
 		let scale =1;
 		ObjRender_SetScaleXYZ(obj,scale,scale,scale);
-		ObjSprite2D_SetSourceRect(obj,0,0,640,480);
-		ObjSprite2D_SetDestRect(obj,0,0,640,480);
+		ObjSprite2D_SetSourceRect(obj,0,0,GetScreenWidth,GetScreenHeight);
+		ObjSprite2D_SetDestRect(obj,0,0,GetScreenWidth,GetScreenHeight);
 		ObjSprite2D_SetDestCenter(obj);
+		ObjRender_SetColor(obj, 0,0,0);
 		ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2,0);
-		while(LoadBool==false){yield;}
-		Obj_Delete(obj);
-	}
-	task Logo()
-	{
-		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
-		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_logo.png");
-		Obj_SetRenderPriorityI(obj,99);
-		ObjRender_SetAngleZ(obj,0);		
-		let ALF=255;
-		ObjRender_SetAlpha(obj,ALF);
-		let scale =10;
-		ObjRender_SetScaleXYZ(obj,1,1,1);
-		ObjSprite2D_SetSourceRect(obj,0,0,640,480);
-		ObjSprite2D_SetDestRect(obj,0,0,640,480);
-		ObjSprite2D_SetDestCenter(obj);
-		ObjRender_SetPosition(obj,GetScreenWidth/2,GetScreenHeight/2-50,0);
-		while(LoadBool==false){yield;}
-		Obj_Delete(obj);
-	}
-	task LoadIcon
-	{
-		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
-		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_load1.png");
-		Obj_SetRenderPriorityI(obj,99);
-		ObjRender_SetAngleZ(obj,0);		
-		let ALF=255;
-		let count = 90;
-		ObjRender_SetScaleXYZ(obj,1,1,1);
-		ObjSprite2D_SetSourceRect(obj,0,0,256,64);
-		ObjSprite2D_SetDestRect(obj,0,0,256,64);
-		ObjSprite2D_SetDestCenter(obj);
-		while(LoadingBool==false)
+		ascent(i in 0..60)
 		{
-			ObjRender_SetPosition(obj,GetScreenWidth-150,GetScreenHeight-80+10*sin(count),0);
-			ObjRender_SetAlpha(obj,255+255*sin(count));
-			count+=5;
+			ALF=255 - 50/59*i;
+			ObjRender_SetAlpha(obj,ALF);
 			yield;
 		}
-		while(LoadBool==false)
+		while(hasEverythingLoaded==false)
 		{
-			ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_load2.png");
-			ObjRender_SetPosition(obj,GetScreenWidth-150,GetScreenHeight-80+10*sin(count),0);
-			ObjRender_SetAlpha(obj,255+255*sin(count));
-			count+=5;
 			yield;
+		}
+		
+		while(!LoadingBool){yield;}
+		let t = 140;
+		ascent(i in 0..t)
+		{
+			ObjRender_SetAlpha(obj, ALF-ALF/(t-1)*i);
+			yield;		
 		}
 		Obj_Delete(obj);
 	}
-	task Orb
-	{
-		let obj = ObjPrim_Create(OBJ_SPRITE_2D);
-		ObjPrim_SetTexture(obj,GetCurrentScriptDirectory ~"./../img/title/img_loadorb.png");
-		Obj_SetRenderPriorityI(obj,99);
-		ObjRender_SetAngleZ(obj,0);		
-		let ALF=255;
-		let count = 90;
-		ObjRender_SetScaleXYZ(obj,0.5,0.5,1);
-		ObjSprite2D_SetSourceRect(obj,0,0,128,128);
-		ObjSprite2D_SetDestRect(obj,0,0,128,128);
-		ObjSprite2D_SetDestCenter(obj);
-		while(LoadingBool==false)
-		{
-			ObjRender_SetPosition(obj,GetScreenWidth-180+60*sin(count),GetScreenHeight-40,0);
-			ObjRender_SetAngleZ(obj,0+180*sin(count));
-			count+=2.5;
-			yield;
-		}
-		Obj_Delete(obj);
-	}
-	while(LoadingBool==false)
-	{
-		yield;
-	}
-	while(LoadBool==false)
-	{
-		LoadBool = true;
-		yield;
-	}
-	loop(60){yield;}
 }
