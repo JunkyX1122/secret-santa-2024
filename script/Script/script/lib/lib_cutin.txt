@@ -222,9 +222,9 @@ task CutinS3(mimage, difficulty)
 		
 		
 		if(!IsReplay&&!DEBUG&&num==0){
-			SpellValueAttempt++;
-			SetAreaCommonData("cutin_History", SpellDataAttempt, SpellValueAttempt);
-			SaveCommonDataAreaA1("cutin_History");
+			//SpellValueAttempt++;
+			//SetAreaCommonData("cutin_History", SpellDataAttempt, SpellValueAttempt);
+			//SaveCommonDataAreaA1("cutin_History");
 		}
 	
 	
@@ -334,9 +334,9 @@ task CutinS3(mimage, difficulty)
 			//	GotSpellCard(bonus);
 			//	AddScore(bonus);
 				if(!IsReplay&&!DEBUG&&num==0){
-					SpellValueGet++;
-					SetAreaCommonData("cutin_History", SpellDataGet, SpellValueGet);
-					SaveCommonDataAreaA1("cutin_History");
+					//SpellValueGet++;
+					//SetAreaCommonData("cutin_History", SpellDataGet, SpellValueGet);
+					//SaveCommonDataAreaA1("cutin_History");
 				}
 			}else{
 			//	FailedSpellCard;
