@@ -1,5 +1,6 @@
 let isCreditsAvailable = false;
-
+let isCreditsSkippable = true;
+let credits_AlphaScl = 1;
 const BGM_ENDING_VOLUME = 100;
 const BGM_CREDITS_VOLUME = 75;
 
@@ -56,6 +57,7 @@ task TEnding(teamEnding)
 	{
 		isCreditsAvailable = true;
 		displayNotification = true;
+		isCreditsSkippable = false;
 	}
 	
 	currentPage = 0;
@@ -535,8 +537,44 @@ task ManagePages(teamEnding)
 }
 
 const CREDITS_X_POS = GetScreenWidth/2 - (200);
+let forceCreditsEnd = false;
+let noLongerSkip = false;
+task ManageCreditsSkip()
+{
+	while(!forceCreditsEnd && (GetVirtualKeyState(VK_CANCEL) != KEY_PUSH))
+	{
+		yield;
+	}
+	if(!forceCreditsEnd && !noLongerSkip)
+	{
+		SE_PlayLen(title_cancel, 60);
+		let t = 180;
+		MusicVolumeChange(BGM_CREDITS_VOLUME, 0, t-1);
+		ascent(i in 0..t)
+		{
+			credits_AlphaScl = 1 - 1/(t-1)*i;
+			yield;
+		}
+		forceCreditsEnd = true;
+	}
+}
+
+function SkippableCreditsWait(t)
+{
+	ascent(i in 0..t)
+	{
+		SkippableCreditsYield();
+	}
+}
+function SkippableCreditsYield()
+{
+	if(!forceCreditsEnd) { yield; }
+}
 function Credits()
 {
+	credits_AlphaScl = 1;
+	forceCreditsEnd = false;
+	noLongerSkip = false;
 	let totalToDisplay = 0;
 	ascent(i in 0..length(CREDITS_ALL))
 	{
@@ -552,50 +590,57 @@ function Credits()
 	let timePerRow = floor(totalFramesToPlay / totalToDisplay);
 	
 	WriteLog(timePerRow);
+	
+	if(isCreditsSkippable) { ManageCreditsSkip(); }
 	MusicChange(BGM_CREDITS, BGM_CREDITS_VOLUME, -1, -1);
 	ObjSound_SetLoopEnable(objPackageBGM, false);
+	
+	
+	
+	
 	CreateCreditSection("Credits", 20);
-	wait(timePerRow);
-	wait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
 	ascent(i in 0..length(CREDITS_ALL))
 	{
-		CreateCreditSection(CREDITS_SECTIONS[i], 18);
-		wait(timePerRow);
+		if(!forceCreditsEnd) { CreateCreditSection(CREDITS_SECTIONS[i], 18); }
+		SkippableCreditsWait(timePerRow);
 		ascent(o in 0..length(CREDITS_ALL[i]))
 		{
-			let currentRow = CREDITS_ALL[i][o];
-			CreateCreditRow(currentRow[0], currentRow[1]);
-			wait(timePerRow);
+			if(!forceCreditsEnd) 
+			{ 
+				let currentRow = CREDITS_ALL[i][o];
+				CreateCreditRow(currentRow[0], currentRow[1]);
+			}
+			SkippableCreditsWait(timePerRow);
 		}
-		wait(timePerRow);
+		SkippableCreditsWait(timePerRow);
 	}
-	wait(timePerRow);
+	noLongerSkip = true;
+	SkippableCreditsWait(timePerRow);
 	CreateCreditSection("Thank yous to all of the members of[r]Shrines and Youkai.", 16);
-	wait(timePerRow);
-	wait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
 	CreateCreditSection("Thank YOU for playing this 2 month time commitment.", 16);
-	wait(timePerRow);
-	wait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
 	CreateCreditSection("And thank you especially to Redrin, my Secret Santa[r]recipiant for this year, for being a cool friend.", 16);
-	wait(timePerRow);
-	wait(timePerRow);
-	wait(timePerRow);
-	wait(timePerRow);
-	wait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
 	CreateCreditSection("Guil this is a reminder to finish Bug Fables :)", 16);
-	wait(timeToScroll);
-	MusicVolumeChange(BGM_CREDITS_VOLUME, 0, 60*4);
-	wait(60*4);
+	SkippableCreditsWait(timeToScroll);
+	if(!forceCreditsEnd)
+	{
+		forceCreditsEnd = true;
+		MusicVolumeChange(BGM_CREDITS_VOLUME, 0, 60*4);
+		wait(60*4);
+	}
 	
-	
-	
-	/*
-	["Being a set of cool friends", 	"The Shrines and Youkai Server"],
-	["Secret Santa Recipiant",			"Redrin"],
-	["Being a really cool friend",		"Redrin"]
-	*/
-	
-	
+	isCreditsSkippable = true;
+
 	task CreateCreditSection(text1, tS)
 	{
 		let objCatag = ObjText_Create;
@@ -612,9 +657,13 @@ function Credits()
 		
 		ascent(i in 0..timeToScroll)
 		{
-			let y = floor(GetScreenHeight + 50 - (GetScreenHeight + 50*2) / (timeToScroll-1) * i);
-			ObjRender_SetY(objCatag, y);
-			yield;
+			if(!forceCreditsEnd)
+			{
+				ObjRender_SetAlpha(objCatag, 255*credits_AlphaScl);
+				let y = floor(GetScreenHeight + 50 - (GetScreenHeight + 50*2) / (timeToScroll-1) * i);
+				ObjRender_SetY(objCatag, y);
+				yield;
+			}
 		}
 		Obj_Delete(objCatag);
 	}
@@ -643,10 +692,16 @@ function Credits()
 		ObjRender_SetX(objName, round(CREDITS_X_POS + credits_row_gap));
 		ascent(i in 0..timeToScroll)
 		{
-			let y = floor(GetScreenHeight + 50 - (GetScreenHeight + 50*2) / (timeToScroll-1) * i);
-			ObjRender_SetY(objCatag, y);
-			ObjRender_SetY(objName, y);
-			yield;
+			if(!forceCreditsEnd)
+			{
+				ObjRender_SetAlpha(objCatag, 255*credits_AlphaScl);
+				ObjRender_SetAlpha(objName, 255*credits_AlphaScl);
+				
+				let y = floor(GetScreenHeight + 50 - (GetScreenHeight + 50*2) / (timeToScroll-1) * i);
+				ObjRender_SetY(objCatag, y);
+				ObjRender_SetY(objName, y);
+				yield;
+			}
 		}
 		Obj_Delete(objCatag);
 		Obj_Delete(objName);
