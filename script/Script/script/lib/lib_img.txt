@@ -1017,6 +1017,32 @@ IMG_ENDING_C_00, IMG_ENDING_C_01, IMG_ENDING_C_02
 ];
 
 //---------------------------------------
+//-------------CREDITS IMAGES------------
+//---------------------------------------
+
+const IMG_CREDITS_00 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_00.png";
+const IMG_CREDITS_01 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_01.png";
+const IMG_CREDITS_02 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_02.png";
+const IMG_CREDITS_03 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_03.png";
+const IMG_CREDITS_04 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_04.png";
+const IMG_CREDITS_05 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_05.png";
+const IMG_CREDITS_06 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_06.png";
+const IMG_CREDITS_07 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_07.png";
+const IMG_CREDITS_08 =  			GetCurrentScriptDirectory()~"./../../img/ending/credits_08.png";
+
+let Credits_ImgArray = [
+IMG_CREDITS_00,
+IMG_CREDITS_01,
+IMG_CREDITS_02,
+IMG_CREDITS_03,
+IMG_CREDITS_04,
+IMG_CREDITS_05,
+IMG_CREDITS_06,
+IMG_CREDITS_07,
+IMG_CREDITS_08
+];
+
+//---------------------------------------
 //-------------GALLERY IMAGES------------
 //---------------------------------------
 

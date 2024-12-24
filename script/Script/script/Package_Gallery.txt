@@ -62,6 +62,11 @@ task InitiateGalleryImages()
 			GalleryImageAvailable ~= [HasBeatenWithTeam(i)];
 		}
 	}
+	ascent(i in 0..length(Credits_ImgArray))
+	{
+		GalleryImages ~= [Credits_ImgArray[i]];
+		GalleryImageAvailable ~= [true];
+	}
 	ascent(i in 0..length(CharCutin_ImgArray))
 	{
 		GalleryImages ~= [CharCutin_ImgArray[i]];

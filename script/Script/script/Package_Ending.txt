@@ -598,19 +598,26 @@ function Credits()
 	
 	
 	
-	CreateCreditSection("Credits", 20);
+	CreateCreditSection("Credits", 20, false);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
 	ascent(i in 0..length(CREDITS_ALL))
 	{
-		if(!forceCreditsEnd) { CreateCreditSection(CREDITS_SECTIONS[i], 18); }
+		if(!forceCreditsEnd) 
+		{ 
+			if(i<length(CREDITS_ALL)-1)
+			{
+				CreateCreditImage(i, true);
+			}
+			CreateCreditSection(CREDITS_SECTIONS[i], 18, i>=length(CREDITS_ALL)-1); 
+		}
 		SkippableCreditsWait(timePerRow);
 		ascent(o in 0..length(CREDITS_ALL[i]))
 		{
 			if(!forceCreditsEnd) 
 			{ 
 				let currentRow = CREDITS_ALL[i][o];
-				CreateCreditRow(currentRow[0], currentRow[1]);
+				CreateCreditRow(currentRow[0], currentRow[1], i>=length(CREDITS_ALL)-1);
 			}
 			SkippableCreditsWait(timePerRow);
 		}
@@ -618,23 +625,26 @@ function Credits()
 	}
 	noLongerSkip = true;
 	SkippableCreditsWait(timePerRow);
-	CreateCreditSection("Thank yous to all of the members of[r]Shrines and Youkai.", 16);
+	CreateCreditSection("Thank yous to all of the members of[r]Shrines and Youkai.", 16, true);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
-	CreateCreditSection("Thank YOU for playing this 2 month time commitment.", 16);
+	CreateCreditSection("Thank YOU for playing this 2 month time commitment.", 16, true);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
-	CreateCreditSection("And thank you especially to Redrin, my Secret Santa[r]recipiant for this year, for being a cool friend.", 16);
+	CreateCreditSection("And thank you especially to Redrin, my Secret Santa[r]recipiant for this year, for being a cool friend.", 16, true);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
-	CreateCreditSection("Guil this is a reminder to finish Bug Fables.", 16);
+	CreateCreditSection("Guil this is a reminder to finish Bug Fables.", 16, true);
 	SkippableCreditsWait(timePerRow);
 	SkippableCreditsWait(timePerRow);
-	CreateCreditSection("Also Gren says hi :)", 16);
-	SkippableCreditsWait(timeToScroll);
+	CreateCreditSection("Also Gren says hi :)", 16, true);
+	SkippableCreditsWait(timePerRow);
+	SkippableCreditsWait(timePerRow);
+	CreateCreditImage(8,false);
+	SkippableCreditsWait(timeToScroll+60*7);
 	if(!forceCreditsEnd)
 	{
 		forceCreditsEnd = true;
@@ -643,8 +653,33 @@ function Credits()
 	}
 	
 	isCreditsSkippable = true;
-
-	task CreateCreditSection(text1, tS)
+	
+	task CreateCreditImage(id,isRight)
+	{
+		let scl = 0.75;
+		let objCI = ObjPrim_Create(OBJ_SPRITE_2D);
+		ObjPrim_SetTexture(objCI, Credits_ImgArray[id]);
+		Obj_SetRenderPriorityI(objCI, BASE_RENDERI+4);
+		ObjSprite2D_SetSourceRect(objCI,0, 0, 512, 512);
+		ObjSprite2D_SetDestRect(objCI,0, 0, 512, 512);
+		ObjSprite2D_SetDestCenter(objCI);
+		ObjRender_SetPosition(objCI,isRight ? GetScreenWidth-256*scl : GetScreenWidth/2,GetScreenHeight+256*scl,0);
+		ObjRender_SetScaleXYZ(objCI, scl, scl, scl);
+		let ccc = 0;
+		let y = GetScreenHeight + 256*scl;
+		while(!forceCreditsEnd && y > -256*scl)
+		{
+			ObjRender_SetAlpha(objCI, 255*credits_AlphaScl);
+			y = floor(GetScreenHeight + 256*scl - (GetScreenHeight + 50*2) / (timeToScroll-1) * ccc);
+			ObjRender_SetY(objCI, y);
+			ccc++;
+			yield;
+			
+		}
+		Obj_Delete(objCI);
+	}
+	
+	task CreateCreditSection(text1, tS, isMiddle)
 	{
 		let objCatag = ObjText_Create;
 		ObjText_SetText(objCatag,text1);
@@ -652,12 +687,15 @@ function Credits()
 		ObjText_SetFontBold(objCatag, true);
 		ObjText_SetHorizontalAlignment(objCatag, ALIGNMENT_CENTER);
 		ObjText_SetMaxWidth(objCatag, GetScreenWidth-24);
-		
+		Obj_SetRenderPriorityI(objCatag, BASE_RENDERI+5);
 		ObjText_SetFontSize(objCatag,tS);
 		ObjText_SetFontColorTop(objCatag,255,255,255);
 		ObjText_SetFontColorBottom(objCatag, 255, 255, 255);
 		ObjRender_SetX(objCatag, round(CREDITS_X_POS-(GetScreenWidth-24)/2));
-		
+		if(isMiddle)
+		{
+			ObjRender_SetX(objCatag, round(GetScreenWidth/2-(GetScreenWidth-24)/2));
+		}
 		ascent(i in 0..timeToScroll)
 		{
 			if(!forceCreditsEnd)
@@ -671,11 +709,12 @@ function Credits()
 		Obj_Delete(objCatag);
 	}
 	
-	task CreateCreditRow(text1, text2)
+	task CreateCreditRow(text1, text2, isMiddle)
 	{
 		let credits_row_gap = 15;
 		let objCatag = ObjText_Create;
 		ObjText_SetText(objCatag,text1);
+		Obj_SetRenderPriorityI(objCatag, BASE_RENDERI+5);
 		ObjText_SetFontType(objCatag, "Lucida Fax");
 		ObjText_SetFontBold(objCatag, true);
 		ObjText_SetFontSize(objCatag,16);
@@ -683,9 +722,12 @@ function Credits()
 		ObjText_SetFontColorBottom(objCatag, 255, 255, 255);
 		ObjText_SetSidePitch(objCatag, -1);
 		ObjRender_SetX(objCatag, round(CREDITS_X_POS - credits_row_gap - textCentreX(objCatag)*2));
-
+		
+		
+		
 		let objName = ObjText_Create;
 		ObjText_SetText(objName,text2);
+		Obj_SetRenderPriorityI(objName, BASE_RENDERI+5);
 		ObjText_SetFontType(objName, "Lucida Fax");
 		ObjText_SetFontBold(objName, true);
 		ObjText_SetFontSize(objName,16);
@@ -693,6 +735,11 @@ function Credits()
 		ObjText_SetFontColorBottom(objName, 255, 255, 255);
 		ObjText_SetSidePitch(objName, -1);
 		ObjRender_SetX(objName, round(CREDITS_X_POS + credits_row_gap));
+		if(isMiddle)
+		{
+			ObjRender_SetX(objCatag, round(GetScreenWidth/2 - credits_row_gap - textCentreX(objCatag)*2));
+			ObjRender_SetX(objName, round(GetScreenWidth/2 + credits_row_gap));
+		}
 		ascent(i in 0..timeToScroll)
 		{
 			if(!forceCreditsEnd)
@@ -787,8 +834,11 @@ const CREDITS_DATA_BACKGROUNDS =
 const CREDITS_DATA_PLAYTESTING = 
 [
 	["Overal Pattern QA",				"GCP"],
-	["Gameplay",						"Gren (thatonefrogxd)"],
-	["Debugging",						"Drek, Lobby, Achy, Adam"]
+	["Balance Help",					"Gren (thatonefrogxd)"],
+	["Text Debugging Help",				"Drek, Lobby"],
+	["Font Fixing",						"Drek"],
+	["Graphical Debugging Help", 		"Achy"],
+	["General Playtesting",				"Adam"]
 ];
 
 const CREDITS_DATA_SOUND = 

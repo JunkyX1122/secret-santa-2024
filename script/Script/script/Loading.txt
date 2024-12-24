@@ -26,6 +26,8 @@ task LoadTally
 	totalThingsToLoad+=length(System_ImgArray);
 	totalThingsToLoad+=length(Icon_ImgArray);
 	totalThingsToLoad+=length(CharCutin_ImgArray);
+	totalThingsToLoad+=length(Ending_ImgArray);
+	totalThingsToLoad+=length(Credits_ImgArray);
 
 
 	ascent(i in 0..length(Team1PortraitImg_ImgArray)) {
@@ -136,7 +138,16 @@ task LoadThings
 		LoadTexturePlus(CharCutin_ImgArray[i]);
 		yield;
 	}
-	
+	ascent(i in 0..length(Ending_ImgArray))
+	{
+		LoadTexturePlus(Ending_ImgArray[i]);
+		yield;
+	}
+	ascent(i in 0..length(Credits_ImgArray))
+	{
+		LoadTexturePlus(Credits_ImgArray[i]);
+		yield;
+	}
 	ascent(i in 0..length(Team1PortraitImg_ImgArray))
 	{
 		ascent(o in 0..length(Team1PortraitImg_ImgArray[i]))
