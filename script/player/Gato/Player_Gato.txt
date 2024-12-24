@@ -142,7 +142,7 @@ let PLAYERSPEED = [6, 3];
         xPos ~= [20 * cos(360 / 6 * i)];
         yPos ~= [20 * sin(360 / 6 * i)];
     }
-	//DebugKeys();
+	DebugKeys();
 }
 
 let debugDamageRate = false;
@@ -156,20 +156,20 @@ task DebugKeys()
 			SetPlayerLife(GetPlayerLife+1);
 		}
 		if (GetKeyState(KEY_P) == KEY_PUSH ) {
-			debugDamageRate = !debugDamageRate;
+			//debugDamageRate = !debugDamageRate;
 		}
 		if (GetKeyState(KEY_O) == KEY_PUSH ) {
-			debugShowHitboxes = !debugShowHitboxes;
-			SetIntersectionVisualization(debugShowHitboxes);
+			//debugShowHitboxes = !debugShowHitboxes;
+			//SetIntersectionVisualization(debugShowHitboxes);
 		}
 		if (GetKeyState(KEY_I) == KEY_PUSH ) {
-			debugInvincible = !debugInvincible;
-			SetCommonData("ForceInvincible", debugInvincible);
+			//debugInvincible = !debugInvincible;
+			//SetCommonData("ForceInvincible", debugInvincible);
 		}
 		if (GetKeyState(KEY_U) == KEY_PUSH ) {
-			debugSlow = !debugSlow;
-			if(debugSlow) { StartSlow(20, TARGET_ALL); }
-			else { StopSlow(TARGET_ALL); }
+			//debugSlow = !debugSlow;
+			//if(debugSlow) { StartSlow(20, TARGET_ALL); }
+			//else { StopSlow(TARGET_ALL); }
 		}
 		yield;
 	}
