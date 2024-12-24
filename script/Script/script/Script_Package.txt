@@ -43,10 +43,12 @@ let FONTS =
 @MainLoop
 {
 	HandleMusicVolume();
+	/*
 	if(GetKeyState(KEY_0)==KEY_PUSH)
 	{
 		ClosePackage();
 	}
+	*/
 	yield;
 }
 

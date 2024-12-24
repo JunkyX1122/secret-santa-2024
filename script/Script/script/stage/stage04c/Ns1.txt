@@ -99,11 +99,11 @@ let isEnemyHittable = true;
     }
 	if(GetKeyState(KEY_Q)==KEY_PUSH)
 	{
-		ObjEnemy_SetLife(objEnemy,(HEALTH_MAX)/3*2);
+		//ObjEnemy_SetLife(objEnemy,(HEALTH_MAX)/3*2);
 	}
 	if(GetKeyState(KEY_W)==KEY_PUSH)
 	{
-		ObjEnemy_SetLife(objEnemy,(HEALTH_MAX)/3);
+		//ObjEnemy_SetLife(objEnemy,(HEALTH_MAX)/3);
 	}
     count++;
     yield;

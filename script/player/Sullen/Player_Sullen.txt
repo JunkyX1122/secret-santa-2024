@@ -141,7 +141,7 @@ let PLAYERSPEED = [4.25, 2];
         xPos ~= [20 * cos(360 / 6 * i)];
         yPos ~= [20 * sin(360 / 6 * i)];
     }
-	DebugKeys();
+	//DebugKeys();
 }
 
 let debugDamageRate = false;

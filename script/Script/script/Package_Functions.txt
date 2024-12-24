@@ -74,7 +74,8 @@ function StartStageProgression()
     DeleteCommonData("PlayerSpell");
 	let WAITER = 0;
 	
-	if(GetKeyState(KEY_6) == KEY_FREE)
+	//if(GetKeyState(KEY_6) == KEY_FREE)
+	if(true)
 	{
 		
 		if(carryOn==true)
