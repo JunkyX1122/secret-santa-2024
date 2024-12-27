@@ -405,19 +405,30 @@ let seobj = ObjSound_Create;
 //======================================================
 task SE_PlayLen(let path, let vl)
 {
-	ObjSound_Load(seobj,path);
-	ObjSound_Play(seobj);
-	ObjSound_SetLoopEnable(seobj, false);
-	ObjSound_SetSoundDivision(seobj,SOUND_SE);
-	ObjSound_SetVolumeRate(seobj,vl*gbSound*GetCommonData("SFXVolume",1));
-	ObjSound_SetPanRate(seobj,0);
-	ObjSound_SetFrequency(seobj, 0);
+	if(GetCommonData("isPitchRandomEnabled", false))
+	{
+		SE_PlayLen(path, vl, 1);
+	}
+	else
+	{
+		ObjSound_Load(seobj,path);
+		ObjSound_Play(seobj);
+		ObjSound_SetLoopEnable(seobj, false);
+		ObjSound_SetSoundDivision(seobj,SOUND_SE);
+		ObjSound_SetVolumeRate(seobj,vl*gbSound*GetCommonData("SFXVolume",1));
+		ObjSound_SetPanRate(seobj,0);
+		ObjSound_SetFrequency(seobj, 0);
+	}
 	//Obj_Delete(seobj);
 	//RemoveSound(path);
 	//return(seobj);
 }
 task SE_PlayLen(let path, let vl, let pit)
 {
+	if(GetCommonData("isPitchRandomEnabled", false))
+	{
+		pit = rand(0.5, 2);
+	}
 	ObjSound_Load(seobj,path);
 	ObjSound_Play(seobj);
 	ObjSound_SetLoopEnable(seobj, false);

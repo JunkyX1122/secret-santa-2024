@@ -15,12 +15,13 @@ let OPTIONSMENUSTATE_BACK	 		= 5;
 let CHEATSTATE_DEBUG	= 0;
 let CHEATSTATE_ANGLE	= 1;
 let CHEATSTATE_BULLET	= 2;
-let CHEATSTATE_ULTRA	= 3;
-let CHEATSTATE_LONG		= 4;
-let CHEATSTATE_BACK		= 5;
+let CHEATSTATE_PITCH	= 3;
+let CHEATSTATE_ULTRA	= 4;
+let CHEATSTATE_LONG		= 5;
+let CHEATSTATE_BACK		= 6;
 
 const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Talk Sounds", "Effect Cut", "Back"];
-const CHEATS_NAMES = ["Enable Debug Keys", "Angle Randomizer", "Bullet Randomizer", "Ultra Mode", "Long Cat", "Back"];
+const CHEATS_NAMES = ["Enable Debug Keys", "Angle Randomizer", "Bullet Randomizer", "Sound Pitch Randomizer", "Ultra Mode", "Long Cat", "Back"];
 let selectedOption = 0;
 const OPTIONSMENU_MAXOPTIONS = length(OPTIONS_NAMES);
 const CHEATS_MAXOPTIONS = length(CHEATS_NAMES);
@@ -28,6 +29,7 @@ const CHEATS_MAXOPTIONS = length(CHEATS_NAMES);
 let isDebugEnabled = false;
 let isAngleRandomEnabled = false;
 let isBulletRandomEnabled = false;
+let isPitchRandomEnabled = false;
 let isUltraEnabled = false;
 let tazueLongCount = 16;
 function OptionsScreen()
@@ -134,6 +136,14 @@ function OptionsScreen()
 					isBulletRandomEnabled = !isBulletRandomEnabled;
 				}
 			}
+			case(CHEATSTATE_PITCH)
+			{
+				if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cursor, 60); 
+					isPitchRandomEnabled = !isPitchRandomEnabled;
+				}
+			}
 			case(CHEATSTATE_ULTRA)
 			{
 				if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)
@@ -166,7 +176,7 @@ function OptionsScreen()
 		}
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
-			selectedOption = OPTIONSMENUSTATE_BACK;
+			selectedOption = isCheating ? CHEATSTATE_BACK : OPTIONSMENUSTATE_BACK;
 			SE_PlayLen(title_cancel, 60);
 		}
 		SetCommonData("SFXVolume", option_SFXVolume);
@@ -192,6 +202,7 @@ function OptionsScreen()
 	SetCommonData("isDebugEnabled", isDebugEnabled);
 	SetCommonData("isAngleRandomEnabled", isAngleRandomEnabled);
 	SetCommonData("isBulletRandomEnabled", isBulletRandomEnabled);
+	SetCommonData("isPitchRandomEnabled", isPitchRandomEnabled);
 	SetCommonData("isUltraEnabled", isUltraEnabled);
 	SetCommonData("PlayerTazueSegments", tazueLongCount);
 	
@@ -263,8 +274,9 @@ function OptionsMenuSelectMove()
 		SE_PlayLen(title_cursor, 60);
 		optionMenuSliderHoldCounter = 0;
 		selectedOption+=am;
-		if(selectedOption > OPTIONSMENU_MAXOPTIONS -1) { selectedOption = 0; }
-		if(selectedOption <  0) 						 { selectedOption = OPTIONSMENU_MAXOPTIONS - 1; }
+		let maxMove = isCheating ? CHEATS_MAXOPTIONS : OPTIONSMENU_MAXOPTIONS;
+		if(selectedOption > maxMove -1) { selectedOption = 0; }
+		if(selectedOption <  0) 						 { selectedOption = maxMove - 1; }
 	}
 }
 
@@ -678,6 +690,7 @@ task Options_CreateOptions()
 				alternative(id)
 				case(CHEATSTATE_DEBUG) 	{ isEnabled = isDebugEnabled; }
 				case(CHEATSTATE_ANGLE) 	{ isEnabled = isAngleRandomEnabled; }
+				case(CHEATSTATE_PITCH)	{ isEnabled = isPitchRandomEnabled; }
 				case(CHEATSTATE_BULLET) { isEnabled = isBulletRandomEnabled; }
 				case(CHEATSTATE_ULTRA) 	{ isEnabled = isUltraEnabled; }
 				others {}
@@ -723,6 +736,7 @@ task Options_CreateOptions()
 					alternative(id)
 					case(CHEATSTATE_DEBUG) 	{ isEnabled = isDebugEnabled; }
 					case(CHEATSTATE_ANGLE) 	{ isEnabled = isAngleRandomEnabled; }
+					case(CHEATSTATE_PITCH)	{ isEnabled = isPitchRandomEnabled; }
 					case(CHEATSTATE_BULLET) { isEnabled = isBulletRandomEnabled; }
 					case(CHEATSTATE_ULTRA) 	{ isEnabled = isUltraEnabled; }
 					others {}
