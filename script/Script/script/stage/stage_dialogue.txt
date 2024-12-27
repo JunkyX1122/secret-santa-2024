@@ -265,6 +265,7 @@ task NameDisplay(x,y,id,title,name)
 
 function PreBossDialogue(stageID)
 {
+	movingParts = 0;
 	wait(30);
 	nameSkip = false;
 	forceStop = false;
@@ -316,7 +317,7 @@ function PreBossDialogue(stageID)
 	}
 	
 	nameSkip = true;
-	while(forceStop){yield;}
+	while(forceStop || movingParts > 0){yield;}
 	if(!Obj_IsDeleted(objDummy)) 	{ Obj_Delete(objDummy); }
 	if(!Obj_IsDeleted(objDummy2)) 	{ Obj_Delete(objDummy2); }
 	if(!Obj_IsDeleted(objDummy3)) 	{ Obj_Delete(objDummy3); }
@@ -328,6 +329,7 @@ function PreBossDialogue(stageID)
 
 function PostBossDialogue(stageID)
 {
+	movingParts = 0;
 	wait(30);
 	nameSkip = false;
 	forceStop = false;
@@ -373,16 +375,18 @@ function PostBossDialogue(stageID)
 	//case(DIALOGUE_STAGE06) 	{  }
 	
 	nameSkip = true;
-	while(forceStop){yield;}
+	while(forceStop || movingParts > 0){yield;}
 	SetCommonData("IsDialogueSequenceActive", false);
 	EndDialogueSequence;
 	SetForbidPlayerShot(false);
 	SetForbidPlayerSpell(false);
 }
 
+let movingParts = 0;
 let forceStop = true;
 task SlideInPlayer(t, enID, x1, x2, y1, y2, yRot)
 {
+	movingParts++;
 	ascent(i in 0..t)
 	{
 		forceStop = true;
@@ -391,9 +395,11 @@ task SlideInPlayer(t, enID, x1, x2, y1, y2, yRot)
 		yield;
 	}
 	forceStop = false;
+	movingParts--;
 }
 task SlideInEnemy(t, enID, x1, x2, y1, y2, yRot)
 {
+	movingParts++;
 	ascent(i in 0..t)
 	{
 		forceStop = true;
@@ -402,10 +408,12 @@ task SlideInEnemy(t, enID, x1, x2, y1, y2, yRot)
 		yield;
 	}
 	forceStop = false;
+	movingParts--;
 }
 
 task SlideInPlayer(t, enID, x1, x2, y1, y2, yRot, a1, a2)
 {
+	movingParts++;
 	ascent(i in 0..t)
 	{
 		forceStop = true;
@@ -414,10 +422,12 @@ task SlideInPlayer(t, enID, x1, x2, y1, y2, yRot, a1, a2)
 		yield;
 	}
 	forceStop = false;
+	movingParts--;
 }
 
 task SlideInEnemy(t, enID, x1, x2, y1, y2, yRot, a1, a2)
 {
+	movingParts++;
 	ascent(i in 0..t)
 	{
 		forceStop = true;
@@ -426,6 +436,7 @@ task SlideInEnemy(t, enID, x1, x2, y1, y2, yRot, a1, a2)
 		yield;
 	}
 	forceStop = false;
+	movingParts--;
 }
 
 const gatoFaceOffsetData = 			[Get_Distance(0, 0, 0, -111),	Get_PointAngle(0, 0, 0, -111)+180];

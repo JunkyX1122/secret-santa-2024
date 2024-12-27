@@ -86,6 +86,12 @@ function ShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 }
 function ShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_ANGLE)
+	{
+		let rotatedSpeed = Rotate2D(xspd, yspd, rand(0,360));
+		xspd = rotatedSpeed[0];
+		yspd = rotatedSpeed[1];
+	}
 	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
@@ -95,6 +101,12 @@ function ShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove)
 }
 function ShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_ANGLE)
+	{
+		let rotatedSpeed = Rotate2D(xspd, yspd, rand(0,360));
+		xspd = rotatedSpeed[0];
+		yspd = rotatedSpeed[1];
+	}
 	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
