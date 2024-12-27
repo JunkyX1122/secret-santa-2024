@@ -169,17 +169,21 @@ task DebugKeys()
 		{
 			if (GetKeyState(KEY_P) == KEY_PUSH ) {
 				debugDamageRate = !debugDamageRate;
+				SetCommonData("DebugDamage", debugDamageRate);
 			}
 			if (GetKeyState(KEY_O) == KEY_PUSH ) {
 				debugShowHitboxes = !debugShowHitboxes;
+				SetCommonData("DebugHitboxes", debugShowHitboxes);
 				SetIntersectionVisualization(debugShowHitboxes);
 			}
 			if (GetKeyState(KEY_I) == KEY_PUSH ) {
 				debugInvincible = !debugInvincible;
+				SetCommonData("DebugInvincible", debugInvincible);
 				SetCommonData("ForceInvincible", debugInvincible);
 			}
 			if (GetKeyState(KEY_U) == KEY_PUSH ) {
 				debugSlow = !debugSlow;
+				SetCommonData("DebugSlow", debugSlow);
 				if(debugSlow) { StartSlow(20, TARGET_ALL); }
 				else { StopSlow(TARGET_ALL); }
 			}
