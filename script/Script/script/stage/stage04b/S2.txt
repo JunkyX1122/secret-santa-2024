@@ -419,7 +419,7 @@ task Homing(obj,maxTraverse,x,y,d)
 		} else {
 			ang += maxTraverse * diff / diffAbs;
 		}
-		ObjMove_SetAngle(obj,ang);
+		ObjMove_SetAngleR(obj,ang);
 		yield;
 	}
 }

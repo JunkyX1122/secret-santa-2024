@@ -99,7 +99,7 @@ let PLAYERSPEED = [5, 2.25];
 
 @Initialize {
 	
-	isDebugEnabled = GetCommonData("isDebugEnabled", false);
+	isDebugEnabled = GetCommonData("isDebugEnabled", true);
 	TOTAL_SEGMENTS = GetCommonData("PlayerTazueSegments", 16);
 	TAZUE_HIND_LEGS_ID = TOTAL_SEGMENTS-8;
 	

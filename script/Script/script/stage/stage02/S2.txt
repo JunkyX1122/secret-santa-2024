@@ -342,6 +342,7 @@ task BulletSweep(x,bit,cc,sprd)
 			SE_PlayLen(shot1,60);
 			let mspd = (3-1.5/3*sprd) * (1-0.005*cc);
 			let obj = CreateShotA2(x,GetStgFrameHeight + 31,0.5,ang,mspd/120,mspd,65,0);
+			if(IS_ULTRA_MODE) {CreateShotA2(x,GetStgFrameHeight + 31,0.5*ULTRA_MODE_SPEEDMOD,ang,mspd/120*ULTRA_MODE_SPEEDMOD,mspd*ULTRA_MODE_SPEEDMOD,65,0);}
 			ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 		}
 		ang+=0.1*bit;

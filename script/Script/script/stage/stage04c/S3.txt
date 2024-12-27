@@ -147,7 +147,7 @@ task NecroShot(ang, am)
 	{
 		let xy = Rotate2D(ObjMove_GetX(obj), ObjMove_GetY(obj), am, xC, yC);
 		ObjMove_SetPosition(obj, xy[0], xy[1]);
-		ObjMove_SetAngle(obj, ObjMove_GetAngle(obj) + am);
+		ObjMove_SetAngleR(obj, ObjMove_GetAngle(obj) + am);
 		yield;
 	}
 	

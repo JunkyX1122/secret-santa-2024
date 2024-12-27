@@ -237,7 +237,7 @@ task BulletTravelOval(obj,rad,spd,radIncrease)
 		rad+=radIncrease;
 		x=(xx-centerX)*cosOA - (yy-centerY)*sinOA + centerX;
 		y=(xx-centerX)*sinOA + (yy-centerY)*cosOA + centerY;
-		ObjMove_SetAngle(obj,Get_PointAngle(x,y,ObjMove_GetX(obj),ObjMove_GetY(obj)));
+		ObjMove_SetAngleR(obj,Get_PointAngle(x,y,ObjMove_GetX(obj),ObjMove_GetY(obj)));
 		ObjMove_SetPosition(obj,x,y);
 		ang+=spd;
 		yield;

@@ -276,7 +276,7 @@ task Infect(x, y, rad)
 
 task BulletInfect(obj)
 {
-	ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+180);
+	ObjMove_SetAngleR(obj,ObjMove_GetAngle(obj)+180);
 	let t = round(rand(65,75)-10);
 	ascent(i in 0..t)
 	{
@@ -354,7 +354,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 		{
 			
 			ObjMove_SetPosition(obj2, ObjMove_GetX(obj), ObjMove_GetY(obj));
-			ObjMove_SetAngle(obj2, ObjMove_GetAngle(obj));
+			ObjMove_SetAngleR(obj2, ObjMove_GetAngle(obj));
 			
 			if(drip)
 			{

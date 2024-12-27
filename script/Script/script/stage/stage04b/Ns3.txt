@@ -237,7 +237,7 @@ task GrandisKnives(ang,bit)
 	{
 		SE_PlayLen(chime1,60);
 		ObjRender_SetAngleZ(obj,0);
-		ObjMove_SetAngle(obj,GetAngleToPlayer(obj));
+		ObjMove_SetAngleR(obj,GetAngleToPlayer(obj));
 		ObjMove_SetMaxSpeed(obj,[6,10][DIFFICULTY]);
 		ObjMove_SetAcceleration(obj,10/120);
 	}

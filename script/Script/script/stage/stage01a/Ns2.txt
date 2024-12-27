@@ -250,7 +250,7 @@ task Homing(obj, x, y, maxTraverse, delay, stayer)
 	
 	wait(delay);
 	
-	//ObjMove_SetAngle(obj, GetAngleToPlayer(obj));
+	//ObjMove_SetAngleR(obj, GetAngleToPlayer(obj));
 	
 	let ang = ObjMove_GetAngle(obj);
 	let countdown = stayer;
@@ -283,7 +283,7 @@ task Homing(obj, x, y, maxTraverse, delay, stayer)
 					ang += maxTraverse * diff / diffAbs;
 				}
 			}
-			ObjMove_SetAngle(obj,ang);
+			ObjMove_SetAngleR(obj,ang);
 			if(!homeForever)
 			{
 				countdown--;
@@ -339,7 +339,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 		{
 			
 			ObjMove_SetPosition(obj2, ObjMove_GetX(obj), ObjMove_GetY(obj));
-			ObjMove_SetAngle(obj2, ObjMove_GetAngle(obj));
+			ObjMove_SetAngleR(obj2, ObjMove_GetAngle(obj));
 			
 			if(drip)
 			{

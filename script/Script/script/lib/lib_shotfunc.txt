@@ -1,4 +1,9 @@
 
+let IS_RANDOM_ANGLE = GetCommonData("isAngleRandomEnabled", false);
+let IS_RANDOM_GRAPHIC = GetCommonData("isBulletRandomEnabled", false);
+let IS_ULTRA_MODE = GetCommonData("isUltraEnabled", false);
+let ULTRA_MODE_SPEEDMOD = 1.5;
+
 let DeleteFrameArea = 16;
 task WarningLaser(x,y,ang,thicc,time,ID,rnd)
 {
@@ -45,41 +50,55 @@ task LaserSource(x,y,deleygraphic,startingdeley,size,delaySize,deletdeley,delete
 	}
 }
 
+function ObjMove_SetAngleR(obj, ang)
+{
+	if(IS_RANDOM_ANGLE) ang = rand(0,360);
+	ObjMove_SetAngle(obj, ang);
+}
+
 function ShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { CreateShotA1(x,y,spd * ULTRA_MODE_SPEEDMOD,dir,graphic,delay); }
     DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
 function ShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { CreateShotA2(x,y,spd * ULTRA_MODE_SPEEDMOD,dir,acc * ULTRA_MODE_SPEEDMOD,maxacc * ULTRA_MODE_SPEEDMOD,graphic,delay); }
     DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
 function ShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { CreateShotOA1(obj,spd * ULTRA_MODE_SPEEDMOD,dir,graphic,delay); }
     DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
     DelayCloud(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
 function ShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { CreateShotB1(x,y,xspd * ULTRA_MODE_SPEEDMOD, yspd * ULTRA_MODE_SPEEDMOD,graphic,delay); }
     DelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
 function ShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype,delaymove)
 {
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { CreateShotB2(x,y,xspd * ULTRA_MODE_SPEEDMOD, yspd * ULTRA_MODE_SPEEDMOD, xacc * ULTRA_MODE_SPEEDMOD ,yacc * ULTRA_MODE_SPEEDMOD ,xmax * ULTRA_MODE_SPEEDMOD ,ymax * ULTRA_MODE_SPEEDMOD,graphic,delay); }
     DelayCloud(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype,delaymove);
     return shot;
 }
@@ -143,31 +162,38 @@ task DelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 
 function ShotA1S(x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotA2S(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotOA1S(obj,spd,dir,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudS(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     DelayCloudS(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotB2S(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudS(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype);
     return shot;
 }
@@ -224,31 +250,38 @@ task DelayCloudS(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 
 function ShotA1F(x,y,spd,dir,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotA2F(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudF(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotOA1F(obj,spd,dir,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudF(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     DelayCloudF(shot,ObjMove_GetX(obj),ObjMove_GetY(obj),spd,dir+90,graphic,cloud,delay,size,blendtype);
     return shot;
 }
 function ShotB2F(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype)
 {
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
-	
+	if(IS_ULTRA_MODE) { }
     DelayCloudF(shot,x,y,0,angle,graphic,cloud,delay,size,blendtype);
     return shot;
 }

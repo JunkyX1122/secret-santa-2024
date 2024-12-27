@@ -98,7 +98,7 @@ let PLAYERSPEED = [4.25, 2];
 
 @Initialize {
 	
-	isDebugEnabled = GetCommonData("isDebugEnabled", false);
+	isDebugEnabled = GetCommonData("isDebugEnabled", true);
 	let initialPlayerPos = [GetCommonData("PlayerX", GetStgFrameWidth/2), GetCommonData("PlayerY", 416)];
 	ObjMove_SetPosition(objPlayer,initialPlayerPos[0], initialPlayerPos[1]);
 	

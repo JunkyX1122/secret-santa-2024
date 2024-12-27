@@ -140,7 +140,7 @@ task KeiranFire(bit)
 		dis = dis * 0.97 + 75 * 0.03;
 		ObjMove_SetPosition(objGyro,x + dis * cos(ang),y + dis * sin(ang));
 		ang+=1.231*bit;
-		ObjMove_SetAngle(objGyro,180-ang);
+		ObjMove_SetAngleR(objGyro,180-ang);
 		if(cc%155==0)
 		{
 			ObjMove_SetDestAtFrameWeight(objEnemy2, GetStgFrameWidth/2+rand(-50,50), rand(95,110), 90);

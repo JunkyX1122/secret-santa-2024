@@ -29,6 +29,7 @@ let FONTS =
 ];
 @Initialize
 {
+	SetCommonData("isDebugEnabled", false);
 	//SetSkipModeKey(KEY_INVALID);
 	//InstallFont(GetCurrentScriptDirectory~"COLUMBUS.ttf");
 	ascent(i in 0..length(FONTS))

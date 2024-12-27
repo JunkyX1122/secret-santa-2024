@@ -404,7 +404,7 @@ task HandleFutureSight()
 				let y = Obj_GetValueD(buID, "bY", -999);
 				let a = Obj_GetValueD(buID, "bAng", -999);
 				ObjMove_SetPosition(buID, x, y);
-				ObjMove_SetAngle(buID, a);
+				ObjMove_SetAngleR(buID, a);
 				ObjMove_SetSpeed(buID, Obj_GetValueD(buID, "bSpd", -999));
 				DelayedAutoDelete(buID,120);
 				let h = Obj_GetValueD(buID, "savedManagerHistory", -999);
@@ -869,6 +869,7 @@ task FireWall(ang, bit, idd)
 				let xB = ObjMove_GetX(obj);
 				let yB = ObjMove_GetY(obj);
 				let obj2 = CreateShotA2(xB, yB, 0, ang+180, 4/180, 4, 425, 0);
+				if(IS_ULTRA_MODE) {CreateShotA2(xB, yB, 0, ang+180, 4/180*ULTRA_MODE_SPEEDMOD, 4*ULTRA_MODE_SPEEDMOD, 425, 0);}
 				ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
 				ObjRender_SetScale(obj2, 1.5);
 				ObjShot_SetIntersectionScaleXY(obj2, 1.5, 1.5);
@@ -959,7 +960,7 @@ task ShotManager(obj, startingPoint, startingAng, bit)
 			Obj_SetValue(obj, "managerHistory", i);
 			let ang2 = startingAng - 0.75*bit*i;
 			alpha = 255/30*i;
-			ObjMove_SetAngle(obj, ang2);
+			ObjMove_SetAngleR(obj, ang2);
 			ObjRender_SetAlpha(obj, alpha);
 			yield;
 		}

@@ -340,7 +340,7 @@ task Homing(obj,maxTraverse)
 	ObjShot_SetAutoDelete(obj,false);
 	while(! Obj_IsDeleted(obj)) 
 	{
-		ObjMove_SetAngle(obj, angle);
+		ObjMove_SetAngleR(obj, angle);
 		yield;
 		// direction angle to player's character
 		let dir=-90;

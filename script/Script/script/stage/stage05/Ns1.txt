@@ -310,7 +310,7 @@ task CreateShuriken(x,y,speed,ang,pAm,size,spinAmount,bit)
 			{
 				let rotatedPos = Rotate2D(ObjMove_GetX(obj),ObjMove_GetY(obj),spinAmount,ObjMove_GetX(objSourceShot),ObjMove_GetY(objSourceShot));
 				ObjMove_SetPosition(obj,rotatedPos[0]+xSpd,rotatedPos[1]+ySpd);
-				ObjMove_SetAngle(obj,ObjMove_GetAngle(obj)+spinAmount);
+				ObjMove_SetAngleR(obj,ObjMove_GetAngle(obj)+spinAmount);
 			}
 		}
 		ObjMove_SetPosition(objSourceShot,ObjMove_GetX(objSourceShot)+xSpd,ObjMove_GetY(objSourceShot)+ySpd);
