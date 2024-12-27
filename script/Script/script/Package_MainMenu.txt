@@ -19,7 +19,38 @@ let SELECTED_WAIT = 20;
 
 let firstTimeBoot = true; // Prevents calling everything more than once.
 
+let hasUnlockedCheatcode = false;
 let isCheating = false;
+
+task CheatTest()
+{
+	let comboCounter = 0;
+	let KEY_CHAIN = [
+		KEY_R,
+		KEY_E,
+		KEY_D,
+		KEY_R,
+		KEY_I,
+		KEY_N];
+	while(menuState==MENUSTATE_MAIN && !hasSelected && comboCounter < length(KEY_CHAIN))
+	{
+		ascent(i in 0..length(KEY_CHAIN))
+		{
+			if(GetKeyState(KEY_CHAIN[i])==KEY_PUSH && i == comboCounter)
+			{
+				comboCounter++;
+			}
+		}
+		yield;
+	}
+	if(comboCounter==length(KEY_CHAIN))
+	{
+		SE_PlayLen(extend, 90);
+		hasUnlockedCheatcode = true;
+	}
+}
+
+
 task Title_Display()
 {
 	isCheating = false;
@@ -61,16 +92,22 @@ task Title_Display()
 	
 	
 	yield;
-	
+	if(!hasUnlockedCheatcode)
+	{
+		CheatTest();
+	}
 	SE_PlayLen(title_cursor, 60);
 	while(menuState==MENUSTATE_MAIN && !hasSelected)
 	{
 		MainMenuSelectMove();
-		if(GetVirtualKeyState(VK_USER1) == KEY_PUSH || GetVirtualKeyState(VK_USER1) == KEY_PULL)
+		if(hasUnlockedCheatcode)
 		{
-			SE_PlayLen(title_cursor, 60);
+			if(GetVirtualKeyState(VK_USER1) == KEY_PUSH || GetVirtualKeyState(VK_USER1) == KEY_PULL)
+			{
+				SE_PlayLen(title_cursor, 60);
+			}
+			isCheating = GetVirtualKeyState(VK_USER1) != KEY_FREE; 
 		}
-		isCheating = GetVirtualKeyState(VK_USER1) != KEY_FREE; 
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
 			SE_PlayLen(title_cancel, 60);

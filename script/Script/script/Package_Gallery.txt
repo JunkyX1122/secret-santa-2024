@@ -124,6 +124,10 @@ task InitiateGalleryImages()
 		{
 			checkTemp = HasBeatenWithTeam(PLAYERTEAM_A) && HasBeatenWithTeam(PLAYERTEAM_B) && HasBeatenWithTeam(PLAYERTEAM_C);
 		}
+		case(19)
+		{
+			checkTemp = HasBeatenWithTeam(PLAYERTEAM_A) && HasBeatenWithTeam(PLAYERTEAM_B) && HasBeatenWithTeam(PLAYERTEAM_C);
+		}
 		others
 		{
 			checkTemp = true;

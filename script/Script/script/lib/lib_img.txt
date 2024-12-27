@@ -1065,6 +1065,7 @@ const IMG_GALLERY_15 =  			GetCurrentScriptDirectory()~"./../../img/gallery/15.p
 const IMG_GALLERY_16 =  			GetCurrentScriptDirectory()~"./../../img/gallery/16.png";
 const IMG_GALLERY_17 =  			GetCurrentScriptDirectory()~"./../../img/gallery/17.png";
 const IMG_GALLERY_18 =  			GetCurrentScriptDirectory()~"./../../img/gallery/18.png";
+const IMG_GALLERY_CHEAT =  			GetCurrentScriptDirectory()~"./../../img/gallery/Z_Cheat.png";
 
 let Gallery_ImgArray = [
 IMG_GALLERY_00,
@@ -1085,6 +1086,7 @@ IMG_GALLERY_14,
 IMG_GALLERY_15,
 IMG_GALLERY_16,
 IMG_GALLERY_17,
-IMG_GALLERY_18
+IMG_GALLERY_18,
+IMG_GALLERY_CHEAT
 ];
 
