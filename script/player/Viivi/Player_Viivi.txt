@@ -98,6 +98,11 @@ function CreateParticleListRect(type, path, source, blend,
 let PLAYERSPEED = [5, 2.25];
 
 @Initialize {
+	
+	isDebugEnabled = GetCommonData("isDebugEnabled", false);
+	TOTAL_SEGMENTS = GetCommonData("PlayerTazueSegments", 16);
+	TAZUE_HIND_LEGS_ID = TOTAL_SEGMENTS-8;
+	
 	let initialPlayerPos = [GetCommonData("PlayerX", GetStgFrameWidth/2), GetCommonData("PlayerY", 416)];
 	ObjMove_SetPosition(objPlayer,initialPlayerPos[0], initialPlayerPos[1]);
 	
@@ -145,36 +150,43 @@ let PLAYERSPEED = [5, 2.25];
 	DebugKeys();
 }
 
+let isDebugEnabled = false;
 let debugDamageRate = false;
 let debugShowHitboxes = false;
 let debugInvincible = false;
 let debugSlow = false;
 task DebugKeys()
 {
+	if(isDebugEnabled)
+	{
+		SetCommonData("ForceInvincible", debugInvincible);
+	}
 	while(true) {
 		if (GetKeyState(KEY_L) == KEY_PUSH ) {
 			SetPlayerLife(GetPlayerLife+1);
 		}
-		if (GetKeyState(KEY_P) == KEY_PUSH ) {
-			//debugDamageRate = !debugDamageRate;
-		}
-		if (GetKeyState(KEY_O) == KEY_PUSH ) {
-			//debugShowHitboxes = !debugShowHitboxes;
-			//SetIntersectionVisualization(debugShowHitboxes);
-		}
-		if (GetKeyState(KEY_I) == KEY_PUSH ) {
-			//debugInvincible = !debugInvincible;
-			//SetCommonData("ForceInvincible", debugInvincible);
-		}
-		if (GetKeyState(KEY_U) == KEY_PUSH ) {
-			//debugSlow = !debugSlow;
-			//if(debugSlow) { StartSlow(20, TARGET_ALL); }
-			//else { StopSlow(TARGET_ALL); }
+		if(isDebugEnabled)
+		{
+			if (GetKeyState(KEY_P) == KEY_PUSH ) {
+				debugDamageRate = !debugDamageRate;
+			}
+			if (GetKeyState(KEY_O) == KEY_PUSH ) {
+				debugShowHitboxes = !debugShowHitboxes;
+				SetIntersectionVisualization(debugShowHitboxes);
+			}
+			if (GetKeyState(KEY_I) == KEY_PUSH ) {
+				debugInvincible = !debugInvincible;
+				SetCommonData("ForceInvincible", debugInvincible);
+			}
+			if (GetKeyState(KEY_U) == KEY_PUSH ) {
+				debugSlow = !debugSlow;
+				if(debugSlow) { StartSlow(20, TARGET_ALL); }
+				else { StopSlow(TARGET_ALL); }
+			}
 		}
 		yield;
 	}
 }
-
 let xPos = [];
 let yPos = [];
 task PlayerLoad {}

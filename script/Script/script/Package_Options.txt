@@ -12,11 +12,24 @@ let OPTIONSMENUSTATE_TALKSOUNDS		= 3;
 let OPTIONSMENUSTATE_EFFECTCUT 		= 4;
 let OPTIONSMENUSTATE_BACK	 		= 5;
 
-const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Talk Sounds", "Effect Cut", "Back"];
+let CHEATSTATE_DEBUG	= 0;
+let CHEATSTATE_ANGLE	= 1;
+let CHEATSTATE_BULLET	= 2;
+let CHEATSTATE_ULTRA	= 3;
+let CHEATSTATE_LONG		= 4;
+let CHEATSTATE_BACK		= 5;
 
+const OPTIONS_NAMES = ["Music Volume", "Sound Volume", "Starting Lives", "Talk Sounds", "Effect Cut", "Back"];
+const CHEATS_NAMES = ["Enable Debug Keys", "Angle Randomizer", "Bullet Randomizer", "Ultra Mode", "Long Cat", "Back"];
 let selectedOption = 0;
 const OPTIONSMENU_MAXOPTIONS = length(OPTIONS_NAMES);
+const CHEATS_MAXOPTIONS = length(CHEATS_NAMES);
 
+let isDebugEnabled = false;
+let isAngleRandomEnabled = false;
+let isBulletRandomEnabled = false;
+let isUltraEnabled = false;
+let tazueLongCount = 16;
 function OptionsScreen()
 {
 	selectedOption = 0;
@@ -34,62 +47,122 @@ function OptionsScreen()
 		let recordedSFXVol = option_SFXVolume;
 		
 		OptionsMenuSelectMove();
-		alternative(selectedOption)
-		case(OPTIONSMENUSTATE_MUSICVOL)
+		if(!isCheating)
 		{
-			let savedVol = option_MusicVolume;
-			option_MusicVolume = OptionsMenuSlider(option_MusicVolume, 0.01, 0, 1, false, 2);
-			if(savedVol!=option_MusicVolume)
+			alternative(selectedOption)
+			case(OPTIONSMENUSTATE_MUSICVOL)
 			{
-				SE_PlayLen(title_cursor, 60 * option_MusicVolume);
-			}
-		}
-		case(OPTIONSMENUSTATE_SOUNDVOL)
-		{
-			option_SFXVolume = OptionsMenuSlider(option_SFXVolume, 0.01, 0, 1, false, 2);
-		}
-		case(OPTIONSMENUSTATE_STARTINGLIVES)
-		{
-			let savedLives = startingLives;
-			startingLives = OptionsMenuSlider(startingLives, 1, 0, 9, true, 6);
-			if(savedLives!=startingLives)
-			{
-				SE_PlayLen(chime1, 60, 0.9 + 0.4/8 * startingLives);
-				if(startingLives==9)
+				let savedVol = option_MusicVolume;
+				option_MusicVolume = OptionsMenuSlider(option_MusicVolume, 0.01, 0, 1, false, 2);
+				if(savedVol!=option_MusicVolume)
 				{
-					SE_PlayLen(extend2, 60);
+					SE_PlayLen(title_cursor, 60 * option_MusicVolume);
 				}
-				SE_PlayLen(title_cursor, 60);
 			}
-		}
-		case(OPTIONSMENUSTATE_TALKSOUNDS)
-		{
-			let saved_option_TalkSound = option_TalkSound;
-			option_TalkSound = OptionsMenuSlider(option_TalkSound, 1, 0, 2, true, 6);
-			if(saved_option_TalkSound!=option_TalkSound)
+			case(OPTIONSMENUSTATE_SOUNDVOL)
 			{
-				if(option_TalkSound == 0)
-				{
-					let randTalkID = round(rand(-0.49, length(TEAM_TALK_RANDOM)-1 + 0.49));
-					OptionsMenu_RandomTalk(randTalkID);
-				}
-				if(option_TalkSound == 1)
-				{
-					OptionsMenu_RandomTalk(-1);
-				}
-				SE_PlayLen(title_cursor, 60);
+				option_SFXVolume = OptionsMenuSlider(option_SFXVolume, 0.01, 0, 1, false, 2);
 			}
-		}
-		case(OPTIONSMENUSTATE_BACK)
-		{
-			if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH || GetVirtualKeyState(VK_OK) == KEY_PUSH)
+			case(OPTIONSMENUSTATE_STARTINGLIVES)
 			{
-				SE_PlayLen(title_cancel, 60);
-				hasCanceled = true;
+				let savedLives = startingLives;
+				startingLives = OptionsMenuSlider(startingLives, 1, 0, 9, true, 6);
+				if(savedLives!=startingLives)
+				{
+					SE_PlayLen(chime1, 60, 0.9 + 0.4/8 * startingLives);
+					if(startingLives==9)
+					{
+						SE_PlayLen(extend2, 60);
+					}
+					SE_PlayLen(title_cursor, 60);
+				}
+			}
+			case(OPTIONSMENUSTATE_TALKSOUNDS)
+			{
+				let saved_option_TalkSound = option_TalkSound;
+				option_TalkSound = OptionsMenuSlider(option_TalkSound, 1, 0, 2, true, 6);
+				if(saved_option_TalkSound!=option_TalkSound)
+				{
+					if(option_TalkSound == 0)
+					{
+						let randTalkID = round(rand(-0.49, length(TEAM_TALK_RANDOM)-1 + 0.49));
+						OptionsMenu_RandomTalk(randTalkID);
+					}
+					if(option_TalkSound == 1)
+					{
+						OptionsMenu_RandomTalk(-1);
+					}
+					SE_PlayLen(title_cursor, 60);
+				}
+			}
+			case(OPTIONSMENUSTATE_BACK)
+			{
+				if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH || GetVirtualKeyState(VK_OK) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cancel, 60);
+					hasCanceled = true;
+				}
+			}
+			others
+			{
 			}
 		}
-		others
+		else
 		{
+			alternative(selectedOption)
+			case(CHEATSTATE_DEBUG)
+			{
+				if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cursor, 60); 
+					isDebugEnabled = !isDebugEnabled;
+				}
+			}
+			case(CHEATSTATE_ANGLE)
+			{
+				if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cursor, 60); 
+					isAngleRandomEnabled = !isAngleRandomEnabled;
+				}
+			}
+			case(CHEATSTATE_BULLET)
+			{
+				if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cursor, 60); 
+					isBulletRandomEnabled = !isBulletRandomEnabled;
+				}
+			}
+			case(CHEATSTATE_ULTRA)
+			{
+				if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cursor, 60); 
+					isUltraEnabled = !isUltraEnabled;
+				}
+			}
+			case(CHEATSTATE_LONG)
+			{
+				let savedtazueLongCount = tazueLongCount;
+				tazueLongCount = OptionsMenuSlider(tazueLongCount, 1, 16, 200, false, 2);
+				
+				if(savedtazueLongCount!=tazueLongCount)
+				{
+					SE_PlayLen(TALK_TAZUE, 60, 0.9 + 0.6/(200-16) * (tazueLongCount-16));
+				}
+			}
+			case(CHEATSTATE_BACK)
+			{
+				if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH || GetVirtualKeyState(VK_OK) == KEY_PUSH)
+				{
+					SE_PlayLen(title_cancel, 60);
+					hasCanceled = true;
+				}
+			}
+			others
+			{
+			}
 		}
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
@@ -114,9 +187,14 @@ function OptionsScreen()
 	SetAreaCommonData("Setting", "StartingLives", startingLives);
 	SetAreaCommonData("Setting", "TalkSound", option_TalkSound);
 	
-	
-	
 	SaveCommonDataAreaA2("Setting", DATA_SETTINGS_PATH);
+
+	SetCommonData("isDebugEnabled", isDebugEnabled);
+	SetCommonData("isAngleRandomEnabled", isAngleRandomEnabled);
+	SetCommonData("isBulletRandomEnabled", isBulletRandomEnabled);
+	SetCommonData("isUltraEnabled", isUltraEnabled);
+	SetCommonData("PlayerTazueSegments", tazueLongCount);
+	
 	ascent(i in 0..30)
 	{
 		options_AlphaScl = 1 - 1/29*i;
@@ -252,7 +330,7 @@ task Options_BoxRender()
 	ObjRender_SetPosition(objOB,GetScreenWidth/2,GetScreenHeight/2,0);
 	
 	let objOptionsTitle = CreateText(
-		"Options",
+		isCheating ? "Cheats" : "Options",
 		20,
 		[[255,255,255],
 		[255,255,200]],
@@ -289,7 +367,7 @@ task Options_SubBoxRender()
 {
 
 	let objAvOp = CreateText(
-		"Available Options",
+		isCheating ? "Available Cheats" : "Available Options",
 		13,
 		[[255,255,255],
 		[255,255,200]],
@@ -303,7 +381,7 @@ task Options_SubBoxRender()
 	ObjText_SetSidePitch(objAvOp, -1);
 	
 	let objOpDat = CreateText(
-		"Values",
+		isCheating ? "Values (Reset on Game Close)" : "Values",
 		13,
 		[[255,255,255],
 		[255,255,200]],
@@ -337,7 +415,8 @@ task Options_SubBoxRender()
 
 task Options_CreateOptions()
 {
-	ascent(i in 0..OPTIONSMENU_MAXOPTIONS)
+	let totalOptions = isCheating ? CHEATS_MAXOPTIONS : OPTIONSMENU_MAXOPTIONS;
+	ascent(i in 0..totalOptions)
 	{
 		OptionCreate(i);
 	}
@@ -345,18 +424,42 @@ task Options_CreateOptions()
 	task OptionCreate(id)
 	{
 		let offsetID = 0;
-		if(id == OPTIONSMENUSTATE_BACK)
+		if(isCheating)
 		{
-			offsetID = 1;
+			if(id == CHEATSTATE_BACK)
+			{
+				offsetID = 1;
+			}
+		}
+		else
+		{
+			if(id == OPTIONSMENUSTATE_BACK)
+			{
+				offsetID = 1;
+			}
 		}
 		let opY = GetScreenHeight/2-215 + (23*3 + 3) + 23 * (id + offsetID);
-		if(id==OPTIONSMENUSTATE_MUSICVOL || id==OPTIONSMENUSTATE_SOUNDVOL)
+		if(!isCheating)
 		{
-			OptionSlider(id,opY);
+			if(id==OPTIONSMENUSTATE_MUSICVOL || id==OPTIONSMENUSTATE_SOUNDVOL)
+			{
+				OptionSlider(id,opY);
+			}
+			else if(id != OPTIONSMENUSTATE_BACK)
+			{
+				OptionInput(id,opY);
+			}
 		}
-		else if(id != OPTIONSMENUSTATE_BACK)
+		else
 		{
-			OptionInput(id,opY);
+			if(id==CHEATSTATE_LONG)
+			{
+				OptionSlider(id,opY);
+			}
+			else if(id != CHEATSTATE_BACK)
+			{
+				OptionInput(id,opY);
+			}
 		}
 		let objOptionsText = CreateText(
 		"A",
@@ -372,7 +475,7 @@ task Options_CreateOptions()
 		ObjText_SetFontBorderWidth(objOptionsText, 1);
 		ObjText_SetFontBorderType(objOptionsText, BORDER_FULL);
 		ObjText_SetSidePitch(objOptionsText, -1);
-		ObjText_SetText(objOptionsText, OPTIONS_NAMES[id]);
+		ObjText_SetText(objOptionsText, isCheating ? CHEATS_NAMES[id] : OPTIONS_NAMES[id]);
 		
 		let objOSB = ObjPrim_Create(OBJ_SPRITE_2D);
 		ObjPrim_SetTexture(objOSB, IMG_TITLE_OPTIONS_SELECTION_BACK);
@@ -443,7 +546,15 @@ task Options_CreateOptions()
 			ObjRender_SetPosition(objBar, x - 129, opY, 0);
 			ObjRender_SetColor(objBar, 0, 139, 159);
 			
-			let statScl = [option_MusicVolume, option_SFXVolume][id];
+			let statScl = 0;
+			if(isCheating)
+			{
+				if(id==CHEATSTATE_LONG) statScl = (tazueLongCount-16)/(200-16);
+			}
+			else
+			{
+				statScl = [option_MusicVolume, option_SFXVolume][id];
+			}
 			ObjPrim_SetVertexPosition(objBar , 2, round(129*2 * statScl), -4,0);
 			ObjPrim_SetVertexPosition(objBar , 3, round(129*2 * statScl),  4,0);
 
@@ -479,14 +590,24 @@ task Options_CreateOptions()
 			yield;
 			while(menuState==MENUSTATE_OPTIONS)
 			{
-				statScl = [option_MusicVolume, option_SFXVolume][id];
+				if(isCheating)
+				{
+					if(id==CHEATSTATE_LONG) statScl = (tazueLongCount-16)/(200-16);
+				}
+				else
+				{
+					statScl = [option_MusicVolume, option_SFXVolume][id];
+				}
 				ObjPrim_SetVertexPosition(objBar , 2, round(129*2 * statScl), -4,0);
 				ObjPrim_SetVertexPosition(objBar , 3, round(129*2 * statScl),  4,0);
 				
 				let newX = x - 129 + round(129*2 * statScl);
 				ObjRender_SetPosition(objOG,newX, opY,0);
 				RenameRecenterText(objOptionsSliderValue, IntToString(round(statScl * 100)), newX, opY);
-				
+				if(isCheating && id==CHEATSTATE_LONG)
+				{
+					RenameRecenterText(objOptionsSliderValue, IntToString(round(tazueLongCount)), newX, opY);
+				}
 				ObjRender_SetAlpha(objOSl, 255*options_AlphaScl);
 				ObjRender_SetAlpha(objBar, 255*options_AlphaScl);
 				ObjRender_SetAlpha(objOG, 255*options_AlphaScl);
@@ -525,37 +646,42 @@ task Options_CreateOptions()
 			ObjText_SetFontBorderType(objOptionsInputText, BORDER_FULL);
 			ObjText_SetSidePitch(objOptionsInputText, -1);
 			
-			if(id==OPTIONSMENUSTATE_STARTINGLIVES)
+			if(!isCheating)
 			{
-				RenameRecenterText(objOptionsInputText, "< " ~ IntToString(startingLives) ~ " >", x, opY);
-				if(startingLives == 9)
+				if(id==OPTIONSMENUSTATE_STARTINGLIVES)
 				{
-					RenameRecenterText(objOptionsInputText, "< Infinite >", x, opY);
+					RenameRecenterText(objOptionsInputText, "< " ~ IntToString(startingLives) ~ " >", x, opY);
+					if(startingLives == 9)
+					{
+						RenameRecenterText(objOptionsInputText, "< Infinite >", x, opY);
+					}
+				}
+				if(id==OPTIONSMENUSTATE_EFFECTCUT)
+				{
+					RenameRecenterText(objOptionsInputText, "Not Implemented", x, opY);
+				}
+				if(id==OPTIONSMENUSTATE_TALKSOUNDS)
+				{
+				
+					let ttt = "";
+					alternative(option_TalkSound)
+					case(0) { ttt = "Unique"; }
+					case(1) { ttt = "Generic"; }
+					others { ttt = "None"; }
+		
+					RenameRecenterText(objOptionsInputText, "< " ~ ttt ~ " >", x, opY);
 				}
 			}
-			if(id==OPTIONSMENUSTATE_EFFECTCUT)
+			else
 			{
-				RenameRecenterText(objOptionsInputText, "Not Implemented", x, opY);
-			}
-			if(id==OPTIONSMENUSTATE_TALKSOUNDS)
-			{
-			
-				let ttt = "";
-				alternative(option_TalkSound)
-				case(0)
-				{
-					ttt = "Unique";
-				}
-				case(1)
-				{
-					ttt = "Generic";
-				}
-				others
-				{
-					ttt = "None";
-				}
-	
-				RenameRecenterText(objOptionsInputText, "< " ~ ttt ~ " >", x, opY);
+				let isEnabled = false;
+				alternative(id)
+				case(CHEATSTATE_DEBUG) 	{ isEnabled = isDebugEnabled; }
+				case(CHEATSTATE_ANGLE) 	{ isEnabled = isAngleRandomEnabled; }
+				case(CHEATSTATE_BULLET) { isEnabled = isBulletRandomEnabled; }
+				case(CHEATSTATE_ULTRA) 	{ isEnabled = isUltraEnabled; }
+				others {}
+				RenameRecenterText(objOptionsInputText, "< " ~ (isEnabled ? "On" : "Off") ~ " >", x, opY);
 			}
 			let t = OPTIONSMENU_TRANSITION;
 			ascent(i in 0..t)
@@ -569,32 +695,38 @@ task Options_CreateOptions()
 			while(menuState==MENUSTATE_OPTIONS)
 			{
 				let theText = "< " ~ IntToString(startingLives) ~ " >";
-				if(startingLives == 9)
-				{
-					theText = "< " ~ "Infinite" ~ " >";
-				}
-				if(id==OPTIONSMENUSTATE_EFFECTCUT)
-				{
-					theText = "Not Implemented";
-				}
-				if(id==OPTIONSMENUSTATE_TALKSOUNDS)
-				{
-					let ttt = "";
-					alternative(option_TalkSound)
-					case(0)
-					{
-						ttt = "Unique";
-					}
-					case(1)
-					{
-						ttt = "Generic";
-					}
-					others
-					{
-						ttt = "None";
-					}
 				
-					theText = "< " ~ ttt ~ " >";
+				if(!isCheating)
+				{
+					if(startingLives == 9)
+					{
+						theText = "< " ~ "Infinite" ~ " >";
+					}
+					if(id==OPTIONSMENUSTATE_EFFECTCUT)
+					{
+						theText = "Not Implemented";
+					}
+					if(id==OPTIONSMENUSTATE_TALKSOUNDS)
+					{
+						let ttt = "";
+						alternative(option_TalkSound)
+						case(0) { ttt = "Unique"; }
+						case(1) { ttt = "Generic"; }
+						others { ttt = "None"; }
+					
+						theText = "< " ~ ttt ~ " >";
+					}
+				}
+				else
+				{
+					let isEnabled = false;
+					alternative(id)
+					case(CHEATSTATE_DEBUG) 	{ isEnabled = isDebugEnabled; }
+					case(CHEATSTATE_ANGLE) 	{ isEnabled = isAngleRandomEnabled; }
+					case(CHEATSTATE_BULLET) { isEnabled = isBulletRandomEnabled; }
+					case(CHEATSTATE_ULTRA) 	{ isEnabled = isUltraEnabled; }
+					others {}
+					theText = "< " ~ (isEnabled ? "On" : "Off") ~ " >";
 				}
 				RenameRecenterText(objOptionsInputText, theText, x, opY);
 

@@ -339,6 +339,19 @@ task CreateMainMenuOption(id)
 		let scll = cos(c*3);
 		let scll2 = cos(c*3*2);
 		let arrowTarg = 0;
+		
+		if(id==MAINMENUSTATE_OPTIONS)
+		{
+			if(isCheating)
+			{
+				RenameRecenterText(obj, "Cheats", GetScreenWidth/2, y);
+			}
+			else
+			{
+				RenameRecenterText(obj, MAINMENU_TEXT[id], GetScreenWidth/2, y);
+			}
+		}
+		
 		if(!mainMenu_Selectable[id])
 		{
 			colTarg = 32;
