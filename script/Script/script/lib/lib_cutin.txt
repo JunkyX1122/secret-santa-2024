@@ -9,6 +9,7 @@ let bossScene; //boss scene object
 
 // Sorry Python but I'm stealing more code.
 task RecordAttackHistory(stage, pattern, diff){
+	if(GetCommonData("isCheatingOverall", false)==true) { return; }
 	boss = GetEnemyBossObjectID[0];
 	bossScene = GetEnemyBossSceneObjectID;
 

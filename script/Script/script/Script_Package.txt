@@ -163,6 +163,8 @@ task LoadSaveDataStuff()
 	SetCommonData("isPitchRandomEnabled", false);
 	SetCommonData("isUltraEnabled", false);
 	SetCommonData("PlayerTazueSegments", 16);
+	
+	SetCommonData("isCheatingOverall", false);
 }
 
 let totalDarkness = 0;

@@ -284,6 +284,7 @@ task EndStageHistoryRecord()
 
 task RecordStageHistory(stage, diff){
 	
+	if(GetCommonData("isCheatingOverall", false)==true) { return; }
 	WriteLog("RECORDING STAGE HISTORY");
 	stageInProgress = true;
 	

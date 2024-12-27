@@ -246,12 +246,18 @@ function OptionsScreen()
 	SetCommonData("isPitchRandomEnabled", isPitchRandomEnabled);
 	SetCommonData("isUltraEnabled", isUltraEnabled);
 	SetCommonData("PlayerTazueSegments", tazueLongCount);
+	SetCommonData("isCheatingOverall", IsGameplayCheating());
 	
 	ascent(i in 0..30)
 	{
 		options_AlphaScl = 1 - 1/29*i;
 		SkippableWait(1);
 	}
+}
+
+function IsGameplayCheating()
+{
+	return isDebugEnabled||isAngleRandomEnabled||isBulletRandomEnabled||isUltraEnabled;
 }
 
 task OptionsMenu_RandomTalk(id)
@@ -529,6 +535,10 @@ task Options_CreateOptions()
 		ObjText_SetFontBorderType(objOptionsText, BORDER_FULL);
 		ObjText_SetSidePitch(objOptionsText, -1);
 		ObjText_SetText(objOptionsText, isCheating ? CHEATS_NAMES[id] : OPTIONS_NAMES[id]);
+		if(isCheating && id==CHEATSTATE_BACK)
+		{
+			ObjText_SetText(objOptionsText, IsGameplayCheating() ? "Back (Disable Spell History)" : CHEATS_NAMES[id]);
+		}
 		
 		let objOSB = ObjPrim_Create(OBJ_SPRITE_2D);
 		ObjPrim_SetTexture(objOSB, IMG_TITLE_OPTIONS_SELECTION_BACK);
@@ -570,6 +580,11 @@ task Options_CreateOptions()
 			ObjRender_SetAlpha(objOSB,255*selAlph*options_AlphaScl * (0.7 + 0.3 * scl1));
 			ObjRender_SetAlpha(objOSF,255*selAlph*options_AlphaScl);
 			ObjRender_SetAlpha(objOptionsText, 255*options_AlphaScl);
+			
+			if(isCheating && id==CHEATSTATE_BACK)
+			{
+				ObjText_SetText(objOptionsText, IsGameplayCheating() ? "Back (Disable Spell History)" : CHEATS_NAMES[id]);
+			}
 			c++;
 			yield;
 		}
