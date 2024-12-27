@@ -263,7 +263,7 @@ task LightDaze(bit)
 					if(ObjShot_GetImageID(buID)==80 || ObjShot_GetImageID(buID)==427)
 					{
 						SE_PlayLen(chime1,60);
-						ObjShot_SetGraphic(buID,87);
+						ObjShot_SetGraphicR(buID,87);
 						let x = ObjMove_GetX(buID);
 						let y = ObjMove_GetY(buID);
 						let angL = Get_PointAngle(x,y,ObjMove_GetX(objEnemy3),ObjMove_GetY(objEnemy3));

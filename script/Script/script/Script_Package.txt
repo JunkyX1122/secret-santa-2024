@@ -160,6 +160,7 @@ task LoadSaveDataStuff()
 	SetCommonData("isDebugEnabled", false);
 	SetCommonData("isAngleRandomEnabled", false);
 	SetCommonData("isBulletRandomEnabled", false);
+	SetCommonData("isSaltEnabled", false);
 	SetCommonData("isPitchRandomEnabled", false);
 	SetCommonData("isUltraEnabled", false);
 	SetCommonData("PlayerTazueSegments", 16);

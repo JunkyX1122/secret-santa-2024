@@ -506,7 +506,8 @@ const OUT_PORTAL = false;
 function PShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
 	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
-	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); cloud = graphic; }
+	if(IS_SALT_GRAPHIC) { graphic = 240; cloud = graphic; }
     let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
 	if(inPortal)
 	{
@@ -522,7 +523,8 @@ function PShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPor
 function PShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
 	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
-	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); cloud = graphic; }
+	if(IS_SALT_GRAPHIC) { graphic = 240; cloud = graphic; }
     let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
 	if(inPortal)
 	{
@@ -538,7 +540,8 @@ function PShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delay
 function PShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
 	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
-	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); cloud = graphic; }
+	if(IS_SALT_GRAPHIC) { graphic = 240; cloud = graphic; }
     let shot = CreateShotOA1(obj,spd,dir,graphic,delay);
 	if(inPortal)
 	{
@@ -554,7 +557,8 @@ function PShotOA1(obj,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPo
 }
 function PShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
-	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); cloud = graphic; }
+	if(IS_SALT_GRAPHIC) { graphic = 240; cloud = graphic; }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB1(x,y,xspd,yspd,graphic,delay);
 	if(inPortal)
@@ -570,7 +574,8 @@ function PShotB1(x,y,xspd,yspd,graphic,cloud,delay,size,blendtype,delaymove, inP
 }
 function PShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
-	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); cloud = graphic; }
+	if(IS_SALT_GRAPHIC) { graphic = 240; cloud = graphic; }
     let angle = atan2(yspd,xspd);
     let shot = CreateShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,delay);
 	if(inPortal)
@@ -587,7 +592,7 @@ function PShotB2(x,y,xspd,yspd,xacc,yacc,xmax,ymax,graphic,cloud,delay,size,blen
 
 task PDelayCloud(shot,x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPortal)
 {
-    let obj=CreateShotA1R(x,y,0,dir,cloud,0);
+    let obj=CreateShotA1(x,y,0,dir,cloud,0);
 	ObjShot_SetAutoDelete(obj,false);
 	if(inPortal)
 	{

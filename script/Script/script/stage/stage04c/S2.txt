@@ -411,7 +411,7 @@ function BloodShotB2(x, y, xSpd, ySpd, xAcc, yAcc, xMSpd, yMSpd, sclMax, growT, 
 {
 	let obj = CreateShotB2(x, y, xSpd, ySpd, xAcc, yAcc, xMSpd, yMSpd, 293, 0);
 	ObjRender_SetColor(obj, 255,255,255);
-	ObjShot_SetGraphic(obj, 296);
+	ObjShot_SetGraphicR(obj, 296);
 	Obj_SetRenderPriority(obj, 0.52);
 	ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
 	ObjShot_SetSpellResist(obj, true);
@@ -424,7 +424,7 @@ function BloodShotB2(x, y, xSpd, ySpd, xAcc, yAcc, xMSpd, yMSpd, sclMax, growT, 
 		let obj2 = CreateShotB2(x, y, xSpd, ySpd, xAcc, yAcc, xMSpd, yMSpd, 296, 0);
 		
 		ObjRender_SetColor(obj2, 255,0,0);
-		ObjShot_SetGraphic(obj2, 293);
+		ObjShot_SetGraphicR(obj2, 293);
 		Obj_SetRenderPriority(obj2, 0.51);
 		ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
 		

@@ -174,7 +174,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 	if(!drip)
 	{
 		ObjRender_SetColor(obj, 255,255,255);
-		ObjShot_SetGraphic(obj, 296);
+		ObjShot_SetGraphicR(obj, 296);
 		Obj_SetRenderPriority(obj, 0.52);
 		ObjRender_SetBlendType(obj, BLEND_SUBTRACT);
 	}
@@ -194,7 +194,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 		if(!drip)
 		{
 			ObjRender_SetColor(obj2, 255,0,0);
-			ObjShot_SetGraphic(obj2, 293);
+			ObjShot_SetGraphicR(obj2, 293);
 			Obj_SetRenderPriority(obj2, 0.51);
 			ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
 		}
