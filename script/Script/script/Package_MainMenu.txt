@@ -159,6 +159,7 @@ task Title_Display()
 	}
 	case(MAINMENUSTATE_OPTIONS)
 	{
+		if(isCheating) { SE_PlayLen(laugh, 75); }
 		let t = 40;
 		ascent(i in 0..t)
 		{
