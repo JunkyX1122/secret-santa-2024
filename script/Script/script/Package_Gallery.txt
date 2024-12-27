@@ -48,6 +48,27 @@ function HasBeatenWithTeam(teamID)
 	}
 	return false;
 }
+
+function HasBeatenWithTeamDifficulty(teamID, diff)
+{
+	alternative(teamID)
+	case(PLAYERTEAM_A)
+	{
+		if(diff==0) { return TeamA_StandardClear; }
+		else		{ return TeamA_OriginalClear; }
+	}
+	case(PLAYERTEAM_B)
+	{
+		if(diff==0) { return TeamB_StandardClear; }
+		else		{ return TeamB_OriginalClear; }
+	}
+	case(PLAYERTEAM_C)
+	{
+		if(diff==0) { return TeamC_StandardClear; }
+		else		{ return TeamC_OriginalClear; }
+	}
+	return false;
+}
 let GalleryImages = [];
 let GalleryImageAvailable = [];
 task InitiateGalleryImages()

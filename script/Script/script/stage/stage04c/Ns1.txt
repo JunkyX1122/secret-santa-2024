@@ -14,7 +14,7 @@ let count = 0;
 let c = 0;
 let TIME_MAX = 300;
 let TIME = TIME_MAX*60;
-let HEALTH_MAX = 220 * 3;
+let HEALTH_MAX = 250 * 3;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){

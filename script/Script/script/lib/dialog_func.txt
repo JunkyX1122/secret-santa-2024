@@ -248,9 +248,9 @@ function SetDialogueTextA4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	ObjText_SetFontBorderWidth(obj, 1);
 	ObjText_SetFontBorderColor(obj, 0, 0, 0);
 	ObjText_SetLinePitch(obj, 7);
-	ObjText_SetMaxWidth(obj, widthGl*2-20);
+	ObjText_SetMaxWidth(obj, widthGl*2-10);
 	Obj_SetRenderPriorityI(obj, 76+RP);
-	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+5, y+8, 0);
 
 	let objName = ObjText_Create();
 	ObjText_SetFontType(objName, "Lucida Fax");
@@ -398,9 +398,9 @@ function SetDialogueTextB4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	ObjText_SetFontBorderWidth(obj, 1);
 	ObjText_SetFontBorderColor(obj, 0, 0, 0);
 	ObjText_SetLinePitch(obj, 7);
-	ObjText_SetMaxWidth(obj, widthGl*2-20);
+	ObjText_SetMaxWidth(obj, widthGl*2-10);
 	Obj_SetRenderPriorityI(obj, 76+RP);
-	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+5, y+8, 0);
 
 	let objName = ObjText_Create();
 	ObjText_SetFontType(objName, "Lucida Fax");
@@ -557,9 +557,9 @@ function SetDialogueTextC4(speaker, text, color , spkP, spkE, imgS, imgE, imgM, 
 	ObjText_SetFontBorderWidth(obj, 1);
 	ObjText_SetFontBorderColor(obj, 0, 0, 0);
 	ObjText_SetLinePitch(obj, 7);
-	ObjText_SetMaxWidth(obj, widthGl*2-20);
+	ObjText_SetMaxWidth(obj, widthGl*2-10);
 	Obj_SetRenderPriorityI(obj, 76+RP);
-	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+10, y+8, 0);
+	ObjRender_SetPosition(obj, GetScreenWidth/2-widthGl+5, y+8, 0);
 
 	let objName = ObjText_Create();
 	ObjText_SetFontType(objName, "Lucida Fax");

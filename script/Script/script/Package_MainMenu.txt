@@ -18,8 +18,11 @@ let hasSelected = false;
 let SELECTED_WAIT = 20;
 
 let firstTimeBoot = true; // Prevents calling everything more than once.
+
+let isCheating = false;
 task Title_Display()
 {
+	isCheating = false;
 	isCreditsAvailable = GetAreaCommonData("History", "CreditsAvailable", false);
 	mainMenu_Selectable = [   true,       true,      true,     IsGalleryAvailable(),     isCreditsAvailable,   true];
 	menuState = MENUSTATE_MAIN;
@@ -63,6 +66,11 @@ task Title_Display()
 	while(menuState==MENUSTATE_MAIN && !hasSelected)
 	{
 		MainMenuSelectMove();
+		if(GetVirtualKeyState(VK_USER1) == KEY_PUSH || GetVirtualKeyState(VK_USER1) == KEY_PULL)
+		{
+			SE_PlayLen(title_cursor, 60);
+		}
+		isCheating = GetVirtualKeyState(VK_USER1) != KEY_FREE; 
 		if(GetVirtualKeyState(VK_CANCEL) == KEY_PUSH)
 		{
 			SE_PlayLen(title_cancel, 60);

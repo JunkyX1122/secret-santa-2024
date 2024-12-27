@@ -265,6 +265,7 @@ task NameDisplay(x,y,id,title,name)
 
 function PreBossDialogue(stageID)
 {
+	wait(30);
 	nameSkip = false;
 	forceStop = false;
 	if(GetCommonData("isPracticing", false)==true)
@@ -327,6 +328,7 @@ function PreBossDialogue(stageID)
 
 function PostBossDialogue(stageID)
 {
+	wait(30);
 	nameSkip = false;
 	forceStop = false;
 	if(GetCommonData("isPracticing", false)==true)
@@ -3970,7 +3972,7 @@ function Stage05APostBattle()
 						DIALOGUE_COLOUR_HIROYUKI, id_null, id_hiroyuki, 
 						IMG_PORTRAIT_HIROYUKI_BASE, IMG_PORTRAIT_HIROYUKI_EYES_02, IMGAR_PORTRAIT_HIROYUKI_MOUTH_01, id_hiroyuki, portraitXRight, portraitYOffset, TALK_HIROYUKI, 0.8, 0.05, 2);					
 	
-	SetDialogueTextA3("Tarkik", "Noooo comment. Fast? Strong? Decisive? Stright for the jugular? Ring|any bells?", 
+	SetDialogueTextA3("Tarkik", "Noooo comment. Fast? Strong? Decisive? Straight for the jugular? Ring|any bells?", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_03, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato,   portraitXLeft,  portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
@@ -4801,7 +4803,7 @@ function Stage06APreBattle()
 	SetDialogueTextA3("Hephaestus", "Hear me, Herald of the Stars.", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_02, IMGAR_PORTRAIT_GATO_MOUTH_00, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
-	SetDialogueTextA3("Hephaestus", "Once I'm done with you (again), You shall return from where you|came from, and I will get all the cool gifts!", 
+	SetDialogueTextA3("Hephaestus", "Once I'm done with you (again), you shall return from whence you|came from, and I will get all the cool gifts!", 
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_02, IMGAR_PORTRAIT_GATO_MOUTH_03, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	SetDialogueTextA3("Hephaestus", "Specially the gift of a safe, brighter world!", 

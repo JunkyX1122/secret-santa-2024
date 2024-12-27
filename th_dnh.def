@@ -1,4 +1,4 @@
-package.script.main = script/Script/script/Script_Package.txt
+//package.script.main = script/Script/script/Script_Package.txt
 window.title = Shrines & Youkai Secret Santa 2024: Snowy Standoffs
 screen.width=854
 screen.height=480

@@ -10,8 +10,8 @@ let YoumuTrailY = [];
 let OldOffSetX = [];
 let OldOffSetY = [];
 let MAX_SNAKEDIST = 8*1.2;
-let TOTAL_SEGMENTS = 16;
-let TAZUE_HIND_LEGS_ID = 8;
+let TOTAL_SEGMENTS = 200;
+let TAZUE_HIND_LEGS_ID = TOTAL_SEGMENTS-8;
 task OptionMoveViivi {
 	yield;
 	

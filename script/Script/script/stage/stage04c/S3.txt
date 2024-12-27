@@ -19,7 +19,7 @@ let finalSpellBool = false;
 @Event{
  alternative(GetEventType())
  case(EV_REQUEST_LIFE){
-  SetScriptResult(225/3);
+  SetScriptResult(290/3);
         }
  case(EV_REQUEST_TIMER){
   SetScriptResult(65);

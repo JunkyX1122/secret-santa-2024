@@ -198,7 +198,7 @@ task Char_PlayerIcons()
 	{
 		let objCSIc = ObjPrim_Create(OBJ_SPRITE_2D);
 		ObjPrim_SetTexture(objCSIc, CHAR_ICONS[id]);
-		Obj_SetRenderPriorityI(objCSIc, BASE_RENDERI+7);
+		Obj_SetRenderPriorityI(objCSIc, BASE_RENDERI+9);
 		ObjSprite2D_SetSourceRect(objCSIc,0, 0, 64, 64);
 		ObjSprite2D_SetDestRect(objCSIc,0, 0, 64, 64);
 		ObjSprite2D_SetDestCenter(objCSIc);
@@ -208,26 +208,46 @@ task Char_PlayerIcons()
 		ObjRender_SetColor(objCSIc, coll, coll, coll);
 		
 		let t = TO_CHARSELECT_TRANSITION;
+		
+		let objHasCleared = CreateText(
+		"Cleared!",
+		25,
+		[[255,255,255],
+		[255,200,200]],
+		[0,0,0],
+		charSelectX+180,
+		GetScreenHeight/2-193,
+		"Lucida Fax",
+		BASE_RENDERI+9);
+		let hasClearedAlpha = HasBeatenWithTeamDifficulty(id, activeDifficulty) ? 255 : 0;
 		ascent(i in 0..t)
 		{	
 			let scl = 1*sin(90/(t-1)*i);
 			ObjRender_SetAlpha(objCSIc, 255*scl);
+			ObjRender_SetAlpha(objHasCleared, hasClearedAlpha*scl);
 			SkippableWait(1);
 		}
 		yield;
 		while(menuState==MENUSTATE_CHARACTER_SELECT)
 		{
 			let colTarg = 128;
+			let targetAlpha = 0;
 			if(selectedTeam == id)
 			{
 				colTarg = 255;
+				targetAlpha = HasBeatenWithTeamDifficulty(id, activeDifficulty) ? 255 : 0;
 			}
 			coll = coll * 0.8 + colTarg * 0.2;
+			hasClearedAlpha = hasClearedAlpha * 0.8 + targetAlpha * 0.2;
+			
+			
+			ObjRender_SetAlpha(objHasCleared, hasClearedAlpha*characterSelect_AlphaScl);
 			ObjRender_SetColor(objCSIc, coll, coll, coll);
 			ObjRender_SetAlpha(objCSIc, 255*characterSelect_AlphaScl);
 			yield;
 		}
 		Obj_Delete(objCSIc);
+		Obj_Delete(objHasCleared);
 	}
 }
 const NAME_BG_COLOURS = [[0,0,0], [128,255,128], [128,0,0]];
