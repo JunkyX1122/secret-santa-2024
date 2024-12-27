@@ -507,7 +507,7 @@ function PShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove, inPor
 {
 	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
 	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
-    let shot = CreateShotA1R(x,y,spd,dir,graphic,delay);
+    let shot = CreateShotA1(x,y,spd,dir,graphic,delay);
 	if(inPortal)
 	{
 		SetInPortal(shot);
@@ -523,7 +523,7 @@ function PShotA2(x,y,spd,dir,acc,maxacc,graphic,cloud,delay,size,blendtype,delay
 {
 	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
 	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
-    let shot = CreateShotA2R(x,y,spd,dir,acc,maxacc,graphic,delay);
+    let shot = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
 	if(inPortal)
 	{
 		SetInPortal(shot);
