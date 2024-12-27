@@ -4486,7 +4486,7 @@ function Stage05CPreBattle()
 						DIALOGUE_COLOUR_VIIVI, id_viivi, id_null, 
 						IMG_PORTRAIT_VIIVI_BASE, IMG_PORTRAIT_VIIVI_EYES_01, IMGAR_PORTRAIT_VIIVI_MOUTH_02, id_viivi, portraitXLeft, portraitYOffset, TALK_VIIVI, 1.1, 0.05, 2);
 	
-	SetDialogueTextA3("Grandis", "Shit, we shouldn't have flown over the lake. ", 
+	SetDialogueTextA3("Grandis", "****, we shouldn't have flown over the lake. ", 
 						DIALOGUE_COLOUR_GRANDIS, id_grandis, id_null, 
 						IMG_PORTRAIT_GRANDIS_BASE, IMG_PORTRAIT_GRANDIS_EYES_08, IMGAR_PORTRAIT_GRANDIS_MOUTH_01, id_grandis, portraitXLeft, portraitYOffset, TALK_GRANDIS, 0.9, 0.05, 2);
 	
@@ -4767,7 +4767,7 @@ function Stage06APreBattle()
 						DIALOGUE_COLOUR_GATO, id_gato, id_null, 
 						IMG_PORTRAIT_GATO2_BASE, IMG_PORTRAIT_GATO_EYES_04, IMGAR_PORTRAIT_GATO_MOUTH_02, id_gato, portraitXLeft, portraitYOffset, TALK_GATO, 1, 0.05, 2);
 	
-	SetDialogueTextA3("Redrin", "...Bullshit.", 
+	SetDialogueTextA3("Redrin", "...Bull****.", 
 						DIALOGUE_COLOUR_REDRIN, id_null, id_redrin, 
 						IMG_PORTRAIT_REDRIN_BASE, IMG_PORTRAIT_REDRIN_EYES_04, IMGAR_PORTRAIT_REDRIN_MOUTH_00, id_redrin, portraitXRight, portraitYOffset, TALK_REDRIN, 0.6, 0.05, 2);					
 	
