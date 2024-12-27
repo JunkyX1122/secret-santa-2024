@@ -222,7 +222,7 @@ task LaserGrowFade(obj,dis,alpha)
 
 task RotateAroundOrbPos(ang,bit)
 {
-	let obj = CreateShotA1(holyOrbPos[0],holyOrbPos[1],0,90,399,0);
+	let obj = CreateShotA1R(holyOrbPos[0],holyOrbPos[1],0,90,399,0);
 	ObjShot_SetSpellResist(obj,true);
 	ObjShot_SetAutoDelete(obj,false);
 	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
@@ -277,7 +277,7 @@ task RotateAroundOrbPos(ang,bit)
 	Obj_Delete(obj);
 	task Fader(obj)
 	{
-		let obj2 = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,90,405,0);
+		let obj2 = CreateShotA1R(ObjMove_GetX(obj),ObjMove_GetY(obj),0,90,405,0);
 		ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
 		ObjShot_SetIntersectionEnable(obj2,false);
 		//ObjRender_SetScale(obj2,0.75);
@@ -323,8 +323,8 @@ task BulletSweep(x,bit,cc)
 		if(cc%[10,9][DIFFICULTY]==0)
 		{
 			SE_PlayLen(shot1,60);
-			let obj = CreateShotA2(x,GetStgFrameHeight + 31,1,ang,0.03,10,432,0);
-			if(IS_ULTRA_MODE) {CreateShotA2(x,GetStgFrameHeight + 31,1*ULTRA_MODE_SPEEDMOD,ang,0.03*ULTRA_MODE_SPEEDMOD,10*ULTRA_MODE_SPEEDMOD,432,0);}
+			let obj = CreateShotA2R(x,GetStgFrameHeight + 31,1,ang,0.03,10,432,0);
+			if(IS_ULTRA_MODE) {CreateShotA2R(x,GetStgFrameHeight + 31,1*ULTRA_MODE_SPEEDMOD,ang,0.03*ULTRA_MODE_SPEEDMOD,10*ULTRA_MODE_SPEEDMOD,432,0);}
 			ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 		
 		}
@@ -367,7 +367,7 @@ task LaserGrow(obj,t,d)
 task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,BLENDER,scaleX,scaleY,soundbool)
 {
 	
-	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	let obj = CreateShotA1R(X,Y,0,angle,ID,0);
 	//Bounce(obj);
 	ObjRender_SetAlpha(obj,128);
 	ObjRender_SetBlendType(obj,BLENDER);

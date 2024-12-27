@@ -262,7 +262,7 @@ task LaserGrowFade(obj,dis,alpha)
 task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,BLENDER,scaleX,scaleY,soundbool)
 {
 	
-	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	let obj = CreateShotA1R(X,Y,0,angle,ID,0);
 	//Bounce(obj);
 	ObjRender_SetAlpha(obj,128);
 	ObjRender_SetBlendType(obj,BLENDER);

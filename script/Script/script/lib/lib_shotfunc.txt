@@ -56,6 +56,24 @@ function ObjMove_SetAngleR(obj, ang)
 	ObjMove_SetAngle(obj, ang);
 }
 
+function CreateShotA1R(x, y, spd, dir, graphic, delay)
+{
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	let obj = CreateShotA1(x, y, spd, dir, graphic, delay);
+	if(IS_ULTRA_MODE) { CreateShotA1(x,y,spd * ULTRA_MODE_SPEEDMOD,dir,graphic,delay); }
+	return obj;
+}
+
+function CreateShotA2R(x, y, spd, dir, acc,maxacc,graphic, delay)
+{
+	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }
+	if(IS_RANDOM_GRAPHIC) { graphic = round(rand(1, 465)); }
+	let obj = CreateShotA2(x,y,spd,dir,acc,maxacc,graphic,delay);
+	if(IS_ULTRA_MODE) { CreateShotA2(x,y,spd * ULTRA_MODE_SPEEDMOD,dir,acc,maxacc,graphic,delay); }
+	return obj;
+}
+
 function ShotA1(x,y,spd,dir,graphic,cloud,delay,size,blendtype,delaymove)
 {
 	if(IS_RANDOM_ANGLE) { dir = rand(0,360); }

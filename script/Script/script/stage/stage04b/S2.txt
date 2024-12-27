@@ -318,7 +318,7 @@ task Nuke(bit)
 {
 	let nukeObjs = [];
 	
-	let objNuke = CreateShotA1(GetStgFrameWidth/2,100,0,90,402,0);
+	let objNuke = CreateShotA1R(GetStgFrameWidth/2,100,0,90,402,0);
 	ObjShot_SetSpellResist(objNuke,true);
 	ObjShot_SetAutoDelete(objNuke,false);
 	ObjRender_SetAlpha(objNuke,0);

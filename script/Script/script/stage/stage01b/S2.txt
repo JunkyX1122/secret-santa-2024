@@ -157,7 +157,7 @@ task Fire
 
 task AuraSphere(x,y,ang,bit,stayAtEnemy)
 {
-	let obj = CreateShotA1(x,y,0,ang,404,0);
+	let obj = CreateShotA1R(x,y,0,ang,404,0);
 	ObjShot_SetSpellResist(obj,true);
 	ObjShot_SetAutoDelete(obj,false);
 	ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
@@ -223,7 +223,7 @@ task AuraSphere(x,y,ang,bit,stayAtEnemy)
 }
 task Fader(obj,s)
 {
-	let obj2 = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),-rand(0.5,3),ObjMove_GetAngle(obj)+rand(10,-10),404,0);
+	let obj2 = CreateShotA1R(ObjMove_GetX(obj),ObjMove_GetY(obj),-rand(0.5,3),ObjMove_GetAngle(obj)+rand(10,-10),404,0);
 	ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
 	ObjShot_SetIntersectionEnable(obj2,false);
 	ObjRender_SetScale(obj2,s);
@@ -239,7 +239,7 @@ task Fader(obj,s)
 }
 task FaderWarning(x,y,ang,s)
 {
-	let obj2 = CreateShotA1(x,y,0,ang,404,0);
+	let obj2 = CreateShotA1R(x,y,0,ang,404,0);
 	ObjRender_SetBlendType(obj2,BLEND_ADD_ARGB);
 	ObjShot_SetIntersectionEnable(obj2,false);
 	ObjRender_SetScale(obj2,s);

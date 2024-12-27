@@ -156,6 +156,10 @@ task DebugKeys()
 	if(isDebugEnabled)
 	{
 		SetCommonData("ForceInvincible", debugInvincible);
+		SetCommonData("DebugDamage", debugDamageRate);
+		SetCommonData("DebugHitboxes", debugShowHitboxes);
+		SetCommonData("DebugInvincible", debugInvincible);
+		SetCommonData("DebugSlow", debugSlow);
 	}
 	while(true) {
 		if (GetKeyState(KEY_L) == KEY_PUSH ) {

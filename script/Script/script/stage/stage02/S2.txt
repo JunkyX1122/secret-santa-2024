@@ -143,7 +143,7 @@ task Fire
 					ascent(i in 0..sprd)
 					{
 						let ang2 = aang + 360/sprd*i*bit;
-						let objS = CreateShotA1(ObjMove_GetX(objEnemy)+dis*cos(ang2),ObjMove_GetY(objEnemy)+dis*sin(ang2),0,ang2,65,0);
+						let objS = CreateShotA1R(ObjMove_GetX(objEnemy)+dis*cos(ang2),ObjMove_GetY(objEnemy)+dis*sin(ang2),0,ang2,65,0);
 						ObjShot_SetAutoDelete(objS,false);
 						ObjMove_SetDestAtFrameWeight(objS, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 120);
 						ObjShot_SetDeleteFrameA6(objS,round(rand(60,100)),0.5);
@@ -168,7 +168,7 @@ task Fire
 					ascent(i in 0..sprd)
 					{
 						let ang2 = ang + 360/sprd*i*bit;
-						let objS = CreateShotA1(ObjMove_GetX(objEnemy)+dis*cos(ang2),ObjMove_GetY(objEnemy)+dis*sin(ang2),0,ang2,65,0);
+						let objS = CreateShotA1R(ObjMove_GetX(objEnemy)+dis*cos(ang2),ObjMove_GetY(objEnemy)+dis*sin(ang2),0,ang2,65,0);
 						ObjShot_SetAutoDelete(objS,false);
 						ObjMove_SetDestAtFrameWeight(objS, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 120);
 						ObjShot_SetDeleteFrameA6(objS,round(rand(60,100)),0.5);
@@ -341,8 +341,8 @@ task BulletSweep(x,bit,cc,sprd)
 		{
 			SE_PlayLen(shot1,60);
 			let mspd = (3-1.5/3*sprd) * (1-0.005*cc);
-			let obj = CreateShotA2(x,GetStgFrameHeight + 31,0.5,ang,mspd/120,mspd,65,0);
-			if(IS_ULTRA_MODE) {CreateShotA2(x,GetStgFrameHeight + 31,0.5*ULTRA_MODE_SPEEDMOD,ang,mspd/120*ULTRA_MODE_SPEEDMOD,mspd*ULTRA_MODE_SPEEDMOD,65,0);}
+			let obj = CreateShotA2R(x,GetStgFrameHeight + 31,0.5,ang,mspd/120,mspd,65,0);
+			if(IS_ULTRA_MODE) {CreateShotA2R(x,GetStgFrameHeight + 31,0.5*ULTRA_MODE_SPEEDMOD,ang,mspd/120*ULTRA_MODE_SPEEDMOD,mspd*ULTRA_MODE_SPEEDMOD,65,0);}
 			ObjRender_SetBlendType(obj,BLEND_ADD_ARGB);
 		}
 		ang+=0.1*bit;
@@ -443,7 +443,7 @@ task LasterBlast(x)
 	{
 		CreateBoom((3+2*sin(90/4*i))*sclD,[255-255/5*i,255-128/5*i,255],BLEND_ADD_ARGB,52);
 	}
-	let objL = CreateShotA1(x,0,0,0,1,0);
+	let objL = CreateShotA1R(x,0,0,0,1,0);
 	ObjStLaser_SetSource(objL,false);
 	ObjLaser_SetInvalidLength(objL,0,0);
 	ObjRender_SetBlendType(objL,BLEND_ALPHA);

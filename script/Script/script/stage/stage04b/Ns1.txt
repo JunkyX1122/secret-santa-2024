@@ -275,7 +275,7 @@ task PortalSlash(x,y,ang,d, xScl, yScl)
 
 task PortalSlashHitbox(x, y, ang, width, t)
 {
-	let objspell = CreateShotA1(x,y,0,0,1,0);
+	let objspell = CreateShotA1R(x,y,0,0,1,0);
 	ObjRender_SetAlpha(objspell,0);
 	ObjShot_SetSpellResist(objspell,true);
 	ascent(i in 0..t)

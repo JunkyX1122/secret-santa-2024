@@ -381,7 +381,7 @@ task SwordPath(sourceX, sourceY, xS, yS, startAng,spinAmount,bit,type,renderTime
 	Obj_SetRenderPriorityI(tri, 48);
 	ObjPrim_SetTexture(tri, texture);
 
-	let objspell = CreateShotA1(sourceX,sourceY,0,0,1,0);
+	let objspell = CreateShotA1R(sourceX,sourceY,0,0,1,0);
 	ObjRender_SetAlpha(objspell,0);
 	let d = renderTime+1+10;
 	ascent(o in 0..renderTime)

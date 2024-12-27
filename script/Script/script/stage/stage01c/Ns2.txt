@@ -157,7 +157,7 @@ task Laser(x,y,del,angle)
 	//let obj1 = CreateLooseLaserA1(ObjMove_GetX(famz)+20*cos(angleT),ObjMove_GetY(famz)+20*sin(angleT), 4, angleT, 160, 30, 422, 10);
 		let obj2 = CreateLooseLaserA1(x,y, 10, angle, 200, 9, 309, 10);
 		ObjLaser_SetInvalidLength(obj2, 0, 0.3);
-		let obj3 = CreateShotA1(x,y, 10, angle, 436, 12);
+		let obj3 = CreateShotA1R(x,y, 10, angle, 436, 12);
 		
 		ObjMove_SetMaxSpeed(obj2,4);
 		ObjMove_SetMaxSpeed(obj3,4);
@@ -202,7 +202,7 @@ task PortalSlash(x,y,ang,d, yScl)
 
 task PortalSlashHitbox(x, y, ang, width, t)
 {
-	let objspell = CreateShotA1(x,y,0,0,1,0);
+	let objspell = CreateShotA1R(x,y,0,0,1,0);
 	ObjRender_SetAlpha(objspell,0);
 	ObjShot_SetSpellResist(objspell,true);
 	ascent(i in 0..t)

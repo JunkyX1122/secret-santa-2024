@@ -172,8 +172,8 @@ task LaserSweep(xs,ys,bit,starter)
 	let laserss = [obj,obj2];
 	
 	
-	let obj3 = CreateShotA1(x,y,0,0,439,0);
-	let obj4 = CreateShotA1(x,y,0,0,439,0);
+	let obj3 = CreateShotA1R(x,y,0,0,439,0);
+	let obj4 = CreateShotA1R(x,y,0,0,439,0);
 	let sourcess = [obj3,obj4];
 	let t = 60;
 	let size = 120;

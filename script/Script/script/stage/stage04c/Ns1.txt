@@ -834,7 +834,7 @@ task FireWall(ang, bit, idd)
 				type = 1;
 			}
 			
-			let obj = CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0, ang, [425, 428][type], 0);
+			let obj = CreateShotA1R(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 0, ang, [425, 428][type], 0);
 			
 			
 			MoverFire(obj, x2, y2, 180-i, ang,type);
@@ -868,8 +868,8 @@ task FireWall(ang, bit, idd)
 			{
 				let xB = ObjMove_GetX(obj);
 				let yB = ObjMove_GetY(obj);
-				let obj2 = CreateShotA2(xB, yB, 0, ang+180, 4/180, 4, 425, 0);
-				if(IS_ULTRA_MODE) {CreateShotA2(xB, yB, 0, ang+180, 4/180*ULTRA_MODE_SPEEDMOD, 4*ULTRA_MODE_SPEEDMOD, 425, 0);}
+				let obj2 = CreateShotA2R(xB, yB, 0, ang+180, 4/180, 4, 425, 0);
+				if(IS_ULTRA_MODE) {CreateShotA2R(xB, yB, 0, ang+180, 4/180*ULTRA_MODE_SPEEDMOD, 4*ULTRA_MODE_SPEEDMOD, 425, 0);}
 				ObjRender_SetBlendType(obj2, BLEND_ADD_ARGB);
 				ObjRender_SetScale(obj2, 1.5);
 				ObjShot_SetIntersectionScaleXY(obj2, 1.5, 1.5);

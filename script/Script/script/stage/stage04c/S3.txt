@@ -138,7 +138,7 @@ task NecroShot(ang, am)
 	let x = ObjMove_GetX(objEnemy) + dis * cos(ang);
 	let y = ObjMove_GetY(objEnemy) + dis * sin(ang);
 	
-	let obj = CreateShotA2(x, y, 1, ang+180, 1/120, 2, 60, 0);
+	let obj = CreateShotA2R(x, y, 1, ang+180, 1/120, 2, 60, 0);
 	ObjShot_SetAutoDelete(obj,false);
 	ObjShot_SetDeleteFrameA5(obj,60*5,2);
 	let xC = ObjMove_GetX(objEnemy);
@@ -164,12 +164,12 @@ task SideFire(bit)
 			let x = GetStgFrameWidth/2 + (GetStgFrameWidth/2 + rand(10,-100)) * innerBit;
 			let y = GetStgFrameHeight + 30;
 			
-			let obj = CreateShotA1(x, y, spd, -90, 400, 0);
+			let obj = CreateShotA1R(x, y, spd, -90, 400, 0);
 			ObjRender_SetScale(obj, 1.5);
 			ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
 			ObjShot_SetSpellResist(obj, true);
 			
-			let obj2 = CreateShotA1(x, y, spd, -90, 401, 0);
+			let obj2 = CreateShotA1R(x, y, spd, -90, 401, 0);
 			ObjRender_SetScale(obj2, 1.1);
 			ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
 			Obj_SetRenderPriority(obj2, 0.51);

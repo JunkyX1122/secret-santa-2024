@@ -241,7 +241,7 @@ task KeiranFire(bit)
 			let x = ObjMove_GetX(objGyro);
 			let y = ObjMove_GetY(objGyro);
 			let ang = ObjMove_GetAngle(objGyro);
-			let obj = CreateShotA1(ObjMove_GetX(objGyro),ObjMove_GetY(objGyro),0,0,1,0);
+			let obj = CreateShotA1R(ObjMove_GetX(objGyro),ObjMove_GetY(objGyro),0,0,1,0);
 			SE_PlayLen(explode,60);
 			SE_PlayLen(drum,70);
 			RenderFlare(obj,IMG_SUN2,512,0.25,10,60,0,false,1,[255,255,165]);

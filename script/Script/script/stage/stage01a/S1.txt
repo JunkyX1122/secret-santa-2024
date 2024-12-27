@@ -146,7 +146,7 @@ task ShinyOrb(x, y, bit)
 		SE_PlayLen(ufo, 60);
 		SE_PlayLen(boon1,60);
 	}
-	let obj = CreateShotA1(x,y, 0, -90, 405, 0);
+	let obj = CreateShotA1R(x,y, 0, -90, 405, 0);
 	ObjShot_SetSpellResist(obj, true);
 	ObjShot_SetAutoDelete(obj, false);
 	Obj_SetRenderPriority(obj, 0.6);
@@ -230,7 +230,7 @@ function IsInScreen(x,y,padding)
 
 function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 {
-	let obj = CreateShotA1(x, y, speed, ang, 293, 0);
+	let obj = CreateShotA1R(x, y, speed, ang, 293, 0);
 	ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
 	ObjRender_SetColor(obj, col[0], col[1], col[2]);
 	Obj_SetRenderPriority(obj, 0.49);
@@ -252,7 +252,7 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 	
 	task BloodRender(obj)
 	{
-		let obj2 = CreateShotA1(x, y, 0, 90, 296, 0);
+		let obj2 = CreateShotA1R(x, y, 0, 90, 296, 0);
 		ObjRender_SetBlendType(obj2, BLEND_SUBTRACT);
 		Obj_SetRenderPriority(obj2, 0.48);
 		if(!drip)
@@ -303,13 +303,13 @@ function BloodShot(x, y, speed, ang, sclMax, growT, col, drip)
 		}
 		task BloodDrip(x, y, scl)
 		{
-			let objD = CreateShotA1(x, y, speed, 90, 293, 0);
+			let objD = CreateShotA1R(x, y, speed, 90, 293, 0);
 			ObjRender_SetBlendType(objD, BLEND_ADD_ARGB);
 			ObjRender_SetColor(objD, 255, 0, 0);
 			Obj_SetRenderPriority(objD, 0.49);
 			ObjShot_SetIntersectionEnable(objD, false);
 			
-			let objD2 = CreateShotA1(x, y, 0, 90, 296, 0);
+			let objD2 = CreateShotA1R(x, y, 0, 90, 296, 0);
 			ObjRender_SetBlendType(objD2, BLEND_SUBTRACT);
 			Obj_SetRenderPriority(objD2, 0.48);
 			ObjShot_SetSpellResist(objD2, true);

@@ -274,7 +274,7 @@ function SpawnProviBites(bit)
 	}
 	if(!Obj_IsDeleted(objEnemy)) 
 	{
-		let obj = CreateShotA2(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),13,GetAngleToPlayer(objEnemy),0,0,1,0);
+		let obj = CreateShotA2R(ObjMove_GetX(objEnemy),ObjMove_GetY(objEnemy),13,GetAngleToPlayer(objEnemy),0,0,1,0);
 		ObjShot_SetIntersectionEnable(obj,false);
 		ObjShot_SetAutoDelete(obj,false);
 		ObjShot_SetSpellResist(obj,true);
@@ -406,7 +406,7 @@ task CreateMaw(x,y,ang,teethNum,rowID,handleType,openTime,waitBite,bit)
 		let teethD = (-teethGap+(teethGap*2)/(teethNum-1)*i);
 		let x2 = x+closeGap*cos(ang-90) + teethD * cos(ang);
 		let y2 = y+closeGap*sin(ang-90) + teethD * sin(ang);
-		let obj = CreateShotA1(x2,y2,0,ang+90,386,0);
+		let obj = CreateShotA1R(x2,y2,0,ang+90,386,0);
 		ObjShot_SetAutoDelete(obj,false);
 		ObjShot_SetSpellResist(obj,true);
 		if(i==bigTeethNumber||i==teethNum-1-bigTeethNumber)
@@ -428,7 +428,7 @@ task CreateMaw(x,y,ang,teethNum,rowID,handleType,openTime,waitBite,bit)
 		let teethD = (-teethGap+((teethGap*2)/(teethNum-1))/2+(teethGap*2-1)/(teethNum-1)*i);
 		let x2 = x+closeGap*cos(ang+90) + teethD * cos(ang);
 		let y2 = y+closeGap*sin(ang+90) + teethD * sin(ang);
-		let obj = CreateShotA1(x2,y2,0,ang-90,386,0);
+		let obj = CreateShotA1R(x2,y2,0,ang-90,386,0);
 		ObjShot_SetAutoDelete(obj,false);
 		ObjShot_SetSpellResist(obj,true);
 		ObjShot_SetIntersectionScaleXY(obj,1.5);
@@ -691,7 +691,7 @@ task SwordPath(sourceX, sourceY, startAng,bit,type)
 	
 	
 	
-	let objspell = CreateShotA1(sourceX,sourceY,0,0,1,0);
+	let objspell = CreateShotA1R(sourceX,sourceY,0,0,1,0);
 	ObjRender_SetAlpha(objspell,0);
 	let d = renderTime+1+10;
 	ascent(o in 0..renderTime)

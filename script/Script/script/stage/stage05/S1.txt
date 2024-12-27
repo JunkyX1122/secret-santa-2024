@@ -253,7 +253,7 @@ task Fader(objFade)
 
 task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,scaleX,scaleY,bouncebool,sizehit,BT)
 {
-	let obj = CreateShotA1(X,Y,0,angle,ID,0);
+	let obj = CreateShotA1R(X,Y,0,angle,ID,0);
 	ObjRender_SetBlendType(obj,BT);
 	ObjShot_SetIntersectionEnable(obj,false);
 	ObjShot_SetSpellResist(obj,true);
@@ -299,7 +299,7 @@ task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,scaleX,scaleY,bounce
 		{
 			loop(1)
 			{
-				let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+				let objFade = CreateShotA1R(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
 				ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
 				ObjShot_SetIntersectionEnable(objFade,false);
 				ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);
@@ -319,7 +319,7 @@ task S_Laser2(X,Y,angle,xmove,ymove,growdeley,deley,stay,ID,scaleX,scaleY,bounce
 		{
 			loop(1)
 			{
-				let objFade = CreateShotA1(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
+				let objFade = CreateShotA1R(ObjMove_GetX(obj),ObjMove_GetY(obj),0,angle,ID,0);
 				ObjRender_SetBlendType(objFade,BLEND_ADD_ARGB);
 				ObjShot_SetIntersectionEnable(objFade,false);
 				ObjRender_SetScaleXYZ(objFade,scaleX,scaleY,1);

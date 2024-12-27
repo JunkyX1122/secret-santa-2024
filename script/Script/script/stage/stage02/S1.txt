@@ -173,7 +173,7 @@ task StaffHandle(bit)
 	let spnAm = 8.213;
 	let cc = 0;
 	
-	let hitbox = CreateShotA1(staffXY[0], staffXY[1],0,0,1,0);
+	let hitbox = CreateShotA1R(staffXY[0], staffXY[1],0,0,1,0);
 	ObjShot_SetAutoDelete(hitbox,false);
 	ObjShot_SetSpellResist(hitbox,true);
 	ObjRender_SetAlpha(hitbox,false);
