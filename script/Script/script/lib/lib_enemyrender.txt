@@ -118,8 +118,9 @@ task RenderTazue(objTarget, usePreviousPosition) {
 	let OptionX = [];
 	let OptionY = [];
 		
-	let TOTAL_SEGMENTS = 16;
+	let TOTAL_SEGMENTS = GetCommonData("PlayerTazueSegments", 16);
 	let MAX_SNAKEDIST = 16;
+	let TAZUE_HIND_LEGS_ID = TOTAL_SEGMENTS-8;
 	let defaultSegments = [];
 	ascent(i in 0..TOTAL_SEGMENTS)
 	{
@@ -202,13 +203,13 @@ task RenderTazue(objTarget, usePreviousPosition) {
 				path = IMG_BOSS_TAZUE_BODY;
 				rp = rp-1;
 			}
-			if(num==8)
+			if(num==TAZUE_HIND_LEGS_ID)
 			{
 				path = IMG_BOSS_TAZUE_LEGS;
 			}
-			if(num > 8)
+			if(num > TAZUE_HIND_LEGS_ID)
 			{
-				widthScl = 1 - 1/(TOTAL_SEGMENTS - 8 + 2)*(num-8);
+				widthScl = 1 - 1/(TAZUE_HIND_LEGS_ID + 2)*(num-TAZUE_HIND_LEGS_ID);
 			}
 			let obj = ObjPrim_Create(OBJ_SPRITE_2D);
 			ObjPrim_SetTexture(obj, path);	
