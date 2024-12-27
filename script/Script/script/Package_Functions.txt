@@ -74,7 +74,7 @@ function StartStageProgression()
     DeleteCommonData("PlayerSpell");
 	let WAITER = 0;
 	
-	if(GetKeyState(KEY_6) == KEY_FREE)
+	if(!isDebugEnabled || (GetKeyState(KEY_6) == KEY_FREE && isDebugEnabled))
 	//if(true)
 	{
 		
