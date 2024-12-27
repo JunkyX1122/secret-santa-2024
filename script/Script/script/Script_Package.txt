@@ -156,6 +156,13 @@ task LoadSaveDataStuff()
 	SetCommonData("MusicVolume", option_MusicVolume);
 	SetCommonData("TalkSound", option_TalkSound);
 	SetCommonData("isPracticing", false);
+	
+	SetCommonData("isDebugEnabled", false);
+	SetCommonData("isAngleRandomEnabled", false);
+	SetCommonData("isBulletRandomEnabled", false);
+	SetCommonData("isPitchRandomEnabled", false);
+	SetCommonData("isUltraEnabled", false);
+	SetCommonData("PlayerTazueSegments", 16);
 }
 
 let totalDarkness = 0;
