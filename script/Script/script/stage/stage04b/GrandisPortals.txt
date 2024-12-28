@@ -25,6 +25,7 @@ let portalObjectArray = [];
 task StartPortalSystem()
 {
 	let hasBeenReset = false;
+	
 	tex_rdMask = CreateRenderTargetEx("textureMask", GetStgFrameWidth, GetStgFrameHeight);
 	
 	ascent(i in 0..32)
@@ -102,11 +103,14 @@ task CreateRegularBulletTarget()
 	
 	ObjShader_SetShaderF(obj, pathShader);
 	ObjShader_SetTechnique(obj, "TecMask");
+	
 
 	ObjShader_SetTexture(obj, "textureMask_", "textureMask");
 	
 	while(isManagingPortals)
 	{
+		ObjShader_SetFloat(obj, "X_OFFSET", GetCommonData("isMoreSpace",false) ? 0 : 107);
+		ObjShader_SetFloat(obj, "SCREEN_WIDTH", GetCommonData("isMoreSpace",false) ? GetScreenWidth : 640);
 		ObjRender_SetBlendType(obj,BaseBulletBlendType);
 		yield;
 	}
@@ -478,6 +482,15 @@ function CreatePortal(x,y,ang,xScale, yScale)
 				
 				ObjPrim_SetVertexUVT(objB, i*2+0, x + 107 + positionTop[0],   positionTop[1] + y);
 				ObjPrim_SetVertexUVT(objB, i*2+1, x + 107 + positionBottom[0],positionBottom[1] + y);
+				
+				if(GetCommonData("isMoreSpace",false))
+				{
+					ObjPrim_SetVertexUVT(obj , i*2+0, x + positionTop[0],   positionTop[1] + y);
+					ObjPrim_SetVertexUVT(obj , i*2+1, x + positionBottom[0],positionBottom[1] + y);
+					
+					ObjPrim_SetVertexUVT(objB, i*2+0, x + positionTop[0],   positionTop[1] + y);
+					ObjPrim_SetVertexUVT(objB, i*2+1, x + positionBottom[0],positionBottom[1] + y);
+				}
 			}
 			let col = ObjPortal_GetColor(id);
 			ObjRender_SetColor(objLine,  col[0], col[1], col[2]);

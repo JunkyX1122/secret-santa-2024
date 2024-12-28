@@ -1,9 +1,10 @@
 #include "./StageFunctions.txt"
 
+//SetCommonData("isMoreSpace",true);
 let x1 = GetScreenWidth/2-208;
 let x2 = GetScreenWidth/2+208;
-x1 = (107);
-x2 = (GetScreenWidth-107);
+x1 = GetCommonData("isMoreSpace",false) ? 0 				: (107);
+x2 = GetCommonData("isMoreSpace",false) ? GetScreenWidth 	: (GetScreenWidth-107);
 
 task InitialiseIndiv()
 {

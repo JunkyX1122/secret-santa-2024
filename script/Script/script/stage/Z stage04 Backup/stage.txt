@@ -68,8 +68,8 @@ task StartMusic
 		x2 = x2 * smooth1 + (GetScreenWidth-107) * smooth2;
 	}
 	*/
-	x1 = (107);
-	x2 = (GetScreenWidth-107);
+	x1 = GetCommonData("isMoreSpace",false) ? 0 				: (107);
+	x2 = GetCommonData("isMoreSpace",false) ? GetScreenWidth 	: (GetScreenWidth-107);
 	SetStgFrame(x1,0,x2,480,10,80);
 	SetPlayerClip(8,16,GetStgFrameWidth-8,GetStgFrameHeight-16);
 	if(GetPlayerY<150){CollectAllItems;}

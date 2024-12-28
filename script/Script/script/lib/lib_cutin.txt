@@ -244,8 +244,7 @@ task CutinS3(mimage, difficulty)
 		ObjText_SetFontBorderType(SpellText,BORDER_FULL);
 		ObjText_SetFontBorderColor(SpellText,0,0,0);
 		ObjText_SetFontBorderWidth(SpellText,2);
-		ObjText_SetHorizontalAlignment(SpellText, ALIGNMENT_CENTER);
-		ObjText_SetMaxWidth(SpellText, GetStgFrameWidth-24);
+
 		Obj_SetRenderPriority(SpellText, 0.82+0.01*max(0, 1-num));
 		ObjRender_SetPosition(SpellText, 0, 28+32*num, 0);
 		ObjRender_SetAlpha(SpellText, 0);
@@ -273,7 +272,7 @@ task CutinS3(mimage, difficulty)
 			let tmod = min(1, ((i*2)/len));
 			ObjRender_SetScaleXYZ(SpellBG, (4-2.5*mod)/2, (4-2.5*mod)/2, 1);
 			ObjRender_SetAlpha(SpellBG, 255*mod);
-			ObjRender_SetX(SpellText, (GetStgFrameWidth-24)*(1-mod)+100);
+			ObjRender_SetX(SpellText, GetScreenWidth/2 + (GetScreenWidth/2)*(1-1/(len-1)*i)-ObjText_GetTotalWidth(SpellText)/2);
 			//ObjRender_SetScaleXYZ(SpellText, 4-3*tmod, 4-3*tmod, 1);
 			ObjRender_SetAlpha(SpellText, 255*tmod);
 			yield;

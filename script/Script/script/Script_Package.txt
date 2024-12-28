@@ -163,6 +163,7 @@ task LoadSaveDataStuff()
 	SetCommonData("isSaltEnabled", false);
 	SetCommonData("isPitchRandomEnabled", false);
 	SetCommonData("isUltraEnabled", false);
+	SetCommonData("isMoreSpace", false);
 	SetCommonData("PlayerTazueSegments", 16);
 	
 	SetCommonData("isCheatingOverall", false);
