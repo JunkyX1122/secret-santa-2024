@@ -1,3 +1,5 @@
+
+
 task KillAllEnemies
 {
 	let enemyArray = GetAllEnemyID();
@@ -9,8 +11,6 @@ task KillAllEnemies
 function Enemy(x,y,life,collision)
 {
 	let BaseObj = ObjEnemy_Create(OBJ_ENEMY);
-	let c = 0;	
-	let color = [0,0,0];
 	ObjEnemy_Regist(BaseObj);
 	ObjEnemy_SetLife(BaseObj,life);
 	ObjEnemy_SetDamageRate(BaseObj,1,1);
@@ -24,8 +24,10 @@ function Enemy(x,y,life,collision)
 	{	
 		let OldX;
 		let OldY;
-		while(!Obj_IsDeleted(BaseObj))
+		while(!Obj_IsDeleted(BaseObj) && ObjEnemy_GetInfo(BaseObj,INFO_LIFE) > 0)
 		{
+			OldX = ObjMove_GetX(BaseObj);
+			OldY = ObjMove_GetY(BaseObj);
 			collision = Obj_GetValueD(BaseObj,"collision",false);
 			if(collision==true)
 			{
@@ -33,36 +35,23 @@ function Enemy(x,y,life,collision)
 				ObjEnemy_SetIntersectionCircleToShot(BaseObj,ObjMove_GetX(BaseObj),ObjMove_GetY(BaseObj),18*scl);
 				ObjEnemy_SetIntersectionCircleToPlayer(BaseObj,ObjMove_GetX(BaseObj),ObjMove_GetY(BaseObj),12*scl);
 			}
-			
-			OldX = ObjMove_GetX(BaseObj);
-			OldY = ObjMove_GetY(BaseObj);
-			if(ObjEnemy_GetInfo(BaseObj,INFO_LIFE) <=0)
-			{
-				if(collision==true)
-				{
-					SE_PlayLen(EnamyDeath,35);
-					loop(1)
-					{
-						
-						EnemyDelete(OldX,OldY,1);
-						
-					}
-					loop(6)
-					{
-						EnemyDelete2(OldX,OldY);
-					}
-				}
-				Obj_Delete(BaseObj);
-			}
-			/*
-			if(ObjMove_GetX(BaseObj)<-borders || ObjMove_GetX(BaseObj)>GetStgFrameWidth+borders || ObjMove_GetY(BaseObj)<-borders || ObjMove_GetY(BaseObj)>GetStgFrameHeight+borders&&collision==true)
-			{
-				Obj_Delete(BaseObj);
-			}
-			*/
 			yield;
 		}
-		Obj_Delete(BaseObj);
+		if(!Obj_IsDeleted(BaseObj))
+		{
+			SE_PlayLen(EnamyDeath,35);
+			loop(1)
+			{
+				
+				EnemyDelete(OldX,OldY,1);
+				
+			}
+			loop(6)
+			{
+				EnemyDelete2(OldX,OldY);
+			}
+			Obj_Delete(BaseObj);
+		}
 
 	}
 	task EnemyDelete(x,y,sc)

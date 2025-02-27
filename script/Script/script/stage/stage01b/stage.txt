@@ -66,7 +66,9 @@ task StartStage
 	BGTransition(255, 255, 60);
 	wait(60);
 	BGTransition(255, 0, 120);
-	wait(120);
+	
+	StagePortion();
+	//wait(120);
 	PreBossDialogue(DIALOGUE_STAGE01B);
 	SetCommonData("MaxNumberOfPhases",1);
 	if(GetCommonData("isPracticing", false)==true)
@@ -97,4 +99,50 @@ task StartStage
 		CloseStgScene;
 	}
 }
-
+const TH8INTRO_FAIRY = 0;
+function StagePortion()
+{
+	Formation1(1);
+	wait(60);
+	Formation1(-1);
+	loop{yield;}
+}
+task Formation1(bit)
+{
+	ascent(i in 0..10)
+	{
+		CreateStage1BEnemy((GetStgFrameWidth/2 - (GetStgFrameWidth/2 + 30)*bit)+(GetStgFrameWidth/2)/9*i*bit + rand(-30,30), -31, TH8INTRO_FAIRY, i, bit);
+		wait(20);
+	}
+}
+task CreateStage1BEnemy(x,y, type, i, bit)
+{
+	let LIFE_VALUES = [100];
+	let objE = Enemy(x,y,LIFE_VALUES[type],true);
+	renderGrannyGoreF(objE,0);
+	alternative(type)
+	case(TH8INTRO_FAIRY)
+	{
+		ObjMove_SetDestAtFrameWeight(objE, x+rand(5,-5), y + 100 + 20*(5*sin(180/9*i)) + rand(10,-10), 60);
+		wait(60);
+		if(!Obj_IsDeleted(objE))
+		{
+			ObjMove_SetAcceleration(objE, 3/120);
+			ObjMove_SetMaxSpeed(objE, 6);
+			ObjMove_SetAngle(objE, 90-60*bit-3*i*bit);
+			wait(rand(0,20));
+			let c = 0;
+			while(!Obj_IsDeleted(objE) && c < 3)
+			{
+				SE_PlayLen(shot1,60);
+				ascent(o in 0..3)
+				{
+					let obj = ShotA2(ObjMove_GetX(objE), ObjMove_GetY(objE), 3+0.25*o, GetAngleToPlayer(objE),1/60,4+0.25*o,100,100,10,2,BLEND_ALPHA,false);
+				}
+				c++;
+				wait(40);
+			}
+		}
+	}
+}
+		
