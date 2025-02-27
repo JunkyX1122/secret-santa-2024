@@ -15,4 +15,6 @@ This project is still a W.I.P., as I plan to make enemy stage portions for each 
 
 Please report any and all bugs to @joonkeh on Discord or at my Twitter @Joonkeh.
 
+If you are playtesting this, please run th_ss2024.
+
 Enjoy~
