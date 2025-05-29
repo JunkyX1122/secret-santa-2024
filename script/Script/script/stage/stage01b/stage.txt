@@ -59,6 +59,24 @@ task LoadBoss()
 
 task StartStage
 {	
+/*
+	if(GetCommonData("isPracticing", false)==false)
+	{
+		StageMusicChange(ID_STAGEBGM_1B);	
+	}
+	BGTransition(255, 255, 60);
+	loop(60)
+	{
+		SetCommonData("StageFramesPassed", 0);
+		yield;
+	}
+	BGTransition(255, 0, 120);
+	
+	//StagePortion();
+	//StageTime_Stop();
+	//wait(120);
+	*/
+	
 	if(GetCommonData("isPracticing", false)==false)
 	{
 		StageMusicChange(ID_STAGEBGM_1B);	
@@ -66,9 +84,7 @@ task StartStage
 	BGTransition(255, 255, 60);
 	wait(60);
 	BGTransition(255, 0, 120);
-	
-	StagePortion();
-	//wait(120);
+	wait(120);
 	PreBossDialogue(DIALOGUE_STAGE01B);
 	SetCommonData("MaxNumberOfPhases",1);
 	if(GetCommonData("isPracticing", false)==true)
@@ -100,11 +116,30 @@ task StartStage
 	}
 }
 const TH8INTRO_FAIRY = 0;
+let stageTimeCounter = 0;
+let isStageTicking = true;
+task StageTime_Progress()
+{
+	isStageTicking = true;
+	while(isStageTicking)
+	{
+		stageTimeCounter++;
+		yield;
+	}
+}
+task StageTime_Stop()
+{
+	isStageTicking = false;
+}
+
 function StagePortion()
 {
+	SetCommonData("StageFramesPassed", 0);
 	Formation1(1);
 	wait(60);
 	Formation1(-1);
+	
+	while(stageTimeCounter < 400) {yield;}
 	loop{yield;}
 }
 task Formation1(bit)

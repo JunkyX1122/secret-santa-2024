@@ -641,7 +641,7 @@ function Stage01BPreBattle()
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_01, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.8, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Sullen!", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						"", "", mouth_null, id_sullen,   portraitXLeft,  portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Oh?", 
@@ -656,7 +656,7 @@ function Stage01BPreBattle()
 	ObjMove_SetDestAtFrameWeightForceStop(objDummy, GetStgFrameWidth/2, 140, 60);
 	
 	SetDialogueTextA4("Daisuke", "It's been so long!", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_03, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.2, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Ah! Daisuke. Isn't this a pleasant surprise?", 
@@ -666,7 +666,7 @@ function Stage01BPreBattle()
 	NameDisplay(portraitXRight-50-75, portraitYOffset + 50, DIALOGUE_ID_DAISUKE);
 	
 	SetDialogueTextA4("Daisuke", "Yeah! Uh, wow, when was the last time I've seen you around here?", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Hm. I am not too sure. Terribly sorry for not visiting my child.", 
@@ -702,7 +702,7 @@ function Stage01BPreBattle()
 	MusicFade(DEFAULT_MUSIC_FADE);
 	
 	SetDialogueTextA4("Daisuke", "Are people in danger?", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_03, IMGAR_PORTRAIT_DAISUKE_MOUTH_02, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 0.9, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "I assume so yes.", 
@@ -710,13 +710,13 @@ function Stage01BPreBattle()
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_03, IMGAR_PORTRAIT_SULLEN_MOUTH_01, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 0.9, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Well if you're going to be walking into a fight...", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_02, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
 	
 	BossMusicChange(ID_BOSSBGM_1B);	
 	
 	SetDialogueTextA4("Daisuke", "Is it ok if I come help too?", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Oh my.", 
@@ -732,7 +732,7 @@ function Stage01BPreBattle()
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_00, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Yeah! Here, just watch!", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_05, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);
 	
 }
@@ -758,7 +758,7 @@ function Stage01BPostBattle()
 						IMG_PORTRAIT_SULLEN_BASE, IMG_PORTRAIT_SULLEN_EYES_05, IMGAR_PORTRAIT_SULLEN_MOUTH_00, id_sullen,   portraitXLeft,  portraitYOffset, TALK_SULLEN, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "It's the duty of a hero to be strong!", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_04, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1.1, 0.05, 2, -1);
 	
 	SetDialogueTextA3("Sullen", "Of course. Dandara my friend, will you be joining us?", 
@@ -778,7 +778,7 @@ function Stage01BPostBattle()
 						IMG_PORTRAIT_DANDARA_BASE, IMG_PORTRAIT_DANDARA_EYES_01, IMGAR_PORTRAIT_DANDARA_MOUTH_00, id_dandara,   portraitXRight,  portraitYOffset, TALK_DANDARA, 1.1, 0.05, 2);
 	
 	SetDialogueTextA4("Daisuke", "Yeah! We'll meet up later mom!", 
-						DIALOGUE_COLOUR_SULLEN, id_null, 0, 
+						DIALOGUE_COLOUR_DAISUKE, id_null, 0, 
 						IMG_PORTRAIT_DAISUKE_BASE, IMG_PORTRAIT_DAISUKE_EYES_01, IMGAR_PORTRAIT_DAISUKE_MOUTH_00, id_daisuke,   portraitXRight,  portraitYOffset, TALK_DAISUKE, 1, 0.05, 2, -1);
 	
 }
