@@ -15,4 +15,7 @@ This project is still a W.I.P., as I plan to make enemy stage portions for each 
 
 Please report any and all bugs to @joonkeh on Discord or at my Twitter @Joonkeh.
 
+If you are playtesting this, please run th_ss2024.
+If you want to experience the game as a full package, open up th_dnh.def and uncomment the first line.
+
 Enjoy~
